@@ -31,6 +31,7 @@ logs/*.json
 *.bak2
 *.bak3
 *.bak_cashsync
+*.bak_pre_audit_fix
 
 # Temp files
 *.tmp

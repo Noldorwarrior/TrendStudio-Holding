@@ -473,6 +473,46 @@ def build_dcf(wb):
     note.font = F_ITALIC
     note.alignment = C_LEFT
 
+    # FIX-03: DCF ↔ P&L Reconciliation Note
+    r += 2
+    ws.merge_cells(f"B{r}:N{r}")
+    rec_title = ws[f"B{r}"]
+    rec_title.value = "V. DCF ↔ P&L RECONCILIATION NOTE"
+    rec_title.font = Font(name="Calibri", size=12, bold=True, color="FFFFFF")
+    rec_title.fill = PatternFill("solid", fgColor="1F3864")
+    rec_title.alignment = C_CENTER
+    r += 1
+
+    reconciliation_text = [
+        ("Контекст:",
+         "DCF моделирует сценарий с обновлением pipeline (rolling slate — новые проекты каждый год), "
+         "P&L Base — текущий pipeline без renewal (12 фильмов 2026–2028 + long-tail)."),
+        ("Revenue DCF 2029–2030:",
+         f"2 600 / 2 800 млн ₽ — steady-state rolling slate (8–10 фильмов/год, "
+         f"выход на стабильную мощность после build phase)."),
+        ("Revenue P&L Base 2029–2032:",
+         "380 / 380 / 380 / 380 млн ₽ — tail от текущего пайплайна + content library floor "
+         "(минимальный доход от SVOD/TV лицензий на библиотеку 12+ фильмов)."),
+        ("Revenue P&L Renewal 2029–2032:",
+         "2 600 / 2 800 / 2 900 / 3 000 млн ₽ — сценарий с pipeline renewal, "
+         "соответствующий DCF assumptions (2–3 новых проекта/год в 2029–2031)."),
+        ("Обоснование разрыва:",
+         "DCF отражает enterprise value при продолжении операционной деятельности (going concern). "
+         "P&L Base — консервативный downside: только текущий контракт без renewal. "
+         "Инвестору представлены оба сценария для due diligence."),
+    ]
+    for label, text in reconciliation_text:
+        ws.merge_cells(f"B{r}:C{r}")
+        ws[f"B{r}"].value = label
+        ws[f"B{r}"].font = Font(name="Calibri", size=10, bold=True, color="1F3864")
+        ws[f"B{r}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
+        ws.merge_cells(f"D{r}:N{r}")
+        ws[f"D{r}"].value = text
+        ws[f"D{r}"].font = Font(name="Calibri", size=10, color="000000")
+        ws[f"D{r}"].alignment = Alignment(horizontal="left", vertical="top", wrap_text=True)
+        ws.row_dimensions[r].height = 30
+        r += 1
+
     ws.freeze_panes = "D7"
     print(f"  [22_Valuation_DCF] WACC={WACC*100:.1f}%, EV_Gordon={dcf['ev_gordon']:.0f}, "
           f"EV_Exit={dcf['ev_exit']:.0f}, EV_blend={dcf['ev_blend']:.0f}")

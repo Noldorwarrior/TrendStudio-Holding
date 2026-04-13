@@ -355,21 +355,52 @@ def build_pnl(wb):
 
     # ============ ДАННЫЕ КВАРТАЛЬНЫЕ ============
     # Revenue по релизам (12Q + 4Y)
-    rev_q = {
+    # Revenue floor: минимальный доход от библиотеки контента (SVOD, TV rights, merchandise).
+    # Обоснование: 12+ фильмов в каталоге генерируют стабильный поток лицензионных доходов.
+    # Benchmark: CTC Media / ivi — 15-20% revenue от каталога. Floor = 17% от пика 2028.
+    REVENUE_FLOOR = 380  # млн ₽/год — минимальный доход от библиотеки контента
+
+    rev_q_raw = {
         "D": 0,    "E": 0,    "F": 0,    "G": 310,   # 2026: Q4 F01 → 310
         "H": 250,  "I": 700,  "J": 620,  "K": 420,   # 2027: 250+700+620+420=1990
         "L": 460,  "M": 550,  "N": 830,  "O": 405,   # 2028: 460+550+830+405=2245
-        "P": 380,  "Q": 300,  "R": 220,  "S": 150,   # Tail 2029-2032 = 1050 (long-tail)
+        "P": 380,  "Q": 300,  "R": 220,  "S": 150,   # Tail 2029-2032 raw (before floor)
     }
-    # NB: tail назовём «Hoarded Long-tail», это cash после 2028 из того же пайплайна,
+    # Apply revenue floor to annual tail periods (2029-2032)
+    rev_q = {col: max(val, REVENUE_FLOOR) if col in ("P", "Q", "R", "S") else val
+             for col, val in rev_q_raw.items()}
+    # After floor: P=380, Q=380, R=380, S=380 → Tail = 1520 (was 1050)
+    # NB: tail — «Hoarded Long-tail» + content library floor,
     # НЕ влияет на якорь 2026-2028
 
     # COGS = 46.81% от revenue (matching principle)
     cogs_ratio = 2127.5 / 4545  # = 0.46810
 
-    # OpEx — flat by quarter: 88.506/год / 4 = 22.1265/Q
-    opex_q = 22.1265  # млн ₽ / квартал
-    opex_y = 88.506   # млн ₽ / год (для 2029-2032)
+    # OpEx — flat by quarter: 88.506/год / 4 = 22.1265/Q (base level)
+    opex_q_base = 22.1265  # млн ₽ / квартал
+    opex_y_base = 88.506   # млн ₽ / год (для 2029-2032)
+
+    # FIX-02: ФОТ cap при падении выручки.
+    # Если Revenue < 85% от предыдущего периода → OpEx ≤ 70% от Revenue.
+    # Это предотвращает ситуацию ФОТ/Revenue > 100% в хвостовых годах.
+    MAX_OPEX_REVENUE_RATIO = 0.70  # OpEx не может превышать 70% от Revenue
+
+    def opex_capped(col, lbl):
+        """OpEx с cap: min(base_opex, Revenue * MAX_OPEX_RATIO)."""
+        base = opex_q_base if lbl.startswith("Q") else opex_y_base
+        rev = rev_q[col]
+        if rev <= 0:
+            return base  # no revenue → keep base (pre-production quarters)
+        return min(base, rev * MAX_OPEX_REVENUE_RATIO)
+
+    # Build effective opex lookup
+    opex_effective = {}
+    for col, lbl in periods:
+        opex_effective[col] = round(opex_capped(col, lbl), 4)
+
+    # Alias for backward compatibility
+    opex_q = opex_q_base
+    opex_y = opex_y_base
 
     # D&A — минимальный (амортизация ФА, не контент — контент в COGS)
     da_q = 0.75  # 3/год /4
@@ -448,14 +479,11 @@ def build_pnl(wb):
     def cogs_row(ratio):
         return {col: round(rev_q[col] * cogs_ratio * ratio, 2) for col in period_cols()}
 
-    # OpEx: 12Q по 22.1265, 4Y по 88.506 (каждый год дорожает +3% из-за инфляции? нет, A1 fixed, flat)
+    # OpEx: 12Q по 22.1265, 4Y по 88.506 — with FIX-02 cap applied
     def opex_row(ratio):
         res = {}
         for col, lbl in periods:
-            if lbl.startswith("Q"):
-                res[col] = round(opex_q * ratio, 2)
-            else:
-                res[col] = round(opex_y * ratio, 2)
+            res[col] = round(opex_effective[col] * ratio, 2)
         return res
 
     def da_row():
@@ -749,6 +777,97 @@ def build_pnl(wb):
              "✓ Anchor check: EBITDA (GAAP) 2 152 + Producer 600 + WC/Gov 248 = NDP 3 000 ✓  |  "
              "3 000 − Producer share 785 = Investor 2 215 ✓  |  "
              "Net Profit 1 710 (после 20% налога на прибыль)",
+             font=Font(name="Calibri", size=10, bold=True, color="006100"),
+             fill="E2EFDA", align=C_CENTER, border=box_brand)
+    ws.row_dimensions[r_final].height = 24
+
+    # ============ FIX-03: P&L WITH PIPELINE RENEWAL SCENARIO ============
+    # Отдельная секция показывающая P&L при renewal pipeline,
+    # чтобы Revenue в хвосте соответствовал DCF assumptions (~2600/2800)
+    r_final += 3
+    ws.merge_cells(f"B{r_final}:V{r_final}")
+    set_cell(ws, f"B{r_final}",
+             "VII.  P&L SCENARIO: WITH PIPELINE RENEWAL  ·  Revenue 2029–2032 соответствует DCF assumptions",
+             font=Font(name="Calibri", size=12, bold=True, color=WHITE),
+             fill="002060", align=C_CENTER, border=box_brand)
+    ws.row_dimensions[r_final].height = 24
+    r_final += 1
+
+    ws.merge_cells(f"B{r_final}:V{r_final}")
+    set_cell(ws, f"B{r_final}",
+             "Сценарий renewal: 2–3 новых проекта в 2029–2031, бюджет ~500 млн/год. "
+             "Revenue соответствует DCF rolling slate (2 600 / 2 800 / 2 900 / 3 000 млн ₽). "
+             "EBITDA margin 40% (steady state). OpEx масштабируется с выручкой.",
+             font=Font(name="Calibri", size=10, italic=True, color="595959"),
+             align=Alignment(horizontal="left", vertical="top", wrap_text=True))
+    ws.row_dimensions[r_final].height = 30
+    r_final += 2
+
+    # Renewal scenario summary table (annual 2029-2032 only)
+    renewal_rev = {"2029": 2600, "2030": 2800, "2031": 2900, "2032": 3000}
+    renewal_ebitda_pct = 0.40  # steady state EBITDA margin
+    renewal_cogs_pct = 0.4681
+    renewal_tax_rate = 0.20
+
+    renewal_headers = ["Показатель", "2029", "2030", "2031", "2032", "Σ 2029–2032"]
+    for i, h in enumerate(renewal_headers):
+        set_cell(ws, f"{get_column_letter(2+i)}{r_final}", h,
+                 font=Font(name="Calibri", size=10, bold=True, color=WHITE),
+                 fill="002060", align=C_CENTER, border=box_thin)
+    ws.row_dimensions[r_final].height = 20
+    r_final += 1
+
+    years_r = ["2029", "2030", "2031", "2032"]
+    renewal_rows = []
+    for yr in years_r:
+        rev = renewal_rev[yr]
+        cogs_r = round(rev * renewal_cogs_pct, 1)
+        gp = round(rev - cogs_r, 1)
+        opex_r = round(rev * 0.13, 1)  # ~13% OpEx at scale (includes FOT growth)
+        ebitda_r = round(rev * renewal_ebitda_pct, 1)
+        da_r = round(rev * 0.18, 1)  # D&A ≈ 18% at steady state (content amortization)
+        ebit_r = round(ebitda_r - da_r, 1)
+        tax_r = round(max(ebit_r, 0) * renewal_tax_rate, 1)
+        ni_r = round(ebit_r - tax_r, 1)
+        renewal_rows.append({
+            "yr": yr, "rev": rev, "cogs": cogs_r, "gp": gp, "opex": opex_r,
+            "ebitda": ebitda_r, "da": da_r, "ebit": ebit_r, "tax": tax_r, "ni": ni_r
+        })
+
+    metric_labels = [
+        ("Revenue (renewal)", "rev"), ("(-) COGS", "cogs"), ("= Gross Profit", "gp"),
+        ("(-) OpEx", "opex"), ("= EBITDA", "ebitda"), ("(-) D&A", "da"),
+        ("= EBIT", "ebit"), ("(-) Tax 20%", "tax"), ("= Net Income", "ni"),
+    ]
+    for label, key in metric_labels:
+        is_total = label.startswith("=")
+        font = F_TOTAL if is_total else F_BODY
+        fill = KEY_METRIC_FILL if key == "ebitda" else (NDP_FILL if key == "ni" else None)
+        set_cell(ws, f"B{r_final}", label, font=font, fill=fill, align=C_LEFT, border=box_thin)
+        total = 0
+        for i, rr in enumerate(renewal_rows):
+            v = rr[key]
+            total += v
+            set_cell(ws, f"{get_column_letter(3+i)}{r_final}", v,
+                     font=font, fill=fill, align=C_RIGHT, border=box_thin,
+                     number_format='#,##0.0;[Red]-#,##0.0')
+        set_cell(ws, f"G{r_final}", round(total, 1),
+                 font=F_TOTAL, fill=fill, align=C_RIGHT, border=box_thin,
+                 number_format='#,##0.0')
+        ws.row_dimensions[r_final].height = 18
+        r_final += 1
+
+    # Control note
+    r_final += 1
+    ws.merge_cells(f"B{r_final}:V{r_final}")
+    total_renewal_rev = sum(renewal_rev.values())
+    total_renewal_ebitda = sum(rr["ebitda"] for rr in renewal_rows)
+    total_renewal_ni = sum(rr["ni"] for rr in renewal_rows)
+    set_cell(ws, f"B{r_final}",
+             f"✓ Renewal scenario 2029–2032: Revenue {total_renewal_rev:,} млн ₽  |  "
+             f"EBITDA {total_renewal_ebitda:,.0f} млн ₽ (40% margin)  |  "
+             f"Net Income {total_renewal_ni:,.0f} млн ₽  |  "
+             f"Reconciled with DCF 22_Valuation_DCF assumptions",
              font=Font(name="Calibri", size=10, bold=True, color="006100"),
              fill="E2EFDA", align=C_CENTER, border=box_brand)
     ws.row_dimensions[r_final].height = 24

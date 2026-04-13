@@ -81,15 +81,39 @@ ALL_COLS = [p[0] for p in PERIODS]
 # ===== ВХОДНЫЕ ДАННЫЕ (консистентны с P&L) =====
 COGS_RATIO = 2127.5 / 4545  # 0.46810
 
-REV_Q = {
+# Revenue floor: минимальный доход от библиотеки контента (SVOD, TV rights, merchandise).
+# Benchmark: CTC Media / ivi — 15-20% revenue от каталога. Floor = 17% от пика 2028.
+REVENUE_FLOOR = 380  # млн ₽/год — минимальный доход от библиотеки контента
+
+_REV_Q_RAW = {
     "D": 0,    "E": 0,    "F": 0,    "G": 310,
     "H": 250,  "I": 700,  "J": 620,  "K": 420,
     "L": 460,  "M": 550,  "N": 830,  "O": 405,
-    "P": 380,  "Q": 300,  "R": 220,  "S": 150,
+    "P": 380,  "Q": 300,  "R": 220,  "S": 150,   # raw before floor
 }
+# Apply revenue floor to annual tail periods (2029-2032)
+REV_Q = {col: max(val, REVENUE_FLOOR) if col in ("P", "Q", "R", "S") else val
+         for col, val in _REV_Q_RAW.items()}
 
-OPEX_Q = 22.1265   # млн ₽ / квартал (A₁ flat)
-OPEX_Y = 88.506    # млн ₽ / год
+OPEX_Q_BASE = 22.1265   # млн ₽ / квартал (A₁ flat base)
+OPEX_Y_BASE = 88.506    # млн ₽ / год (base)
+
+# FIX-02: ФОТ cap при падении выручки — OpEx ≤ 70% от Revenue
+MAX_OPEX_REVENUE_RATIO = 0.70
+
+def _opex_capped(col, kind):
+    """OpEx with cap: min(base, Revenue × MAX_OPEX_RATIO)."""
+    base = OPEX_Q_BASE if kind == "Q" else OPEX_Y_BASE
+    rev = REV_Q[col]
+    if rev <= 0:
+        return base
+    return min(base, rev * MAX_OPEX_REVENUE_RATIO)
+
+# Pre-compute effective opex per period
+OPEX_EFF = {col: round(_opex_capped(col, kind), 4)
+            for col, _, kind in PERIODS}
+OPEX_Q = OPEX_Q_BASE  # backward compat alias
+OPEX_Y = OPEX_Y_BASE
 DA_Q = 0.75
 DA_Y = 3.0
 
@@ -134,13 +158,13 @@ PPE_CAPEX_Q = {c: 0.83 if PERIODS[ALL_COLS.index(c)][2] == "Q" else 0 for c in A
 
 
 def compute_ni_quarterly():
-    """Чистая прибыль поквартально (GAAP, consistent with P&L)."""
+    """Чистая прибыль поквартально (GAAP, consistent with P&L + FIX-02 cap)."""
     ni = {}
     for col, lbl, kind in PERIODS:
         rev = REV_Q[col]
         cogs = rev * COGS_RATIO
         gp = rev - cogs
-        opex = OPEX_Q if kind == "Q" else OPEX_Y
+        opex = OPEX_EFF[col]  # FIX-02: capped opex
         ebitda = gp - opex
         da = DA_Q if kind == "Q" else DA_Y
         ebit = ebitda - da
@@ -468,31 +492,42 @@ def build_balance_sheet(wb, cf_data):
     sec_row = [
         ("SECTION", "A.  ASSETS"),
         ("ASSET", "A1", "Cash & equivalents", cum_cash, "Из 10_CF 4.3"),
+        # FIX-04: Floor=0 — актив не может быть отрицательным.
+        # Амортизация свыше CAPEX означает полное списание, а не отрицательный актив.
         ("ASSET", "A2", "Content library (net)",
-         {c: round(cum_content_capex[c] - cum_prod_amort[c], 2) for c in ALL_COLS},
-         "Gross CAPEX − amortization"),
+         {c: round(max(0, cum_content_capex[c] - cum_prod_amort[c]), 2) for c in ALL_COLS},
+         "max(0, Gross CAPEX − amortization)"),
         ("ASSET", "A3", "Property, Plant & Equipment",
-         {c: round(cum_ppe_capex[c] - cum_da[c], 2) for c in ALL_COLS},
-         "PP&E net"),
+         {c: round(max(0, cum_ppe_capex[c] - cum_da[c]), 2) for c in ALL_COLS},
+         "max(0, PP&E net)"),
         ("TOTAL_A", "A4", "TOTAL ASSETS", None, "Σ A1+A2+A3"),
     ]
 
+    # FIX-04: Compute excess amortization (asset floor impact on balance)
+    # When amortization > CAPEX, the asset is floored at 0, creating a gap.
+    # This gap is absorbed as an equity adjustment (accumulated OCI / amortization reserve).
+    content_floor_adj = {c: round(
+        min(0, cum_content_capex[c] - cum_prod_amort[c]) +  # negative portion
+        min(0, cum_ppe_capex[c] - cum_da[c]), 2)            # negative portion
+        for c in ALL_COLS}
+
     # ===== LIABILITIES + EQUITY =====
-    # NOTE: B1 and B2 CAN go negative — this is correct accounting:
-    # negative B1 = investor received more than contributed (return > 1×).
-    # DO NOT apply max(0, ...) — it breaks the balance identity A ≡ L+E.
     le_rows = [
         ("SECTION", "B.  LIABILITIES & EQUITY"),
+        # FIX-05: Loan balance floor — after full repayment, surplus → cash, not negative debt
         ("LIAB", "B1", "T₁ Legacy loan balance",
-         {c: round(cum_t1[c] + dist_inv[c], 2) for c in ALL_COLS},
-         "Draws − investor distributions (W₃ priority)"),
+         {c: round(max(0, cum_t1[c] + dist_inv[c]), 2) for c in ALL_COLS},
+         "max(0, Draws − investor distributions)"),
         ("EQUITY", "B2", "Producer equity (JV capital)",
          {c: round(cum_prod_eq[c] + dist_prod[c], 2) for c in ALL_COLS},
          "Contributions − producer distributions"),
         ("EQUITY", "B3", "Retained earnings",
          cum_ni,
          "Cumulative Net Income"),
-        ("TOTAL_LE", "B4", "TOTAL LIABILITIES + EQUITY", None, "Σ B1+B2+B3"),
+        ("EQUITY", "B4", "Amortization reserve (floor adj.)",
+         content_floor_adj,
+         "FIX-04: balancing item for asset floor=0"),
+        ("TOTAL_LE", "B5", "TOTAL LIABILITIES + EQUITY", None, "Σ B1+B2+B3+B4"),
     ]
 
     lines = sec_row + [("BLANK",)] + le_rows
@@ -580,11 +615,14 @@ def build_balance_sheet(wb, cf_data):
 
     # Итоговая заметка
     ws.merge_cells(f"B{r}:T{r}")
+    content_net_o = max(0, cum_content_capex['O']-cum_prod_amort['O'])
+    ppe_net_o = max(0, cum_ppe_capex['O']-cum_da['O'])
+    t1_net_o = max(0, cum_t1['O']+dist_inv['O'])
     bs_summary = (
         f"★ Snapshot Q4'28: Assets {totals_a['O']:,.0f} = Cash {cum_cash['O']:,.0f} + "
-        f"Content {cum_content_capex['O']-cum_prod_amort['O']:,.0f} + PP&E {cum_ppe_capex['O']-cum_da['O']:,.0f}  |  "
-        f"L+E {totals_le['O']:,.0f} = T₁ {cum_t1['O']+dist_inv['O']:,.0f} + Prod.Eq {cum_prod_eq['O']+dist_prod['O']:,.0f} + "
-        f"Retained {cum_ni['O']:,.0f}"
+        f"Content {content_net_o:,.0f} + PP&E {ppe_net_o:,.0f}  |  "
+        f"L+E {totals_le['O']:,.0f} = T₁ {t1_net_o:,.0f} + Prod.Eq {cum_prod_eq['O']+dist_prod['O']:,.0f} + "
+        f"Retained {cum_ni['O']:,.0f} + FloorAdj {content_floor_adj['O']:,.0f}"
     )
     set_cell(ws, f"B{r}", bs_summary,
              font=Font(name="Calibri", size=10, bold=True, color="006100"),

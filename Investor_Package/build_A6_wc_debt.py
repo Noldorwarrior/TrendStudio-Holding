@@ -77,20 +77,31 @@ PERIODS = [
 ]
 ALL_COLS = [p[0] for p in PERIODS]
 
-REV_Q = {
+# Revenue floor: минимальный доход от библиотеки контента (SVOD, TV rights, merchandise).
+REVENUE_FLOOR = 380  # млн ₽/год — минимальный доход от библиотеки контента
+
+_REV_Q_RAW = {
     "D": 0,    "E": 0,    "F": 0,    "G": 310,
     "H": 250,  "I": 700,  "J": 620,  "K": 420,
     "L": 460,  "M": 550,  "N": 830,  "O": 405,
-    "P": 380,  "Q": 300,  "R": 220,  "S": 150,
+    "P": 380,  "Q": 300,  "R": 220,  "S": 150,   # raw before floor
 }
+REV_Q = {col: max(val, REVENUE_FLOOR) if col in ("P", "Q", "R", "S") else val
+         for col, val in _REV_Q_RAW.items()}
 
 OPEX_Q = 22.1265
 OPEX_Y = 88.506
+# FIX-02: ФОТ cap — OpEx ≤ 70% от Revenue
+MAX_OPEX_REVENUE_RATIO = 0.70
 PA_Q = {c: round(REV_Q[c] * (277.5 / 4545), 2) for c in ALL_COLS}
 
 
 def opex_val(col):
-    return OPEX_Q if PERIODS[ALL_COLS.index(col)][2] == "Q" else OPEX_Y
+    base = OPEX_Q if PERIODS[ALL_COLS.index(col)][2] == "Q" else OPEX_Y
+    rev = REV_Q[col]
+    if rev <= 0:
+        return base
+    return min(base, rev * MAX_OPEX_REVENUE_RATIO)
 
 
 # ============================================================

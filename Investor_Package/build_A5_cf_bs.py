@@ -503,13 +503,18 @@ def build_balance_sheet(wb, cf_data):
         ("TOTAL_A", "A4", "TOTAL ASSETS", None, "Σ A1+A2+A3"),
     ]
 
-    # FIX-04: Compute excess amortization (asset floor impact on balance)
-    # When amortization > CAPEX, the asset is floored at 0, creating a gap.
-    # This gap is absorbed as an equity adjustment (accumulated OCI / amortization reserve).
+    # FIX-04/05: Compute floor adjustment balancing item.
+    # Flooring assets at 0 INCREASES total assets (removes negative values).
+    # Flooring loan at 0 INCREASES total L+E (removes negative values).
+    # The equity balancing item = asset floor impact - liability floor impact.
+    # Formula: adj = -min(0, content_net) - min(0, ppe_net) + min(0, T1_raw)
+    # where min(0, x) extracts the negative portion; we negate to get the floor delta.
+    _t1_raw = {c: round(cum_t1[c] + dist_inv[c], 2) for c in ALL_COLS}
     content_floor_adj = {c: round(
-        min(0, cum_content_capex[c] - cum_prod_amort[c]) +  # negative portion
-        min(0, cum_ppe_capex[c] - cum_da[c]), 2)            # negative portion
-        for c in ALL_COLS}
+        -min(0, cum_content_capex[c] - cum_prod_amort[c])   # asset floor delta (positive)
+        - min(0, cum_ppe_capex[c] - cum_da[c])              # asset floor delta (positive)
+        + min(0, _t1_raw[c]),                                # liability floor delta (negative)
+        2) for c in ALL_COLS}
 
     # ===== LIABILITIES + EQUITY =====
     le_rows = [

@@ -1,0 +1,1899 @@
+{
+  "file": "/home/user/TrendStudio-Holding/Investor_Package/investor_model_v1.0_Public.xlsx",
+  "file_size_bytes": 241590,
+  "sheet_count": 42,
+  "sheet_names": [
+    "01_Cover",
+    "02_Assumptions",
+    "03_Change_Log",
+    "04_FOT_Staff_A1",
+    "05_FOT_Staff_A2",
+    "06_Cost_Structure",
+    "07_Revenue_Breakdown",
+    "08_Content_Pipeline",
+    "09_P&L_Statement",
+    "10_Cash_Flow",
+    "11_Balance_Sheet",
+    "12_Working_Capital",
+    "13_Debt_Schedule",
+    "14_Investment_Inflow",
+    "15_Use_of_Funds",
+    "16_CAPEX_Schedule",
+    "17_Deal_Structures",
+    "18_Cap_Table",
+    "19_Waterfall",
+    "20_Unit_Economics_per_Film",
+    "21_KPI_Dashboard",
+    "22_Valuation_DCF",
+    "23_Valuation_Multiples",
+    "24_Investor_Returns",
+    "25_Exit_Scenarios",
+    "26_Sensitivity",
+    "27_Scenario_Analysis",
+    "28_Monte_Carlo_Summary",
+    "29_Risk_Register",
+    "30_Market_Analysis",
+    "31_Benchmarks",
+    "32_Comparable_Transactions",
+    "33_Gov_KPI",
+    "34_Tax_Schedule",
+    "35_Roadmap_2026_2032",
+    "36_Executive_Summary",
+    "37_Glossary",
+    "38_Notes_and_Sources",
+    "39_TOC",
+    "40_Investor_Checklist",
+    "41_Print_Setup",
+    "42_Cover_Letter"
+  ],
+  "document_properties": {
+    "creator": "\u041a\u043e\u043c\u0430\u043d\u0434\u0430 \u0422\u0440\u0435\u043d\u0434\u0421\u0442\u0443\u0434\u0438\u043e",
+    "last_modified_by": "a",
+    "created": "2026-04-11 18:02:50",
+    "modified": "2026-04-12 22:57:34",
+    "title": "investor_model_v1.0_Public \u2014 \u0422\u0440\u0435\u043d\u0434\u0421\u0442\u0443\u0434\u0438\u043e",
+    "description": "\u042f\u043a\u043e\u0440\u044c: cumulative EBITDA 2026\u20132028 = 3 000 \u043c\u043b\u043d \u20bd",
+    "subject": "Investor Financial Model, Pre-IPO Institutional",
+    "keywords": "investor, financial model, L3, pre-IPO, cinema",
+    "category": null,
+    "company": null,
+    "manager": null,
+    "revision": null,
+    "version": null,
+    "content_status": null,
+    "identifier": null,
+    "language": null,
+    "custom_properties": []
+  },
+  "global_defined_names": [],
+  "workbook_external_links": [],
+  "sheets": [
+    {
+      "name": "01_Cover",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 39,
+        "min_col": 2,
+        "max_col": 12,
+        "min_col_letter": "B",
+        "max_col_letter": "L",
+        "total_rows_used": 38,
+        "total_cols_used": 11
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 63,
+        "empty": 355,
+        "total_non_empty": 63
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "02_Assumptions",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 141,
+        "min_col": 2,
+        "max_col": 6,
+        "min_col_letter": "B",
+        "max_col_letter": "F",
+        "total_rows_used": 140,
+        "total_cols_used": 5
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 2,
+        "values": 501,
+        "empty": 197,
+        "total_non_empty": 503
+      },
+      "formula_samples": [
+        {
+          "cell": "B129",
+          "formula": "="
+        },
+        {
+          "cell": "B131",
+          "formula": "="
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "03_Change_Log",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 33,
+        "min_col": 1,
+        "max_col": 6,
+        "min_col_letter": "A",
+        "max_col_letter": "F",
+        "total_rows_used": 32,
+        "total_cols_used": 6
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 99,
+        "empty": 93,
+        "total_non_empty": 99
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "04_FOT_Staff_A1",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 23,
+        "min_col": 2,
+        "max_col": 15,
+        "min_col_letter": "B",
+        "max_col_letter": "O",
+        "total_rows_used": 22,
+        "total_cols_used": 14
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 42,
+        "values": 75,
+        "empty": 191,
+        "total_non_empty": 117
+      },
+      "formula_samples": [
+        {
+          "cell": "F6",
+          "formula": "=D6*E6"
+        },
+        {
+          "cell": "G6",
+          "formula": "=F6*0.3"
+        },
+        {
+          "cell": "H6",
+          "formula": "=F6+G6"
+        },
+        {
+          "cell": "I6",
+          "formula": "=H6*12"
+        },
+        {
+          "cell": "F7",
+          "formula": "=D7*E7"
+        },
+        {
+          "cell": "G7",
+          "formula": "=F7*0.3"
+        },
+        {
+          "cell": "H7",
+          "formula": "=F7+G7"
+        },
+        {
+          "cell": "I7",
+          "formula": "=H7*12"
+        },
+        {
+          "cell": "F8",
+          "formula": "=D8*E8"
+        },
+        {
+          "cell": "G8",
+          "formula": "=F8*0.3"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "05_FOT_Staff_A2",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 28,
+        "min_col": 2,
+        "max_col": 15,
+        "min_col_letter": "B",
+        "max_col_letter": "O",
+        "total_rows_used": 27,
+        "total_cols_used": 14
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 54,
+        "values": 63,
+        "empty": 261,
+        "total_non_empty": 117
+      },
+      "formula_samples": [
+        {
+          "cell": "C10",
+          "formula": "=C7*C9"
+        },
+        {
+          "cell": "D10",
+          "formula": "=D7*D9"
+        },
+        {
+          "cell": "E10",
+          "formula": "=E7*E9"
+        },
+        {
+          "cell": "F10",
+          "formula": "=F7*F9"
+        },
+        {
+          "cell": "G10",
+          "formula": "=G7*G9"
+        },
+        {
+          "cell": "H10",
+          "formula": "=H7*H9"
+        },
+        {
+          "cell": "I10",
+          "formula": "=I7*I9"
+        },
+        {
+          "cell": "C11",
+          "formula": "=C10*1.3"
+        },
+        {
+          "cell": "D11",
+          "formula": "=D10*1.3"
+        },
+        {
+          "cell": "E11",
+          "formula": "=E10*1.3"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "06_Cost_Structure",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 39,
+        "min_col": 2,
+        "max_col": 15,
+        "min_col_letter": "B",
+        "max_col_letter": "O",
+        "total_rows_used": 38,
+        "total_cols_used": 14
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 31,
+        "values": 126,
+        "empty": 375,
+        "total_non_empty": 157
+      },
+      "formula_samples": [
+        {
+          "cell": "H7",
+          "formula": "=SUM(C7:E7)"
+        },
+        {
+          "cell": "H8",
+          "formula": "=SUM(C8:E8)"
+        },
+        {
+          "cell": "H9",
+          "formula": "=SUM(C9:E9)"
+        },
+        {
+          "cell": "H10",
+          "formula": "=SUM(C10:E10)"
+        },
+        {
+          "cell": "H11",
+          "formula": "=SUM(C11:E11)"
+        },
+        {
+          "cell": "H12",
+          "formula": "=SUM(C12:E12)"
+        },
+        {
+          "cell": "H13",
+          "formula": "=SUM(C13:E13)"
+        },
+        {
+          "cell": "H14",
+          "formula": "=SUM(C14:E14)"
+        },
+        {
+          "cell": "H15",
+          "formula": "=SUM(C15:E15)"
+        },
+        {
+          "cell": "H16",
+          "formula": "=SUM(C16:E16)"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "07_Revenue_Breakdown",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 28,
+        "min_col": 2,
+        "max_col": 8,
+        "min_col_letter": "B",
+        "max_col_letter": "H",
+        "total_rows_used": 27,
+        "total_cols_used": 7
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 24,
+        "values": 89,
+        "empty": 76,
+        "total_non_empty": 113
+      },
+      "formula_samples": [
+        {
+          "cell": "G7",
+          "formula": "=SUM(D7:F7)"
+        },
+        {
+          "cell": "H7",
+          "formula": "=(F7/D7)^(1/2)-1"
+        },
+        {
+          "cell": "G8",
+          "formula": "=SUM(D8:F8)"
+        },
+        {
+          "cell": "H8",
+          "formula": "=(F8/D8)^(1/2)-1"
+        },
+        {
+          "cell": "G9",
+          "formula": "=SUM(D9:F9)"
+        },
+        {
+          "cell": "H9",
+          "formula": "=(F9/D9)^(1/2)-1"
+        },
+        {
+          "cell": "G10",
+          "formula": "=SUM(D10:F10)"
+        },
+        {
+          "cell": "H10",
+          "formula": "=(F10/D10)^(1/2)-1"
+        },
+        {
+          "cell": "G11",
+          "formula": "=SUM(D11:F11)"
+        },
+        {
+          "cell": "H11",
+          "formula": "=(F11/D11)^(1/2)-1"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "08_Content_Pipeline",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 40,
+        "min_col": 2,
+        "max_col": 13,
+        "min_col_letter": "B",
+        "max_col_letter": "M",
+        "total_rows_used": 39,
+        "total_cols_used": 12
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 60,
+        "values": 201,
+        "empty": 207,
+        "total_non_empty": 261
+      },
+      "formula_samples": [
+        {
+          "cell": "G7",
+          "formula": "=F7*0.15"
+        },
+        {
+          "cell": "H7",
+          "formula": "=F7+G7"
+        },
+        {
+          "cell": "J7",
+          "formula": "=(I7-H7)/H7"
+        },
+        {
+          "cell": "K7",
+          "formula": "=(I7-H7)/I7"
+        },
+        {
+          "cell": "G8",
+          "formula": "=F8*0.15"
+        },
+        {
+          "cell": "H8",
+          "formula": "=F8+G8"
+        },
+        {
+          "cell": "J8",
+          "formula": "=(I8-H8)/H8"
+        },
+        {
+          "cell": "K8",
+          "formula": "=(I8-H8)/I8"
+        },
+        {
+          "cell": "G9",
+          "formula": "=F9*0.15"
+        },
+        {
+          "cell": "H9",
+          "formula": "=F9+G9"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "09_P&L_Statement",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 55,
+        "min_col": 2,
+        "max_col": 22,
+        "min_col_letter": "B",
+        "max_col_letter": "V",
+        "total_rows_used": 54,
+        "total_cols_used": 21
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 2,
+        "values": 620,
+        "empty": 512,
+        "total_non_empty": 622
+      },
+      "formula_samples": [
+        {
+          "cell": "B51",
+          "formula": "="
+        },
+        {
+          "cell": "B53",
+          "formula": "="
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "10_Cash_Flow",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 25,
+        "min_col": 2,
+        "max_col": 22,
+        "min_col_letter": "B",
+        "max_col_letter": "V",
+        "total_rows_used": 24,
+        "total_cols_used": 21
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 317,
+        "empty": 187,
+        "total_non_empty": 317
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "11_Balance_Sheet",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 21,
+        "min_col": 2,
+        "max_col": 20,
+        "min_col_letter": "B",
+        "max_col_letter": "T",
+        "total_rows_used": 20,
+        "total_cols_used": 19
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 196,
+        "empty": 184,
+        "total_non_empty": 196
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "12_Working_Capital",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 16,
+        "min_col": 2,
+        "max_col": 21,
+        "min_col_letter": "B",
+        "max_col_letter": "U",
+        "total_rows_used": 15,
+        "total_cols_used": 20
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 146,
+        "empty": 154,
+        "total_non_empty": 146
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "13_Debt_Schedule",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 24,
+        "min_col": 2,
+        "max_col": 21,
+        "min_col_letter": "B",
+        "max_col_letter": "U",
+        "total_rows_used": 23,
+        "total_cols_used": 20
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 249,
+        "empty": 211,
+        "total_non_empty": 249
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "14_Investment_Inflow",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 26,
+        "min_col": 2,
+        "max_col": 17,
+        "min_col_letter": "B",
+        "max_col_letter": "Q",
+        "total_rows_used": 25,
+        "total_cols_used": 16
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 155,
+        "empty": 245,
+        "total_non_empty": 155
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "15_Use_of_Funds",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 19,
+        "min_col": 2,
+        "max_col": 9,
+        "min_col_letter": "B",
+        "max_col_letter": "I",
+        "total_rows_used": 18,
+        "total_cols_used": 8
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 2,
+        "values": 70,
+        "empty": 72,
+        "total_non_empty": 72
+      },
+      "formula_samples": [
+        {
+          "cell": "B15",
+          "formula": "="
+        },
+        {
+          "cell": "B17",
+          "formula": "="
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "16_CAPEX_Schedule",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 20,
+        "min_col": 2,
+        "max_col": 18,
+        "min_col_letter": "B",
+        "max_col_letter": "R",
+        "total_rows_used": 19,
+        "total_cols_used": 17
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 145,
+        "empty": 178,
+        "total_non_empty": 145
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "17_Deal_Structures",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 31,
+        "min_col": 2,
+        "max_col": 6,
+        "min_col_letter": "B",
+        "max_col_letter": "F",
+        "total_rows_used": 30,
+        "total_cols_used": 5
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 1,
+        "values": 110,
+        "empty": 39,
+        "total_non_empty": 111
+      },
+      "formula_samples": [
+        {
+          "cell": "B31",
+          "formula": "="
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "18_Cap_Table",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 29,
+        "min_col": 2,
+        "max_col": 10,
+        "min_col_letter": "B",
+        "max_col_letter": "J",
+        "total_rows_used": 28,
+        "total_cols_used": 9
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 2,
+        "values": 95,
+        "empty": 155,
+        "total_non_empty": 97
+      },
+      "formula_samples": [
+        {
+          "cell": "G23",
+          "formula": "= EBITDA (\u043f\u0440\u0438\u0431\u044b\u043b\u044c \u0434\u043e \u0432\u044b\u0447\u0435\u0442\u043e\u0432) \u00d7 multiple"
+        },
+        {
+          "cell": "G25",
+          "formula": "= EV (\u0441\u0442\u043e\u0438\u043c\u043e\u0441\u0442\u044c \u043f\u0440\u0435\u0434\u043f\u0440\u0438\u044f\u0442\u0438\u044f) \u2212 Net Debt (\u0414\u043e\u043b\u0433)"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "19_Waterfall",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 38,
+        "min_col": 2,
+        "max_col": 10,
+        "min_col_letter": "B",
+        "max_col_letter": "J",
+        "total_rows_used": 37,
+        "total_cols_used": 9
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 154,
+        "empty": 179,
+        "total_non_empty": 154
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "20_Unit_Economics_per_Film",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 30,
+        "min_col": 2,
+        "max_col": 15,
+        "min_col_letter": "B",
+        "max_col_letter": "O",
+        "total_rows_used": 29,
+        "total_cols_used": 14
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 211,
+        "empty": 195,
+        "total_non_empty": 211
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "21_KPI_Dashboard",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 50,
+        "min_col": 2,
+        "max_col": 10,
+        "min_col_letter": "B",
+        "max_col_letter": "J",
+        "total_rows_used": 49,
+        "total_cols_used": 9
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 279,
+        "empty": 162,
+        "total_non_empty": 279
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "22_Valuation_DCF",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 72,
+        "min_col": 2,
+        "max_col": 14,
+        "min_col_letter": "B",
+        "max_col_letter": "N",
+        "total_rows_used": 71,
+        "total_cols_used": 13
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 1,
+        "values": 204,
+        "empty": 718,
+        "total_non_empty": 205
+      },
+      "formula_samples": [
+        {
+          "cell": "B45",
+          "formula": "= Equity (\u0421\u043e\u0431\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u043a\u0430\u043f\u0438\u0442\u0430\u043b) Value"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "23_Valuation_Multiples",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 51,
+        "min_col": 2,
+        "max_col": 11,
+        "min_col_letter": "B",
+        "max_col_letter": "K",
+        "total_rows_used": 50,
+        "total_cols_used": 10
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 197,
+        "empty": 303,
+        "total_non_empty": 197
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "24_Investor_Returns",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 50,
+        "min_col": 2,
+        "max_col": 13,
+        "min_col_letter": "B",
+        "max_col_letter": "M",
+        "total_rows_used": 49,
+        "total_cols_used": 12
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 2,
+        "values": 227,
+        "empty": 359,
+        "total_non_empty": 229
+      },
+      "formula_samples": [
+        {
+          "cell": "I34",
+          "formula": "= DPI (\u0440\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u0435\u043d\u0438\u044f \u043a \u0432\u043b\u043e\u0436\u0435\u043d\u043d\u043e\u043c\u0443) (no NAV)"
+        },
+        {
+          "cell": "J44",
+          "formula": "= 1250 + 500 + 750 (W\u2083 Base (\u0411\u0430\u0437\u043e\u0432\u044b\u0439) NDP (\u0447\u0438\u0441\u0442\u044b\u0435 \u0440\u0430\u0441\u043f\u0440\u0435\u0434\u0435\u043b\u044f\u0435\u043c\u044b\u0435 \u043f\u043e\u0441\u0442\u0443\u043f\u043b\u0435\u043d\u0438\u044f) 3000)"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "25_Exit_Scenarios",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 55,
+        "min_col": 2,
+        "max_col": 11,
+        "min_col_letter": "B",
+        "max_col_letter": "K",
+        "total_rows_used": 54,
+        "total_cols_used": 10
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 3,
+        "values": 177,
+        "empty": 360,
+        "total_non_empty": 180
+      },
+      "formula_samples": [
+        {
+          "cell": "B21",
+          "formula": "= Enterprise Value (\u0421\u0442\u043e\u0438\u043c\u043e\u0441\u0442\u044c \u043f\u0440\u0435\u0434\u043f\u0440\u0438\u044f\u0442\u0438\u044f)"
+        },
+        {
+          "cell": "B24",
+          "formula": "= Equity (\u0421\u043e\u0431\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u043a\u0430\u043f\u0438\u0442\u0430\u043b) Value"
+        },
+        {
+          "cell": "B26",
+          "formula": "= Net Equity (\u0421\u043e\u0431\u0441\u0442\u0432\u0435\u043d\u043d\u044b\u0439 \u043a\u0430\u043f\u0438\u0442\u0430\u043b) Proceeds"
+        }
+      ],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "26_Sensitivity",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 47,
+        "min_col": 2,
+        "max_col": 11,
+        "min_col_letter": "B",
+        "max_col_letter": "K",
+        "total_rows_used": 46,
+        "total_cols_used": 10
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 224,
+        "empty": 236,
+        "total_non_empty": 224
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "27_Scenario_Analysis",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 37,
+        "min_col": 2,
+        "max_col": 9,
+        "min_col_letter": "B",
+        "max_col_letter": "I",
+        "total_rows_used": 36,
+        "total_cols_used": 8
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 145,
+        "empty": 143,
+        "total_non_empty": 145
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "28_Monte_Carlo_Summary",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 51,
+        "min_col": 2,
+        "max_col": 12,
+        "min_col_letter": "B",
+        "max_col_letter": "L",
+        "total_rows_used": 50,
+        "total_cols_used": 11
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 184,
+        "empty": 366,
+        "total_non_empty": 184
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "29_Risk_Register",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 94,
+        "min_col": 2,
+        "max_col": 12,
+        "min_col_letter": "B",
+        "max_col_letter": "L",
+        "total_rows_used": 93,
+        "total_cols_used": 11
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 535,
+        "empty": 488,
+        "total_non_empty": 535
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "30_Market_Analysis",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 65,
+        "min_col": 2,
+        "max_col": 16,
+        "min_col_letter": "B",
+        "max_col_letter": "P",
+        "total_rows_used": 64,
+        "total_cols_used": 15
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 241,
+        "empty": 719,
+        "total_non_empty": 241
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "31_Benchmarks",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 58,
+        "min_col": 2,
+        "max_col": 10,
+        "min_col_letter": "B",
+        "max_col_letter": "J",
+        "total_rows_used": 57,
+        "total_cols_used": 9
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 214,
+        "empty": 299,
+        "total_non_empty": 214
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "32_Comparable_Transactions",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 65,
+        "min_col": 2,
+        "max_col": 11,
+        "min_col_letter": "B",
+        "max_col_letter": "K",
+        "total_rows_used": 64,
+        "total_cols_used": 10
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 287,
+        "empty": 353,
+        "total_non_empty": 287
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "33_Gov_KPI",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 80,
+        "min_col": 2,
+        "max_col": 11,
+        "min_col_letter": "B",
+        "max_col_letter": "K",
+        "total_rows_used": 79,
+        "total_cols_used": 10
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 279,
+        "empty": 511,
+        "total_non_empty": 279
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "34_Tax_Schedule",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 56,
+        "min_col": 2,
+        "max_col": 20,
+        "min_col_letter": "B",
+        "max_col_letter": "T",
+        "total_rows_used": 55,
+        "total_cols_used": 19
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 244,
+        "empty": 801,
+        "total_non_empty": 244
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "35_Roadmap_2026_2032",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 93,
+        "min_col": 2,
+        "max_col": 18,
+        "min_col_letter": "B",
+        "max_col_letter": "R",
+        "total_rows_used": 92,
+        "total_cols_used": 17
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 425,
+        "empty": 1139,
+        "total_non_empty": 425
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "36_Executive_Summary",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 84,
+        "min_col": 2,
+        "max_col": 14,
+        "min_col_letter": "B",
+        "max_col_letter": "N",
+        "total_rows_used": 83,
+        "total_cols_used": 13
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 195,
+        "empty": 884,
+        "total_non_empty": 195
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "37_Glossary",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 69,
+        "min_col": 2,
+        "max_col": 14,
+        "min_col_letter": "B",
+        "max_col_letter": "N",
+        "total_rows_used": 68,
+        "total_cols_used": 13
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 255,
+        "empty": 629,
+        "total_non_empty": 255
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "38_Notes_and_Sources",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 68,
+        "min_col": 2,
+        "max_col": 14,
+        "min_col_letter": "B",
+        "max_col_letter": "N",
+        "total_rows_used": 67,
+        "total_cols_used": 13
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 138,
+        "empty": 733,
+        "total_non_empty": 138
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "39_TOC",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 95,
+        "min_col": 2,
+        "max_col": 14,
+        "min_col_letter": "B",
+        "max_col_letter": "N",
+        "total_rows_used": 94,
+        "total_cols_used": 13
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 177,
+        "empty": 1045,
+        "total_non_empty": 177
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "40_Investor_Checklist",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 68,
+        "min_col": 2,
+        "max_col": 14,
+        "min_col_letter": "B",
+        "max_col_letter": "N",
+        "total_rows_used": 67,
+        "total_cols_used": 13
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 195,
+        "empty": 676,
+        "total_non_empty": 195
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "41_Print_Setup",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 51,
+        "min_col": 2,
+        "max_col": 14,
+        "min_col_letter": "B",
+        "max_col_letter": "N",
+        "total_rows_used": 50,
+        "total_cols_used": 13
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 262,
+        "empty": 388,
+        "total_non_empty": 262
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    },
+    {
+      "name": "42_Cover_Letter",
+      "visibility": "visible",
+      "dimensions": {
+        "min_row": 2,
+        "max_row": 42,
+        "min_col": 2,
+        "max_col": 14,
+        "min_col_letter": "B",
+        "max_col_letter": "N",
+        "total_rows_used": 41,
+        "total_cols_used": 13
+      },
+      "protection": {
+        "sheet_protected": false,
+        "password_set": false,
+        "format_cells": true,
+        "format_columns": true,
+        "format_rows": true,
+        "insert_columns": true,
+        "insert_rows": true,
+        "delete_columns": true,
+        "delete_rows": true,
+        "sort": true,
+        "auto_filter": true
+      },
+      "cell_counts": {
+        "formulas": 0,
+        "values": 25,
+        "empty": 508,
+        "total_non_empty": 25
+      },
+      "formula_samples": [],
+      "errors_in_cached_values": [],
+      "external_links_in_formulas": [],
+      "defined_names_scoped_here": []
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Generate a single image. 3D isometric stylized portrait bust of a marketing director, dark premium style. Resolution: 1024x1024 pixels, square 1:1 format.
+
+A minimal geometric bust/silhouette of a person from shoulders up, slight isometric angle. Dark charcoal (#1E2D45) smooth low-poly faceted sculpture — abstract and geometric, like a chess piece.
+
+Golden accent details (#D4A843): a golden earpiece/wireless headset on one ear, a golden play-button shaped pin on the chest, golden highlight edges on a modern hairstyle silhouette.
+
+Small dark circular pedestal (#152238) with golden edge line. Subtle golden rim light from behind-left.
+
+Background: pure solid black (#060D1A).
+
+STYLE: Abstract geometric minimal sculpture. NOT a realistic portrait. Premium feel.
+
+DO NOT include: realistic facial features, skin, text, labels, watermarks, bright backgrounds.

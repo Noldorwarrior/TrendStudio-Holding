@@ -1,0 +1,18 @@
+Generate a single image. 3D isometric illustration of a digital influencer/blogger agency hub, dark premium style. Resolution: 1024x768 pixels, 4:3 aspect ratio.
+
+A compact isometric scene of a modern digital content creation space:
+
+- A central stylish desk/workstation with dark surface (#1E2D45) and a golden-rimmed ring light (#F5C563) standing behind it
+- A golden smartphone on a golden mini tripod on the desk, as if recording
+- Behind the desk: a large curved monitor (#2A3A55) displaying a golden play button symbol
+- Above the workspace: 6-8 small golden circular avatar icons floating in an arc formation, connected by thin golden lines — representing the blogger network/pool. Avatars have tiny minimalist person silhouettes inside.
+- To the side: a golden megaphone/bullhorn (marketing symbol)
+- Small golden notification bell icons, heart icons, and comment bubble icons floating decoratively in the air around the workspace
+
+Platform: compact dark rectangular base (#152238) with golden edge. Background: pure solid black (#060D1A).
+
+All tech/furniture in dark charcoal (#1E2D45). All accent and floating elements in golden (#D4A843, #F5C563).
+
+STYLE: Clean 3D isometric render, miniature diorama. Premium dark with golden accents. Similar to T-Bank/Tinkoff 3D isometric ad style.
+
+DO NOT include: any text, numbers, real social media logos, watermarks, people with faces, bright backgrounds, abstract gradients.

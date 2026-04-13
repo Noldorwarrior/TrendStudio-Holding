@@ -1,0 +1,11 @@
+Generate a single image. 3D golden glowing orb/sphere floating on pure black background, premium style. Resolution: 1024x1024 pixels, square 1:1 format.
+
+A single perfect golden sphere (#D4A843) floating in the center of a pure black void (#060D1A). The sphere has a smooth polished metallic golden surface with a bright specular highlight spot in the upper-right area.
+
+Around the sphere: a soft golden glow/halo (#F5C563 at 30% opacity) creating an atmospheric warm aura that fades into the darkness. 4-5 tiny golden particles orbit the sphere in a subtle ring/elliptical pattern at various distances.
+
+This is a minimal decorative light element designed for compositing as an overlay or accent.
+
+STYLE: Clean 3D render. Smooth metallic gold surface. Luxurious and minimal. Pure geometric perfection.
+
+DO NOT include: text, labels, watermarks, other objects, bright backgrounds, multiple spheres, complex scenes, reflections of environments.

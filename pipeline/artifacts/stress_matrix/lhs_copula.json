@@ -1,0 +1,27 @@
+{
+  "method": "lhs_gaussian_copula",
+  "n_simulations": 2000,
+  "lhs_strata": true,
+  "use_copula": true,
+  "seed": 45,
+  "base_ebitda": 3000.65,
+  "mean_ebitda": 2952.24,
+  "std_ebitda": 144.62,
+  "p1_ebitda": 2595.92,
+  "p5_ebitda": 2702.61,
+  "p25_ebitda": 2858.97,
+  "p50_ebitda": 2961.16,
+  "p75_ebitda": 3051.29,
+  "p95_ebitda": 3184.42,
+  "p99_ebitda": 3281.11,
+  "var_95_mln_rub": 298.04,
+  "var_99_mln_rub": 404.73,
+  "breach_probability": 0.0485,
+  "severe_breach_probability": 0.0,
+  "correlations_applied": {
+    "fx_vs_inflation": 0.29,
+    "fx_vs_delay": 0.3,
+    "inflation_vs_delay": 0.2
+  },
+  "variance_reduction_vs_naive": 1.0
+}

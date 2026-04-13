@@ -1,0 +1,11 @@
+Generate a single image. Seamless dark 3D geometric panel texture for presentation background, isometric style. Resolution: 1024x1024 pixels, square format, must be tileable/seamless.
+
+A top-down view of dark geometric rectangular panels arranged in a subtle grid pattern — like dark premium metal floor tiles or wall cladding panels. The panels are varying shades of very dark navy (#0A1628, #0F1D32, #152238) with extremely thin hairline gaps between them showing faint golden color (#D4A843 at approximately 15% opacity).
+
+Some panels are very slightly raised compared to neighbors, creating subtle 3D depth through micro-shadows. Panel sizes vary slightly — some are squares, some are wider rectangles, arranged in a modern geometric pattern.
+
+The overall appearance is like looking at a premium dark tech-surface floor from directly above. Very subtle — designed to work at 10-20% opacity as a background texture overlay.
+
+STYLE: Clean, precise, geometric. Seamless tileable pattern with no visible seam lines at edges. Minimal and dark.
+
+DO NOT include: text, labels, bright colors, golden objects, visible focal points, non-geometric shapes, organic textures.

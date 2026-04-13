@@ -1,0 +1,39 @@
+```mermaid
+graph LR
+    strategy_holding_2026_2028["Стратегия развития холдинга ТрендСтудио "]
+    strategy_holding_2026_2028 --> scenarios
+    cbr_minek_consensus_2026["Консенсус-прогноз ЦБ РФ и Минэкономразви"]
+    cbr_minek_consensus_2026 --> macro
+    slate_holding_2026_2028["Производственный план ТрендСтудио на 202"]
+    slate_holding_2026_2028 --> slate
+    segment_cinema_2026_2028["Сегмент кинотеатрального проката, план Т"]
+    segment_cinema_2026_2028 --> cinema
+    segment_advertising_2026_2028["segment_advertising_2026_2028"]
+    segment_advertising_2026_2028 --> advertising
+    segment_festivals_2026_2028["segment_festivals_2026_2028"]
+    segment_festivals_2026_2028 --> festivals
+    segment_education_2026_2028["segment_education_2026_2028"]
+    segment_education_2026_2028 --> education
+    segment_license_library_2026_2028["segment_license_library_2026_2028"]
+    segment_license_library_2026_2028 --> license_library
+    opex_budget_2026_2028["opex_budget_2026_2028"]
+    opex_budget_2026_2028 --> opex
+    pa_budget_2026_2028["pa_budget_2026_2028"]
+    pa_budget_2026_2028 --> pa_costs
+    capex_plan_2026_2028["capex_plan_2026_2028"]
+    capex_plan_2026_2028 --> capex
+    nwc_plan_2026_2028["nwc_plan_2026_2028"]
+    nwc_plan_2026_2028 --> nwc
+    valuation_assumptions_2026["valuation_assumptions_2026"]
+    valuation_assumptions_2026 --> valuation
+    investment_round_plan_2026["Инвестиционный раунд Series A ТрендСтуди"]
+    investment_round_plan_2026 --> investment
+    capm_rf_2026["WACC method: capm_classic"]
+    capm_rf_2026 --> valuation
+    buildup_2026["WACC method: build_up_country_risk"]
+    buildup_2026 --> valuation
+    peers_em_2026["WACC method: comparable_emerging_markets"]
+    peers_em_2026 --> valuation
+    ifrs_15_revenue_recognition["Revenue recognition policy (cinema)"]
+    ifrs_15_revenue_recognition --> cinema
+```

@@ -1,0 +1,82 @@
+# ============================================================================
+# opex.yaml — Операционные расходы холдинга
+# ============================================================================
+# Base targets (млн ₽):
+#   2026 = 770   (28.5% от revenue 2700)
+#   2027 = 1 356 (30.8%)
+#   2028 = 1 667 (30.9%)
+#   Σ    = 3 793
+# ============================================================================
+
+targets_mln_rub:
+  # Base (жёсткий якорь) ≈ 28-31% от revenue.
+  # cons — худший сценарий: инфляционное давление + сбой оптимизации → +8% к base.
+  # opt  — лучший сценарий: экономия на масштабе + закрытые вакансии → −7% от base.
+  - year: 2026
+    cons: 832.0
+    base: 770.0
+    opt:  716.0
+  - year: 2027
+    cons: 1464.0
+    base: 1356.0
+    opt:  1261.0
+  - year: 2028
+    cons: 1800.0
+    base: 1667.0
+    opt:  1550.0
+
+cost_categories:
+
+  - category_id: personnel
+    title: "ФОТ, налоги на ФОТ (30%), премии"
+    share_in_opex_pct: 0.55
+    headcount_plan:
+      - year: 2026
+        count: 240
+        avg_salary_kk_rub: 14.7    # средний оклад × 12 × (1 + 30%)
+      - year: 2027
+        count: 310
+        avg_salary_kk_rub: 16.1
+      - year: 2028
+        count: 360
+        avg_salary_kk_rub: 17.3
+
+  - category_id: rent_and_utilities
+    title: "Аренда офисов, студийных помещений, коммуналка"
+    share_in_opex_pct: 0.08
+    main_locations:
+      - moscow_hq
+      - st_petersburg_studio
+      - kazan_production
+
+  - category_id: it_and_software
+    title: "IT-инфраструктура, ПО, cloud"
+    share_in_opex_pct: 0.06
+
+  - category_id: marketing_corporate
+    title: "Корпоративный маркетинг и PR (не включая P&A фильмов)"
+    share_in_opex_pct: 0.07
+
+  - category_id: legal_and_consulting
+    title: "Юридические услуги, аудит, консалтинг"
+    share_in_opex_pct: 0.05
+
+  - category_id: production_overhead
+    title: "Производственные накладные (пре-продакшн, разработка)"
+    share_in_opex_pct: 0.12
+
+  - category_id: other_opex
+    title: "Прочие административные расходы"
+    share_in_opex_pct: 0.07
+
+contingency:
+  included: true
+  contingency_rate_pct: 0.05    # 5% от (COGS + P&A + OPEX) сверху
+  rationale: >
+    Буфер на непредвиденные расходы (перерасход бюджетов, курсовые потери,
+    задержки производства). Учитывается отдельной строкой в P&L.
+
+meta:
+  source_id: opex_budget_2026_2028
+  confidence: high
+  last_updated: "2026-04-11"

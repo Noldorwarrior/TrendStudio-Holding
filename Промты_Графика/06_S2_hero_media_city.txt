@@ -1,0 +1,25 @@
+Generate a single image. 3D isometric illustration of a digital media marketplace as a dark miniature city, cinematic style. Resolution: 1920x1080 pixels, 16:9 aspect ratio.
+
+SCENE: A bird's-eye isometric view (30 degrees above) of a stylized miniature city representing the media and content market. The city sits on a large dark rectangular platform.
+
+MAIN ELEMENTS:
+- CENTER-RIGHT: One tall dominant tower — a streaming platform headquarters. Dark geometric skyscraper (#1E2D45) with a large golden screen/display panel on the facade (#F5C563 glow). This is the largest and tallest structure.
+- MIDDLE RING (4-5 buildings): Medium-height structures around the tower — content studios, production houses. Dark blocks (#2A3A55) with golden window rows and small golden satellite dishes on rooftops.
+- OUTER RING (scattered): Smaller buildings, creative offices, small studios. Dark low blocks (#152238) with individual golden accent lights on facades.
+- CONNECTING INFRASTRUCTURE: Golden illuminated pathways (#D4A843) running between all buildings like data highways — thin golden lines on the dark ground.
+
+ACCENT OBJECTS:
+- Small golden broadcast antennas on 2-3 rooftops
+- Tiny golden play-button triangles floating above some buildings
+- 2-3 small golden delivery trucks on the golden pathways
+- Miniature golden screens on building facades (just golden glow rectangles, no content)
+
+PLATFORM: Large dark platform (#152238) with clean geometric edges, layered tiers. Thin golden line tracing the perimeter. Below: pure black void.
+
+COLOR PALETTE: Buildings in dark navy/charcoal gradients (#152238 to #2A3A55). All accent elements in golden (#D4A843, #F5C563). Background: pure black (#060D1A).
+
+COMPOSITION: The city occupies the right 60% of the frame. The left 40% is darker and emptier — reserved for overlay content. The tallest tower is positioned at right-center.
+
+STYLE: Clean 3D isometric render, stylized miniature city. Premium dark aesthetic. Similar to T-Bank/Tinkoff 3D isometric advertising illustrations.
+
+DO NOT include: any text, labels, logos, numbers, watermarks, sky, clouds, sun, bright colorful backgrounds, realistic buildings, people, abstract effects.

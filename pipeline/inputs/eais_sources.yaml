@@ -1,0 +1,96 @@
+# inputs/eais_sources.yaml — реестр источников исторических данных
+# российского кинорынка 2019–2025 (v1.3.7, Этап 2 D1 спринта Tier D-post).
+#
+# Назначение: каталогизировать все источники, откуда pipeline может
+# получать исторические агрегаты (годовые box office, viewers, ср. цена,
+# доля российских фильмов) для калибровки F1 block bootstrap в Tier E.
+#
+# Структура: два уровня источников.
+#   1. primary   — автоматически загружаемые (opendata.mkrf.ru)
+#   2. reference — вручную сведённые из публичных отраслевых отчётов
+#                  (kinometro, profi, ТАСС, РБК, Бюллетень кинопрокатчика)
+#
+# Seed-датасет годовых агрегатов лежит в inputs/eais_seed/annual_box_office.csv
+# и имеет источники, прослеживаемые до строк этого файла.
+
+sources:
+  primary:
+    - source_id: mkrf_register_movies_v11
+      title: "Реестр прокатных удостоверений фильмов"
+      url: "https://opendata.mkrf.ru/opendata/7705851331-register_movies"
+      format: "json.zip"
+      version: "11"
+      last_updated: "2026-04-11"
+      scope: "metadata (titles, release dates, distribution certificates)"
+      provides:
+        - release_date
+        - title
+        - country
+        - distribution_certificate
+      not_provides:
+        - box_office_mln_rub
+        - viewers_count
+        - showings_count
+      license: "Типовые условия использования открытых данных РФ"
+      fetcher: "scripts/eais_fetcher.py::fetch_mkrf_register"
+      cache_path: "inputs/eais_cache/mkrf_register_v11.json"
+      status: "available"
+
+    - source_id: fond_kino_statistics
+      title: "Статистика показов (ЕАИС Фонд кино)"
+      url: "https://ekinobilet.fond-kino.ru/statistics/"
+      format: "html (требует регистрации для детальных данных)"
+      scope: "daily/weekly/monthly box office, viewers per film"
+      provides:
+        - daily_box_office
+        - viewers_per_film
+        - showings_count
+      license: "закрытый доступ после регистрации"
+      fetcher: "scripts/eais_fetcher.py::fetch_fond_kino_snapshot (TODO Tier E+)"
+      status: "locked"
+
+  reference:
+    - source_id: kinometro_annual_2019_2025
+      title: "Kinometro.ru — годовые итоги российского проката 2019–2025"
+      url: "https://www.kinometro.ru/"
+      format: "web articles"
+      scope: "yearly aggregates: total_bo_rub_mln, viewers_mln, russian_share_pct"
+      citation_template: "Kinometro.ru — итоги {year} года российского кинопроката"
+      status: "referenced in seed"
+
+    - source_id: profi_cinema_annual
+      title: "ProfiCinema — аналитические годовые обзоры"
+      url: "https://www.proficinema.com/"
+      format: "web articles + PDF reports"
+      scope: "yearly aggregates, top-25 films, share by country"
+      status: "referenced in seed"
+
+    - source_id: bulletin_kinoprokatchika
+      title: "Бюллетень кинопрокатчика"
+      url: "https://kinobusiness.com/"
+      format: "weekly PDF bulletin"
+      scope: "weekly charts, box office rankings"
+      status: "referenced in seed (aggregate only)"
+
+    - source_id: rbc_tass_industry
+      title: "РБК / ТАСС — индустриальные сводки"
+      url: "https://www.rbc.ru/technology_and_media/ + https://tass.ru/"
+      format: "news articles"
+      scope: "industry narrative, key events (pandemic, Hollywood exit)"
+      status: "context only"
+
+meta:
+  source_id: eais_sources_v1_3_7
+  version: "1.3.7"
+  purpose: >
+    Каталог источников для F1 block bootstrap калибровки в Tier E.
+    Primary-источник (opendata.mkrf.ru) даёт метаданные фильмов;
+    reference-источники дают агрегаты box office (скомпилированы в seed).
+  confidence: medium
+  last_updated: "2026-04-11"
+  comment: >
+    Ограничение v1.3.7: fond-kino.ru/statistics требует авторизации,
+    поэтому детальные данные по фильмам недоступны автоматически.
+    Для F1 bootstrap используются годовые агрегаты из seed-датасета.
+    Переход к детальному boxoffice по фильмам — Tier E+ через регистрацию
+    на ekinobilet.fond-kino.ru или партнёрство с Kinopoisk Pro.

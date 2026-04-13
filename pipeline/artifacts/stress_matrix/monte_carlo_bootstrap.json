@@ -1,0 +1,19 @@
+{
+  "method": "historical_block_bootstrap",
+  "n_simulations": 2000,
+  "block_length": 3,
+  "n_historical_obs": 119,
+  "historical_source": "ЦБ РФ",
+  "base_ebitda": 3000.65,
+  "mean_ebitda": 2971.23,
+  "std_ebitda": 151.02,
+  "p5_ebitda": 2683.17,
+  "p25_ebitda": 2917.04,
+  "p50_ebitda": 3002.52,
+  "p75_ebitda": 3052.21,
+  "p95_ebitda": 3179.98,
+  "var_95_mln_rub": 317.48,
+  "breach_probability": 0.0535,
+  "severe_breach_probability": 0.003,
+  "parametric_p5_diff": -7.98
+}

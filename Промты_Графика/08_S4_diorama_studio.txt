@@ -1,0 +1,17 @@
+Generate a single image. 3D isometric illustration of a film production soundstage diorama, dark premium style. Resolution: 1024x768 pixels, 4:3 aspect ratio.
+
+A compact isometric scene (30-degree angle) showing a film set inside a partially open soundstage building:
+
+- The soundstage is a large dark rectangular building (#1E2D45) with one wall removed to reveal the interior
+- Inside: a golden professional film camera on a dolly track (#D4A843), aimed at a small set area
+- 2 large golden Fresnel studio lamps on C-stands (#F5C563), casting warm golden light pools on the dark floor
+- A golden director's monitor on a stand showing abstract golden shapes
+- A golden film clapperboard leaning against the camera
+- Dark floor (#0A1628) with subtle golden tape marks (set position markers)
+- Outside the soundstage: a golden director's chair and a small stack of golden film reels
+
+Platform: compact dark rectangular base (#152238) with thin golden edge. Background: pure solid black (#060D1A).
+
+STYLE: Clean 3D isometric render, miniature diorama/architectural model feel. Dark matte structures, golden metallic accents. Premium and cinematic. Similar to T-Bank/Tinkoff 3D isometric ad aesthetic.
+
+DO NOT include: any text, labels, numbers, watermarks, people, bright backgrounds, realistic textures, abstract effects.

@@ -1,0 +1,82 @@
+# ============================================================================
+# festivals.yaml — Сегмент «Фестивали, форумы, мероприятия»
+# ============================================================================
+# 15% выручки. Base targets (млн ₽):
+#   2026 = 405
+#   2027 = 660
+#   2028 = 810
+#   Σ    = 1 875
+# ============================================================================
+
+segment_share_pct: 0.15
+
+targets_mln_rub:
+  - year: 2026
+    cons: 344.0
+    base: 405.0
+    opt: 454.0
+  - year: 2027
+    cons: 561.0
+    base: 660.0
+    opt: 739.0
+  - year: 2028
+    cons: 688.0
+    base: 810.0
+    opt: 907.0
+
+events:
+
+  - event_id: moscow_film_forum
+    title: "Московский киноформум ТрендСтудио"
+    type: annual
+    revenue_mln_rub:
+      cons: 180.0
+      base: 220.0
+      opt: 260.0
+    attendees:
+      cons: 3500
+      base: 5000
+      opt: 6500
+    ticket_avg_rub:
+      base: 15000.0
+    sponsors_share_pct: 0.55
+
+  - event_id: regional_festivals
+    title: "Региональные кинофестивали (3-4 шт/год)"
+    type: annual_multi
+    count_per_year:
+      cons: 3
+      base: 4
+      opt: 5
+    revenue_per_event_mln_rub:
+      cons: 35.0
+      base: 55.0
+      opt: 75.0
+
+  - event_id: industry_forums
+    title: "Индустриальные форумы и питчинги"
+    type: annual_multi
+    count_per_year:
+      cons: 4
+      base: 6
+      opt: 8
+    revenue_per_event_mln_rub:
+      cons: 8.0
+      base: 15.0
+      opt: 22.0
+
+  - event_id: corporate_events
+    title: "Корпоративные и премьерные показы"
+    type: ad_hoc
+    revenue_mln_rub:
+      cons: 40.0
+      base: 60.0
+      opt: 80.0
+
+meta:
+  source_id: segment_festivals_2026_2028
+  confidence: high
+  last_updated: "2026-04-11"
+  comment: >
+    Планы по флагманскому Московскому киноформуму согласованы с отделом
+    спецпроектов. Остальные мероприятия — оценка на основе факта 2024-2025.

@@ -1,0 +1,11 @@
+Generate a single image. 3D decorative golden divider line on pure black background. Resolution: 1920x240 pixels, ultra-wide horizontal format (8:1 ratio).
+
+A horizontal golden metallic bar/rod floating in a black void. The bar is a slim 3D golden cylinder (#D4A843) with smooth metallic surface, tapering to thin points at both left and right ends. At the exact center of the bar, it passes through a small golden diamond/rhombus-shaped ornament (#F5C563).
+
+A subtle golden glow/reflection beneath the bar. 2-3 tiny golden sparkle particles near the central diamond ornament.
+
+Background: pure solid black (#060D1A). The bar is centered vertically in the frame.
+
+STYLE: Clean 3D render, premium metallic gold finish. Minimal and elegant.
+
+DO NOT include: any text, labels, watermarks, other objects, bright backgrounds, complex decorations.

@@ -1,0 +1,35 @@
+# Холдинг Кино Finmodel Pipeline — pinned dependencies
+# Pydantic v2 для контрактов
+pydantic>=2.5,<3.0
+
+# YAML parser
+PyYAML>=6.0.1
+
+# Excel / Word / PDF
+openpyxl>=3.1.2
+python-docx>=1.1.0
+
+# Numerical / statistical
+numpy>=1.26
+scipy>=1.11
+pandas>=2.1
+
+# Testing
+pytest>=7.4
+pytest-html>=4.1
+pytest-cov>=4.1
+hypothesis>=6.92
+
+# Mutation testing
+mutmut>=2.4
+
+# Code quality (optional)
+black>=23.12
+ruff>=0.1.9
+mypy>=1.8
+
+# Visualization (для MC histogram)
+matplotlib>=3.8
+
+# Semantic search (для navigation/ontology.fts5)
+# sqlite3 — встроено в Python

@@ -1,0 +1,13 @@
+Generate a single image. 3D isometric stylized portrait bust of a finance director, dark premium style. Resolution: 1024x1024 pixels, square 1:1 format.
+
+A minimal geometric bust/silhouette of a person from shoulders up, slight isometric angle. Dark charcoal (#1E2D45) smooth low-poly faceted sculpture — abstract geometric, like a premium chess piece.
+
+Golden accent details (#D4A843): a golden necktie, golden cufflink dots on the suit sleeves, a tiny golden diamond/gem pin on the lapel, golden highlight edge on a structured hairstyle silhouette.
+
+Small dark circular pedestal (#152238) with golden edge line. Subtle golden rim light from behind-left.
+
+Background: pure solid black (#060D1A).
+
+STYLE: Abstract geometric minimal sculpture. NOT realistic. Premium, authoritative.
+
+DO NOT include: realistic facial features, skin texture, text, labels, watermarks, bright backgrounds.

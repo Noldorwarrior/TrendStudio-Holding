@@ -1,0 +1,11 @@
+Generate a single image. 3D isometric icon of a smartphone with social media audience network visualization, dark premium style. Resolution: 1024x1024 pixels, square 1:1 format.
+
+A stylized smartphone standing slightly tilted on a small dark circular platform (#152238). The phone body is dark matte charcoal (#1E2D45) with golden edge highlights (#D4A843). The phone screen glows with a warm golden color (#F5C563).
+
+Above the phone, 6-7 small circular avatar icons float upward in a fan/arc pattern — rendered as simple golden circles (#D4A843) with tiny minimalist person silhouettes inside each circle. The avatars are connected by thin golden thread-like lines suggesting a social network. Avatars vary slightly in size (larger ones closer to the phone, smaller ones further away).
+
+Platform: small dark circle with golden edge line. Background: pure solid black (#060D1A).
+
+STYLE: Clean minimal 3D isometric render, isolated composition. Similar to T-Bank/Tinkoff 3D isometric ad style — dark background, volumetric dark objects, golden accents.
+
+DO NOT include: any text, numbers, labels, watermarks, real social media logos, bright colors, white background, realistic photographs, abstract gradients.

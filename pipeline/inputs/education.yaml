@@ -1,0 +1,72 @@
+# ============================================================================
+# education.yaml — Сегмент «Образовательные программы и киношколы»
+# ============================================================================
+# 10% выручки. Base targets (млн ₽):
+#   2026 = 270
+#   2027 = 440
+#   2028 = 540
+#   Σ    = 1 250
+# ============================================================================
+
+segment_share_pct: 0.10
+
+targets_mln_rub:
+  - year: 2026
+    cons: 230.0
+    base: 270.0
+    opt: 302.0
+  - year: 2027
+    cons: 374.0
+    base: 440.0
+    opt: 493.0
+  - year: 2028
+    cons: 459.0
+    base: 540.0
+    opt: 605.0
+
+programs:
+
+  - program_id: film_school_pro
+    title: "ТрендСтудио.School — очная программа для режиссёров"
+    format: offline
+    annual_students:
+      cons: 80
+      base: 120
+      opt: 160
+    price_per_student_rub:
+      base: 750000.0
+    length_months: 9
+
+  - program_id: online_courses
+    title: "Онлайн-курсы (сценарий, продюсирование, VFX)"
+    format: online
+    annual_students:
+      cons: 3500
+      base: 5500
+      opt: 7200
+    price_per_student_rub:
+      base: 25000.0
+
+  - program_id: corporate_training
+    title: "Корпоративные тренинги и master-classes"
+    format: mixed
+    annual_contracts:
+      cons: 10
+      base: 16
+      opt: 22
+    avg_contract_mln_rub:
+      base: 4.5
+
+  - program_id: grants_and_subsidies
+    title: "Гранты Минкультуры РФ и Фонда кино на образовательные программы"
+    format: grant
+    annual_amount_mln_rub:
+      cons: 35.0
+      base: 60.0
+      opt: 90.0
+    source_id: minkult_grants_2026
+
+meta:
+  source_id: segment_education_2026_2028
+  confidence: medium
+  last_updated: "2026-04-11"

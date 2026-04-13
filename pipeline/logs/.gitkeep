@@ -1,0 +1,2 @@
+# Placeholder — логи появятся после первого make all
+# audit_log.jsonl — append-only, никогда не переписывается

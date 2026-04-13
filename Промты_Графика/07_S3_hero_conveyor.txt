@@ -1,0 +1,23 @@
+Generate a single image. 3D isometric illustration of a content production assembly line generating golden revenue, dark cinematic style. Resolution: 1920x1080 pixels, 16:9 aspect ratio.
+
+SCENE: A stylized isometric factory/conveyor system that transforms raw materials into golden products — a visual metaphor for the content-to-revenue pipeline.
+
+MAIN ELEMENTS:
+- LEFT SIDE (input): Dark industrial intake area with raw material blocks entering — dark grey geometric cubes (#2A3A55) on a conveyor belt, representing raw content and ideas.
+- CENTER: A large processing machine/factory unit — a dark geometric mechanism (#1E2D45) with golden internal glow visible through ventilation slits (#F5C563). Golden gears and cogs partially visible inside (#D4A843). Subtle golden particle steam rising from the top.
+- RIGHT SIDE (output): The conveyor continues carrying golden finished products — stylized golden bars/ingots (#F5C563) that increase in size from left to right. The rightmost products are the largest and brightest.
+- BEHIND THE CONVEYOR: 4 vertical golden pillars/columns of progressively increasing height (left to right: short → medium → tall → tallest), representing revenue growth 2025→2028. Each column glows progressively brighter golden.
+
+ACCENT DETAILS:
+- Thin golden conveyor belt line running through the entire scene
+- Golden sparks/particles at the processing point
+- A control panel on the machine side with small golden indicator lights
+- Dark geometric support scaffolding around the factory
+
+PLATFORM: Dark layered platform (#152238) with golden edge lighting. Background: pure black (#060D1A).
+
+COLOR: Machinery in dark matte (#152238, #1E2D45). Input blocks dark grey (#2A3A55). Output products and growth pillars golden gradient (#D4A843 → #F5C563).
+
+STYLE: Clean 3D isometric render. Stylized industrial aesthetic, premium. Similar to T-Bank/Tinkoff 3D isometric ad style.
+
+DO NOT include: any text, numbers, labels, chart axes, watermarks, bright backgrounds, realistic machinery, people, abstract effects, smoke.

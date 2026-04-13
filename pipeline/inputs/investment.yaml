@@ -1,0 +1,160 @@
+# ============================================================================
+# investment.yaml — Инвестиционный запрос / параметры раунда
+# ============================================================================
+# 14-й YAML-инпут. Цифры обоснованы квартальным cash-flow расчётом 2026:
+#
+#   Peak cumulative deficit 2026 (Base, квартальная сетка, честные лаги):
+#     Q1: -276   Q2: -311 (пик)   Q3: +17   Q4: +372
+#   Opening NWC (day 0): 430
+#
+#   БАЗОВЫЙ СТАРТОВЫЙ ЗАПРОС = Opening NWC + |Peak gap| = 430 + 311 = 741
+#   С БУФЕРОМ +20% (непредвиденные) = 890
+#
+# В Base операционный cash-flow становится положительным с Q3 2026 —
+# раньше этого момента компания живёт на инвесторские деньги.
+# ============================================================================
+
+round_type: equity_with_debt_tranche     # equity / debt / mezzanine / convertible / equity_with_debt_tranche
+round_stage: series_a_growth
+
+# ─────────────────────────────────────────────────────────────────────────
+# Сколько просим (млн ₽)
+# ─────────────────────────────────────────────────────────────────────────
+ask_mln_rub:
+  cons: 1172.0    # consevative: rev×0.85, costs×1.10 → peak gap 546, +NWC 430, +20%
+  base:  890.0    # base        : peak gap 311, +NWC 430, +20%
+  opt:   773.0    # optimistic  : rev×1.12, costs×0.95 → peak gap 214, +NWC 430, +20%
+
+# Рекомендованное «целевое» число для переговоров (округлено, +5% к Base)
+headline_ask_mln_rub: 950.0
+
+# ─────────────────────────────────────────────────────────────────────────
+# Структура раунда
+# ─────────────────────────────────────────────────────────────────────────
+tranche_structure:
+
+  - tranche_id: equity_primary
+    title: "Equity (primary issue, cash into company)"
+    amount_mln_rub: 650.0
+    instrument: "дополнительная эмиссия обыкновенных акций"
+    target_stake_pct: 0.28           # 28% доли за 650 млн → pre-money 1670, post 2320
+    pre_money_valuation_mln_rub: 1670.0
+    post_money_valuation_mln_rub: 2320.0
+    comment: >
+      Основная часть раунда. Оценка pre-money ниже DCF (12 500 млн) —
+      это growth-stage дисконт и премия инвестору за risk.
+
+  - tranche_id: debt_senior
+    title: "Senior debt (срочный банковский кредит)"
+    amount_mln_rub: 200.0
+    instrument: "кредитная линия под залог НМА (библиотека прав)"
+    interest_rate: 0.175              # KS + 2.5 п.п.
+    tenor_years: 5
+    grace_period_months: 12
+    comment: >
+      Привлекается параллельно с equity. Снижает dilution.
+      Обеспечение: 45 существующих наименований в библиотеке.
+
+  - tranche_id: government_support
+    title: "Грант Фонда кино + субсидия Минкультуры"
+    amount_mln_rub: 100.0
+    instrument: "безвозвратные субсидии на нац. кино"
+    probability:
+      cons: 0.40
+      base: 0.65
+      opt: 0.85
+    comment: >
+      Учитывается только в опт. сценарии. В Base — как buffer.
+    source_id: fond_kino_subsidies_2026
+
+# ─────────────────────────────────────────────────────────────────────────
+# Use of funds (на что тратим)
+# ─────────────────────────────────────────────────────────────────────────
+use_of_funds_pct:
+  production_slate_2026_2027: 0.52    # покрытие peak production cash gap
+  opening_working_capital:    0.25    # NWC day-0 (430 млн)
+  infrastructure_capex:       0.09    # LED-walls, post-production
+  pa_marketing_reserve:       0.07    # буфер P&A на флагманы
+  general_contingency:        0.07    # резерв 20% неучтённых
+
+use_of_funds_mln_rub:
+  production_slate_2026_2027: 494.0
+  opening_working_capital:    238.0   # часть из 430 (остальное из debt)
+  infrastructure_capex:        85.0
+  pa_marketing_reserve:        66.5
+  general_contingency:         66.5
+
+# ─────────────────────────────────────────────────────────────────────────
+# Возвратность инвестору
+# ─────────────────────────────────────────────────────────────────────────
+investor_returns:
+
+  expected_exit_year: 2029
+  expected_exit_multiple_moic:         # Multiple on Invested Capital
+    cons: 2.1
+    base: 3.8
+    opt: 5.6
+
+  expected_irr_pct:
+    cons: 0.18
+    base: 0.32
+    opt: 0.47
+
+  exit_strategy: "продажа стратегу (медиахолдинг / стриминг) или IPO"
+
+  base_case_bridge:
+    entry_equity_mln_rub: 650.0
+    entry_stake_pct: 0.28
+    equity_value_at_exit_mln_rub: 12500.0   # из valuation.yaml base
+    investor_exit_value_mln_rub: 3500.0
+    moic: 5.38                               # 3500/650
+    hold_period_years: 3
+    irr_pct: 0.75                            # high т.к. короткий hold
+    comment: >
+      Bridge показан для Base DCF. Реальный exit чаще лежит ниже —
+      отсюда более консервативные MOIC 3.8x и IRR 32% в расчётах.
+
+# ─────────────────────────────────────────────────────────────────────────
+# Условия сделки (ключевые)
+# ─────────────────────────────────────────────────────────────────────────
+key_terms:
+  liquidation_preference: "1x non-participating"
+  anti_dilution: "broad-based weighted average"
+  board_seats_investor: 2
+  board_seats_total: 7
+  veto_rights:
+    - "бюджеты свыше 500 млн ₽"
+    - "новые долговые обязательства >100 млн ₽"
+    - "изменение основной деятельности"
+    - "сделки M&A"
+  drag_along_threshold_pct: 0.66
+  tag_along: true
+  rofo_rofr: true
+  vesting_founders_years: 4
+
+# ─────────────────────────────────────────────────────────────────────────
+# Milestones / следующие раунды
+# ─────────────────────────────────────────────────────────────────────────
+next_round_plan:
+  series_b_mln_rub:
+    cons: 1500.0
+    base: 2500.0
+    opt: 3500.0
+  series_b_expected_year: 2028
+  series_b_trigger: >
+    Достижение cumulative EBITDA 2026-2027 ≥ 1 500 млн ₽ и
+    выход 2-х флагманских релизов с box office > 1 000 млн ₽ каждый.
+
+# ─────────────────────────────────────────────────────────────────────────
+# Метаданные
+# ─────────────────────────────────────────────────────────────────────────
+meta:
+  source_id: investment_round_plan_2026
+  source_title: "Инвестиционный раунд Series A ТрендСтудио, план 2026"
+  confidence: medium
+  last_updated: "2026-04-11"
+  notes: >
+    Числа будут автоматически пересчитываться генератором investment.py
+    на каждой сборке модели. Quarterly cash-flow (честные лаги) определяет
+    peak_cumulative_deficit, а equity_value из valuation.yaml — целевой
+    stake при фиксированной сумме раунда.

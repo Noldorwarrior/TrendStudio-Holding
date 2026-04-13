@@ -1,0 +1,88 @@
+# ============================================================================
+# advertising.yaml — Сегмент «Реклама / Product Placement / Brand Integration»
+# ============================================================================
+# 28% выручки. Base targets (млн ₽):
+#   2026 = 756
+#   2027 = 1 232
+#   2028 = 1 512
+#   Σ    = 3 500
+# ============================================================================
+
+segment_share_pct: 0.28
+
+targets_mln_rub:
+  - year: 2026
+    cons: 643.0
+    base: 756.0
+    opt: 847.0
+  - year: 2027
+    cons: 1047.0
+    base: 1232.0
+    opt: 1380.0
+  - year: 2028
+    cons: 1285.0
+    base: 1512.0
+    opt: 1693.0
+
+revenue_streams:
+
+  - stream_id: pp_brand_integration
+    title: "Product Placement / Brand Integration в фильмах"
+    share_in_segment_pct: 0.45
+    avg_deals_per_year:
+      cons: 18
+      base: 24
+      opt: 30
+    avg_deal_mln_rub:
+      cons: 12.0
+      base: 16.0
+      opt: 22.0
+
+  - stream_id: pre_roll_trailer
+    title: "Pre-roll / трейлерная реклама"
+    share_in_segment_pct: 0.20
+    avg_cpm_rub:
+      cons: 250.0
+      base: 320.0
+      opt: 400.0
+    annual_impressions_mln:
+      cons: 180.0
+      base: 240.0
+      opt: 300.0
+
+  - stream_id: sponsored_content
+    title: "Спонсорские проекты / web-series"
+    share_in_segment_pct: 0.25
+    deals_per_year:
+      cons: 4
+      base: 6
+      opt: 9
+    avg_deal_mln_rub:
+      cons: 45.0
+      base: 65.0
+      opt: 85.0
+
+  - stream_id: licensing_adv_library
+    title: "Рекламные доходы от библиотеки (YouTube, VK Video)"
+    share_in_segment_pct: 0.10
+    annual_views_mln:
+      cons: 320.0
+      base: 450.0
+      opt: 600.0
+    revenue_per_1000_views_rub:
+      cons: 25.0
+      base: 40.0
+      opt: 55.0
+
+growth_drivers:
+  year_on_year_pct:
+    2026_to_2027: 0.63
+    2027_to_2028: 0.23
+  rationale: >
+    Резкий рост 2026→2027 объясняется масштабированием pre-roll и выходом
+    франшизы «Фронтир» на YouTube (см. license_library.yaml).
+
+meta:
+  source_id: segment_advertising_2026_2028
+  confidence: medium
+  last_updated: "2026-04-11"

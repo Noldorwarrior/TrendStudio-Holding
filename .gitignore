@@ -1,0 +1,41 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+~$*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+*.egg
+.hypothesis/
+.pytest_cache/
+*.pyc
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs (regeneratable)
+logs/*.json
+!logs/.gitkeep
+
+# Backups from xlsx surgery
+*.bak
+*.bak2
+*.bak3
+*.bak_cashsync
+
+# Temp files
+*.tmp
+zitSgrRh
+structure.json
+
+# Bundle files (large, stored separately)
+*.bundle

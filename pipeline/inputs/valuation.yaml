@@ -1,0 +1,100 @@
+# ============================================================================
+# valuation.yaml — Параметры оценки (WACC, terminal value, exit multiples)
+# ============================================================================
+# Обязательно: 3 WACC-методологии + 2 методики терминальной стоимости.
+# ============================================================================
+
+wacc_methodologies:
+
+  - method_id: capm_classic
+    title: "CAPM классический (с market risk premium для РФ)"
+    risk_free_rate: 0.135              # ОФЗ 10Y на 2026
+    equity_risk_premium: 0.085
+    beta_unlevered: 0.95
+    beta_levered: 1.18                  # re-lever под D/E холдинга
+    cost_of_debt_pre_tax: 0.165
+    tax_shield_rate: 0.25
+    debt_to_capital: 0.30
+    equity_to_capital: 0.70
+    wacc:
+      cons: 0.215
+      base: 0.195
+      opt: 0.175
+    source_id: capm_rf_2026
+
+  - method_id: build_up_country_risk
+    title: "Build-up метод: безрисковая + страновой риск + индустриальный риск"
+    components:
+      risk_free_rate: 0.135
+      country_risk_premium: 0.045
+      industry_risk_premium: 0.035
+      size_premium: 0.025
+      specific_risk_premium: 0.020
+    wacc:
+      cons: 0.285
+      base: 0.260
+      opt: 0.240
+    source_id: buildup_2026
+
+  - method_id: comparable_emerging_markets
+    title: "Сравнительный метод — медиана по публичным EM-медиакомпаниям"
+    peers:
+      - ticker: "CMCSA"
+        name: "Comcast"
+        wacc: 0.078
+      - ticker: "WMBD"
+        name: "Warner Bros Discovery"
+        wacc: 0.095
+      - ticker: "PARA"
+        name: "Paramount"
+        wacc: 0.092
+      - name: "IVI (PFRI via OFZ+spread)"
+        wacc: 0.215
+      - name: "START (internal estimate)"
+        wacc: 0.220
+    country_adjustment_rf_pct: 0.075    # премия за суверенный риск РФ
+    wacc:
+      cons: 0.230
+      base: 0.210
+      opt: 0.190
+    source_id: peers_em_2026
+
+terminal_value_methodologies:
+
+  - method_id: gordon_growth
+    title: "Модель Гордона (perpetuity growth)"
+    perpetual_growth_rate:
+      cons: 0.02
+      base: 0.035
+      opt: 0.045
+    rationale: >
+      Долгосрочный темп роста выручки в РФ-медиа = CPI - 1 п.п.
+
+  - method_id: exit_multiple
+    title: "Exit multiple (EV / EBITDA последнего года)"
+    ev_ebitda_multiple:
+      cons: 4.5
+      base: 6.0
+      opt: 7.5
+    rationale: >
+      Медианный EV/EBITDA по российским медиакомпаниям 5-7x; премия за
+      рост и библиотеку прав.
+
+target_dcf_output:
+  enterprise_value_mln_rub:
+    cons: 8500.0
+    base: 14500.0
+    opt: 22000.0
+  equity_value_mln_rub:
+    cons: 6500.0
+    base: 12500.0
+    opt: 20000.0
+
+sensitivity_grid:
+  wacc_range: [0.15, 0.17, 0.19, 0.21, 0.23, 0.25]
+  terminal_growth_range: [0.02, 0.025, 0.03, 0.035, 0.04, 0.045]
+
+meta:
+  source_id: valuation_assumptions_2026
+  confidence: medium
+  last_updated: "2026-04-11"

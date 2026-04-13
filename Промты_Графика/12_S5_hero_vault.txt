@@ -1,0 +1,26 @@
+Generate a single image. 3D isometric illustration of a premium investment vault/safe with golden contents inside, dark cinematic style. Resolution: 1920x1080 pixels, 16:9 aspect ratio.
+
+SCENE: A dramatic isometric view (30 degrees above) of an open luxury vault revealing golden treasures — a visual metaphor for the investment opportunity.
+
+MAIN ELEMENTS:
+- CENTER: A large dark vault/safe (#1E2D45) with its heavy door swung wide open to the right. The door has golden hinges and a golden combination dial (#D4A843). The vault walls are thick dark metal with visible layered structure.
+- INSIDE THE VAULT: Neatly arranged stacks of golden bars/ingots (#F5C563), several golden film reels, and a small golden trophy/award statuette. A warm golden glow emanates from inside the vault, illuminating the interior surfaces.
+- IN FRONT OF THE VAULT: A large golden key lying on the dark platform surface — the key to the investment.
+- TO THE LEFT: A golden balance scale with golden weights on both sides — representing fair valuation.
+- TO THE RIGHT: A sculptural golden ascending bar chart (3 physical golden metal bars of increasing height) — representing ROI and growth.
+- BEHIND: A dark protective wall structure (#2A3A55) with subtle golden geometric circuit line patterns etched into the surface (security and trust).
+
+ACCENT DETAILS:
+- Golden light rays streaming out from the open vault door onto the dark floor
+- 5-6 small golden sparkle particles floating near the vault opening
+- A subtle golden handshake emblem on the vault door exterior (partnership symbol)
+- Dark geometric steps/tiers leading up to the vault like a premium pedestal
+
+PLATFORM: Elevated dark platform (#152238) with multiple tiers/levels, golden edge lighting on each tier. The vault sits at the highest central point.
+Background: pure black (#060D1A).
+
+COLOR: Vault and structures in dark matte (#152238, #1E2D45). All treasures, keys, scales, and accents in golden (#D4A843, #F5C563). Interior glow creates warm golden atmosphere.
+
+STYLE: Clean 3D isometric render, dramatic premium lighting. Similar to T-Bank/Tinkoff 3D isometric advertising style.
+
+DO NOT include: any text, numbers, labels, currency symbols, watermarks, people, bright backgrounds, realistic photographs, abstract effects, money bills.

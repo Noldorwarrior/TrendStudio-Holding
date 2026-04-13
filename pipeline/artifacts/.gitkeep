@@ -1,0 +1,2 @@
+# Placeholder — выходы pipeline (xlsx, docx, png) появятся после make build
+# Этот файл в .gitignore, но директория должна существовать

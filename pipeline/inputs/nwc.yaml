@@ -1,0 +1,62 @@
+# ============================================================================
+# nwc.yaml — Рабочий капитал (Net Working Capital)
+# ============================================================================
+# Δ NWC влияет на Cash Flow from Operations:
+#   CF_ops = EBITDA - taxes - Δ NWC
+# ============================================================================
+
+# Допущения по оборачиваемости (в днях)
+turnover_days:
+
+  accounts_receivable:
+    cons: 95
+    base: 75
+    opt: 60
+    rationale: >
+      Дебиторка от кинотеатральных сетей (~60-75 дней) и рекламных агентств
+      (90+). Взвешено по выручке.
+
+  accounts_payable:
+    cons: 45
+    base: 55
+    opt: 70
+
+  inventory_wip:
+    # "Незавершённые производства" — фильмы в стадии production
+    # выражается в днях от COGS
+    cons: 120
+    base: 90
+    opt: 75
+
+  advances_received:
+    # предоплаты от стримингов и рекламодателей
+    cons: 15
+    base: 25
+    opt: 40
+
+# Явные targets для NWC change (для валидации)
+nwc_change_mln_rub:
+  - year: 2026
+    cons: 65.0
+    base: 45.0
+    opt: 25.0
+  - year: 2027
+    cons: 140.0
+    base: 95.0
+    opt: 55.0
+  - year: 2028
+    cons: 130.0
+    base: 80.0
+    opt: 40.0
+
+opening_balance_2026:
+  ar_mln_rub: 480.0
+  ap_mln_rub: 280.0
+  inventory_mln_rub: 320.0
+  advances_mln_rub: 90.0
+  net_nwc_mln_rub: 430.0
+
+meta:
+  source_id: nwc_plan_2026_2028
+  confidence: medium
+  last_updated: "2026-04-11"

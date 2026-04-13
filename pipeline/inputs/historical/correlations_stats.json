@@ -1,0 +1,47 @@
+{
+  "full": {
+    "period": "full_2014_2023",
+    "n_obs": 119,
+    "fx_std_monthly": 0.063477,
+    "fx_std_annual": 0.219891,
+    "infl_d_std_monthly": 1.220993,
+    "infl_d_std_annual": 4.229643,
+    "key_d_std_monthly": 1.531653,
+    "pearson_fx_infl": 0.2899,
+    "pearson_fx_key": 0.371,
+    "pearson_infl_key": 0.1517,
+    "spearman_fx_infl": 0.1422,
+    "spearman_fx_key": 0.2586,
+    "spearman_infl_key": 0.3115
+  },
+  "calm": {
+    "period": "calm_2015_2017_2018_2019",
+    "n_obs": 60,
+    "fx_std_monthly": 0.046632,
+    "fx_std_annual": 0.161537,
+    "infl_d_std_monthly": 0.805781,
+    "infl_d_std_annual": 2.791306,
+    "key_d_std_monthly": 0.385356,
+    "pearson_fx_infl": 0.1477,
+    "pearson_fx_key": 0.0835,
+    "pearson_infl_key": -0.1597,
+    "spearman_fx_infl": 0.1745,
+    "spearman_fx_key": 0.1237,
+    "spearman_infl_key": 0.0111
+  },
+  "no_2022": {
+    "period": "no_2022",
+    "n_obs": 107,
+    "fx_std_monthly": 0.04783,
+    "fx_std_annual": 0.165689,
+    "infl_d_std_monthly": 1.029197,
+    "infl_d_std_annual": 3.565244,
+    "key_d_std_monthly": 0.944268,
+    "pearson_fx_infl": 0.109,
+    "pearson_fx_key": 0.3995,
+    "pearson_infl_key": 0.2401,
+    "spearman_fx_infl": 0.1417,
+    "spearman_fx_key": 0.2018,
+    "spearman_infl_key": 0.291
+  }
+}

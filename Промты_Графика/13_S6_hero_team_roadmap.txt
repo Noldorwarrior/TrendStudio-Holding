@@ -1,0 +1,31 @@
+Generate a single image. 3D isometric illustration of a creative team workspace with a milestone roadmap path, dark premium style. Resolution: 1920x1080 pixels, 16:9 aspect ratio.
+
+SCENE: A panoramic isometric view showing a creative team headquarters connected to a physical timeline/roadmap.
+
+LEFT SECTION (Team workspace):
+- A modern open-plan office area on a dark platform
+- 4 individual workstations arranged in a semi-circle formation, each with a dark desk (#1E2D45) and a golden-glowing monitor screen (#F5C563)
+- Each workstation has a unique small golden accent object identifying the role:
+  * Station 1: a golden miniature film camera (Creative Director)
+  * Station 2: a golden megaphone (Marketing)
+  * Station 3: a golden laptop with visible golden screen (Tech)
+  * Station 4: a golden briefcase (Finance)
+- All desk chairs are golden (#D4A843), desk surfaces are dark charcoal
+- A central meeting table in the middle of the semi-circle with golden edge
+
+RIGHT SECTION (Roadmap path):
+- A physical golden illuminated pathway (#D4A843) extending from the team area toward the right edge of the frame
+- 4 milestone markers along the path, increasing in size and brightness left to right:
+  * Marker 1 (nearest to team): small golden flag/pin
+  * Marker 2: medium golden beacon/light tower
+  * Marker 3: larger golden pillar with subtle glow
+  * Marker 4 (furthest, largest): tall golden trophy/obelisk, brightest golden glow (#F5C563)
+- The golden path between markers glows progressively brighter toward the final marker
+- Golden dotted line connecting the team area to the first marker, then solid golden line between all subsequent markers
+
+PLATFORM: Large dark platform (#152238), the team section slightly lower than the roadmap section (gentle upward incline toward the future/goals).
+Background: pure black (#060D1A).
+
+STYLE: Clean 3D isometric render. Premium dark with golden accents. Warm but professional mood. Similar to T-Bank/Tinkoff 3D isometric ad aesthetic.
+
+DO NOT include: any text, numbers, dates, labels, watermarks, people with visible faces, bright backgrounds, abstract effects.

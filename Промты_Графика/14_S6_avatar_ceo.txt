@@ -1,0 +1,13 @@
+Generate a single image. 3D isometric stylized portrait bust of a creative director/CEO, dark premium style. Resolution: 1024x1024 pixels, square 1:1 format.
+
+A minimal geometric bust/silhouette of a person from shoulders up, viewed at a slight isometric angle. The figure is rendered in dark charcoal (#1E2D45) as a smooth, faceted low-poly sculpture — abstract and geometric, NOT a realistic face. More like a premium chess piece or award trophy figure.
+
+Golden accent details (#D4A843): a pair of golden-rimmed stylish glasses, golden collar/lapel edges on a suit jacket silhouette, and a tiny golden film clapperboard pin on the chest area.
+
+The bust sits on a small dark circular pedestal (#152238) with a thin golden edge line. A subtle golden rim light illuminates the left edge of the figure from behind.
+
+Background: pure solid black (#060D1A). No environment, no floor reflections.
+
+STYLE: Abstract, geometric, minimal. Smooth faceted surfaces, clean sharp edges. Premium sculptural feel. NOT a realistic portrait — a stylized representation.
+
+DO NOT include: realistic facial features, eyes, mouth, skin texture, hair detail, text, labels, watermarks, bright backgrounds, other objects.

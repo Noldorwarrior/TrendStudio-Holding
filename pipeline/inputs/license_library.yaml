@@ -1,0 +1,85 @@
+# ============================================================================
+# license_library.yaml — Сегмент «Библиотека прав и лицензирование»
+# ============================================================================
+# 7% выручки. Base targets (млн ₽):
+#   2026 = 189
+#   2027 = 308
+#   2028 = 378
+#   Σ    = 875
+# ============================================================================
+
+segment_share_pct: 0.07
+
+targets_mln_rub:
+  - year: 2026
+    cons: 161.0
+    base: 189.0
+    opt: 212.0
+  - year: 2027
+    cons: 262.0
+    base: 308.0
+    opt: 345.0
+  - year: 2028
+    cons: 321.0
+    base: 378.0
+    opt: 423.0
+
+revenue_streams:
+
+  - stream_id: svod_licensing_rf
+    title: "Лицензирование РФ-стримингам (KION, Okko, Start, Кинопоиск)"
+    share_in_segment_pct: 0.55
+    deals_per_year:
+      cons: 8
+      base: 12
+      opt: 16
+    avg_deal_mln_rub:
+      cons: 9.0
+      base: 14.0
+      opt: 18.0
+
+  - stream_id: tv_rights
+    title: "Телевизионные права (федеральные каналы)"
+    share_in_segment_pct: 0.25
+    deals_per_year:
+      cons: 4
+      base: 6
+      opt: 8
+    avg_deal_mln_rub:
+      cons: 6.0
+      base: 11.0
+      opt: 16.0
+
+  - stream_id: international_licensing
+    title: "Международное лицензирование (СНГ + Азия + БРИКС)"
+    share_in_segment_pct: 0.15
+    countries_per_year:
+      cons: 5
+      base: 10
+      opt: 15
+    avg_deal_mln_rub:
+      cons: 3.0
+      base: 5.5
+      opt: 8.0
+
+  - stream_id: secondary_rights
+    title: "Вторичные права (авиа, гостиницы, корпоративные показы)"
+    share_in_segment_pct: 0.05
+    annual_revenue_mln_rub:
+      cons: 8.0
+      base: 15.0
+      opt: 25.0
+
+library_depth:
+  titles_at_start_2026: 45
+  new_titles_per_year: 4
+  library_monetization_curve:
+    year_1: 0.45
+    year_2: 0.25
+    year_3: 0.15
+    year_4_plus: 0.15
+
+meta:
+  source_id: segment_license_library_2026_2028
+  confidence: medium
+  last_updated: "2026-04-11"

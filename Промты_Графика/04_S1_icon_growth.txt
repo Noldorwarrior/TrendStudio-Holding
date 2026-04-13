@@ -1,0 +1,11 @@
+Generate a single image. 3D isometric icon of ascending golden bar chart, dark premium style. Resolution: 1024x1024 pixels, square 1:1 format.
+
+Three stylized rectangular 3D bars of increasing height arranged left to right on a small dark rectangular platform (#152238). The bars have smooth golden metallic surfaces with a gradient from warm gold (#D4A843 on the shortest) to bright gold (#F5C563 on the tallest). Each bar is a clean geometric cuboid with sharp edges.
+
+The tallest bar has a small golden upward-pointing arrow hovering just above its top surface. A subtle warm golden glow emanates from behind the tallest bar.
+
+Gaps between bars are thin and dark. Platform: dark rectangle with clean edges and a thin golden perimeter line. Background: pure solid black (#060D1A).
+
+STYLE: Clean minimal 3D isometric render. Smooth golden metallic finish. Premium, like a golden trophy sculpture. Similar to T-Bank/Tinkoff 3D isometric ad aesthetic.
+
+DO NOT include: any text, numbers, axis lines, grid lines, labels, watermarks, white background, bright colors, abstract effects, chart annotations.

@@ -1,0 +1,33 @@
+Generate a single image. 3D isometric illustration of a premium film production studio complex, dark cinematic style. Resolution: 1920x1080 pixels, 16:9 aspect ratio.
+
+SCENE: A stylized miniature film studio campus viewed from above at a 30-degree isometric angle. The complex sits on a dark floating platform with subtle golden edge lighting.
+
+MAIN ELEMENTS:
+- A large central soundstage building — dark matte geometric block (#1E2D45) with a partially open wall revealing golden studio lights inside (#F5C563 glow). A film camera on a dolly track is visible inside, rendered in clean golden metal.
+- To the left: a smaller post-production building with a large screen showing abstract golden waveforms. Dark exterior, golden window glow.
+- To the right: a modern glass-and-steel office wing — dark panels with thin golden frame lines. A satellite dish on the roof in golden color.
+- In front: a small outdoor set area with lighting rigs — tall C-stands and Fresnel lights rendered in golden/amber color (#D4A843), casting warm pools of light on the dark ground.
+- Connecting paths between buildings — thin golden illuminated lines on the dark ground, like premium runway lighting.
+
+SMALL ACCENT DETAILS:
+- 2-3 tiny golden film reels scattered decoratively near the soundstage
+- A director's chair in golden color near the outdoor set
+- Small golden clapperboard leaning against the main building
+
+PLATFORM & BASE:
+- The entire complex sits on a dark geometric platform (dark navy/charcoal #152238) with sharp clean edges
+- The platform has subtle layered tiers, like a premium pedestal
+- Thin golden line tracing the platform edge
+- Below the platform: pure black void
+
+COLOR PALETTE:
+- Buildings/structures: dark matte (#152238, #1E2D45, #2A3A55) — like dark steel and concrete
+- Accent objects & lights: golden/amber (#D4A843, #F5C563) — cameras, lights, reels, window glow
+- Background: pure dark (#060D1A), no gradient, no sky, no stars
+- Subtle shadow pools in darker navy beneath structures
+
+LIGHTING: Soft ambient light from above-right. Golden objects emit subtle warm glow. No harsh highlights. Cinematic mood lighting — dramatic but restrained.
+
+STYLE: Clean 3D isometric render. Stylized, not photorealistic — think low-poly premium meets architectural model. Sharp edges, smooth surfaces, minimal texture. Similar aesthetic to T-Bank / Tinkoff Investment 3D isometric advertising illustrations — dark background, volumetric dark blocks, bright golden accent objects.
+
+DO NOT include: any text, labels, logos, numbers, watermarks, UI elements, people with visible faces, realistic photographs, bright colorful backgrounds, white backgrounds, gradients in the sky, lens flares, abstract effects. Keep it clean 3D objects only.

@@ -1,0 +1,23 @@
+Generate a single image. 3D isometric illustration of a content distribution and licensing network hub, dark premium style. Resolution: 1024x768 pixels, 4:3 aspect ratio.
+
+A compact isometric scene showing a content distribution center:
+
+- CENTER: A golden server/distribution hub — a stylized glowing golden cube (#D4A843) on a small pedestal, with radiating golden beams/lines extending outward in 5 directions
+- The golden beams connect to 5 small dark devices/screens positioned around the hub at the edges of the platform:
+  * A TV screen (dark #1E2D45, golden screen glow #F5C563)
+  * A laptop (dark body, golden screen)
+  * A tablet (dark body, golden screen)
+  * A smartphone (dark body, golden screen)
+  * A cinema/projection screen (largest, dark frame, golden projection area)
+- Small golden film reel icons traveling along the connection beams (content being distributed)
+- Above the central hub: a small golden satellite dish broadcasting upward
+- A small golden globe/world icon floating above the dish — representing international distribution
+- A golden key icon near the hub base (licensing metaphor)
+
+Platform: compact dark rectangular base (#152238) with golden edge. Background: pure solid black (#060D1A).
+
+The golden connection lines create a visual starburst/network pattern from the center outward.
+
+STYLE: Clean 3D isometric render, miniature diorama. Premium dark with golden accents. Similar to T-Bank/Tinkoff 3D isometric ad aesthetic.
+
+DO NOT include: any text, numbers, labels, real platform logos, watermarks, people, bright backgrounds, abstract gradients.

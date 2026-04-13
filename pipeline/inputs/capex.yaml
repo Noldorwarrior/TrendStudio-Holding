@@ -1,0 +1,80 @@
+# ============================================================================
+# capex.yaml — Капитальные затраты и производственные бюджеты фильмов
+# ============================================================================
+# CapEx делится на:
+#   1) PRODUCTION — бюджеты фильмов, капитализируются как НМА (IAS 38)
+#      и амортизируются по релизу в P&L через COGS.
+#   2) INFRASTRUCTURE — студийное оборудование, IT, офисы.
+#
+# Base COGS targets (млн ₽) — амортизация production CapEx:
+#   2026 = 1 080
+#   2027 = 1 584
+#   2028 = 1 890
+#   Σ    = 4 554
+# ============================================================================
+
+production_capex_mln_rub:
+  # Суммарные бюджеты slate (см. slate.yaml), распределены по годам производства
+  - year: 2026
+    cons: 1100.0
+    base: 1240.0
+    opt: 1400.0
+    releases_count: 4
+    comment: "Fronteeer, Baikal, Moscow Trick, NY Fairy Tale"
+  - year: 2027
+    cons: 1200.0
+    base: 1360.0
+    opt: 1520.0
+    releases_count: 4
+    comment: "Arctic Wings, Diplomat Wife, Last Tram, President NY"
+  - year: 2028
+    cons: 1540.0
+    base: 1880.0
+    opt: 2100.0
+    releases_count: 4
+    comment: "Victory Code, Nullification, Own Hero, Big City Lights"
+
+# COGS в P&L (амортизация production CapEx + распределение P&A + комиссии)
+cogs_targets_mln_rub:
+  - year: 2026
+    cons: 972.0
+    base: 1080.0
+    opt: 1210.0
+  - year: 2027
+    cons: 1426.0
+    base: 1584.0
+    opt: 1774.0
+  - year: 2028
+    cons: 1701.0
+    base: 1890.0
+    opt: 2117.0
+
+infrastructure_capex_mln_rub:
+  - year: 2026
+    base: 85.0
+    items:
+      - "обновление студийного оборудования (камеры RED, grip)"
+      - "расширение post-production площадок"
+  - year: 2027
+    base: 110.0
+    items:
+      - "строительство 2-го павильона"
+      - "LED-walls для виртуального продакшна"
+  - year: 2028
+    base: 95.0
+    items:
+      - "доводка LED-площадки"
+      - "обновление рендер-фермы"
+
+depreciation_policy:
+  production_amortization_curve:
+    theatrical_release: 0.70        # 70% списывается при релизе в кинотеатрах
+    year_plus_1: 0.15                # 15% за первый год после
+    year_plus_2: 0.10
+    year_plus_3: 0.05
+  infrastructure_useful_life_years: 7
+
+meta:
+  source_id: capex_plan_2026_2028
+  confidence: high
+  last_updated: "2026-04-11"

@@ -1,0 +1,57 @@
+# ============================================================================
+# pa_costs.yaml — Prints & Advertising (маркетинг и реклама релизов)
+# ============================================================================
+# Это ОТДЕЛЬНАЯ от OPEX статья — маркетинг конкретных кинорелизов (ТВ, DOOH,
+# digital, кинотеатры, trailers, посев и т.д.), идёт напрямую в себестоимость
+# релиза.
+#
+# Base targets (млн ₽):
+#   2026 = 150   (~14% от выручки cinema 1 080)
+#   2027 = 250   (~14% от 1 760)
+#   2028 = 300   (~14% от 2 160)
+#   Σ    = 700
+# ============================================================================
+
+targets_mln_rub:
+  - year: 2026
+    cons: 135.0
+    base: 150.0
+    opt: 165.0
+  - year: 2027
+    cons: 225.0
+    base: 250.0
+    opt: 275.0
+  - year: 2028
+    cons: 270.0
+    base: 300.0
+    opt: 330.0
+
+pa_ratio_to_cinema_revenue:
+  cons: 0.147
+  base: 0.139
+  opt: 0.136
+  industry_benchmark: 0.125          # средний бенчмарк 10-15%
+  rationale: >
+    Целевая доля P&A на уровне 14% от выручки cinema. Чуть выше рынка
+    из-за стратегии агрессивного продвижения флагманских релизов
+    («Фронтир», «Ёлка», «Код Победы»).
+
+cost_breakdown_pct:
+  tv_advertising: 0.32
+  digital_advertising: 0.28
+  outdoor_dooh: 0.12
+  cinema_trailers: 0.10
+  pr_and_influencer: 0.08
+  media_buying_commission: 0.05
+  print_and_materials: 0.03
+  other: 0.02
+
+per_release_plan:
+  flagship_release_mln_rub: 120.0   # «Фронтир», «Ёлка», «Код Победы», «Огни»
+  medium_release_mln_rub: 55.0
+  small_release_mln_rub: 25.0
+
+meta:
+  source_id: pa_budget_2026_2028
+  confidence: high
+  last_updated: "2026-04-11"

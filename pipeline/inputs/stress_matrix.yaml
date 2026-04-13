@@ -1,0 +1,269 @@
+# ============================================================================
+# stress_matrix.yaml — Матрица комбинированных стресс-тестов (v1.3.4)
+# ============================================================================
+# v1.3.4 Tier B: корреляции + σ откалиброваны по историческим данным
+# 2014-01..2023-12 от Банка России (см. stress_matrix_calibration.md).
+# Ключевые изменения относительно v1.3.2:
+#   • correlations.fx_vs_inflation: 0.60 → 0.29 (Pearson full period)
+#   • distributions.fx_shock_pct.std: 0.08 → 0.10 (historical 3y-equiv)
+#   • distributions.inflation_pct.std: 0.025 → 0.028
+#   • добавлен блок correlations_sensitivity (Spearman + calm)
+#   • добавлен блок historical_calibration (источники + метод)
+# Цель: проверить устойчивость anchor-инварианта cumulative EBITDA 2026-2028
+#       к одновременным негативным сдвигам трёх независимых переменных:
+#         (1) FX (USD/RUB)        — валютный шок
+#         (2) inflation_fot_opex  — инфляция ФОТ и OPEX
+#         (3) release_delay_months — задержка релизов слейта
+#
+# Tolerance: anchor должен остаться в диапазоне [base × 0.90; base × 1.10],
+#            т.е. cumulative EBITDA ≥ 2700 млн ₽ при базе 3000.
+#            Если anchor < 2700 → breach_flag = True.
+#
+# Структура матрицы: полная 3×3×3 = 27 сценариев.
+# ============================================================================
+
+dimensions:
+  fx_shock_pct:
+    levels:
+      base: 0.0       # базовый сценарий
+      shock: 0.10     # +10% USD/RUB
+      extreme: 0.20   # +20% USD/RUB
+    rationale: >
+      Base — текущий курс; shock — умеренная девальвация (исторический
+      прецедент 2022-Q1); extreme — глубокая девальвация (2014, 2022-Q3).
+
+  inflation_fot_opex_pct:
+    levels:
+      base: 0.0       # целевая инфляция 4%
+      shock: 0.03     # +3 п.п. → 7% факт
+      extreme: 0.06   # +6 п.п. → 10% факт
+    rationale: >
+      Base — таргет ЦБ; shock — отклонение до 7% (уже наблюдалось 2023-2024);
+      extreme — выше 10% (сценарий стагфляции).
+
+  release_delay_months:
+    levels:
+      base: 0         # релизы по плану
+      shock: 3        # задержка 1 квартала (production issues)
+      extreme: 6      # задержка 2 кварталов (кризис цепочек/пост-прод)
+    rationale: >
+      Base — релизы точно в plan; shock — типичная задержка 3 мес
+      (перенос на следующий квартал); extreme — тяжёлая задержка 6 мес
+      (перенос через год, часть box office 2026 утекает в 2029).
+
+# ============================================================================
+# Механика применения шоков к модели
+# ============================================================================
+shock_mechanics:
+  fx:
+    description: >
+      FX-шок применяется через pt-коэффициенты из fx_pass_through.yaml
+      к 4 статьям затрат: p_and_a, cogs, production_capex, infrastructure_capex.
+      Каждая статья × (1 + pt_i × fx_shock_pct).
+
+  inflation_fot_opex:
+    description: >
+      Инфляция применяется к ФОТ и OPEX (производственные и общехозяйственные).
+      target_fot × (1 + inflation_pct) — прямой рост фонда.
+      Остальные OPEX-статьи × (1 + inflation_pct × 0.6) — частичное
+      пропускание инфляции (не весь OPEX валютно-инфляционно чувствителен).
+
+  release_delay:
+    description: >
+      Задержка релизов сдвигает revenue.cinema_targets на N месяцев вправо.
+      При delay=3: 25% выручки 2026 уходит в 2027; 25% 2027 → 2028; 25% 2028
+      утекает за горизонт (списывается в ноль при расчёте EBITDA 2026-2028).
+      При delay=6: 50% соответствующий сдвиг.
+      P&A и COGS сдвигаются пропорционально (нет экономии на издержках,
+      только временной сдвиг выручки).
+
+# ============================================================================
+# Численные параметры shock-механики (v1.3.6 P2: refactor magic numbers)
+# ============================================================================
+# v1.3.6: вынесены два остаточных magic number из generators/combined_stress_tests.py
+#   1) inflation_transmission_factor = 0.82 — эффективный множитель пропускания
+#      инфляции через OPEX с учётом структуры ФОТ/нефот.
+#   2) fx_clip_bounds ±0.30 — разумные границы FX-шока для Monte Carlo
+#      и bootstrap (предохранитель против «хвостов»).
+# ============================================================================
+shock_parameters:
+  inflation_transmission_factor: 0.82
+  inflation_transmission_derivation: >
+    Эффективный множитель (1 + infl × 0.82) выведен из структуры OPEX:
+    ФОТ (55% от OPEX) × полная трансляция (1 + infl)
+      + прочий OPEX (45%: аренда, IT, маркетинг, юрист, накладные, прочее)
+        × частичное пропускание (1 + infl × 0.6, v1.3 экспертная оценка).
+    Итог: 0.55 × (1+infl) + 0.45 × (1+infl × 0.6) = 1 + infl × (0.55 + 0.45×0.6)
+        = 1 + infl × 0.82.
+    Источник структуры ФОТ 55/45: inputs/opex.yaml, экспертная оценка отрасли.
+  fx_clip_lower: -0.30
+  fx_clip_upper: 0.30
+  fx_clip_rationale: >
+    Границы ±30% применяются к FX-шоку в Monte Carlo и bootstrap как
+    «разумный предел»: исторические максимумы девальвации 2014-Q4 и 2022-Q1
+    не превышали 30% YoY после усреднения на квартал. Граница нужна для
+    избежания числовой нестабильности и «неэкономических» хвостов в MC,
+    где нормальное распределение формально допускает σ×4..5 = 40-50%.
+    Обоснование: ЦБ РФ, динамика USD/RUB 2014-2023 (full period).
+  inflation_clip_lower: 0.0
+  inflation_clip_upper: 0.15
+  inflation_clip_rationale: >
+    Инфляция не может быть отрицательной в MC (модель дефляции не поддержана);
+    верхняя граница 15% соответствует максимальному observed YoY 2022
+    (Росстат) + небольшой запас.
+  delay_clip_lower: 0
+  delay_clip_upper: 9
+  delay_clip_rationale: >
+    Максимальная задержка релиза — 9 месяцев (3 квартала).
+    Это граница «управляемой» задержки; далее — полный перенос релиза
+    в следующий финансовый год, что моделируется отдельно.
+
+# ============================================================================
+# Параметры breach-check
+# ============================================================================
+breach_thresholds:
+  anchor_lower_bound_mln_rub: 2700.0    # 90% от базы 3000
+  anchor_upper_bound_mln_rub: 3300.0    # 110% от базы (верхняя граница симметрична)
+  severe_breach_threshold_mln_rub: 2400.0  # 80% от базы → серьёзный пробой
+
+# ============================================================================
+# Monte Carlo конфигурация (параллельно с 27-cell matrix)
+# ============================================================================
+monte_carlo:
+  n_simulations: 2000
+  seed: 42
+  distributions:
+    fx_shock_pct:
+      distribution: normal
+      mean: 0.0
+      std: 0.10       # calibrated: full-period ann. σ=0.22 / √3 ≈ 0.127 → округлено (v1.3.4)
+    inflation_pct:
+      distribution: normal
+      mean: 0.02      # mean=2 п.п. отклонения от таргета
+      std: 0.028      # calibrated: calm-period ann. σ≈2.8 п.п. (v1.3.4)
+    release_delay_months:
+      distribution: half_normal
+      scale: 3.0      # v1.3.6 P3: формализованная экспертная оценка, см. release_delay_calibration.md
+      # sensitivity-альтернативы (не используются в прогоне, только для документации):
+      # scale_optimistic: 2.0 (в обычный год — технические недельные сдвиги)
+      # scale_pessimistic: 4.0 (кризис/санкции/пандемия — сдвиги на квартал+)
+  correlations:
+    fx_vs_inflation: 0.29    # Pearson, full period 2014-2023 (было 0.60, v1.3.2)
+    fx_vs_delay: 0.30        # экспертная оценка (не калибруется)
+    inflation_vs_delay: 0.20 # экспертная оценка (не калибруется)
+  correlations_sensitivity:
+    pearson_calm: 0.148          # период 2015-17 + 2018-19, без шоков
+    pearson_no_2022: 0.109       # полный период минус 2022
+    spearman_full: 0.142         # ранговая, полный период
+    spearman_calm: 0.175         # ранговая, calm
+    comment: >
+      Если Pearson-calm (0.148) использовать вместо full (0.29), breach_probability
+      в MC снизится ~на 30%. Spearman устойчив к выбросам и ближе к режиму
+      «без экстремальных шоков». См. stress_matrix_calibration.md §3.1.
+  bootstrap:
+    enabled: true
+    n_simulations: 2000
+    block_length: 3            # в месяцах; для 3-летнего горизонта сохраняет autocorr
+    historical_csv: inputs/historical/fx_infl_key_2014_2023.csv
+    comment: >
+      Historical block bootstrap на парах (r_fx, d_infl) из CSV. Tail-aware,
+      без предположения о нормальности. Запускается параллельно с parametric MC.
+
+  # -----------------------------------------------------------------------
+  # v1.3.9 F2: stage-gate дерево решений для 12 фильмов слейта
+  # Источник вероятностей: экспертные оценки индустрии РФ 2024-2026
+  # -----------------------------------------------------------------------
+  stage_gate:
+    enabled: true
+    n_simulations: 2000
+    seed: 44                       # +2 от parametric MC для независимости
+    probabilities:
+      p_development_to_greenlight: 0.85
+      p_greenlight_to_production:  0.92
+      p_production_to_post:        0.95
+      p_post_to_release:           0.97
+    sunk_cost_pct:
+      development: 0.05            # 5% бюджета — cancel на development
+      greenlight:  0.15            # 15% — cancel на pre-production
+      production:  0.70            # 70% — cancel во время съёмок
+      post:        0.95            # 95% — cancel на пост-продакшене
+    apply_sunk_to_capex: true
+    comment: >
+      F2 Tier E: биномиальное дерево прохождения 4 этапов для каждого из 12
+      фильмов слейта. P(release) = 0.85×0.92×0.95×0.97 ≈ 0.721.
+      При cancel sunk_cost = budget × stage_pct признаётся дополнительным опекс.
+      Cancelled фильмы обнуляют свою долю в cinema.targets через slate_weight.
+
+  # -----------------------------------------------------------------------
+  # v1.3.8 F1: блочный bootstrap годовых YoY-множителей российского проката
+  # Источник: inputs/eais_seed/annual_box_office.csv (2019–2025, 6 YoY-точек)
+  # -----------------------------------------------------------------------
+  market_bootstrap:
+    enabled: true
+    n_simulations: 2000
+    block_size: 2              # сохраняет кризисно-восстановительные пары (2020-2021, 2022-2023)
+    seed: 43                   # seed+1 от parametric MC для независимости
+    seed_csv: inputs/eais_seed/annual_box_office.csv
+    market_beta: 0.40          # доля cinema.targets, чувствительная к рыночному YoY
+                               # (консервативно: слейт+часть кинотеатров, 60% — долгосрочные контракты/SVOD)
+    horizon_years: 3           # 2026-2028
+    exclude_years: []          # пусто = используем все 6 YoY-переходов
+    comment: >
+      F1 Tier E: блочный bootstrap исторических YoY мультипликаторов годового
+      российского box office (ЕАИС seed 2019–2025). Применяется к cinema.targets
+      через market_beta. Цель — tail-aware распределение cumulative EBITDA
+      без предположения о нормальности рыночных шоков. В отличие от parametric MC
+      (FX, инфляция, задержки) использует КРЫНОЧНЫЙ доход как прокси шоков спроса.
+      block_size=2 сохраняет пары типа (COVID trough, post-COVID rebound) и
+      (Hollywood exit, russification).
+
+  # -----------------------------------------------------------------------
+  # v1.4.0 F3+F4: Latin Hypercube Sampling + Gaussian copula
+  # Замена наивного iid MC на стратифицированную копулу для variance reduction
+  # и корректной tail-симуляции разнородных маргиналов (normal + half-normal)
+  # -----------------------------------------------------------------------
+  lhs_copula:
+    enabled: true
+    n_simulations: 2000
+    seed: 45                   # seed+2 от parametric/bootstrap для независимости
+    use_copula: true           # Gaussian copula через inverse-CDF маргиналов
+    lhs_strata: true           # Latin Hypercube стратификация
+    comment: >
+      F3+F4 Tier E: вариантность reduction через LHS (стратификация [0,1]
+      на 2000 страт, по 1 точке из каждой → Π перемешивание) + Gaussian copula
+      через обратные CDF маргиналов. Это корректная многомерная конструкция,
+      которая сохраняет корреляционный ранг между разнородными маргиналами:
+      FX ~ N(μ,σ), infl ~ N(μ,σ), delay ~ |N(0,scale)|. Прямой Cholesky на N(0,1)
+      (как в run_monte_carlo) корректен только для нормальных маргиналов, а
+      half-normal delay через прямой |y_3| даёт смещение корреляционного ранга.
+      Ожидаемый эффект: std(EBITDA) снижается ×1.5–3, percentile-стабильность
+      растёт в 3–5× по сравнению с базовым run_monte_carlo при одинаковом N.
+  historical_calibration:
+    enabled: true
+    source_fx: "ЦБ РФ, XML API R01235, 2014-01..2023-12"
+    source_inflation: "ЦБ РФ, hd_base/infl YoY monthly, 2014-01..2023-12"
+    source_key_rate: "ЦБ РФ, hd_base/infl key rate monthly, 2014-01..2023-12"
+    n_observations: 119
+    method: "Pearson + Spearman на (log-return FX, Δ YoY инфляция)"
+    calibration_doc: inputs/stress_matrix_calibration.md
+    full_period_sigma_fx_annual: 0.2199
+    calm_period_sigma_fx_annual: 0.1615
+    full_period_sigma_infl_annual: 0.0423
+    calm_period_sigma_infl_annual: 0.0279
+
+meta:
+  source_id: stress_matrix_v1_3_6
+  release_delay_calibration_doc: inputs/release_delay_calibration.md
+  source_title: "Combined Stress-Test Matrix (v1.3.4 — historical calibration)"
+  confidence: high
+  last_updated: "2026-04-11"
+  comment: >
+    v1.3.4 Tier B: корреляции и σ откалиброваны по историческим данным
+    2014-2023 от Банка России. Главные коррекции:
+      • corr(FX,inflation): 0.60 → 0.29 (Pearson full period, 119 obs)
+      • σ(fx_shock): 0.08 → 0.10 (3y-equivalent full period)
+      • σ(inflation): 0.025 → 0.028
+    Введён historical block bootstrap MC параллельно с parametric MC.
+    Release delay остаётся экспертным параметром (нет исторического ряда).
+    Tolerance anchor: ±10%. Breach < 2700 млн ₽, severe breach < 2400.
+    Подробности: inputs/stress_matrix_calibration.md

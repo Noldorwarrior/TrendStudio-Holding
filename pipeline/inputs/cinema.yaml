@@ -1,0 +1,47 @@
+# ============================================================================
+# cinema.yaml — Сегмент «Кинотеатральный прокат» (40% выручки)
+# ============================================================================
+# Base targets (млн ₽):
+#   2026 = 1 080
+#   2027 = 1 760
+#   2028 = 2 160
+#   Σ    = 5 000
+#
+# Этот файл задаёт целевые значения для валидации + параметры распределения.
+# Фактические числа формируются генератором revenue.py на основе slate.yaml
+# (box_office × holding_share × hit_rate) и сверяются с targets ниже.
+# ============================================================================
+
+segment_share_pct: 0.40
+
+targets_mln_rub:
+  - year: 2026
+    cons: 918.0
+    base: 1080.0
+    opt: 1210.0
+  - year: 2027
+    cons: 1496.0
+    base: 1760.0
+    opt: 1971.0
+  - year: 2028
+    cons: 1836.0
+    base: 2160.0
+    opt: 2419.0
+
+distribution_params:
+  theatrical_window_days: 90          # окно кинотеатрального проката
+  vpf_per_copy_rub: 1500.0            # Virtual Print Fee
+  avg_copies_per_release: 1200
+  p_and_a_budget_ratio: 0.40          # P&A = 40% от бокс-офиса (см. pa_costs.yaml)
+  min_distribution_fee_pct: 0.10
+
+revenue_recognition:
+  method: "net after theatrical chain"
+  timing: "at exhibition"
+  source_id: ifrs_15_revenue_recognition
+
+meta:
+  source_id: segment_cinema_2026_2028
+  source_title: "Сегмент кинотеатрального проката, план ТрендСтудио"
+  confidence: high
+  last_updated: "2026-04-11"

@@ -1,0 +1,11 @@
+Generate a single image. 3D decorative golden corner bracket ornament for card borders, on pure black background. Resolution: 512x512 pixels, square 1:1 format.
+
+A single L-shaped golden corner bracket/frame element (#D4A843), rendered as a slim 3D golden metallic profile/molding. The corner features a small decorative golden circle at the corner intersection point, with thin golden lines extending along both the horizontal and vertical edges (about 40% of frame width each direction).
+
+The element is positioned in the upper-left quadrant of the image, designed to be placed at the top-left corner of a rectangular card. Subtle golden glow around the metallic surfaces.
+
+The remaining 3 quadrants of the image are pure black (#060D1A).
+
+STYLE: Clean 3D render, premium polished gold metallic finish. Minimal, elegant.
+
+DO NOT include: text, labels, watermarks, full frames, bright backgrounds, complex patterns.

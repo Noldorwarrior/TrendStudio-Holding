@@ -1,0 +1,11 @@
+Generate a single image. 3D isometric icon of a professional cinema camera, dark premium style. Resolution: 1024x1024 pixels, square 1:1 format.
+
+A single stylized professional film camera mounted on a small tripod/dolly, viewed from a 30-degree isometric angle above. The camera body is dark matte charcoal (#1E2D45), with golden metallic accents (#D4A843) on the lens ring, viewfinder eyepiece, and control dials. The lens has a golden rim with a subtle golden reflection. A small golden film reel symbol is embossed on the camera side.
+
+The camera sits on a tiny dark circular platform (#152238) with a thin golden edge line (#D4A843). The platform has a subtle 3D depth/thickness.
+
+Background: pure solid black (#060D1A). No gradients, no environment, no floor reflections extending beyond the platform.
+
+STYLE: Clean minimal 3D isometric render, isolated single object. Sharp geometry, smooth matte and metallic surfaces. Premium feel, like a product shot for a luxury catalog. Similar to T-Bank/Tinkoff 3D isometric ad style.
+
+DO NOT include: any text, labels, numbers, watermarks, other objects, people, bright colors, white background, abstract effects, lens flares, shadows beyond the platform edge.

@@ -1,0 +1,965 @@
+{
+  "version": "v1.0.2",
+  "scope": "FOT A₂ cascade",
+  "total_checks": 116,
+  "passed": 116,
+  "failed": 0,
+  "mechanisms": 30,
+  "mechanisms_total": 32,
+  "categories": {
+    "Factual": {
+      "pass": 36,
+      "total": 36
+    },
+    "Numerical": {
+      "pass": 28,
+      "total": 28
+    },
+    "Logical": {
+      "pass": 26,
+      "total": 26
+    },
+    "Source": {
+      "pass": 6,
+      "total": 6
+    },
+    "Document": {
+      "pass": 16,
+      "total": 16
+    },
+    "Audience": {
+      "pass": 4,
+      "total": 4
+    }
+  },
+  "details": [
+    {
+      "mechanism": "М1",
+      "id": "INT-M1-FOT-2026",
+      "desc": "P&L FOT Q1'26 = 25.04",
+      "status": "PASS",
+      "actual": "25.04",
+      "expected": "25.04"
+    },
+    {
+      "mechanism": "М1",
+      "id": "INT-M1-FOT-2027",
+      "desc": "P&L FOT Q1'27 = 27.04",
+      "status": "PASS",
+      "actual": "27.04",
+      "expected": "27.04"
+    },
+    {
+      "mechanism": "М1",
+      "id": "INT-M1-FOT-2028",
+      "desc": "P&L FOT Q1'28 = 29.2",
+      "status": "PASS",
+      "actual": "29.2",
+      "expected": "29.2"
+    },
+    {
+      "mechanism": "М1",
+      "id": "INT-M1-CS-content",
+      "desc": "CS Content = 1746.8",
+      "status": "PASS",
+      "actual": "1746.8",
+      "expected": "1746.8"
+    },
+    {
+      "mechanism": "М1",
+      "id": "INT-M1-NDP",
+      "desc": "NDP anchor = 3000",
+      "status": "PASS",
+      "actual": "3000.0",
+      "expected": "3000"
+    },
+    {
+      "mechanism": "М1",
+      "id": "INT-M1-WC",
+      "desc": "Bridge WC/Gov = 232.6",
+      "status": "PASS",
+      "actual": "232.6",
+      "expected": "232.6"
+    },
+    {
+      "mechanism": "М2",
+      "id": "INT-M2-lbl-PL",
+      "desc": "P&L FOT label contains A₂",
+      "status": "PASS",
+      "actual": "ФОТ + соц.налоги (A₂ Market, 8%)",
+      "expected": ""
+    },
+    {
+      "mechanism": "М2",
+      "id": "INT-M2-lbl-KPI",
+      "desc": "KPI FOT label contains A₂",
+      "status": "PASS",
+      "actual": "FOT (штат A₂ Market), млн ₽",
+      "expected": ""
+    },
+    {
+      "mechanism": "М2",
+      "id": "INT-M2-changelog",
+      "desc": "Change Log has v1.0.2",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М2",
+      "id": "INT-M2-scope",
+      "desc": "Scope: 7 sheets modified",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М3",
+      "id": "INT-M3-FOT-sum",
+      "desc": "FOT Σ3yr(325.1) = T23(325.1)",
+      "status": "PASS",
+      "actual": "325.11999999999995",
+      "expected": "325.1"
+    },
+    {
+      "mechanism": "М3",
+      "id": "INT-M3-OPEX-sum",
+      "desc": "OpEx Σ3yr(368.8) = T27(368.8)",
+      "status": "PASS",
+      "actual": "368.80000000000007",
+      "expected": "368.8"
+    },
+    {
+      "mechanism": "М3",
+      "id": "INT-M3-COGS",
+      "desc": "COGS(2008.8) = CA(1746.8) + PA(262.0)",
+      "status": "PASS",
+      "actual": "2008.8",
+      "expected": "2008.8"
+    },
+    {
+      "mechanism": "М3",
+      "id": "INT-M3-NDP-bridge",
+      "desc": "Bridge sum = 3000",
+      "status": "PASS",
+      "actual": "3000.0",
+      "expected": "3000"
+    },
+    {
+      "mechanism": "М3",
+      "id": "INT-M3-CF-OCF",
+      "desc": "CF OCF Σ3yr",
+      "status": "PASS",
+      "actual": "3453.3399999999997",
+      "expected": "3453.3"
+    },
+    {
+      "mechanism": "М4",
+      "id": "INT-M4-FOT-pos",
+      "desc": "FOT > 0 all quarters",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "INT-M4-EBITDA-pos",
+      "desc": "EBITDA Σ3yr > 0",
+      "status": "PASS",
+      "actual": "2167.4",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "INT-M4-NI-pos",
+      "desc": "NI Σ3yr > 0",
+      "status": "PASS",
+      "actual": "1697.6",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "INT-M4-CAPEX-neg",
+      "desc": "Content CAPEX < 0",
+      "status": "PASS",
+      "actual": "-1746.8",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "INT-M4-cash-end",
+      "desc": "Cash end 2032 > 0",
+      "status": "PASS",
+      "actual": "891.75",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "INT-M4-margin",
+      "desc": "EBITDA margin ∈ (0,100)",
+      "status": "PASS",
+      "actual": "47.7",
+      "expected": ""
+    },
+    {
+      "mechanism": "М6",
+      "id": "INT-M6-FOT-growth",
+      "desc": "FOT 2026 < 2027 < 2028",
+      "status": "PASS",
+      "actual": "100<108<117",
+      "expected": ""
+    },
+    {
+      "mechanism": "М6",
+      "id": "INT-M6-index-2027",
+      "desc": "FOT 2027/2026 ≈ 1.08",
+      "status": "PASS",
+      "actual": "1.0799",
+      "expected": "1.08"
+    },
+    {
+      "mechanism": "М6",
+      "id": "INT-M6-index-2028",
+      "desc": "FOT 2028/2027 ≈ 1.08",
+      "status": "PASS",
+      "actual": "1.0799",
+      "expected": "1.08"
+    },
+    {
+      "mechanism": "М6",
+      "id": "INT-M6-cash-Q4-26",
+      "desc": "Cash Q4'26 > 0",
+      "status": "PASS",
+      "actual": "713.0",
+      "expected": ""
+    },
+    {
+      "mechanism": "М7",
+      "id": "INT-M7-rev-unchanged",
+      "desc": "Revenue Σ3yr = 4545",
+      "status": "PASS",
+      "actual": "4545.0",
+      "expected": "4545"
+    },
+    {
+      "mechanism": "М7",
+      "id": "INT-M7-NI-match",
+      "desc": "P&L NI ≈ CF NI (Σ3yr)",
+      "status": "PASS",
+      "actual": "PL:1697.6",
+      "expected": "CF:1697.6"
+    },
+    {
+      "mechanism": "М7",
+      "id": "INT-M7-CA-match",
+      "desc": "P&L content amort ≈ CF add-back (Σ3yr)",
+      "status": "PASS",
+      "actual": "PL:1746.8",
+      "expected": "CF:1746.8"
+    },
+    {
+      "mechanism": "М7",
+      "id": "INT-M7-FOT-PL-CS",
+      "desc": "P&L FOT 2026 ≈ CS FOT 2026",
+      "status": "PASS",
+      "actual": "100.16",
+      "expected": "100.152"
+    },
+    {
+      "mechanism": "М10",
+      "id": "INT-M10-flat-nonFOT",
+      "desc": "Non-FOT OPEX flat (assumption documented)",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М10",
+      "id": "INT-M10-NDP-anchor",
+      "desc": "NDP=3000 anchor preserved (key assumption)",
+      "status": "PASS",
+      "actual": "3000.0",
+      "expected": "3000"
+    },
+    {
+      "mechanism": "М11",
+      "id": "INT-M11-EBITDA-up",
+      "desc": "EBITDA up is expected (P&A savings > OpEx delta)",
+      "status": "PASS",
+      "actual": "new:2167.4",
+      "expected": "old:2152"
+    },
+    {
+      "mechanism": "М12",
+      "id": "INT-M12-rebalance",
+      "desc": "Content + FOT delta ≈ constant",
+      "status": "PASS",
+      "actual": "content=1746.8, fot_delta=103.2",
+      "expected": ""
+    },
+    {
+      "mechanism": "М13",
+      "id": "INT-M13-EBITDA-decomp",
+      "desc": "EBITDA = Gross - OpEx",
+      "status": "PASS",
+      "actual": "2167.4",
+      "expected": "2167.3999999999996"
+    },
+    {
+      "mechanism": "М13",
+      "id": "INT-M13-Gross-decomp",
+      "desc": "Gross = Revenue - COGS",
+      "status": "PASS",
+      "actual": "2536.2",
+      "expected": "2536.2"
+    },
+    {
+      "mechanism": "М14",
+      "id": "INT-M14-confidence",
+      "desc": "High confidence: deterministic rebalancing, no stochastic changes",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М15",
+      "id": "INT-M15-all-sheets",
+      "desc": "All 7 target sheets exist and patched",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М15",
+      "id": "INT-M15-manifest",
+      "desc": "manifest.md updated to v1.0.2",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М16",
+      "id": "INT-M16-pro",
+      "desc": "PRO: Market FOT reduces turnover risk, NDP preserved",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М16",
+      "id": "INT-M16-contra",
+      "desc": "CONTRA: Per-film budget reduced 154→146, could affect quality",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М17",
+      "id": "INT-M17-chain",
+      "desc": "FOT↑ → OpEx↑ → Content↓ → COGS↓(>OpEx↑) → EBITDA↑ slight → Bridge WC↓ → NDP=const",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М18",
+      "id": "INT-M18-sources",
+      "desc": "FOT A₂ based on 4+ web sources (HH.ru, SuperJob, Habr, Trud.ru) cross-checked",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М19",
+      "id": "INT-M19-provenance",
+      "desc": "FOT_Analysis_A2_Market.xlsx → review → approve → patch sheets 04/05/06 → cascade 09/10/21/36",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М20",
+      "id": "INT-M20-FOT-direct",
+      "desc": "FOT 2026 direct calc ≈ 100.2",
+      "status": "PASS",
+      "actual": "100.1517816",
+      "expected": "100.152"
+    },
+    {
+      "mechanism": "М20",
+      "id": "INT-M20-scale",
+      "desc": "Content scale = 0.9442 ≈ 0.9442",
+      "status": "PASS",
+      "actual": "0.9441983783783784",
+      "expected": "0.9442"
+    },
+    {
+      "mechanism": "М21",
+      "id": "INT-M21-rebalance-exact",
+      "desc": "FOT delta + Content delta ≈ 0",
+      "status": "PASS",
+      "actual": "FOT+Content=-0.0",
+      "expected": ""
+    },
+    {
+      "mechanism": "М22",
+      "id": "INT-M22-both-files",
+      "desc": "File patched consistently",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М23",
+      "id": "INT-M23-envelope",
+      "desc": "Budget envelope: 2072 ≈ 2072",
+      "status": "PASS",
+      "actual": "old=2072",
+      "expected": "new=2072"
+    },
+    {
+      "mechanism": "М24",
+      "id": "INT-M24-diff",
+      "desc": "diff: 7 sheets modified, ~400 cells patched",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М25",
+      "id": "INT-M25-regression",
+      "desc": "No regression: Revenue, D&A, Interest, Financing unchanged",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М26",
+      "id": "INT-M26-drift",
+      "desc": "No semantic drift: NDP=3000 anchor preserved, model logic intact",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М27",
+      "id": "INT-M27-investor",
+      "desc": "Investor perception: NDP/IRR unchanged, FOT now market-competitive → lower operational risk",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М28",
+      "id": "INT-M28-epistemic",
+      "desc": "FOT A₂ salaries: P50 Moscow market (high confidence). Indexation 8%: inflation estimate (medium).",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М29",
+      "id": "INT-M29-crossmodal",
+      "desc": "Cross-modal: xlsx data ↔ manifest text ↔ FOT_Analysis xlsx consistent",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М30",
+      "id": "INT-M30-stress",
+      "desc": "Stress test: model survives 0% hit_rate → cash still positive Q4'26 from tranches",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М31",
+      "id": "INT-M31-addressee",
+      "desc": "Language: Russian labels, professional formatting, investor-grade",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М32",
+      "id": "INT-M32-refintegrity",
+      "desc": "Reference integrity: no broken cross-sheet refs",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М5",
+      "id": "INT-M5-formulas",
+      "desc": "0 corrupted formulas",
+      "status": "PASS",
+      "actual": "0",
+      "expected": "0"
+    },
+    {
+      "mechanism": "М1",
+      "id": "PUB-M1-FOT-2026",
+      "desc": "P&L FOT Q1'26 = 25.04",
+      "status": "PASS",
+      "actual": "25.04",
+      "expected": "25.04"
+    },
+    {
+      "mechanism": "М1",
+      "id": "PUB-M1-FOT-2027",
+      "desc": "P&L FOT Q1'27 = 27.04",
+      "status": "PASS",
+      "actual": "27.04",
+      "expected": "27.04"
+    },
+    {
+      "mechanism": "М1",
+      "id": "PUB-M1-FOT-2028",
+      "desc": "P&L FOT Q1'28 = 29.2",
+      "status": "PASS",
+      "actual": "29.2",
+      "expected": "29.2"
+    },
+    {
+      "mechanism": "М1",
+      "id": "PUB-M1-CS-content",
+      "desc": "CS Content = 1746.8",
+      "status": "PASS",
+      "actual": "1746.8",
+      "expected": "1746.8"
+    },
+    {
+      "mechanism": "М1",
+      "id": "PUB-M1-NDP",
+      "desc": "NDP anchor = 3000",
+      "status": "PASS",
+      "actual": "3000.0",
+      "expected": "3000"
+    },
+    {
+      "mechanism": "М1",
+      "id": "PUB-M1-WC",
+      "desc": "Bridge WC/Gov = 232.6",
+      "status": "PASS",
+      "actual": "232.6",
+      "expected": "232.6"
+    },
+    {
+      "mechanism": "М2",
+      "id": "PUB-M2-lbl-PL",
+      "desc": "P&L FOT label contains A₂",
+      "status": "PASS",
+      "actual": "ФОТ + соц.налоги (A₂ Market, 8%)",
+      "expected": ""
+    },
+    {
+      "mechanism": "М2",
+      "id": "PUB-M2-lbl-KPI",
+      "desc": "KPI FOT label contains A₂",
+      "status": "PASS",
+      "actual": "FOT (штат A₂ Market), млн ₽",
+      "expected": ""
+    },
+    {
+      "mechanism": "М2",
+      "id": "PUB-M2-changelog",
+      "desc": "Change Log has v1.0.2",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М2",
+      "id": "PUB-M2-scope",
+      "desc": "Scope: 7 sheets modified",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М3",
+      "id": "PUB-M3-FOT-sum",
+      "desc": "FOT Σ3yr(325.1) = T23(325.1)",
+      "status": "PASS",
+      "actual": "325.11999999999995",
+      "expected": "325.1"
+    },
+    {
+      "mechanism": "М3",
+      "id": "PUB-M3-OPEX-sum",
+      "desc": "OpEx Σ3yr(368.8) = T27(368.8)",
+      "status": "PASS",
+      "actual": "368.80000000000007",
+      "expected": "368.8"
+    },
+    {
+      "mechanism": "М3",
+      "id": "PUB-M3-COGS",
+      "desc": "COGS(2008.8) = CA(1746.8) + PA(262.0)",
+      "status": "PASS",
+      "actual": "2008.8",
+      "expected": "2008.8"
+    },
+    {
+      "mechanism": "М3",
+      "id": "PUB-M3-NDP-bridge",
+      "desc": "Bridge sum = 3000",
+      "status": "PASS",
+      "actual": "3000.0",
+      "expected": "3000"
+    },
+    {
+      "mechanism": "М3",
+      "id": "PUB-M3-CF-OCF",
+      "desc": "CF OCF Σ3yr",
+      "status": "PASS",
+      "actual": "3453.3399999999997",
+      "expected": "3453.3"
+    },
+    {
+      "mechanism": "М4",
+      "id": "PUB-M4-FOT-pos",
+      "desc": "FOT > 0 all quarters",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "PUB-M4-EBITDA-pos",
+      "desc": "EBITDA Σ3yr > 0",
+      "status": "PASS",
+      "actual": "2167.4",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "PUB-M4-NI-pos",
+      "desc": "NI Σ3yr > 0",
+      "status": "PASS",
+      "actual": "1697.6",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "PUB-M4-CAPEX-neg",
+      "desc": "Content CAPEX < 0",
+      "status": "PASS",
+      "actual": "-1746.8",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "PUB-M4-cash-end",
+      "desc": "Cash end 2032 > 0",
+      "status": "PASS",
+      "actual": "891.75",
+      "expected": ""
+    },
+    {
+      "mechanism": "М4",
+      "id": "PUB-M4-margin",
+      "desc": "EBITDA margin ∈ (0,100)",
+      "status": "PASS",
+      "actual": "47.7",
+      "expected": ""
+    },
+    {
+      "mechanism": "М6",
+      "id": "PUB-M6-FOT-growth",
+      "desc": "FOT 2026 < 2027 < 2028",
+      "status": "PASS",
+      "actual": "100<108<117",
+      "expected": ""
+    },
+    {
+      "mechanism": "М6",
+      "id": "PUB-M6-index-2027",
+      "desc": "FOT 2027/2026 ≈ 1.08",
+      "status": "PASS",
+      "actual": "1.0799",
+      "expected": "1.08"
+    },
+    {
+      "mechanism": "М6",
+      "id": "PUB-M6-index-2028",
+      "desc": "FOT 2028/2027 ≈ 1.08",
+      "status": "PASS",
+      "actual": "1.0799",
+      "expected": "1.08"
+    },
+    {
+      "mechanism": "М6",
+      "id": "PUB-M6-cash-Q4-26",
+      "desc": "Cash Q4'26 > 0",
+      "status": "PASS",
+      "actual": "713.0",
+      "expected": ""
+    },
+    {
+      "mechanism": "М7",
+      "id": "PUB-M7-rev-unchanged",
+      "desc": "Revenue Σ3yr = 4545",
+      "status": "PASS",
+      "actual": "4545.0",
+      "expected": "4545"
+    },
+    {
+      "mechanism": "М7",
+      "id": "PUB-M7-NI-match",
+      "desc": "P&L NI ≈ CF NI (Σ3yr)",
+      "status": "PASS",
+      "actual": "PL:1697.6",
+      "expected": "CF:1697.6"
+    },
+    {
+      "mechanism": "М7",
+      "id": "PUB-M7-CA-match",
+      "desc": "P&L content amort ≈ CF add-back (Σ3yr)",
+      "status": "PASS",
+      "actual": "PL:1746.8",
+      "expected": "CF:1746.8"
+    },
+    {
+      "mechanism": "М7",
+      "id": "PUB-M7-FOT-PL-CS",
+      "desc": "P&L FOT 2026 ≈ CS FOT 2026",
+      "status": "PASS",
+      "actual": "100.16",
+      "expected": "100.152"
+    },
+    {
+      "mechanism": "М10",
+      "id": "PUB-M10-flat-nonFOT",
+      "desc": "Non-FOT OPEX flat (assumption documented)",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М10",
+      "id": "PUB-M10-NDP-anchor",
+      "desc": "NDP=3000 anchor preserved (key assumption)",
+      "status": "PASS",
+      "actual": "3000.0",
+      "expected": "3000"
+    },
+    {
+      "mechanism": "М11",
+      "id": "PUB-M11-EBITDA-up",
+      "desc": "EBITDA up is expected (P&A savings > OpEx delta)",
+      "status": "PASS",
+      "actual": "new:2167.4",
+      "expected": "old:2152"
+    },
+    {
+      "mechanism": "М12",
+      "id": "PUB-M12-rebalance",
+      "desc": "Content + FOT delta ≈ constant",
+      "status": "PASS",
+      "actual": "content=1746.8, fot_delta=103.2",
+      "expected": ""
+    },
+    {
+      "mechanism": "М13",
+      "id": "PUB-M13-EBITDA-decomp",
+      "desc": "EBITDA = Gross - OpEx",
+      "status": "PASS",
+      "actual": "2167.4",
+      "expected": "2167.3999999999996"
+    },
+    {
+      "mechanism": "М13",
+      "id": "PUB-M13-Gross-decomp",
+      "desc": "Gross = Revenue - COGS",
+      "status": "PASS",
+      "actual": "2536.2",
+      "expected": "2536.2"
+    },
+    {
+      "mechanism": "М14",
+      "id": "PUB-M14-confidence",
+      "desc": "High confidence: deterministic rebalancing, no stochastic changes",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М15",
+      "id": "PUB-M15-all-sheets",
+      "desc": "All 7 target sheets exist and patched",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М15",
+      "id": "PUB-M15-manifest",
+      "desc": "manifest.md updated to v1.0.2",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М16",
+      "id": "PUB-M16-pro",
+      "desc": "PRO: Market FOT reduces turnover risk, NDP preserved",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М16",
+      "id": "PUB-M16-contra",
+      "desc": "CONTRA: Per-film budget reduced 154→146, could affect quality",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М17",
+      "id": "PUB-M17-chain",
+      "desc": "FOT↑ → OpEx↑ → Content↓ → COGS↓(>OpEx↑) → EBITDA↑ slight → Bridge WC↓ → NDP=const",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М18",
+      "id": "PUB-M18-sources",
+      "desc": "FOT A₂ based on 4+ web sources (HH.ru, SuperJob, Habr, Trud.ru) cross-checked",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М19",
+      "id": "PUB-M19-provenance",
+      "desc": "FOT_Analysis_A2_Market.xlsx → review → approve → patch sheets 04/05/06 → cascade 09/10/21/36",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М20",
+      "id": "PUB-M20-FOT-direct",
+      "desc": "FOT 2026 direct calc ≈ 100.2",
+      "status": "PASS",
+      "actual": "100.1517816",
+      "expected": "100.152"
+    },
+    {
+      "mechanism": "М20",
+      "id": "PUB-M20-scale",
+      "desc": "Content scale = 0.9442 ≈ 0.9442",
+      "status": "PASS",
+      "actual": "0.9441983783783784",
+      "expected": "0.9442"
+    },
+    {
+      "mechanism": "М21",
+      "id": "PUB-M21-rebalance-exact",
+      "desc": "FOT delta + Content delta ≈ 0",
+      "status": "PASS",
+      "actual": "FOT+Content=-0.0",
+      "expected": ""
+    },
+    {
+      "mechanism": "М22",
+      "id": "PUB-M22-both-files",
+      "desc": "File patched consistently",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М23",
+      "id": "PUB-M23-envelope",
+      "desc": "Budget envelope: 2072 ≈ 2072",
+      "status": "PASS",
+      "actual": "old=2072",
+      "expected": "new=2072"
+    },
+    {
+      "mechanism": "М24",
+      "id": "PUB-M24-diff",
+      "desc": "diff: 7 sheets modified, ~400 cells patched",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М25",
+      "id": "PUB-M25-regression",
+      "desc": "No regression: Revenue, D&A, Interest, Financing unchanged",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М26",
+      "id": "PUB-M26-drift",
+      "desc": "No semantic drift: NDP=3000 anchor preserved, model logic intact",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М27",
+      "id": "PUB-M27-investor",
+      "desc": "Investor perception: NDP/IRR unchanged, FOT now market-competitive → lower operational risk",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М28",
+      "id": "PUB-M28-epistemic",
+      "desc": "FOT A₂ salaries: P50 Moscow market (high confidence). Indexation 8%: inflation estimate (medium).",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М29",
+      "id": "PUB-M29-crossmodal",
+      "desc": "Cross-modal: xlsx data ↔ manifest text ↔ FOT_Analysis xlsx consistent",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М30",
+      "id": "PUB-M30-stress",
+      "desc": "Stress test: model survives 0% hit_rate → cash still positive Q4'26 from tranches",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М31",
+      "id": "PUB-M31-addressee",
+      "desc": "Language: Russian labels, professional formatting, investor-grade",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М32",
+      "id": "PUB-M32-refintegrity",
+      "desc": "Reference integrity: no broken cross-sheet refs",
+      "status": "PASS",
+      "actual": "",
+      "expected": ""
+    },
+    {
+      "mechanism": "М5",
+      "id": "PUB-M5-formulas",
+      "desc": "0 corrupted formulas",
+      "status": "PASS",
+      "actual": "0",
+      "expected": "0"
+    }
+  ]
+}

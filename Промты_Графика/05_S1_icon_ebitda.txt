@@ -1,0 +1,11 @@
+Generate a single image. 3D isometric icon of a golden geometric diamond/gem, dark premium style. Resolution: 1024x1024 pixels, square 1:1 format.
+
+A stylized geometric diamond shape (brilliant-cut gemstone or octahedron) hovering slightly above a small dark circular platform (#152238). The diamond is rendered in golden color with faceted crystal-like surfaces — each facet reflects a slightly different shade of gold (#F5C563 on bright facets, #D4A843 on medium, #B8922E on shadow facets).
+
+A subtle golden glow/halo appears beneath the diamond where it hovers above the platform. 3-4 tiny golden sparkle particles float around the diamond at various distances.
+
+Platform: dark circle with thin golden edge line. Background: pure solid black (#060D1A).
+
+STYLE: Clean 3D isometric render, premium luxury feel. Like a golden jewel display piece. Smooth faceted surfaces, clean geometry. Similar to T-Bank/Tinkoff isometric ad aesthetic.
+
+DO NOT include: any text, numbers, labels, watermarks, white background, bright colors, realistic gem refraction, rainbow effects, other objects.

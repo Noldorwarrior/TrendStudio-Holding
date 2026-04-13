@@ -1,0 +1,228 @@
+# ============================================================================
+# slate.yaml — Портфель фильмов на 2026-2028 (Base scenario)
+# ============================================================================
+# 12 релизов за 3 года. Box office и доля холдинга уже учитывают:
+#   - долю дистрибьютора (50%)
+#   - долю продюсера (50% от доли дистр.) с учётом кинотеатральной комиссии
+# hit_rate умножается на theatrical_net для расчёта ожидаемого дохода от кино
+# ============================================================================
+
+films:
+
+  # ─────────── 2026 ───────────
+  - id: film_01_2026_q1
+    title: "Фронтир: Восток"
+    release_year: 2026
+    release_quarter: 1
+    genre: historical_action
+    budget_mln_rub: 480.0
+    box_office_mln_rub:
+      cons: 780.0
+      base: 1100.0
+      opt: 1400.0
+    holding_share_pct: 0.22      # доля холдинга в боксе (после цепочки)
+    hit_rate:
+      cons: 0.55
+      base: 0.80
+      opt: 0.95
+    source_id: slate_plan_2026
+
+  - id: film_02_2026_q2
+    title: "Сердце Байкала"
+    release_year: 2026
+    release_quarter: 2
+    genre: family_drama
+    budget_mln_rub: 260.0
+    box_office_mln_rub:
+      cons: 420.0
+      base: 650.0
+      opt: 820.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.55
+      base: 0.80
+      opt: 0.95
+    source_id: slate_plan_2026
+
+  - id: film_03_2026_q3
+    title: "Московский трюк"
+    release_year: 2026
+    release_quarter: 3
+    genre: comedy
+    budget_mln_rub: 180.0
+    box_office_mln_rub:
+      cons: 350.0
+      base: 550.0
+      opt: 700.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.55
+      base: 0.80
+      opt: 0.95
+    source_id: slate_plan_2026
+
+  - id: film_04_2026_q4
+    title: "Новогодняя сказка"
+    release_year: 2026
+    release_quarter: 4
+    genre: family_newyear
+    budget_mln_rub: 320.0
+    box_office_mln_rub:
+      cons: 900.0
+      base: 1400.0
+      opt: 1800.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.60
+      base: 0.85
+      opt: 0.97
+    source_id: slate_plan_2026
+
+  # ─────────── 2027 ───────────
+  - id: film_05_2027_q1
+    title: "Крылья над Арктикой"
+    release_year: 2027
+    release_quarter: 1
+    genre: historical_action
+    budget_mln_rub: 560.0
+    box_office_mln_rub:
+      cons: 900.0
+      base: 1300.0
+      opt: 1700.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.55
+      base: 0.80
+      opt: 0.95
+    source_id: slate_plan_2027
+
+  - id: film_06_2027_q2
+    title: "Жена дипломата"
+    release_year: 2027
+    release_quarter: 2
+    genre: melodrama
+    budget_mln_rub: 220.0
+    box_office_mln_rub:
+      cons: 380.0
+      base: 600.0
+      opt: 780.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.55
+      base: 0.80
+      opt: 0.95
+    source_id: slate_plan_2027
+
+  - id: film_07_2027_q3
+    title: "Последний трамвай"
+    release_year: 2027
+    release_quarter: 3
+    genre: drama
+    budget_mln_rub: 200.0
+    box_office_mln_rub:
+      cons: 300.0
+      base: 500.0
+      opt: 680.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.50
+      base: 0.75
+      opt: 0.92
+    source_id: slate_plan_2027
+
+  - id: film_08_2027_q4
+    title: "Ёлка Президента"
+    release_year: 2027
+    release_quarter: 4
+    genre: family_newyear
+    budget_mln_rub: 380.0
+    box_office_mln_rub:
+      cons: 1100.0
+      base: 1700.0
+      opt: 2200.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.60
+      base: 0.85
+      opt: 0.97
+    source_id: slate_plan_2027
+
+  # ─────────── 2028 ───────────
+  - id: film_09_2028_q1
+    title: "Код Победы"
+    release_year: 2028
+    release_quarter: 1
+    genre: historical_action
+    budget_mln_rub: 640.0
+    box_office_mln_rub:
+      cons: 1050.0
+      base: 1500.0
+      opt: 1950.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.55
+      base: 0.80
+      opt: 0.95
+    source_id: slate_plan_2028
+
+  - id: film_10_2028_q2
+    title: "Обнуление"
+    release_year: 2028
+    release_quarter: 2
+    genre: scifi_thriller
+    budget_mln_rub: 520.0
+    box_office_mln_rub:
+      cons: 700.0
+      base: 1100.0
+      opt: 1450.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.50
+      base: 0.75
+      opt: 0.92
+    source_id: slate_plan_2028
+
+  - id: film_11_2028_q3
+    title: "Свой герой"
+    release_year: 2028
+    release_quarter: 3
+    genre: sport_drama
+    budget_mln_rub: 280.0
+    box_office_mln_rub:
+      cons: 450.0
+      base: 720.0
+      opt: 950.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.55
+      base: 0.80
+      opt: 0.95
+    source_id: slate_plan_2028
+
+  - id: film_12_2028_q4
+    title: "Огни большого города"
+    release_year: 2028
+    release_quarter: 4
+    genre: family_newyear
+    budget_mln_rub: 440.0
+    box_office_mln_rub:
+      cons: 1350.0
+      base: 2000.0
+      opt: 2600.0
+    holding_share_pct: 0.22
+    hit_rate:
+      cons: 0.60
+      base: 0.85
+      opt: 0.97
+    source_id: slate_plan_2028
+
+meta:
+  source_id: slate_holding_2026_2028
+  source_title: "Производственный план ТрендСтудио на 2026-2028"
+  confidence: high
+  last_updated: "2026-04-11"
+  comment: >
+    Slate откалиброван так, чтобы суммарный сегмент cinema в Base давал
+    ~5000 млн ₽ выручки за 3 года (1080 / 1760 / 2160).
+    Остальные сегменты (реклама, фестивали, образование, библиотека)
+    задаются отдельными файлами.

@@ -1,0 +1,34 @@
+```mermaid
+flowchart TB
+    subgraph L1["L1 · Inputs (14 YAML)"]
+        SC[scenarios.yaml] --- MC[macro.yaml] --- SL[slate.yaml]
+        CN[cinema] --- AD[advertising] --- FT[festivals]
+        ED[education] --- LL[license_library]
+        OP[opex] --- PA[pa_costs] --- CX[capex] --- NW[nwc]
+        VL[valuation] --- IN[investment]
+    end
+    subgraph L2["L2 · Pydantic (schemas/)"]
+        S1[StrictModel] --> S2[Segment] --> S3[Costs] --> S4[Valuation]
+    end
+    subgraph L3["L3 · Generators (13)"]
+        G1[revenue] --> G2[costs] --> G3[pnl] --> G4[cashflow]
+        G4 --> G5[quarterly_cf]
+        G3 --> G6[valuation]
+        G6 --> G7[sensitivity] --> G8[stress] --> G9[monte_carlo]
+        G10[provenance] --> G11[manifest]
+    end
+    subgraph L4["L4 · Artifacts"]
+        A1[model.xlsx · 21 листов]
+        A2[model_report.docx]
+        A3[manifest.json]
+        A4[provenance.json]
+    end
+    subgraph N3["N3 · Navigation (9)"]
+        N1[index.html] --- N2[architecture.mmd]
+        N4[schemas_ref.md] --- N5[generators_map.md]
+    end
+    L1 --> L2 --> L3 --> L4
+    L3 --> N3
+    classDef anchor fill:#0070C0,color:#fff,stroke:#004a8a;
+    class SC anchor
+```

@@ -1,0 +1,51 @@
+# ============================================================================
+# scenarios.yaml — Якорь модели и 3 сценария
+# ============================================================================
+# Anchor: cumulative EBITDA Base 2026-2028 = 3 000 млн ₽ ± 1%
+# Веса: 25 / 50 / 25 (cons / base / opt)
+# Скрипт generators/core.py обязан бросить AnchorViolated, если вне [2970; 3030]
+# ============================================================================
+
+anchor:
+  metric: cumulative_ebitda_2026_2028
+  scenario: base
+  value_mln_rub: 3000.0
+  tolerance_pct: 1.0
+  unit: "млн ₽"
+  rationale: >
+    Целевой KPI холдинга «ТрендСтудио» на период 2026-2028.
+    Зафиксирован в стратегии и служит инвариантом для всех генераторов.
+
+scenarios:
+  - name: conservative
+    short: cons
+    weight: 0.25
+    ebitda_multiplier: 0.85
+    hit_rate_multiplier: 0.80
+    description: >
+      Пессимистичный сценарий. Снижение среднего бокс-офиса на 15%,
+      падение hit-rate релизов на 20%, задержка по 1-2 релизам.
+
+  - name: base
+    short: base
+    weight: 0.50
+    ebitda_multiplier: 1.00
+    hit_rate_multiplier: 1.00
+    description: >
+      Базовый сценарий. Соответствует бизнес-плану холдинга и целевому
+      якорю 3 000 млн ₽ cumulative EBITDA за 2026-2028.
+
+  - name: optimistic
+    short: opt
+    weight: 0.25
+    ebitda_multiplier: 1.12
+    hit_rate_multiplier: 1.15
+    description: >
+      Оптимистичный сценарий. Рост среднего бокса +12%, hit-rate +15%,
+      увеличение доли рекламных и лицензионных доходов.
+
+meta:
+  source_id: strategy_holding_2026_2028
+  source_title: "Стратегия развития холдинга ТрендСтудио 2026-2028"
+  confidence: high
+  last_updated: "2026-04-11"

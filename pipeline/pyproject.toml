@@ -1,0 +1,59 @@
+[project]
+name = "trendstudio-finmodel"
+version = "1.0.0"
+description = "Финмодель холдинга ТрендСтудио (Кино) — pipeline-first подход с L4+N3 архитектурой"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--tb=short",
+]
+markers = [
+    "anchor: tests that validate the 3 bln EBITDA anchor",
+    "audit: tests closing audit gaps",
+    "reconciliation: reconciliation tests",
+    "bounds: range/boundary tests",
+    "pnl: PnL structure tests",
+    "monotonicity: monotonicity invariant tests",
+    "valuation: valuation (NPV/IRR/MOIC) tests",
+    "sensitivity: sensitivity & MC tests",
+    "provenance: provenance and hash tests",
+    "verification: verification sheet tests",
+    "legal: legal invariant tests",
+    "temporal: temporal ordering tests",
+    "property: Hypothesis property-based tests",
+    "slow: tests that take > 1 second",
+]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+[tool.mutmut]
+paths_to_mutate = "generators/"
+runner = "pytest tests/ -x --tb=no -q"
+tests_dir = "tests/"
+dict_synonyms = "Struct,NamedStruct"
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "RET"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true

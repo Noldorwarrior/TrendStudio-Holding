@@ -1,0 +1,65 @@
+# ============================================================================
+# macro.yaml — Макроэкономические допущения
+# ============================================================================
+
+horizon:
+  start_year: 2026
+  end_year: 2028
+  total_years: 3
+
+inflation_cpi:
+  - year: 2026
+    cons: 0.075
+    base: 0.060
+    opt: 0.050
+  - year: 2027
+    cons: 0.070
+    base: 0.055
+    opt: 0.045
+  - year: 2028
+    cons: 0.065
+    base: 0.050
+    opt: 0.040
+
+usd_rub:
+  - year: 2026
+    cons: 98.0
+    base: 92.0
+    opt: 88.0
+  - year: 2027
+    cons: 102.0
+    base: 94.0
+    opt: 89.0
+  - year: 2028
+    cons: 106.0
+    base: 96.0
+    opt: 90.0
+
+key_rate_cbr:
+  - year: 2026
+    cons: 0.18
+    base: 0.15
+    opt: 0.13
+  - year: 2027
+    cons: 0.16
+    base: 0.13
+    opt: 0.11
+  - year: 2028
+    cons: 0.14
+    base: 0.11
+    opt: 0.095
+
+profit_tax_rate:
+  rate: 0.25  # 25% с 2025 года (ФЗ-176 от 12.07.2024)
+  source_id: fz_176_2024
+
+vat_rate:
+  rate: 0.20
+  cinema_exempt: true  # льгота для национального кино (пп. 20 п. 2 ст. 149 НК РФ)
+  source_id: nk_rf_art_149
+
+meta:
+  source_id: cbr_minek_consensus_2026
+  source_title: "Консенсус-прогноз ЦБ РФ и Минэкономразвития на 2026-2028"
+  confidence: medium
+  last_updated: "2026-04-11"

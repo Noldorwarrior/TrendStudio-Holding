@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КИНОХОЛДИНГ — Инвестиционная презентация</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#060D1A;--bg2:#0A1628;--bg3:#0F1D32;--card:#152238;
+  --gold:#D4A843;--gold-light:#F5C563;--gold-glow:rgba(212,168,67,0.25);
+  --white:#FFFFFF;--gray:#8B95A5;--gray-light:#C0C8D4;
+  --green:#2ECC71;--blue:#3498DB;--red:#E74C3C;
+  --accent1:#D4A843;--accent2:#F5C563;--accent3:#3498DB;--accent4:#2ECC71;
+}
+
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:var(--bg);color:var(--white)}
+
+/* Progress bar */
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));z-index:1000;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);box-shadow:0 0 12px var(--gold-glow)}
+
+/* Slide navigation dots */
+#nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:12px}
+.nav-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--gold);background:transparent;cursor:pointer;transition:all 0.3s}
+.nav-dot.active{background:var(--gold);box-shadow:0 0 10px var(--gold-glow);transform:scale(1.3)}
+
+/* Slide counter */
+#slide-counter{position:fixed;bottom:20px;right:24px;font-size:13px;color:var(--gray);z-index:999;font-weight:300;letter-spacing:2px}
+
+/* Slides */
+.slide{position:absolute;top:0;left:0;width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;opacity:0;visibility:hidden;transition:opacity 0.7s ease,transform 0.7s ease;transform:translateY(30px)}
+.slide.active{opacity:1;visibility:visible;transform:translateY(0)}
+.slide-inner{width:min(1280px,92vw);height:min(720px,88vh);position:relative;overflow:hidden}
+
+/* Animations */
+.fade-up{opacity:0;transform:translateY(40px);transition:all 0.6s cubic-bezier(0.16,1,0.3,1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-left{opacity:0;transform:translateX(-40px);transition:all 0.6s cubic-bezier(0.16,1,0.3,1)}
+.fade-left.visible{opacity:1;transform:translateX(0)}
+.fade-right{opacity:0;transform:translateX(40px);transition:all 0.6s cubic-bezier(0.16,1,0.3,1)}
+.fade-right.visible{opacity:1;transform:translateX(0)}
+.scale-in{opacity:0;transform:scale(0.8);transition:all 0.6s cubic-bezier(0.16,1,0.3,1)}
+.scale-in.visible{opacity:1;transform:scale(1)}
+
+/* Counter animation */
+.counter{display:inline-block}
+
+/* ===== SLIDE 1 ===== */
+.s1-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(212,168,67,0.08) 0%,transparent 60%),var(--bg)}
+.s1-particles{position:absolute;inset:0;overflow:hidden}
+.s1-particle{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;opacity:0.3;animation:float linear infinite}
+@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.3}90%{opacity:0.3}100%{transform:translateY(-10vh) rotate(720deg);opacity:0}}
+
+.s1-crown{width:64px;height:64px;margin:0 auto 16px;opacity:0.9}
+.s1-crown svg{fill:var(--gold);filter:drop-shadow(0 0 20px rgba(212,168,67,0.4))}
+
+.s1-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:900;text-align:center;letter-spacing:8px;background:linear-gradient(135deg,var(--gold-light),var(--gold),#B8922E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
+
+.s1-subtitle{text-align:center;font-size:clamp(14px,1.5vw,18px);color:var(--gray-light);font-weight:300;margin-top:8px;font-style:italic;letter-spacing:1px}
+
+.s1-divider{width:200px;height:1px;margin:24px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+.s1-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:20px;padding:0 20px}
+.s1-card{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.8));border:1px solid rgba(212,168,67,0.15);border-radius:12px;padding:24px 16px;text-align:center;position:relative;overflow:hidden;transition:all 0.4s;cursor:default}
+.s1-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.s1-card:hover{transform:translateY(-4px);border-color:rgba(212,168,67,0.35);box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 30px var(--gold-glow)}
+.s1-card-icon{font-size:28px;margin-bottom:8px;filter:drop-shadow(0 0 8px var(--gold-glow))}
+.s1-card-value{font-size:clamp(22px,2.5vw,30px);font-weight:800;color:var(--gold-light);margin-bottom:4px}
+.s1-card-label{font-size:12px;color:var(--gray);font-weight:400;letter-spacing:0.5px}
+
+.s1-tagline{text-align:center;margin-top:28px;font-size:13px;color:var(--gray);letter-spacing:2px;font-weight:300}
+.s1-tagline span{color:var(--gold);font-weight:500}
+
+/* ===== SLIDE 2 ===== */
+.s2-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;height:100%;align-items:center;padding:80px 40px 40px}
+.s2-header{position:absolute;top:0;left:0;right:0;padding:32px 40px 0}
+.s2-title{font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--white)}
+.s2-sub{font-size:14px;color:var(--gold);font-style:italic;margin-top:4px}
+
+.tam-container{position:relative;width:100%;max-width:380px;aspect-ratio:1;margin:0 auto}
+.tam-circle,.sam-circle,.som-circle{position:absolute;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all 0.4s}
+.tam-circle{inset:0;border:1.5px solid rgba(212,168,67,0.3);background:radial-gradient(circle,rgba(21,34,56,0.9),rgba(10,22,40,0.95))}
+.tam-circle:hover{border-color:var(--gold);box-shadow:0 0 40px rgba(212,168,67,0.1)}
+.sam-circle{top:18%;left:12%;right:12%;bottom:10%;border:1.5px solid rgba(245,197,99,0.3);background:radial-gradient(circle,rgba(30,58,90,0.8),rgba(21,34,56,0.9))}
+.sam-circle:hover{border-color:var(--gold-light);box-shadow:0 0 30px rgba(245,197,99,0.1)}
+.som-circle{top:40%;left:28%;right:28%;bottom:22%;border:2px solid var(--gold);background:radial-gradient(circle,rgba(212,168,67,0.2),rgba(212,168,67,0.05));backdrop-filter:blur(4px)}
+.som-circle:hover{background:radial-gradient(circle,rgba(212,168,67,0.3),rgba(212,168,67,0.1));box-shadow:0 0 30px var(--gold-glow)}
+.tam-label,.sam-label,.som-label{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:3px;margin-bottom:4px}
+.tam-value,.sam-value{font-size:clamp(18px,2vw,24px);font-weight:700;color:var(--white)}
+.som-value{font-size:clamp(16px,1.8vw,22px);font-weight:700;color:var(--gold-light)}
+.tam-desc{position:absolute;top:8%;left:50%;transform:translateX(-50%);text-align:center}
+.sam-desc{position:absolute;top:22%;left:50%;transform:translateX(-50%);text-align:center}
+.som-desc{text-align:center}
+
+.s2-trends{display:flex;flex-direction:column;gap:16px}
+.s2-trend{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.7));border:1px solid rgba(212,168,67,0.1);border-radius:10px;padding:20px;display:flex;gap:16px;align-items:flex-start;position:relative;overflow:hidden;transition:all 0.4s;cursor:default}
+.s2-trend::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px}
+.s2-trend:nth-child(1)::before{background:var(--gold)}
+.s2-trend:nth-child(2)::before{background:var(--gold-light)}
+.s2-trend:nth-child(3)::before{background:var(--green)}
+.s2-trend:hover{transform:translateX(6px);border-color:rgba(212,168,67,0.25);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+.s2-trend-icon{font-size:28px;flex-shrink:0;width:40px;text-align:center}
+.s2-trend-title{font-size:15px;font-weight:600;color:var(--white);margin-bottom:4px}
+.s2-trend-desc{font-size:12px;color:var(--gray);line-height:1.5}
+
+/* Slide 2 enhanced */
+@keyframes circleOrbit{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.tam-container{perspective:800px}
+.tam-circle::after,.sam-circle::after{content:'';position:absolute;inset:-1px;border-radius:50%;border:1px solid transparent;pointer-events:none}
+@keyframes tamPulse{0%{box-shadow:0 0 0 rgba(212,168,67,0)}50%{box-shadow:0 0 50px rgba(212,168,67,0.12)}100%{box-shadow:0 0 0 rgba(212,168,67,0)}}
+.tam-circle.animated{animation:tamPulse 4s ease-in-out infinite}
+@keyframes samPulse{0%{box-shadow:0 0 0 rgba(245,197,99,0)}50%{box-shadow:0 0 40px rgba(245,197,99,0.1)}100%{box-shadow:0 0 0 rgba(245,197,99,0)}}
+.sam-circle.animated{animation:samPulse 3.5s ease-in-out infinite 0.5s}
+@keyframes somGlow{0%{box-shadow:0 0 15px var(--gold-glow)}50%{box-shadow:0 0 35px var(--gold-glow),0 0 60px rgba(212,168,67,0.12)}100%{box-shadow:0 0 15px var(--gold-glow)}}
+.som-circle.animated{animation:somGlow 3s ease-in-out infinite 1s}
+
+.tam-circle,.sam-circle,.som-circle{cursor:pointer}
+.tam-value,.sam-value,.som-value{transition:all 0.3s}
+.tam-circle:hover .tam-value,.sam-circle:hover .sam-value{transform:scale(1.12);text-shadow:0 0 20px rgba(255,255,255,0.3)}
+.som-circle:hover .som-value{transform:scale(1.15);text-shadow:0 0 20px rgba(245,197,99,0.4)}
+
+.s2-trend::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(212,168,67,0.08) 0%,transparent 60%);opacity:0;transition:opacity 0.4s;pointer-events:none;border-radius:10px}
+.s2-trend:hover::after{opacity:1}
+.s2-trend:hover::before{width:5px}
+.s2-trend:hover .s2-trend-icon{transform:scale(1.25) rotate(-5deg)}
+.s2-trend-icon{transition:transform 0.4s}
+.s2-trend-bar{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.02)}
+.s2-trend-bar-fill{height:100%;width:0%;border-radius:1px;transition:width 1s cubic-bezier(0.4,0,0.2,1)}
+.s2-trend-stat{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;margin-top:8px;opacity:0;transition:opacity 0.4s 0.1s;letter-spacing:0.5px}
+.s2-trend:hover .s2-trend-stat{opacity:1}
+
+/* ===== SLIDE 3 ===== */
+.s3-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:32px;height:100%;padding:80px 40px 50px;align-items:start}
+.s3-header{position:absolute;top:0;left:0;right:0;padding:32px 40px 0}
+
+.s3-chart-container{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.7));border:1px solid rgba(212,168,67,0.1);border-radius:12px;padding:24px;height:100%}
+.s3-chart{width:100%;height:100%}
+.s3-bar-group{display:flex;align-items:flex-end;gap:0;height:280px;justify-content:space-around;padding:0 20px}
+.s3-bar-stack{display:flex;flex-direction:column-reverse;align-items:center;gap:0;width:60px;position:relative;cursor:pointer}
+.s3-bar-segment{width:100%;border-radius:2px;transition:all 0.4s;position:relative}
+.s3-bar-segment:hover{filter:brightness(1.2);box-shadow:0 0 15px rgba(212,168,67,0.2)}
+.s3-bar-label{margin-top:10px;font-size:13px;color:var(--gray);font-weight:500}
+.s3-bar-total{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:600;color:var(--gold-light);white-space:nowrap}
+
+.s3-chart-legend{display:flex;gap:16px;margin-top:16px;justify-content:center;flex-wrap:wrap}
+.s3-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gray)}
+.s3-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+.s3-metrics-panel{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.7));border:1px solid rgba(212,168,67,0.1);border-radius:12px;padding:24px;overflow:hidden}
+.s3-metrics-title{font-size:16px;font-weight:600;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+.s3-metric-row{display:flex;flex-direction:column;padding:10px 12px;border-radius:8px;margin-bottom:4px;position:relative;overflow:hidden;cursor:default;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);border:1px solid transparent}
+.s3-metric-row:hover{background:rgba(212,168,67,0.06);border-color:rgba(212,168,67,0.15);transform:translateX(4px)}
+.s3-metric-row:hover .s3-metric-glow{opacity:1}
+
+.s3-metric-top{display:flex;justify-content:space-between;align-items:center}
+.s3-metric-label{font-size:12px;color:var(--gray);font-weight:400;transition:color 0.3s}
+.s3-metric-row:hover .s3-metric-label{color:var(--gray-light)}
+.s3-metric-value{font-size:18px;font-weight:800;transition:all 0.3s}
+.s3-metric-row:hover .s3-metric-value{transform:scale(1.05)}
+.s3-metric-value.gold{color:var(--gold-light)}
+.s3-metric-value.green{color:var(--green)}
+.s3-metric-value.blue{color:var(--blue)}
+
+.s3-metric-bar-track{width:100%;height:3px;background:rgba(255,255,255,0.05);border-radius:2px;margin-top:8px;overflow:hidden}
+.s3-metric-bar-fill{height:100%;border-radius:2px;width:0%;transition:width 1.2s cubic-bezier(0.4,0,0.2,1);position:relative}
+.s3-metric-bar-fill::after{content:'';position:absolute;right:0;top:-1px;width:6px;height:5px;border-radius:50%;background:inherit;box-shadow:0 0 8px currentColor;filter:brightness(1.5)}
+
+.s3-metric-glow{position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;opacity:0;transition:opacity 0.4s;filter:blur(15px)}
+
+.s3-metric-sparkline{position:absolute;right:12px;bottom:6px;opacity:0.25;transition:opacity 0.3s}
+.s3-metric-row:hover .s3-metric-sparkline{opacity:0.5}
+
+/* Counter animation for metric values */
+@keyframes metricPulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.s3-metric-row:hover .s3-metric-value{animation:metricPulse 0.4s ease}
+
+.s3-breakdown{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:12px;color:var(--gray);letter-spacing:0.5px}
+
+/* ===== SLIDE 4 ===== */
+.s4-layout{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:20px;height:100%;padding:80px 40px 40px}
+.s4-header{position:absolute;top:0;left:0;right:0;padding:32px 40px 0}
+
+.s4-card{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.7));border:1px solid rgba(212,168,67,0.08);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;transition:all 0.5s cubic-bezier(0.4,0,0.2,1);cursor:default}
+.s4-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px;transition:width 0.4s}
+.s4-card:nth-child(1)::before{background:var(--accent1)}
+.s4-card:nth-child(2)::before{background:var(--accent2)}
+.s4-card:nth-child(3)::before{background:var(--accent3)}
+.s4-card:nth-child(4)::before{background:var(--accent4)}
+.s4-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(212,168,67,0.08) 0%,transparent 60%);opacity:0;transition:opacity 0.4s;pointer-events:none}
+.s4-card:hover::after{opacity:1}
+.s4-card:hover{transform:translateY(-5px) scale(1.01);border-color:rgba(212,168,67,0.25);box-shadow:0 16px 50px rgba(0,0,0,0.5),0 0 30px rgba(212,168,67,0.08)}
+.s4-card:hover::before{width:5px}
+
+.s4-card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.s4-card-icon{font-size:24px;transition:transform 0.4s}
+.s4-card:hover .s4-card-icon{transform:scale(1.2) rotate(-5deg)}
+.s4-card-title{font-size:16px;font-weight:700;transition:all 0.3s}
+.s4-card:nth-child(1) .s4-card-title{color:var(--accent1)}
+.s4-card:nth-child(2) .s4-card-title{color:var(--accent2)}
+.s4-card:nth-child(3) .s4-card-title{color:var(--accent3)}
+.s4-card:nth-child(4) .s4-card-title{color:var(--accent4)}
+.s4-card:hover .s4-card-title{letter-spacing:0.5px}
+
+/* Gauge in top-right corner */
+.s4-gauge{position:absolute;top:14px;right:16px;width:52px;height:52px;opacity:0.7;transition:all 0.4s}
+.s4-card:hover .s4-gauge{opacity:1;transform:scale(1.12)}
+.s4-gauge-ring{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:4}
+.s4-gauge-fill{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)}
+.s4-gauge-text{font-size:11px;font-weight:800;fill:var(--white);text-anchor:middle;dominant-baseline:central}
+
+.s4-stat{display:flex;justify-content:space-between;align-items:center;padding:7px 8px;margin:2px -8px;font-size:13px;border-radius:6px;transition:all 0.3s;position:relative}
+.s4-stat:hover{background:rgba(212,168,67,0.06)}
+.s4-stat-label{color:var(--gray);transition:color 0.3s}
+.s4-stat:hover .s4-stat-label{color:var(--gray-light)}
+.s4-stat-value{color:var(--gray-light);font-weight:600;transition:all 0.3s;position:relative}
+.s4-card:hover .s4-stat-value{color:var(--white)}
+.s4-stat:hover .s4-stat-value{color:var(--gold-light)!important;transform:translateX(2px)}
+
+/* Mini bar under each stat */
+.s4-stat-bar{position:absolute;bottom:0;left:8px;right:8px;height:2px;background:rgba(255,255,255,0.03);border-radius:1px;overflow:hidden}
+.s4-stat-bar-fill{height:100%;border-radius:1px;width:0%;transition:width 1s cubic-bezier(0.4,0,0.2,1)}
+
+/* Revenue sparkline in card */
+.s4-card-sparkline{position:absolute;bottom:0;left:0;right:0;height:40px;opacity:0.08;transition:opacity 0.4s;pointer-events:none}
+.s4-card:hover .s4-card-sparkline{opacity:0.18}
+
+@keyframes s4CardGlow{0%{box-shadow:0 0 0 rgba(212,168,67,0)}50%{box-shadow:0 0 20px rgba(212,168,67,0.15)}100%{box-shadow:0 0 0 rgba(212,168,67,0)}}
+
+/* ===== SLIDE 5 ===== */
+.s5-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;height:100%;padding:80px 40px 40px;align-items:start}
+.s5-header{position:absolute;top:0;left:0;right:0;padding:32px 40px 0}
+
+.s5-deal{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.7));border:1px solid rgba(212,168,67,0.15);border-radius:12px;padding:28px;position:relative;overflow:hidden}
+.s5-deal::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(212,168,67,0.06) 0%,transparent 60%);opacity:0;transition:opacity 0.4s;pointer-events:none}
+.s5-deal:hover::after{opacity:1}
+.s5-deal-title{font-size:16px;font-weight:600;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.s5-deal-row{display:flex;justify-content:space-between;align-items:center;padding:10px 10px;margin:0 -10px;border-radius:8px;border-bottom:1px solid rgba(255,255,255,0.03);position:relative;transition:all 0.35s;cursor:default}
+.s5-deal-row:last-child{border-bottom:none}
+.s5-deal-row:hover{background:rgba(212,168,67,0.06);transform:translateX(4px)}
+.s5-deal-row:hover .s5-deal-value{transform:scale(1.08)}
+.s5-deal-label{font-size:12px;color:var(--gray);transition:color 0.3s}
+.s5-deal-row:hover .s5-deal-label{color:var(--gray-light)}
+.s5-deal-value{font-size:17px;font-weight:700;transition:all 0.3s}
+.s5-deal-value.highlight{color:var(--green);font-size:20px}
+.s5-deal-bar{position:absolute;bottom:0;left:10px;right:10px;height:2px;background:rgba(255,255,255,0.03);border-radius:1px;overflow:hidden}
+.s5-deal-bar-fill{height:100%;border-radius:1px;width:0%;transition:width 1s cubic-bezier(0.4,0,0.2,1)}
+
+.s5-right{display:flex;flex-direction:column;gap:20px}
+.s5-donut-wrap{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.7));border:1px solid rgba(212,168,67,0.1);border-radius:12px;padding:24px;text-align:center}
+.s5-donut-title{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:16px}
+.s5-donut-svg{width:220px;height:220px;margin:0 auto}
+.s5-donut-legend{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;margin-top:12px}
+.s5-donut-leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)}
+.s5-donut-leg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+.s5-synergy{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.7));border:1px solid rgba(212,168,67,0.1);border-radius:12px;padding:20px}
+.s5-syn-title{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:12px}
+.s5-syn-item{display:flex;align-items:center;gap:10px;padding:10px 10px;margin:0 -10px;font-size:13px;color:var(--gray-light);border-radius:8px;transition:all 0.35s;cursor:default;position:relative;overflow:hidden}
+.s5-syn-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold);transition:width 0.3s;border-radius:4px}
+.s5-syn-item:hover::before{width:3px}
+.s5-syn-item:hover{background:rgba(212,168,67,0.06);transform:translateX(6px);color:var(--white)}
+.s5-syn-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;transition:transform 0.3s}
+.s5-syn-item:hover .s5-syn-icon{transform:scale(1.2)}
+
+/* ===== SLIDE 6 ===== */
+.s6-layout{display:flex;flex-direction:column;height:100%;padding:80px 40px 40px;gap:24px}
+.s6-header{position:absolute;top:0;left:0;right:0;padding:32px 40px 0}
+
+.s6-team{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.s6-person{background:linear-gradient(145deg,var(--card),rgba(15,29,50,0.7));border:1px solid rgba(212,168,67,0.1);border-radius:12px;padding:20px;text-align:center;transition:all 0.4s;cursor:default;position:relative;overflow:hidden}
+.s6-person::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.s6-person:hover{transform:translateY(-4px);border-color:rgba(212,168,67,0.25);box-shadow:0 8px 30px rgba(0,0,0,0.4)}
+.s6-avatar{width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;background:rgba(212,168,67,0.08);font-size:22px}
+.s6-name{font-size:13px;font-weight:600;color:var(--gold);margin-bottom:4px}
+.s6-exp{font-size:11px;color:var(--gray);line-height:1.4}
+
+.s6-timeline-section{flex:1;display:flex;flex-direction:column;justify-content:center}
+.s6-timeline-label{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:2px;text-transform:uppercase}
+.s6-timeline{position:relative;display:flex;justify-content:space-between;align-items:center;padding:0 20px}
+.s6-timeline-line{position:absolute;top:50%;left:30px;right:30px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transform:translateY(-50%)}
+.s6-milestone{position:relative;display:flex;flex-direction:column;align-items:center;z-index:1;width:140px}
+.s6-ms-date{font-size:13px;font-weight:700;color:var(--gold-light);margin-bottom:12px}
+.s6-ms-dot{width:16px;height:16px;border-radius:50%;background:var(--gold);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--gold),0 0 15px var(--gold-glow);margin-bottom:12px;transition:all 0.3s}
+.s6-milestone:hover .s6-ms-dot{transform:scale(1.5);box-shadow:0 0 0 2px var(--gold),0 0 25px var(--gold-glow)}
+.s6-ms-text{font-size:12px;color:var(--gray-light);text-align:center;line-height:1.5}
+
+.s6-cta{display:flex;justify-content:center;margin-top:auto}
+.s6-cta-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--bg);padding:14px 48px;border-radius:8px;font-size:16px;font-weight:700;letter-spacing:1px;box-shadow:0 4px 20px rgba(212,168,67,0.3);transition:all 0.3s;cursor:pointer;text-decoration:none}
+.s6-cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,168,67,0.4)}
+
+/* Tooltip */
+.chart-tooltip{position:fixed;background:rgba(10,22,40,0.97);border:1px solid var(--gold);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--white);pointer-events:none;opacity:0;transition:opacity 0.15s ease;z-index:10000;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,0.6),0 0 20px var(--gold-glow);backdrop-filter:blur(8px);transform:translateY(-8px)}
+.chart-tooltip.show{opacity:1;transform:translateY(0)}
+.chart-tooltip .tt-title{font-weight:700;color:var(--gold);margin-bottom:6px;font-size:14px;display:flex;align-items:center;gap:6px}
+.chart-tooltip .tt-dot{width:10px;height:10px;border-radius:3px;display:inline-block;flex-shrink:0}
+.chart-tooltip .tt-value{font-size:18px;font-weight:800;color:var(--gold-light)}
+.chart-tooltip .tt-pct{font-size:11px;color:var(--gray);margin-top:2px}
+
+.s3-bar-segment{cursor:pointer}
+.s3-bar-segment:hover{filter:brightness(1.3) saturate(1.2);box-shadow:0 0 20px rgba(212,168,67,0.3);transform:scaleX(1.06);z-index:5;position:relative}
+
+/* Responsive */
+@media(max-width:768px){
+  .s1-metrics{grid-template-columns:repeat(2,1fr)}
+  .s2-layout,.s3-layout,.s5-layout{grid-template-columns:1fr}
+  .s4-layout{grid-template-columns:1fr}
+  .s6-team{grid-template-columns:repeat(2,1fr)}
+  .slide-inner{width:96vw;height:96vh}
+}
+
+/* Gold shine animation */
+@keyframes goldShine{0%{background-position:-200% center}100%{background-position:200% center}}
+.gold-shine{background:linear-gradient(90deg,var(--gold),var(--gold-light),#FFF5D4,var(--gold-light),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShine 4s linear infinite}
+
+/* Donut animation */
+@keyframes donutDraw{from{stroke-dashoffset:var(--circumference)}to{stroke-dashoffset:var(--offset)}}
+.donut-segment{transition:all 0.3s}
+.donut-segment:hover{filter:brightness(1.3);transform-origin:center;transform:scale(1.03)}
+
+/* ===== SLIDE 1 ENHANCED ===== */
+.s1-card{perspective:600px}
+.s1-card-inner{transition:transform 0.4s ease}
+.s1-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(212,168,67,0.12) 0%,transparent 60%);opacity:0;transition:opacity 0.4s;pointer-events:none;border-radius:12px}
+.s1-card:hover::after{opacity:1}
+@keyframes crownPulse{0%{filter:drop-shadow(0 0 20px rgba(212,168,67,0.4))}50%{filter:drop-shadow(0 0 40px rgba(212,168,67,0.7)) drop-shadow(0 0 60px rgba(245,197,99,0.3))}100%{filter:drop-shadow(0 0 20px rgba(212,168,67,0.4))}}
+.s1-crown.animated svg{animation:crownPulse 3s ease-in-out infinite}
+@keyframes titleShimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+.s1-title.animated{background:linear-gradient(90deg,var(--gold),var(--gold-light),#FFF5D4,var(--gold-light),var(--gold));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:titleShimmer 6s linear infinite}
+.s1-card .s1-card-value{position:relative}
+@keyframes counterFlash{0%{text-shadow:0 0 0 transparent}50%{text-shadow:0 0 20px rgba(245,197,99,0.6)}100%{text-shadow:0 0 0 transparent}}
+.s1-card.counter-done .s1-card-value{animation:counterFlash 0.6s ease}
+
+/* ===== SLIDE 5 ENHANCED ===== */
+.s5-deal-row{overflow:hidden}
+.s5-deal-value{position:relative}
+.s5-deal-row .s5-deal-bar{position:absolute;bottom:0;left:10px;right:10px;height:2px;background:rgba(255,255,255,0.03);border-radius:1px;overflow:hidden}
+.s5-deal-row .s5-deal-bar-fill{height:100%;border-radius:1px;width:0%;transition:width 1s cubic-bezier(0.4,0,0.2,1)}
+.s5-donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.s5-donut-center-val{font-size:28px;font-weight:900;color:var(--gold-light)}
+.s5-donut-center-label{font-size:10px;color:var(--gray);margin-top:2px;letter-spacing:1px}
+.s5-syn-item .s5-syn-bar{position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold));width:0%;transition:width 0.8s cubic-bezier(0.4,0,0.2,1)}
+
+/* ===== SLIDE 6 ENHANCED ===== */
+.s6-person::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(212,168,67,0.1) 0%,transparent 60%);opacity:0;transition:opacity 0.4s;pointer-events:none;border-radius:12px}
+.s6-person:hover::after{opacity:1}
+.s6-person:hover{transform:translateY(-6px) scale(1.02);border-color:rgba(212,168,67,0.3);box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 25px rgba(212,168,67,0.1)}
+.s6-avatar{transition:all 0.5s}
+.s6-person:hover .s6-avatar{transform:scale(1.15);box-shadow:0 0 20px rgba(212,168,67,0.3);border-color:var(--gold-light)}
+.s6-name{transition:all 0.3s}
+.s6-person:hover .s6-name{letter-spacing:0.5px}
+@keyframes msPulse{0%{box-shadow:0 0 0 2px var(--gold),0 0 15px var(--gold-glow)}50%{box-shadow:0 0 0 4px var(--gold),0 0 30px var(--gold-glow),0 0 50px rgba(212,168,67,0.15)}100%{box-shadow:0 0 0 2px var(--gold),0 0 15px var(--gold-glow)}}
+.s6-ms-dot.pulsing{animation:msPulse 2s ease-in-out infinite}
+.s6-timeline-line{height:2px;background:linear-gradient(90deg,rgba(212,168,67,0),var(--gold),var(--gold-light),var(--gold),rgba(212,168,67,0));overflow:hidden;position:relative}
+.s6-timeline-line::after{content:'';position:absolute;top:0;left:-50%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);animation:timelineShine 3s ease-in-out infinite}
+@keyframes timelineShine{0%{left:-50%}100%{left:150%}}
+.s6-ms-detail{max-height:0;overflow:hidden;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;opacity:0;font-size:11px;color:var(--gold);margin-top:4px;text-align:center}
+.s6-milestone.expanded .s6-ms-detail{max-height:40px;opacity:1}
+.s6-milestone{cursor:pointer;transition:transform 0.3s}
+.s6-milestone:hover{transform:translateY(-3px)}
+@keyframes ctaPulse{0%{box-shadow:0 4px 20px rgba(212,168,67,0.3)}50%{box-shadow:0 4px 30px rgba(212,168,67,0.5),0 0 50px rgba(212,168,67,0.2)}100%{box-shadow:0 4px 20px rgba(212,168,67,0.3)}}
+.s6-cta-btn{animation:ctaPulse 2.5s ease-in-out infinite}
+.s6-cta-btn:hover{animation:none;box-shadow:0 8px 40px rgba(212,168,67,0.5);transform:translateY(-3px) scale(1.03)}
+.s6-person-stats{display:flex;gap:8px;margin-top:8px;justify-content:center;opacity:0;max-height:0;overflow:hidden;transition:all 0.4s}
+.s6-person:hover .s6-person-stats{opacity:1;max-height:40px}
+.s6-person-stat{font-size:10px;color:var(--gold);background:rgba(212,168,67,0.1);padding:2px 8px;border-radius:4px;border:1px solid rgba(212,168,67,0.15)}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="chart-tooltip" id="chart-tooltip"></div>
+
+<div id="nav-dots"></div>
+<div id="slide-counter">1 / 6</div>
+
+<!-- ===================== SLIDE 1: TITLE ===================== -->
+<section class="slide active" data-slide="0">
+<div class="slide-inner">
+  <div class="s1-bg"></div>
+  <div class="s1-particles" id="particles"></div>
+
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:40px">
+
+    <div class="s1-crown fade-up" style="transition-delay:0.1s">
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M8 48h48v6H8zm4-4L6 16l14 12 12-18 12 18 14-12-6 28z"/></svg>
+    </div>
+
+    <h1 class="s1-title fade-up" style="transition-delay:0.2s">КИНОХОЛДИНГ</h1>
+
+    <p class="s1-subtitle fade-up" style="transition-delay:0.3s">Контентная фабрика нового поколения: кино × блогеры × бренды</p>
+
+    <div class="s1-divider fade-up" style="transition-delay:0.4s"></div>
+
+    <div class="s1-metrics">
+      <div class="s1-card fade-up" style="transition-delay:0.5s">
+        <div class="s1-card-icon">📈</div>
+        <div class="s1-card-value"><span class="counter" data-target="300">0</span> млн ₽</div>
+        <div class="s1-card-label">Выручка 2025</div>
+      </div>
+      <div class="s1-card fade-up" style="transition-delay:0.6s">
+        <div class="s1-card-icon">🚀</div>
+        <div class="s1-card-value"><span class="counter" data-target="115.44">0</span>%</div>
+        <div class="s1-card-label">CAGR выручки</div>
+      </div>
+      <div class="s1-card fade-up" style="transition-delay:0.7s">
+        <div class="s1-card-icon">💰</div>
+        <div class="s1-card-value"><span class="counter" data-target="3">0</span> млрд ₽</div>
+        <div class="s1-card-label">EBITDA 2028</div>
+      </div>
+      <div class="s1-card fade-up" style="transition-delay:0.8s">
+        <div class="s1-card-icon">👥</div>
+        <div class="s1-card-value"><span class="counter" data-target="100">0</span> млн +</div>
+        <div class="s1-card-label">Аудитория</div>
+      </div>
+    </div>
+
+    <p class="s1-tagline fade-up" style="transition-delay:0.9s"><span>4 направления</span>  ·  <span>1 экосистема</span>  ·  Готовый pipeline для стратегического партнёра</p>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 2: MARKET ===================== -->
+<section class="slide" data-slide="1">
+<div class="slide-inner">
+  <div class="s2-header">
+    <h2 class="s2-title fade-up">Рынок и позиционирование</h2>
+    <p class="s2-sub fade-up" style="transition-delay:0.1s">Российский рынок контента: $3.2 млрд и окно возможностей</p>
+  </div>
+  <div class="s2-layout">
+    <div class="tam-container scale-in" style="transition-delay:0.2s">
+      <div class="tam-circle" data-tip="Total Addressable Market — весь рынок кино, контента, блогеров и дистрибуции в РФ" data-counter="3.2" data-suffix=" млрд">
+        <div class="tam-desc">
+          <span class="tam-label">TAM</span>
+          <span class="tam-value">$3.2 млрд</span>
+        </div>
+      </div>
+      <div class="sam-circle" data-tip="Serviceable Addressable Market — сегмент кинопроизводства и инфлюенсер-маркетинга, доступный нам" data-counter="980" data-suffix=" млн">
+        <div class="sam-desc">
+          <span class="sam-label">SAM</span>
+          <span class="sam-value">$980 млн</span>
+        </div>
+      </div>
+      <div class="som-circle" data-tip="Serviceable Obtainable Market 2028 — реалистичная доля рынка при выходе на 3 млрд ₽ выручки" data-counter="30" data-suffix=" млн">
+        <div class="som-desc">
+          <span class="som-label">SOM 2028</span>
+          <span class="som-value">$40 млн</span>
+        </div>
+      </div>
+    </div>
+    <div class="s2-trends">
+      <div class="s2-trend fade-right" style="transition-delay:0.3s" data-bar="85" data-bar-c="var(--gold)" data-tip="Доля отечественного контента в кинопрокате выросла с 25% до 52% за 2 года">
+        <div class="s2-trend-icon">🚀</div>
+        <div>
+          <div class="s2-trend-title">Окно возможностей</div>
+          <div class="s2-trend-desc">Уход западных мейджоров → дефицит контента → рост спроса платформ на локальное производство</div>
+          <span class="s2-trend-stat" style="color:var(--gold);background:rgba(212,168,67,0.1)">+52% доля рус. контента</span>
+        </div>
+        <div class="s2-trend-bar"><div class="s2-trend-bar-fill"></div></div>
+      </div>
+      <div class="s2-trend fade-right" style="transition-delay:0.45s" data-bar="70" data-bar-c="var(--gold-light)" data-tip="Единственный холдинг, объединяющий кинопроизводство + блогерское агентство + продакшн + дистрибуцию">
+        <div class="s2-trend-icon">🔗</div>
+        <div>
+          <div class="s2-trend-title">Кросс-платформенная синергия</div>
+          <div class="s2-trend-desc">Единственная структура, связывающая кинопроизводство с инфлюенсер-экономикой</div>
+          <span class="s2-trend-stat" style="color:var(--gold-light);background:rgba(245,197,99,0.1)">4-в-1 экосистема</span>
+        </div>
+        <div class="s2-trend-bar"><div class="s2-trend-bar-fill"></div></div>
+      </div>
+      <div class="s2-trend fade-right" style="transition-delay:0.6s" data-bar="60" data-bar-c="var(--green)" data-tip="Кинотеатральный сегмент +15%, OTT-платформы +22% год к году">
+        <div class="s2-trend-icon">📈</div>
+        <div>
+          <div class="s2-trend-title">Рост рынка +12% CAGR</div>
+          <div class="s2-trend-desc">Стриминговые платформы наращивают бюджеты на original content</div>
+          <span class="s2-trend-stat" style="color:var(--green);background:rgba(46,204,113,0.1)">OTT +22% г/г</span>
+        </div>
+        <div class="s2-trend-bar"><div class="s2-trend-bar-fill"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 3: FINANCIALS ===================== -->
+<section class="slide" data-slide="2">
+<div class="slide-inner">
+  <div class="s3-header">
+    <h2 class="s2-title fade-up">Финансовые показатели</h2>
+    <p class="s2-sub fade-up" style="transition-delay:0.1s">От 300 млн к 3 млрд ₽ за 3 года</p>
+  </div>
+  <div class="s3-layout">
+    <div class="s3-chart-container fade-left" style="transition-delay:0.2s">
+      <div class="s3-chart">
+        <div class="s3-bar-group" id="bar-chart">
+          <!-- Bars rendered by JS -->
+        </div>
+        <div class="s3-chart-legend">
+          <div class="s3-legend-item"><div class="s3-legend-dot" style="background:var(--accent1)"></div>Кино</div>
+          <div class="s3-legend-item"><div class="s3-legend-dot" style="background:var(--accent2)"></div>Реклама</div>
+          <div class="s3-legend-item"><div class="s3-legend-dot" style="background:var(--accent3)"></div>Фестивали</div>
+          <div class="s3-legend-item"><div class="s3-legend-dot" style="background:var(--accent4)"></div>Обучение</div>
+        </div>
+      </div>
+    </div>
+    <div class="s3-metrics-panel fade-right" style="transition-delay:0.35s" id="metrics-panel">
+      <div class="s3-metrics-title">📊 Ключевые метрики</div>
+
+      <div class="s3-metric-row" data-bar="95" data-bar-color="var(--gold-light)" data-sparkline="300,646,1392,3000">
+        <div class="s3-metric-glow" style="background:var(--gold-light)"></div>
+        <div class="s3-metric-top">
+          <span class="s3-metric-label">Выручка 2028</span>
+          <span class="s3-metric-value gold" data-counter="3" data-suffix=" млрд ₽">3 млрд ₽</span>
+        </div>
+        <div class="s3-metric-bar-track"><div class="s3-metric-bar-fill" style="background:linear-gradient(90deg,rgba(212,168,67,0.3),var(--gold-light))"></div></div>
+      </div>
+
+      <div class="s3-metric-row" data-bar="70" data-bar-color="var(--green)" data-sparkline="-100,220,1020,3000">
+        <div class="s3-metric-glow" style="background:var(--green)"></div>
+        <div class="s3-metric-top">
+          <span class="s3-metric-label">EBITDA 2028</span>
+          <span class="s3-metric-value green" data-counter="3" data-suffix=" млрд ₽">3 млрд ₽</span>
+        </div>
+        <div class="s3-metric-bar-track"><div class="s3-metric-bar-fill" style="background:linear-gradient(90deg,rgba(46,204,113,0.3),var(--green))"></div></div>
+      </div>
+
+      <div class="s3-metric-row" data-bar="60" data-bar-color="var(--green)" data-sparkline="-15,12,25,30">
+        <div class="s3-metric-glow" style="background:var(--green)"></div>
+        <div class="s3-metric-top">
+          <span class="s3-metric-label">Net margin</span>
+          <span class="s3-metric-value green" data-counter="67" data-suffix="%">67%</span>
+        </div>
+        <div class="s3-metric-bar-track"><div class="s3-metric-bar-fill" style="background:linear-gradient(90deg,rgba(46,204,113,0.3),var(--green))"></div></div>
+      </div>
+
+      <div class="s3-metric-row" data-bar="55" data-bar-color="var(--gold-light)" data-sparkline="-200,-30,550,2000">
+        <div class="s3-metric-glow" style="background:var(--gold-light)"></div>
+        <div class="s3-metric-top">
+          <span class="s3-metric-label">Чистая прибыль 2028</span>
+          <span class="s3-metric-value gold" data-counter="2" data-suffix=" млрд ₽">2 млрд ₽</span>
+        </div>
+        <div class="s3-metric-bar-track"><div class="s3-metric-bar-fill" style="background:linear-gradient(90deg,rgba(212,168,67,0.3),var(--gold-light))"></div></div>
+      </div>
+
+      <div class="s3-metric-row" data-bar="85" data-bar-color="var(--gold-light)" data-sparkline="80,95,108,115">
+        <div class="s3-metric-glow" style="background:var(--gold-light)"></div>
+        <div class="s3-metric-top">
+          <span class="s3-metric-label">CAGR выручки</span>
+          <span class="s3-metric-value gold" data-counter="115" data-suffix="%">115%</span>
+        </div>
+        <div class="s3-metric-bar-track"><div class="s3-metric-bar-fill" style="background:linear-gradient(90deg,rgba(212,168,67,0.3),var(--gold-light))"></div></div>
+      </div>
+
+      <div class="s3-metric-row" data-bar="45" data-bar-color="var(--blue)">
+        <div class="s3-metric-glow" style="background:var(--blue)"></div>
+        <div class="s3-metric-top">
+          <span class="s3-metric-label">Breakeven</span>
+          <span class="s3-metric-value blue">Q4 2026</span>
+        </div>
+        <div class="s3-metric-bar-track"><div class="s3-metric-bar-fill" style="background:linear-gradient(90deg,rgba(52,152,219,0.3),var(--blue))"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="s3-breakdown fade-up" style="transition-delay:0.5s">Структура выручки 2028: Кино 40% · Реклама 30% · Фестивали 18% · Обучение 12%</div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 4: UNIT ECONOMICS ===================== -->
+<section class="slide" data-slide="3">
+<div class="slide-inner">
+  <div class="s4-header">
+    <h2 class="s2-title fade-up">Экономика направлений</h2>
+    <p class="s2-sub fade-up" style="transition-delay:0.1s">Юнит-экономика и ключевые драйверы каждого бизнеса</p>
+  </div>
+  <div class="s4-layout">
+    <div class="s4-card fade-up" style="transition-delay:0.2s" data-accent="#D4A843" data-gauge="89" data-gauge-label="ROI" data-spark="28,52,94,145">
+      <div class="s4-card-header"><span class="s4-card-icon">🎬</span><span class="s4-card-title">Кино</span></div>
+      <div class="s4-stat" data-bar="90" data-bar-c="#D4A843"><span class="s4-stat-label">Бюджет проектов</span><span class="s4-stat-value">1,85 млрд ₽</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="85" data-bar-c="#D4A843"><span class="s4-stat-label">Выручка проекта</span><span class="s4-stat-value">3,5 млрд ₽</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="89" data-bar-c="#2ECC71"><span class="s4-stat-label">ROI на проект</span><span class="s4-stat-value" style="color:var(--green)">89%</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="90" data-bar-c="#D4A843"><span class="s4-stat-label">Pipeline за 3 года</span><span class="s4-stat-value">5 п/м, 2 сериала</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+    </div>
+    <div class="s4-card fade-up" style="transition-delay:0.3s" data-accent="#F5C563" data-gauge="50" data-gauge-label="COM" data-spark="120,230,380,500">
+      <div class="s4-card-header"><span class="s4-card-icon">📣</span><span class="s4-card-title">Реклама</span></div>
+      <div class="s4-stat" data-bar="80" data-bar-c="#F5C563"><span class="s4-stat-label">Продукт-плейсмент</span><span class="s4-stat-value">500 млн+ ₽</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="50" data-bar-c="#F5C563"><span class="s4-stat-label">Комиссия</span><span class="s4-stat-value" style="color:var(--gold-light)">50%</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="65" data-bar-c="#F5C563"><span class="s4-stat-label">ARPU на бренд</span><span class="s4-stat-value">45 млн ₽/год</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="60" data-bar-c="#2ECC71"><span class="s4-stat-label">Бренды</span><span class="s4-stat-value" style="color:var(--green)">5+ брендов ежегодно</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+    </div>
+    <div class="s4-card fade-up" style="transition-delay:0.4s" data-accent="#3498DB" data-gauge="92" data-gauge-label="NPS" data-spark="200,450,750,1000">
+      <div class="s4-card-header"><span class="s4-card-icon">🎪</span><span class="s4-card-title">Фестивали</span></div>
+      <div class="s4-stat" data-bar="85" data-bar-c="#3498DB"><span class="s4-stat-label">Посещаемость за 3 года</span><span class="s4-stat-value">1 млн + чел.</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="75" data-bar-c="#3498DB"><span class="s4-stat-label">Охват городов</span><span class="s4-stat-value" style="color:var(--blue)">300</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="80" data-bar-c="#3498DB"><span class="s4-stat-label">Медиа охват</span><span class="s4-stat-value">50 млн+</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="70" data-bar-c="#2ECC71"><span class="s4-stat-label">Pipeline за 3 года</span><span class="s4-stat-value" style="color:var(--green)">6 фестивалей</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+    </div>
+    <div class="s4-card fade-up" style="transition-delay:0.5s" data-accent="#2ECC71" data-gauge="85" data-gauge-label="GROW" data-spark="9,20,30,46">
+      <div class="s4-card-header"><span class="s4-card-icon">🌍</span><span class="s4-card-title">Обучение</span></div>
+      <div class="s4-stat" data-bar="55" data-bar-c="#2ECC71"><span class="s4-stat-label">LTV учащегося</span><span class="s4-stat-value">15 000 ₽</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="80" data-bar-c="#2ECC71"><span class="s4-stat-label">Охват за 3 года</span><span class="s4-stat-value">70+ тыс. учащихся</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="90" data-bar-c="#2ECC71"><span class="s4-stat-label">Территории</span><span class="s4-stat-value" style="color:var(--green)">РФ + СНГ + BRICS</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+      <div class="s4-stat" data-bar="70" data-bar-c="#2ECC71"><span class="s4-stat-label">Единиц контента</span><span class="s4-stat-value">8+ тыс.</span><div class="s4-stat-bar"><div class="s4-stat-bar-fill"></div></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 5: INVESTMENT PROPOSAL ===================== -->
+<section class="slide" data-slide="4">
+<div class="slide-inner">
+  <div class="s5-header">
+    <h2 class="s2-title fade-up">Инвестиционное предложение</h2>
+    <p class="s2-sub fade-up" style="transition-delay:0.1s">Раунд 1.25 млрд ₽ → оценка 21 млрд ₽ к 2028</p>
+  </div>
+  <div class="s5-layout">
+    <div class="s5-deal fade-left" style="transition-delay:0.2s">
+      <div class="s5-deal-title">💎 Условия сделки</div>
+      <div class="s5-deal-row" data-bar="80" data-bar-c="var(--gold)" data-tip="Раунд A — стратегический инвестор"><span class="s5-deal-label">Инвестиции</span><span class="s5-deal-value gold">1.25 млрд ₽</span><div class="s5-deal-bar"><div class="s5-deal-bar-fill"></div></div></div>
+      <div class="s5-deal-row" data-bar="80" data-bar-c="var(--white)" data-counter="51" data-suffix="%" data-tip="Контрольный пакет с Board seat"><span class="s5-deal-label">Доля инвестора</span><span class="s5-deal-value" style="color:var(--white)">51%</span><div class="s5-deal-bar"><div class="s5-deal-bar-fill"></div></div></div>
+      <div class="s5-deal-row" data-bar="65" data-bar-c="var(--white)" data-tip="На основе DCF + сравнительного анализа"><span class="s5-deal-label">Pre-money valuation</span><span class="s5-deal-value" style="color:var(--white)">1.2 млрд ₽</span><div class="s5-deal-bar"><div class="s5-deal-bar-fill"></div></div></div>
+      <div class="s5-deal-row" data-bar="95" data-bar-c="var(--gold)" data-tip="EV/EBITDA 7× на EBITDA 3 млрд ₽"><span class="s5-deal-label">Целевая оценка 2028</span><span class="s5-deal-value gold">21 млрд ₽</span><div class="s5-deal-bar"><div class="s5-deal-bar-fill"></div></div></div>
+      <div class="s5-deal-row" data-bar="90" data-bar-c="var(--green)" data-tip="Возврат ×8.6 за 3 года"><span class="s5-deal-label">Money Multiple</span><span class="s5-deal-value highlight">8.6x</span><div class="s5-deal-bar"><div class="s5-deal-bar-fill"></div></div></div>
+      <div class="s5-deal-row" data-bar="95" data-bar-c="var(--green)" data-tip="Топ-квартиль для медиа-сектора РФ"><span class="s5-deal-label">IRR</span><span class="s5-deal-value highlight">~105%</span><div class="s5-deal-bar"><div class="s5-deal-bar-fill"></div></div></div>
+      <div class="s5-deal-row" data-bar="50" data-bar-c="var(--white)" data-tip="Медиана отрасли 6–9×"><span class="s5-deal-label">EV/EBITDA 2028</span><span class="s5-deal-value" style="color:var(--white)">7.0x</span><div class="s5-deal-bar"><div class="s5-deal-bar-fill"></div></div></div>
+    </div>
+    <div class="s5-right">
+      <div class="s5-donut-wrap fade-right" style="transition-delay:0.3s">
+        <div class="s5-donut-title">Использование средств</div>
+        <div style="position:relative;width:220px;height:220px;margin:0 auto">
+          <svg class="s5-donut-svg" viewBox="0 0 220 220" id="donut-chart" style="width:100%;height:100%"></svg>
+          <div class="s5-donut-center"><div class="s5-donut-center-val"><span class="counter" data-target="1.25">0</span></div><div class="s5-donut-center-label">МЛРД ₽</div></div>
+        </div>
+        <div class="s5-donut-legend">
+          <div class="s5-donut-leg-item"><div class="s5-donut-leg-dot" style="background:var(--accent1)"></div>Кино 40%</div>
+          <div class="s5-donut-leg-item"><div class="s5-donut-leg-dot" style="background:var(--accent2)"></div>Реклама 30%</div>
+          <div class="s5-donut-leg-item"><div class="s5-donut-leg-dot" style="background:var(--accent3)"></div>Фестивали 18%</div>
+          <div class="s5-donut-leg-item"><div class="s5-donut-leg-dot" style="background:var(--accent4)"></div>Обучение 12%</div>
+        </div>
+      </div>
+      <div class="s5-synergy fade-right" style="transition-delay:0.45s">
+        <div class="s5-syn-title">Синергия для стратега:</div>
+        <div class="s5-syn-item" data-tip="3 сериала + 1 п/м в pipeline 2026"><span class="s5-syn-icon">🎬</span>Эксклюзивный pipeline контента<div class="s5-syn-bar"></div></div>
+        <div class="s5-syn-item" data-tip="Совокупный охват аудитории холдинга"><span class="s5-syn-icon">📡</span>100 млн + аудитории<div class="s5-syn-bar"></div></div>
+        <div class="s5-syn-item" data-tip="Полный цикл: сценарий → постпродакшн"><span class="s5-syn-icon">🏗️</span>Production house без capex<div class="s5-syn-bar"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== SLIDE 6: TEAM & MILESTONES ===================== -->
+<section class="slide" data-slide="5">
+<div class="slide-inner">
+  <div class="s6-header">
+    <h2 class="s2-title fade-up">Команда и milestones</h2>
+    <p class="s2-sub fade-up" style="transition-delay:0.1s">Команда, которая уже делает</p>
+  </div>
+  <div class="s6-layout">
+    <div class="s6-team">
+      <div class="s6-person fade-up" style="transition-delay:0.2s">
+        <div class="s6-avatar">🎬</div>
+        <div class="s6-name">CEO / Продюсер</div>
+        <div class="s6-exp">15 лет в кинопроизводстве, 8 полных метров</div>
+        <div class="s6-person-stats"><span class="s6-person-stat">15 лет</span><span class="s6-person-stat">8 фильмов</span></div>
+      </div>
+      <div class="s6-person fade-up" style="transition-delay:0.3s">
+        <div class="s6-avatar">🎭</div>
+        <div class="s6-name">CCO / Креативный директор</div>
+        <div class="s6-exp">2 мировых фестивальных рекорда</div>
+        <div class="s6-person-stats"><span class="s6-person-stat">1300+ городов</span><span class="s6-person-stat">230 млн медиа-охват</span></div>
+      </div>
+      <div class="s6-person fade-up" style="transition-delay:0.4s">
+        <div class="s6-avatar">👥</div>
+        <div class="s6-name">Head of Talent</div>
+        <div class="s6-exp">150+ блогеров</div>
+        <div class="s6-person-stats"><span class="s6-person-stat">150+ блогеров</span><span class="s6-person-stat">1+ млрд охват</span></div>
+      </div>
+      <div class="s6-person fade-up" style="transition-delay:0.5s">
+        <div class="s6-avatar">💼</div>
+        <div class="s6-name">CFO</div>
+        <div class="s6-exp">Ex-Big4, M&A в медиа-секторе</div>
+        <div class="s6-person-stats"><span class="s6-person-stat">Big4</span><span class="s6-person-stat">M&A медиа</span></div>
+      </div>
+    </div>
+
+    <div class="s6-timeline-section">
+      <div class="s6-timeline-label fade-up" style="transition-delay:0.5s">Дорожная карта</div>
+      <div class="s6-timeline">
+        <div class="s6-timeline-line"></div>
+        <div class="s6-milestone fade-up" style="transition-delay:0.6s" data-detail="6 стриминговых платформ + кассовые сборы">
+          <div class="s6-ms-date">Q2 2026</div>
+          <div class="s6-ms-dot"></div>
+          <div class="s6-ms-text">Запуск 2 п/м<br>и 1 сериала</div>
+          <div class="s6-ms-detail"></div>
+        </div>
+        <div class="s6-milestone fade-up" style="transition-delay:0.7s" data-detail="EBITDA break-even">
+          <div class="s6-ms-date">Q4 2026</div>
+          <div class="s6-ms-dot"></div>
+          <div class="s6-ms-text">Breakeven<br>EBITDA break-even</div>
+          <div class="s6-ms-detail"></div>
+        </div>
+        <div class="s6-milestone fade-up" style="transition-delay:0.8s" data-detail="СНГ + BRICS">
+          <div class="s6-ms-date">Q2 2027</div>
+          <div class="s6-ms-dot"></div>
+          <div class="s6-ms-text">Международный<br>licensing deal</div>
+          <div class="s6-ms-detail"></div>
+        </div>
+        <div class="s6-milestone fade-up" style="transition-delay:0.9s" data-detail="Выход / следующий раунд Series B">
+          <div class="s6-ms-date">Q4 2028</div>
+          <div class="s6-ms-dot"></div>
+          <div class="s6-ms-text">EBITDA 3 млрд ₽<br>Следующий раунд</div>
+          <div class="s6-ms-detail"></div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+</section>
+
+<script>
+// ===== Slide Navigation =====
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+let isAnimating = false;
+
+const progress = document.getElementById('progress');
+const counter = document.getElementById('slide-counter');
+const dotsContainer = document.getElementById('nav-dots');
+
+// Create nav dots
+for(let i = 0; i < totalSlides; i++){
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+}
+
+function updateProgress(){
+  const pct = ((currentSlide) / (totalSlides - 1)) * 100;
+  progress.style.width = pct + '%';
+  counter.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+  document.querySelectorAll('.nav-dot').forEach((d,i) => {
+    d.classList.toggle('active', i === currentSlide);
+  });
+}
+
+function goToSlide(n){
+  if(isAnimating || n === currentSlide || n < 0 || n >= totalSlides) return;
+  isAnimating = true;
+
+  slides[currentSlide].classList.remove('active');
+  currentSlide = n;
+  slides[currentSlide].classList.add('active');
+  updateProgress();
+
+  // Trigger animations
+  setTimeout(() => animateSlide(currentSlide), 100);
+  setTimeout(() => { isAnimating = false; }, 700);
+}
+
+function nextSlide(){ goToSlide(currentSlide + 1); }
+function prevSlide(){ goToSlide(currentSlide - 1); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+});
+
+// Touch/swipe
+let touchStartX = 0, touchStartY = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50){
+    if(dx < 0) nextSlide(); else prevSlide();
+  }
+});
+
+// Wheel
+let wheelTimeout;
+document.addEventListener('wheel', e => {
+  clearTimeout(wheelTimeout);
+  wheelTimeout = setTimeout(() => {
+    if(e.deltaY > 0) nextSlide(); else prevSlide();
+  }, 50);
+}, {passive: true});
+
+// ===== Animations =====
+function animateSlide(n){
+  const slide = slides[n];
+  const els = slide.querySelectorAll('.fade-up,.fade-left,.fade-right,.scale-in');
+  els.forEach((el, i) => {
+    el.classList.remove('visible');
+    const delay = parseFloat(el.style.transitionDelay || '0') * 1000;
+    setTimeout(() => el.classList.add('visible'), delay);
+  });
+
+  // Slide-specific animations
+  if(n === 0) animateSlide1(slide);
+  if(n === 1) animateMarketSlide();
+  if(n === 2){ animateBarChart(); animateMetricsPanel(); }
+  if(n === 3) animateUnitCards();
+  if(n === 4){ animateDonut(); animateInvestmentSlide(); }
+  if(n === 5) animateTeamSlide();
+}
+
+// ===== Counter Animation =====
+function animateCounters(container){
+  container.querySelectorAll('.counter').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    let current = 0;
+    const duration = 1500;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      current += step;
+      if(current >= target){ current = target; clearInterval(timer); }
+      el.textContent = Math.round(current);
+    }, 16);
+  });
+}
+
+// ===== Particles (Slide 1) =====
+function createParticles(){
+  const container = document.getElementById('particles');
+  for(let i = 0; i < 30; i++){
+    const p = document.createElement('div');
+    p.className = 's1-particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 15) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+    container.appendChild(p);
+  }
+}
+createParticles();
+
+// ===== Bar Chart (Slide 3) =====
+const barData = [
+  { year: '2025', studio: 120, bloggers: 90, production: 54, distrib: 36, total: 300 },
+  { year: '2026', studio: 258, bloggers: 194, production: 116, distrib: 78, total: 646 },
+  { year: '2027', studio: 557, bloggers: 418, production: 251, distrib: 167, total: 1393 },
+  { year: '2028', studio: 1200, bloggers: 900, production: 540, distrib: 360, total: 3000 },
+];
+
+const tooltip = document.getElementById('chart-tooltip');
+let tooltipTimeout;
+
+function showTooltip(e, html){
+  clearTimeout(tooltipTimeout);
+  tooltip.innerHTML = html;
+  tooltip.classList.add('show');
+  const rect = tooltip.getBoundingClientRect();
+  let x = e.clientX + 16;
+  let y = e.clientY - 16;
+  if(x + rect.width > window.innerWidth - 20) x = e.clientX - rect.width - 16;
+  if(y < 10) y = e.clientY + 20;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+function hideTooltip(){
+  tooltipTimeout = setTimeout(() => { tooltip.classList.remove('show'); }, 50);
+}
+
+// ===== Unit Economics Cards Animation (Slide 4) =====
+function animateUnitCards(){
+  const cards = document.querySelectorAll('.s4-card');
+
+  cards.forEach((card, ci) => {
+    const accent = card.dataset.accent || '#D4A843';
+    const gaugeVal = parseInt(card.dataset.gauge || '0');
+    const gaugeLabel = card.dataset.gaugeLabel || '';
+    const sparkRaw = card.dataset.spark;
+
+    // === Inject radial gauge (top-right) ===
+    if(!card.querySelector('.s4-gauge')){
+      const r = 20, circ = 2 * Math.PI * r;
+      const offset = circ - (gaugeVal / 100) * circ;
+      const gaugeSvg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      gaugeSvg.setAttribute('class','s4-gauge');
+      gaugeSvg.setAttribute('viewBox','0 0 52 52');
+      gaugeSvg.innerHTML =
+        '<circle cx="26" cy="26" r="' + r + '" class="s4-gauge-ring"/>' +
+        '<circle cx="26" cy="26" r="' + r + '" class="s4-gauge-fill" stroke="' + accent + '" ' +
+          'stroke-dasharray="' + circ + '" stroke-dashoffset="' + circ + '" transform="rotate(-90 26 26)" ' +
+          'data-target="' + offset + '" data-circ="' + circ + '"/>' +
+        '<text x="26" y="24" class="s4-gauge-text">' + gaugeVal + '%</text>' +
+        '<text x="26" y="34" font-size="7" fill="' + accent + '" text-anchor="middle" opacity="0.7">' + gaugeLabel + '</text>';
+      card.appendChild(gaugeSvg);
+
+      // Animate gauge fill
+      const fillCircle = gaugeSvg.querySelector('.s4-gauge-fill');
+      setTimeout(() => {
+        fillCircle.style.strokeDashoffset = offset;
+      }, 500 + ci * 200);
+    }
+
+    // === Inject sparkline area (bottom of card) ===
+    if(sparkRaw && !card.querySelector('.s4-card-sparkline')){
+      const vals = sparkRaw.split(',').map(Number);
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const w = 300, h = 40;
+      const min = Math.min(...vals, 0);
+      const max = Math.max(...vals);
+      const range = max - min || 1;
+
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('class', 's4-card-sparkline');
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+      svg.setAttribute('preserveAspectRatio', 'none');
+      svg.style.width = '100%';
+      svg.style.height = '40px';
+
+      const pts = vals.map((v, i) => {
+        const x = (i / (vals.length - 1)) * w;
+        const y = h - ((v - min) / range) * (h - 4) - 2;
+        return x + ',' + y;
+      });
+
+      const area = document.createElementNS(svgNS, 'polygon');
+      area.setAttribute('points', pts.join(' ') + ' ' + w + ',' + h + ' 0,' + h);
+      area.setAttribute('fill', accent);
+      svg.appendChild(area);
+
+      card.appendChild(svg);
+    }
+
+    // === Animate stat mini-bars ===
+    const stats = card.querySelectorAll('.s4-stat');
+    stats.forEach((stat, si) => {
+      const barVal = parseInt(stat.dataset.bar || '0');
+      const barColor = stat.dataset.barC || accent;
+      const fill = stat.querySelector('.s4-stat-bar-fill');
+      if(fill){
+        fill.style.background = 'linear-gradient(90deg, ' + barColor + '33, ' + barColor + ')';
+        fill.style.width = '0%';
+        setTimeout(() => { fill.style.width = barVal + '%'; }, 600 + ci * 200 + si * 100);
+      }
+
+      // Hover tooltip per stat
+      stat.addEventListener('mouseenter', function(e){
+        const label = stat.querySelector('.s4-stat-label').textContent;
+        const value = stat.querySelector('.s4-stat-value').textContent;
+        const title = card.querySelector('.s4-card-title').textContent;
+        showTooltip(e,
+          '<div class="tt-title"><span class="tt-dot" style="background:' + accent + '"></span>' + title + '</div>' +
+          '<div style="font-size:12px;color:var(--gray-light);margin-top:4px">' + label + '</div>' +
+          '<div class="tt-value">' + value + '</div>'
+        );
+      });
+      stat.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+      stat.addEventListener('mouseleave', hideTooltip);
+    });
+
+    // === Mouse tracking glow ===
+    card.addEventListener('mousemove', function(e){
+      const rect = card.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const my = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+      card.style.setProperty('--mx', mx + '%');
+      card.style.setProperty('--my', my + '%');
+    });
+  });
+}
+
+// ===== Metrics Panel Animation (Slide 3) =====
+function animateMetricsPanel(){
+  const rows = document.querySelectorAll('#metrics-panel .s3-metric-row');
+
+  rows.forEach((row, i) => {
+    const barTarget = parseInt(row.dataset.bar || '0');
+    const fill = row.querySelector('.s3-metric-bar-fill');
+
+    // Animate progress bar with staggered delay
+    if(fill){
+      fill.style.width = '0%';
+      setTimeout(() => { fill.style.width = barTarget + '%'; }, 400 + i * 180);
+    }
+
+    // Animate counter values
+    const valEl = row.querySelector('[data-counter]');
+    if(valEl){
+      const target = parseInt(valEl.dataset.counter);
+      const suffix = valEl.dataset.suffix || '';
+      let current = 0;
+      const startDelay = 300 + i * 180;
+
+      setTimeout(() => {
+        const duration = 1200;
+        const step = target / (duration / 16);
+        const negative = target < 0;
+        const absTarget = Math.abs(target);
+
+        const timer = setInterval(() => {
+          current += Math.abs(step);
+          if(current >= absTarget){ current = absTarget; clearInterval(timer); }
+          valEl.textContent = (negative ? '-' : '') + Math.round(current) + suffix;
+        }, 16);
+      }, startDelay);
+    }
+
+    // Draw sparkline SVGs
+    const sparkData = row.dataset.sparkline;
+    if(sparkData){
+      const vals = sparkData.split(',').map(Number);
+      const svg = createSparkline(vals, row.dataset.barColor || 'var(--gold)');
+      svg.classList.add('s3-metric-sparkline');
+      row.appendChild(svg);
+    }
+
+    // Hover tooltip on metrics
+    row.addEventListener('mouseenter', function(e){
+      const label = row.querySelector('.s3-metric-label').textContent;
+      const value = row.querySelector('.s3-metric-value').textContent;
+      const sparkData = row.dataset.sparkline;
+
+      let years = '';
+      if(sparkData){
+        const vals = sparkData.split(',');
+        years = '<div class="tt-pct" style="margin-top:6px">2025: ' + vals[0] + ' → 2026: ' + vals[1] + ' → 2027: ' + vals[2] + ' → 2028: ' + vals[3] + '</div>';
+      }
+
+      showTooltip(e,
+        '<div class="tt-title">' + label + '</div>' +
+        '<div class="tt-value">' + value + '</div>' +
+        years
+      );
+    });
+    row.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+    row.addEventListener('mouseleave', hideTooltip);
+  });
+}
+
+function createSparkline(vals, color){
+  const w = 60, h = 24, pad = 2;
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+  const range = max - min || 1;
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', w);
+  svg.setAttribute('height', h);
+  svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+  svg.style.overflow = 'visible';
+
+  const points = vals.map((v, i) => {
+    const x = pad + (i / (vals.length - 1)) * (w - pad * 2);
+    const y = pad + (1 - (v - min) / range) * (h - pad * 2);
+    return x + ',' + y;
+  });
+
+  // Area fill
+  const area = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+  const areaPoints = points.join(' ') + ' ' + (w - pad) + ',' + (h - pad) + ' ' + pad + ',' + (h - pad);
+  area.setAttribute('points', areaPoints);
+  area.setAttribute('fill', 'currentColor');
+  area.setAttribute('opacity', '0.15');
+  area.style.color = color;
+  svg.appendChild(area);
+
+  // Line
+  const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+  polyline.setAttribute('points', points.join(' '));
+  polyline.setAttribute('fill', 'none');
+  polyline.setAttribute('stroke', 'currentColor');
+  polyline.setAttribute('stroke-width', '1.5');
+  polyline.setAttribute('stroke-linecap', 'round');
+  polyline.setAttribute('stroke-linejoin', 'round');
+  polyline.style.color = color;
+  svg.appendChild(polyline);
+
+  // End dot
+  const lastPt = points[points.length - 1].split(',');
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', lastPt[0]);
+  circle.setAttribute('cy', lastPt[1]);
+  circle.setAttribute('r', '2.5');
+  circle.setAttribute('fill', 'currentColor');
+  circle.style.color = color;
+  svg.appendChild(circle);
+
+  return svg;
+}
+
+const segmentColors = {
+  'Кино': '#D4A843',
+  'Реклама': '#F5C563',
+  'Фестивали': '#3498DB',
+  'Обучение': '#2ECC71',
+};
+
+function animateBarChart(){
+  const container = document.getElementById('bar-chart');
+  container.innerHTML = '';
+  const maxVal = 3200;
+  const barH = 260;
+
+  barData.forEach((d, idx) => {
+    const stack = document.createElement('div');
+    stack.className = 's3-bar-stack';
+
+    const segments = [
+      { val: d.distrib, color: 'var(--accent4)', label: 'Обучение' },
+      { val: d.production, color: 'var(--accent3)', label: 'Фестивали' },
+      { val: d.bloggers, color: 'var(--accent2)', label: 'Реклама' },
+      { val: d.studio, color: 'var(--accent1)', label: 'Кино' },
+    ];
+
+    segments.forEach((seg, si) => {
+      const div = document.createElement('div');
+      div.className = 's3-bar-segment';
+      const targetH = (seg.val / maxVal) * barH;
+      div.style.height = '0px';
+      div.style.background = seg.color;
+      div.style.transition = 'height 0.6s cubic-bezier(0.4,0,0.2,1), filter 0.2s, box-shadow 0.2s, transform 0.2s';
+
+      const pct = Math.round((seg.val / d.total) * 100);
+
+      div.addEventListener('mouseenter', function(e){
+        showTooltip(e,
+          '<div class="tt-title"><span class="tt-dot" style="background:' + segmentColors[seg.label] + '"></span>' + seg.label + ' · ' + d.year + '</div>' +
+          '<div class="tt-value">' + seg.val + ' млн ₽</div>' +
+          '<div class="tt-pct">' + pct + '% от выручки ' + d.year + ' (' + d.total + ' млн ₽)</div>'
+        );
+      });
+      div.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+      div.addEventListener('mouseleave', hideTooltip);
+
+      setTimeout(() => {
+        div.style.height = targetH + 'px';
+      }, 200 + idx * 150 + si * 50);
+
+      stack.appendChild(div);
+    });
+
+    // Total label
+    const total = document.createElement('div');
+    total.className = 's3-bar-total';
+    total.textContent = d.total >= 1000 ? (d.total / 1000).toFixed(1).replace('.0','') + ' млрд' : d.total + ' млн';
+    total.style.opacity = '0';
+    setTimeout(() => { total.style.opacity = '1'; total.style.transition = 'opacity 0.4s'; }, 600 + idx * 150);
+    stack.appendChild(total);
+
+    // Year label
+    const lbl = document.createElement('div');
+    lbl.className = 's3-bar-label';
+    lbl.textContent = d.year;
+    if(idx === 0) lbl.style.fontStyle = 'italic';
+    stack.appendChild(lbl);
+
+    container.appendChild(stack);
+  });
+}
+
+// ===== Market Slide Animation (Slide 2) =====
+function animateMarketSlide(){
+  // Pulse circles sequentially
+  const tam = document.querySelector('.tam-circle');
+  const sam = document.querySelector('.sam-circle');
+  const som = document.querySelector('.som-circle');
+  if(tam) setTimeout(() => tam.classList.add('animated'), 400);
+  if(sam) setTimeout(() => sam.classList.add('animated'), 700);
+  if(som) setTimeout(() => som.classList.add('animated'), 1000);
+
+  // Tooltips on circles
+  [tam, sam, som].forEach(circle => {
+    if(!circle) return;
+    const tip = circle.dataset.tip;
+    if(!tip) return;
+    circle.addEventListener('mouseenter', function(e){
+      const label = circle.querySelector('.tam-label,.sam-label,.som-label');
+      const value = circle.querySelector('.tam-value,.sam-value,.som-value');
+      const lbl = label ? label.textContent : '';
+      const val = value ? value.textContent : '';
+      showTooltip(e,
+        '<div class="tt-title">🎯 ' + lbl + '</div>' +
+        '<div class="tt-value">' + val + '</div>' +
+        '<div class="tt-pct" style="margin-top:4px;max-width:260px;white-space:normal;line-height:1.4">' + tip + '</div>'
+      );
+    });
+    circle.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+    circle.addEventListener('mouseleave', hideTooltip);
+  });
+
+  // Trend cards — progress bars, mouse tracking, tooltips
+  const trends = document.querySelectorAll('.s2-trend');
+  trends.forEach((trend, i) => {
+    const barVal = parseInt(trend.dataset.bar || '0');
+    const barColor = trend.dataset.barC || 'var(--gold)';
+    const fill = trend.querySelector('.s2-trend-bar-fill');
+    if(fill){
+      fill.style.background = 'linear-gradient(90deg, transparent, ' + barColor + ')';
+      fill.style.width = '0%';
+      setTimeout(() => { fill.style.width = barVal + '%'; }, 600 + i * 200);
+    }
+
+    // Mouse tracking glow
+    trend.addEventListener('mousemove', function(e){
+      const rect = trend.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const my = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+      trend.style.setProperty('--mx', mx + '%');
+      trend.style.setProperty('--my', my + '%');
+    });
+
+    // Tooltip on hover
+    const tip = trend.dataset.tip;
+    if(tip){
+      trend.addEventListener('mouseenter', function(e){
+        const title = trend.querySelector('.s2-trend-title').textContent;
+        showTooltip(e,
+          '<div class="tt-title">' + title + '</div>' +
+          '<div class="tt-pct" style="margin-top:4px;max-width:280px;white-space:normal;line-height:1.4">' + tip + '</div>'
+        );
+      });
+      trend.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+      trend.addEventListener('mouseleave', hideTooltip);
+    }
+  });
+}
+
+// ===== Slide 1 Enhanced Animation =====
+function animateSlide1(slide){
+  // Counter animation
+  animateCounters(slide);
+
+  // Crown pulse
+  const crown = slide.querySelector('.s1-crown');
+  if(crown) setTimeout(() => crown.classList.add('animated'), 800);
+
+  // Title shimmer
+  const title = slide.querySelector('.s1-title');
+  if(title) setTimeout(() => title.classList.add('animated'), 1200);
+
+  // Card mouse tracking + 3D tilt
+  const cards = slide.querySelectorAll('.s1-card');
+  cards.forEach((card, ci) => {
+    card.addEventListener('mousemove', function(e){
+      const rect = card.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const my = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+      card.style.setProperty('--mx', mx + '%');
+      card.style.setProperty('--my', my + '%');
+      // 3D tilt
+      const rotX = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
+      const rotY = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+      card.style.transform = 'translateY(-4px) perspective(600px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg)';
+    });
+    card.addEventListener('mouseleave', function(){
+      card.style.transform = '';
+    });
+
+    // Flash when counter done
+    const counter = card.querySelector('.counter');
+    if(counter){
+      const target = parseInt(counter.dataset.target);
+      const dur = 1500;
+      setTimeout(() => card.classList.add('counter-done'), dur + 100 + ci * 100);
+    }
+  });
+}
+
+// ===== Investment Slide Animation (Slide 5) =====
+function animateInvestmentSlide(){
+  const deal = document.querySelector('.s5-deal');
+  if(!deal) return;
+
+  // Mouse tracking glow on deal panel
+  deal.addEventListener('mousemove', function(e){
+    const rect = deal.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+    const my = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+    deal.style.setProperty('--mx', mx + '%');
+    deal.style.setProperty('--my', my + '%');
+  });
+
+  // Deal rows — progress bars, counters, tooltips
+  const rows = deal.querySelectorAll('.s5-deal-row');
+  rows.forEach((row, i) => {
+    const barVal = parseInt(row.dataset.bar || '0');
+    const barColor = row.dataset.barC || 'var(--gold)';
+    const fill = row.querySelector('.s5-deal-bar-fill');
+    if(fill){
+      fill.style.background = 'linear-gradient(90deg, transparent, ' + barColor + ')';
+      fill.style.width = '0%';
+      setTimeout(() => { fill.style.width = barVal + '%'; }, 400 + i * 120);
+    }
+
+    // Counter animation for deal values
+    const counterTarget = row.dataset.counter;
+    const suffix = row.dataset.suffix || '';
+    if(counterTarget){
+      const valEl = row.querySelector('.s5-deal-value');
+      const target = parseInt(counterTarget);
+      let current = 0;
+      setTimeout(() => {
+        const step = target / (1200 / 16);
+        const timer = setInterval(() => {
+          current += step;
+          if(current >= target){ current = target; clearInterval(timer); }
+          valEl.textContent = Math.round(current) + suffix;
+        }, 16);
+      }, 300 + i * 120);
+    }
+
+    // Tooltip on hover
+    const tip = row.dataset.tip;
+    if(tip){
+      row.addEventListener('mouseenter', function(e){
+        const label = row.querySelector('.s5-deal-label').textContent;
+        const value = row.querySelector('.s5-deal-value').textContent;
+        showTooltip(e,
+          '<div class="tt-title">💎 ' + label + '</div>' +
+          '<div class="tt-value">' + value + '</div>' +
+          '<div class="tt-pct" style="margin-top:4px">' + tip + '</div>'
+        );
+      });
+      row.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+      row.addEventListener('mouseleave', hideTooltip);
+    }
+  });
+
+  // Synergy items — bar animation + tooltips
+  const synItems = document.querySelectorAll('.s5-syn-item');
+  synItems.forEach((item, i) => {
+    const bar = item.querySelector('.s5-syn-bar');
+    if(bar){
+      setTimeout(() => { bar.style.width = '100%'; }, 600 + i * 200);
+    }
+    const tip = item.dataset.tip;
+    if(tip){
+      item.addEventListener('mouseenter', function(e){
+        showTooltip(e,
+          '<div class="tt-title">🔗 Синергия</div>' +
+          '<div style="font-size:13px;color:var(--gray-light);margin-top:4px">' + tip + '</div>'
+        );
+      });
+      item.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+      item.addEventListener('mouseleave', hideTooltip);
+    }
+  });
+
+  // Donut center counter
+  const donutCounter = document.querySelector('.s5-donut-center .counter');
+  if(donutCounter){
+    const target = parseInt(donutCounter.dataset.target);
+    let current = 0;
+    setTimeout(() => {
+      const step = target / (1200 / 16);
+      const timer = setInterval(() => {
+        current += step;
+        if(current >= target){ current = target; clearInterval(timer); }
+        donutCounter.textContent = Math.round(current);
+      }, 16);
+    }, 400);
+  }
+}
+
+// ===== Team Slide Animation (Slide 6) =====
+function animateTeamSlide(){
+  // Mouse tracking on person cards
+  const persons = document.querySelectorAll('.s6-person');
+  persons.forEach((person, i) => {
+    person.addEventListener('mousemove', function(e){
+      const rect = person.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+      const my = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+      person.style.setProperty('--mx', mx + '%');
+      person.style.setProperty('--my', my + '%');
+    });
+  });
+
+  // Milestone dots pulse sequentially
+  const dots = document.querySelectorAll('.s6-ms-dot');
+  dots.forEach((dot, i) => {
+    setTimeout(() => dot.classList.add('pulsing'), 800 + i * 300);
+  });
+
+  // Milestones — click to expand detail
+  const milestones = document.querySelectorAll('.s6-milestone');
+  milestones.forEach(ms => {
+    const detail = ms.querySelector('.s6-ms-detail');
+    const detailText = ms.dataset.detail || '';
+    if(detail && detailText){
+      detail.textContent = detailText;
+      ms.addEventListener('click', function(){
+        // Toggle expanded
+        milestones.forEach(m => { if(m !== ms) m.classList.remove('expanded'); });
+        ms.classList.toggle('expanded');
+      });
+      // Also show on hover tooltip
+      ms.addEventListener('mouseenter', function(e){
+        const date = ms.querySelector('.s6-ms-date').textContent;
+        const text = ms.querySelector('.s6-ms-text').textContent;
+        showTooltip(e,
+          '<div class="tt-title">📍 ' + date + '</div>' +
+          '<div style="font-size:12px;color:var(--gray-light);margin-top:4px">' + text.replace(/\n/g,' ') + '</div>' +
+          '<div class="tt-pct" style="margin-top:4px">' + detailText + '</div>'
+        );
+      });
+      ms.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+      ms.addEventListener('mouseleave', hideTooltip);
+    }
+  });
+}
+
+// ===== Donut Chart (Slide 5) =====
+function animateDonut(){
+  const svg = document.getElementById('donut-chart');
+  svg.innerHTML = '';
+
+  const data = [
+    { val: 40, color: '#D4A843', label: 'Кино' },
+    { val: 30, color: '#F5C563', label: 'Реклама' },
+    { val: 18, color: '#3498DB', label: 'Фестивали' },
+    { val: 12, color: '#2ECC71', label: 'Обучение' },
+  ];
+
+  const cx = 110, cy = 110, r = 80, strokeW = 35;
+  const circumference = 2 * Math.PI * r;
+  let offset = 0;
+
+  data.forEach((d, i) => {
+    const segLen = (d.val / 100) * circumference;
+    const dasharray = segLen + ' ' + (circumference - segLen);
+    const rotation = (offset / 100) * 360 - 90;
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', cx);
+    circle.setAttribute('cy', cy);
+    circle.setAttribute('r', r);
+    circle.setAttribute('fill', 'none');
+    circle.setAttribute('stroke', d.color);
+    circle.setAttribute('stroke-width', strokeW);
+    circle.setAttribute('stroke-dasharray', '0 ' + circumference);
+    circle.setAttribute('transform', 'rotate(' + rotation + ' ' + cx + ' ' + cy + ')');
+    circle.classList.add('donut-segment');
+
+    // Tooltip on hover
+    const sumRub = 120; // 120 млн total
+    const rubVal = Math.round(sumRub * d.val / 100);
+    circle.addEventListener('mouseenter', function(e){
+      this.style.filter = 'brightness(1.3)';
+      this.style.strokeWidth = strokeW + 4;
+      showTooltip(e,
+        '<div class="tt-title"><span class="tt-dot" style="background:' + d.color + '"></span>' + d.label + '</div>' +
+        '<div class="tt-value">' + d.val + '% · ' + rubVal + ' млн ₽</div>' +
+        '<div class="tt-pct">от раунда 120 млн ₽</div>'
+      );
+    });
+    circle.addEventListener('mousemove', function(e){ showTooltip(e, tooltip.innerHTML); });
+    circle.addEventListener('mouseleave', function(){
+      this.style.filter = '';
+      this.style.strokeWidth = strokeW;
+      hideTooltip();
+    });
+
+    // Animate
+    setTimeout(() => {
+      circle.setAttribute('stroke-dasharray', dasharray);
+      circle.style.transition = 'stroke-dasharray 0.8s cubic-bezier(0.4,0,0.2,1)';
+    }, 200 + i * 150);
+
+    svg.appendChild(circle);
+
+    // Label
+    const midAngle = ((offset + d.val / 2) / 100) * 360 - 90;
+    const labelR = r + 2;
+    const lx = cx + labelR * Math.cos(midAngle * Math.PI / 180);
+    const ly = cy + labelR * Math.sin(midAngle * Math.PI / 180);
+
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', lx);
+    text.setAttribute('y', ly);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('dominant-baseline', 'middle');
+    text.setAttribute('fill', '#FFFFFF');
+    text.setAttribute('font-size', '12');
+    text.setAttribute('font-weight', '600');
+    text.textContent = d.val + '%';
+    text.style.opacity = '0';
+    setTimeout(() => { text.style.opacity = '1'; text.style.transition = 'opacity 0.4s'; }, 600 + i * 150);
+    svg.appendChild(text);
+
+    offset += d.val;
+  });
+}
+
+// ===== Initial animation =====
+updateProgress();
+setTimeout(() => animateSlide(0), 300);
+</script>
+</body>
+</html>

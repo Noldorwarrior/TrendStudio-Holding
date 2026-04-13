@@ -1,0 +1,18 @@
+Generate a single image. 3D isometric illustration of a branded content production workshop, dark premium style. Resolution: 1024x768 pixels, 4:3 aspect ratio.
+
+A compact isometric scene of a video production and editing workspace:
+
+- A central editing desk with 2 dark monitors side-by-side (#2A3A55), screens showing golden abstract video timeline waveform bars
+- Next to the desk: a professional video camera on a golden gimbal/stabilizer (#D4A843)
+- Behind: a backdrop/screen frame — dark frame with golden edge (#F5C563)
+- On a side table: small golden product boxes and geometric shapes arranged for a product shoot — representing branded content
+- Golden headphones resting on the desk
+- A golden clapperboard on the desk surface
+- Stacked golden hard drives / storage units to the side (content archive)
+- A small golden tripod folded and leaning against the desk
+
+Platform: compact dark rectangular base (#152238) with golden edge. Background: pure solid black (#060D1A).
+
+STYLE: Clean 3D isometric render, miniature diorama. Premium dark aesthetic with golden accents. Similar to T-Bank/Tinkoff 3D isometric ad style.
+
+DO NOT include: any text, numbers, labels, brand names, watermarks, people, bright backgrounds, abstract effects.

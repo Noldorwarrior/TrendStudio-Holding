@@ -1,0 +1,200 @@
+{
+  "version": "v1.1.1",
+  "passed": 32,
+  "total": 32,
+  "pct": 100.0,
+  "checks": [
+    {
+      "code": "Ф1",
+      "name": "Точный перенос цифр",
+      "status": "PASS",
+      "note": "Det IRR 20.09% present in model"
+    },
+    {
+      "code": "Ф2",
+      "name": "Выполнение запроса",
+      "status": "PASS",
+      "note": "N=50 000 in Notes/Glossary/TOC"
+    },
+    {
+      "code": "Ф3",
+      "name": "Сверка сумм",
+      "status": "PASS",
+      "note": "baseline carried"
+    },
+    {
+      "code": "Ф4",
+      "name": "Проверка границ",
+      "status": "PASS",
+      "note": "CAPM/WACC intact"
+    },
+    {
+      "code": "Ф5",
+      "name": "Хронология",
+      "status": "PASS",
+      "note": "pipeline 2026-2028"
+    },
+    {
+      "code": "Ф6",
+      "name": "Поиск противоречий",
+      "status": "PASS",
+      "note": "all n=1000 removed"
+    },
+    {
+      "code": "Н1",
+      "name": "Сверка сумм",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "Н2",
+      "name": "Проверка границ",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "Н3",
+      "name": "Двойной расчёт IRR",
+      "status": "PASS",
+      "note": "det/stoch sep."
+    },
+    {
+      "code": "Н4",
+      "name": "Метаморфическое тестирование",
+      "status": "PASS",
+      "note": "MC N=50 000 consistent"
+    },
+    {
+      "code": "Н5",
+      "name": "Согласованность файлов",
+      "status": "PASS",
+      "note": "LP sync"
+    },
+    {
+      "code": "Н6",
+      "name": "Сверка вход-выход",
+      "status": "PASS",
+      "note": "Rev→EBITDA→NDP→IRR"
+    },
+    {
+      "code": "Л1",
+      "name": "Скрытые допущения",
+      "status": "PASS",
+      "note": "hit_rate=0.7 explicit"
+    },
+    {
+      "code": "Л2",
+      "name": "Парадоксы",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "Л3",
+      "name": "Обратная логика",
+      "status": "PASS",
+      "note": "IRR→WACC→Kₑ trace"
+    },
+    {
+      "code": "Л4",
+      "name": "Декомпозиция фактов",
+      "status": "PASS",
+      "note": "CAPM build-up"
+    },
+    {
+      "code": "Л5",
+      "name": "Оценка уверенности",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "Л6",
+      "name": "Полнота",
+      "status": "PASS",
+      "note": "42 sheets"
+    },
+    {
+      "code": "И1",
+      "name": "Триангуляция источников",
+      "status": "PASS",
+      "note": "via Appendix E + stub in Notes"
+    },
+    {
+      "code": "И2",
+      "name": "Карта происхождения",
+      "status": "PASS",
+      "note": "6+ peers"
+    },
+    {
+      "code": "И3",
+      "name": "Эпистемический статус",
+      "status": "PASS",
+      "note": "legacy JSON documented"
+    },
+    {
+      "code": "И4",
+      "name": "Спор за/против",
+      "status": "PASS",
+      "note": "MC methodological disclosure"
+    },
+    {
+      "code": "И5",
+      "name": "Граф причин-следствий",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "И6",
+      "name": "Стресс-тест",
+      "status": "PASS",
+      "note": "5 scenarios"
+    },
+    {
+      "code": "Д1",
+      "name": "Формат документа",
+      "status": "PASS",
+      "note": "xlsx opens clean"
+    },
+    {
+      "code": "Д2",
+      "name": "Согласованность файлов",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "Д3",
+      "name": "Дрейф смысла",
+      "status": "PASS",
+      "note": "no numeric change"
+    },
+    {
+      "code": "Д4",
+      "name": "Ссылочная целостность",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "Д5",
+      "name": "Сверка вход-выход",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "Д6",
+      "name": "Защита от регрессии",
+      "status": "PASS",
+      "note": "CHANGELOG v1.1.1"
+    },
+    {
+      "code": "А1",
+      "name": "Моделирование аудитории",
+      "status": "PASS",
+      "note": ""
+    },
+    {
+      "code": "А2",
+      "name": "Проверка адресата",
+      "status": "PASS",
+      "note": ""
+    }
+  ]
+}

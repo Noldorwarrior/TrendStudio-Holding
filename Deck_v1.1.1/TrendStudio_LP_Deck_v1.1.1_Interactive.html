@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>:root{--bg-primary:#0A0E1A;--bg-secondary:#141A2A;--accent-gold:#C9A961;--accent-gold-light:#E5C98A;--text-primary:#F5F5F5;--text-secondary:#9CA3AF;--success:#10B981;--warning:#F59E0B;--danger:#EF4444;--chart-1:#3B82F6;--chart-2:#8B5CF6}*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.light-mode body{background:#FAFAF7;color:#1A1A1A}#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--accent-gold);z-index:1000;transition:width 0.3s ease}.deck-container{width:100vw;height:100vh;overflow:hidden;position:relative}.slide{width:100%;height:100%;position:absolute;display:flex;flex-direction:column;justify-content:center;padding:60px 80px;box-sizing:border-box;opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;border-top:3px solid var(--accent-gold)}.slide.active{opacity:1;transform:none;pointer-events:auto}.slide-footer{position:absolute;bottom:20px;left:80px;right:80px;display:flex;justify-content:space-between;font-size:9pt;color:var(--text-secondary)}.slide h1{font-family:Georgia,serif;font-size:52px;color:var(--text-primary);margin-bottom:8px;border-bottom:3px solid var(--accent-gold);padding-bottom:12px;display:inline-block}.slide h2{font-family:Georgia,serif;font-size:24px;color:var(--accent-gold);margin-bottom:30px;font-weight:normal}.animate-in{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease-out,transform 0.6s ease-out}.animate-in.active{opacity:1;transform:translateY(0)}.controls{position:fixed;bottom:30px;right:80px;display:flex;gap:15px;z-index:100}.btn{padding:12px 24px;background:var(--accent-gold);color:var(--bg-primary);border:none;border-radius:6px;cursor:pointer;font-weight:500;transition:all 0.3s ease;font-size:14px}.btn:hover{background:var(--accent-gold-light);transform:translateY(-2px)}.btn:active{transform:translateY(0)}.btn.secondary{background:var(--bg-secondary);color:var(--text-primary);border:2px solid var(--accent-gold)}.btn.secondary:hover{background:var(--accent-gold);color:var(--bg-primary)}.keyboard-hint{position:fixed;bottom:30px;left:80px;font-size:12px;color:var(--text-secondary);z-index:100}@media(max-width:768px){.slide{padding:40px 20px}.controls{bottom:20px;right:20px}.keyboard-hint{left:20px;bottom:20px}.slide h1{font-size:32px}.slide h2{font-size:18px}}</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div class="deck-container" id="deck">
+<div class="slide active" id="slide-1">
+<h1>TrendStudio</h1>
+<h2>Where Data Meets Design</h2>
+<p style="font-size:18px;color:var(--text-secondary);margin-top:40px;max-width:600px">Transform your data into compelling visual narratives. Built for investors, creatives, and visionaries who demand precision and beauty.</p>
+<div class="slide-footer">
+<span>Investor Presentation</span>
+<span id="slide-counter">1 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-2">
+<h1>The Problem</h1>
+<h2>Data Presentation Gap</h2>
+<ul style="font-size:16px;line-height:2;color:var(--text-secondary);max-width:700px">
+<li>Complex data often becomes oversimplified or inaccessible</li>
+<li>Beautiful designs frequently sacrifice analytical depth</li>
+<li>Teams struggle to create consistent, professional visualizations</li>
+<li>Time-to-insight remains prohibitively long</li>
+</ul>
+<div class="slide-footer">
+<span>Problem Statement</span>
+<span id="slide-counter">2 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-3">
+<h1>The Solution</h1>
+<h2>TrendStudio Platform</h2>
+<p style="font-size:16px;color:var(--text-secondary);margin:30px 0;max-width:700px">An integrated platform combining:</p>
+<ul style="font-size:16px;line-height:2;color:var(--text-secondary);max-width:700px">
+<li><strong style="color:var(--accent-gold)">Intelligent Data Processing</strong> - Automatic insights and pattern detection</li>
+<li><strong style="color:var(--accent-gold)">Design System</strong> - Enterprise-grade visual components</li>
+<li><strong style="color:var(--accent-gold)">Collaboration Tools</strong> - Real-time teamwork and versioning</li>
+<li><strong style="color:var(--accent-gold)">Export Capabilities</strong> - Multi-format output for any platform</li>
+</ul>
+<div class="slide-footer">
+<span>Solution Overview</span>
+<span id="slide-counter">3 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-4">
+<h1>Market Opportunity</h1>
+<h2>TAM Analysis</h2>
+<div style="display:flex;gap:40px;margin-top:40px">
+<div>
+<div style="font-size:36px;color:var(--accent-gold);font-weight:bold">$8.5B</div>
+<div style="color:var(--text-secondary);margin-top:10px">Total Addressable Market</div>
+</div>
+<div>
+<div style="font-size:36px;color:var(--accent-gold);font-weight:bold">27%</div>
+<div style="color:var(--text-secondary);margin-top:10px">CAGR 2024-2030</div>
+</div>
+<div>
+<div style="font-size:36px;color:var(--accent-gold);font-weight:bold">1.2M</div>
+<div style="color:var(--text-secondary);margin-top:10px">Potential Users</div>
+</div>
+</div>
+<div class="slide-footer">
+<span>Market Analysis</span>
+<span id="slide-counter">4 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-5">
+<h1>Business Model</h1>
+<h2>Revenue Streams</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;max-width:800px">
+<div style="background:var(--bg-secondary);padding:30px;border-radius:8px;border-left:4px solid var(--accent-gold)">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">SaaS Subscription</div>
+<div style="color:var(--text-secondary);font-size:14px">Monthly/annual plans starting at $49/month. Premium tier at $299/month for enterprise features.</div>
+</div>
+<div style="background:var(--bg-secondary);padding:30px;border-radius:8px;border-left:4px solid var(--accent-gold)">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">Enterprise Licensing</div>
+<div style="color:var(--text-secondary);font-size:14px">Custom contracts for large organizations with dedicated support and on-premise deployment.</div>
+</div>
+</div>
+<div class="slide-footer">
+<span>Monetization Strategy</span>
+<span id="slide-counter">5 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-6">
+<h1>Competitive Advantage</h1>
+<h2>Why We Win</h2>
+<ul style="font-size:16px;line-height:2.2;color:var(--text-secondary);max-width:700px">
+<li><strong style="color:var(--accent-gold)">AI-Powered Insights</strong> - Proprietary algorithm detects patterns 10x faster</li>
+<li><strong style="color:var(--accent-gold)">Design-First Approach</strong> - Professional visuals out-of-the-box</li>
+<li><strong style="color:var(--accent-gold)">Developer-Friendly</strong> - Comprehensive API and integrations</li>
+<li><strong style="color:var(--accent-gold)">Privacy-Centric</strong> - Enterprise-grade data protection and compliance</li>
+<li><strong style="color:var(--accent-gold)">Community</strong> - Growing ecosystem of creators and contributors</li>
+</ul>
+<div class="slide-footer">
+<span>Competitive Position</span>
+<span id="slide-counter">6 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-7">
+<h1>Technology Stack</h1>
+<h2>Built for Scale</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;max-width:800px">
+<div>
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">Frontend</div>
+<ul style="color:var(--text-secondary);font-size:14px;line-height:1.8">
+<li>React + TypeScript</li>
+<li>Tailwind CSS</li>
+<li>D3.js & Canvas API</li>
+<li>WebGL for performance</li>
+</ul>
+</div>
+<div>
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">Backend</div>
+<ul style="color:var(--text-secondary);font-size:14px;line-height:1.8">
+<li>Node.js / Python</li>
+<li>PostgreSQL</li>
+<li>Redis Cache</li>
+<li>Kubernetes</li>
+</ul>
+</div>
+</div>
+<div class="slide-footer">
+<span>Technical Architecture</span>
+<span id="slide-counter">7 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-8">
+<h1>Team</h1>
+<h2>Experienced Leaders</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px;max-width:800px">
+<div>
+<div style="color:var(--accent-gold);font-weight:bold">CEO & Founder</div>
+<div style="color:var(--text-secondary);font-size:14px;margin-top:8px">Former VP Product at Design Co. 15+ years in design tools.</div>
+</div>
+<div>
+<div style="color:var(--accent-gold);font-weight:bold">CTO</div>
+<div style="color:var(--text-secondary);font-size:14px;margin-top:8px">Ex-Google Engineer. Expert in ML and scalable systems.</div>
+</div>
+<div>
+<div style="color:var(--accent-gold);font-weight:bold">COO</div>
+<div style="color:var(--text-secondary);font-size:14px;margin-top:8px">Growth strategist from Series B startup unicorn.</div>
+</div>
+<div>
+<div style="color:var(--accent-gold);font-weight:bold">VP Design</div>
+<div style="color:var(--text-secondary);font-size:14px;margin-top:8px">Award-winning designer. Built design systems at Scale.</div>
+</div>
+</div>
+<div class="slide-footer">
+<span>Organization</span>
+<span id="slide-counter">8 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-9">
+<h1>Traction</h1>
+<h2>Early Success Metrics</h2>
+<div style="display:flex;gap:40px;margin-top:40px;justify-content:space-between;max-width:900px">
+<div style="text-align:center">
+<div style="font-size:32px;color:var(--success);font-weight:bold">2,500+</div>
+<div style="color:var(--text-secondary);margin-top:10px;font-size:14px">Beta Users</div>
+</div>
+<div style="text-align:center">
+<div style="font-size:32px;color:var(--success);font-weight:bold">$150K</div>
+<div style="color:var(--text-secondary);margin-top:10px;font-size:14px">MRR (Current)</div>
+</div>
+<div style="text-align:center">
+<div style="font-size:32px;color:var(--success);font-weight:bold">35%</div>
+<div style="color:var(--text-secondary);margin-top:10px;font-size:14px">Month-over-Month Growth</div>
+</div>
+<div style="text-align:center">
+<div style="font-size:32px;color:var(--success);font-weight:bold">4.8/5</div>
+<div style="color:var(--text-secondary);margin-top:10px;font-size:14px">User Rating</div>
+</div>
+</div>
+<div class="slide-footer">
+<span>Metrics</span>
+<span id="slide-counter">9 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-10">
+<h1>Use Cases</h1>
+<h2>Real-World Applications</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;max-width:800px">
+<div style="background:var(--bg-secondary);padding:25px;border-radius:8px">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:12px">Investor Presentations</div>
+<div style="color:var(--text-secondary);font-size:14px">Create compelling pitch decks with live data integration.</div>
+</div>
+<div style="background:var(--bg-secondary);padding:25px;border-radius:8px">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:12px">Marketing Analytics</div>
+<div style="color:var(--text-secondary);font-size:14px">Track campaigns and ROI with professional dashboards.</div>
+</div>
+<div style="background:var(--bg-secondary);padding:25px;border-radius:8px">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:12px">Scientific Research</div>
+<div style="color:var(--text-secondary);font-size:14px">Visualize complex datasets for publications.</div>
+</div>
+<div style="background:var(--bg-secondary);padding:25px;border-radius:8px">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:12px">Executive Reporting</div>
+<div style="color:var(--text-secondary);font-size:14px">Real-time business intelligence and KPI tracking.</div>
+</div>
+</div>
+<div class="slide-footer">
+<span>Applications</span>
+<span id="slide-counter">10 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-11">
+<h1>Funding Ask</h1>
+<h2>Series A Investment</h2>
+<div style="margin-top:40px;max-width:700px">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--bg-secondary)">
+<span style="color:var(--text-secondary)">Raising</span>
+<span style="font-size:28px;color:var(--accent-gold);font-weight:bold">$5M</span>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--bg-secondary)">
+<span style="color:var(--text-secondary)">Post-Money Valuation</span>
+<span style="font-size:28px;color:var(--accent-gold);font-weight:bold">$25M</span>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--bg-secondary)">
+<span style="color:var(--text-secondary)">Use of Funds</span>
+<span style="font-size:18px;color:var(--accent-gold)">Product: 40% | Sales: 35% | Team: 20%</span>
+</div>
+</div>
+<p style="color:var(--text-secondary);font-size:14px;margin-top:30px">18-month runway. Path to profitability with current growth trajectory.</p>
+<div class="slide-footer">
+<span>Financing</span>
+<span id="slide-counter">11 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-12">
+<h1>Roadmap</h1>
+<h2>12-Month Vision</h2>
+<div style="margin-top:40px;max-width:700px">
+<div style="margin-bottom:25px">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:8px">Q2 2026: AI Co-pilot</div>
+<div style="color:var(--text-secondary);font-size:14px">Natural language data querying and automatic visualization suggestions.</div>
+</div>
+<div style="margin-bottom:25px">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:8px">Q3 2026: Mobile App</div>
+<div style="color:var(--text-secondary);font-size:14px">iOS/Android apps for on-the-go presentations and monitoring.</div>
+</div>
+<div style="margin-bottom:25px">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:8px">Q4 2026: Enterprise Suite</div>
+<div style="color:var(--text-secondary);font-size:14px">Advanced security, SSO, and white-label options.</div>
+</div>
+<div>
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:8px">Q1 2027: AI Analytics</div>
+<div style="color:var(--text-secondary);font-size:14px">Predictive modeling and advanced statistical analysis.</div>
+</div>
+</div>
+<div class="slide-footer">
+<span>Future Plans</span>
+<span id="slide-counter">12 / 13</span>
+</div>
+</div>
+<div class="slide" id="slide-13">
+<h1>Let's Build Together</h1>
+<h2>Contact & Next Steps</h2>
+<div style="margin-top:60px;max-width:600px">
+<p style="font-size:18px;color:var(--text-secondary);margin-bottom:40px">We're excited to discuss how TrendStudio can transform data visualization for your organization.</p>
+<div style="background:var(--bg-secondary);padding:30px;border-radius:8px;border-left:4px solid var(--accent-gold)">
+<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">Get in Touch</div>
+<div style="color:var(--text-secondary);font-size:14px;line-height:1.8">
+Email: invest@trendstudio.com<br>
+Website: www.trendstudio.com<br>
+Schedule Demo: calendly.com/trendstudio
+</div>
+</div>
+</div>
+<div class="slide-footer">
+<span>Thank You</span>
+<span id="slide-counter">13 / 13</span>
+</div>
+</div>
+</div>
+<div class="keyboard-hint">Use arrow keys to navigate • ESC for exit</div>
+<div class="controls">
+<button class="btn secondary" id="prev-btn">Previous</button>
+<button class="btn" id="next-btn">Next</button>
+</div>
+<script>let currentSlide=0;const slides=document.querySelectorAll('.slide');const totalSlides=slides.length;const progressBar=document.getElementById('progress-bar');const nextBtn=document.getElementById('next-btn');const prevBtn=document.getElementById('prev-btn');const deckContainer=document.getElementById('deck');function updateProgress(){const progress=(currentSlide+1)/totalSlides*100;progressBar.style.width=progress+'%'}function showSlide(n){slides.forEach(slide=>slide.classList.remove('active'));if(n>=totalSlides){currentSlide=0}else if(n<0){currentSlide=totalSlides-1}else{currentSlide=n}slides[currentSlide].classList.add('active');updateProgress()}function nextSlide(){showSlide(currentSlide+1)}function prevSlide(){showSlide(currentSlide-1)}nextBtn.addEventListener('click',nextSlide);prevBtn.addEventListener('click',prevSlide);document.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight'){nextSlide()}else if(e.key==='ArrowLeft'){prevSlide()}else if(e.key==='Escape'){document.body.classList.toggle('light-mode')}});deckContainer.addEventListener('click',(e)=>{if(e.clientX>window.innerWidth/2){nextSlide()}else{prevSlide()}});updateProgress();showSlide(0);</script>
+</body>
+</html>

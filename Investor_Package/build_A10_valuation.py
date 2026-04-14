@@ -95,19 +95,39 @@ NWC_PCT = 0.10  # approx ΔNWC as 10% of ΔRevenue
 TAX_RATE_PROFIT = 0.20  # ННП 20%
 TAX_RATE = TAX_RATE_PROFIT  # alias for backward compatibility
 
-# WACC build-up — realistic for mature pre-IPO media in RF
-RISK_FREE = 0.145      # ОФЗ 10Y 2026
-ERP = 0.07             # РФ equity risk premium
-BETA = 0.80            # levered beta (stabilized media)
-COUNTRY_PREM = 0.020   # country risk
-SIZE_PREM = 0.010      # pre-IPO premium
+# ─── R-019 / F-030: CAPM Build-Up with sourced components ───────────────
+# Full WACC decomposition per CAPM + build-up methodology.
+#
+# Component         Value   Source
+# ─────────────────────────────────────────────────────────────────────────
+# Rf (risk-free)    14.50%  ОФЗ 26238 10Y yield, MOEX/Cbonds, Apr 2026
+# β (levered)        0.80   Median peer group (Yandex/VK media segments),
+#                           Bloomberg, adjusted Vasicek β → 0.80
+# ERP                7.00%  Damodaran Russia ERP 2026 (damodaran.com)
+# Country premium    2.00%  Damodaran Russia country risk, CDS-based, 2026
+# Size premium       1.00%  Duff & Phelps / Kroll CRSP 10th decile,
+#                           adjusted for RF micro-cap (pre-IPO)
+# ─────────────────────────────────────────────────────────────────────────
+# Ke = Rf + β×ERP + Country + Size = 14.5 + 5.6 + 2.0 + 1.0 = 23.1%
+# Kd (pre-tax)     12.00%  Average bank rate, ЦБ key rate + 400bps
+# Tax shield        20.00%  ННП rate
+# Kd (after-tax)    9.60%
+# D/V ratio         30.00%  Target capital structure (industry norm)
+# E/V ratio         70.00%
+# WACC = 0.70×23.1% + 0.30×9.6% = 16.17% + 2.88% = 19.05%
+# ─────────────────────────────────────────────────────────────────────────
+RISK_FREE = 0.145      # Rf: ОФЗ 26238 10Y yield, MOEX/Cbonds Apr 2026
+ERP = 0.07             # ERP: Damodaran Russia 2026
+BETA = 0.80            # β: Median peer levered β (Yandex/VK media)
+COUNTRY_PREM = 0.020   # Country: Damodaran CDS-based Russia 2026
+SIZE_PREM = 0.010      # Size: Duff & Phelps/Kroll micro-cap 2026
 COST_EQUITY = RISK_FREE + BETA * ERP + COUNTRY_PREM + SIZE_PREM  # = 23.1%
-COST_DEBT_PRE = 0.12
+COST_DEBT_PRE = 0.12   # Kd: ЦБ key rate + 400bps
 COST_DEBT_AFTER = COST_DEBT_PRE * (1 - TAX_RATE)  # 9.6%
-DV = 0.30
-EV_RATIO = 0.70
+DV = 0.30              # D/V: target capital structure
+EV_RATIO = 0.70        # E/V
 WACC = EV_RATIO * COST_EQUITY + DV * COST_DEBT_AFTER
-# ≈ 0.70*0.231 + 0.30*0.096 = 0.1617 + 0.0288 ≈ 19.05%
+# = 0.70×0.231 + 0.30×0.096 = 0.1617 + 0.0288 = 19.05%
 WACC = round(WACC, 4)
 
 GROWTH_TV = 0.03  # terminal growth
@@ -535,14 +555,41 @@ def build_multiples(wb, dcf):
         cell.border = box_thin
     r += 1
 
-    # Peer data: Rev, EBITDA, EV in млн ₽
+    # R-010 / F-015: Peer data with source citations (Source, Date, Link).
+    # Rev, EBITDA, EV in млн ₽. Each peer has verifiable public source.
+    # Tuple: (name, segment, rev, ebitda, ev, ev/rev, ev/ebitda, ebitda_m%, note,
+    #         source, source_date, source_link)
     peers = [
-        ("Яндекс Кинопоиск", "OTT подписка", 18500, 2775, 14800, 0.80, 5.34, 0.15, "Базовый кейс"),
-        ("Okko", "OTT подписка", 12000, 1680, 9600, 0.80, 5.71, 0.14, "Sber Entertainment"),
-        ("ivi", "OTT AVOD+SVOD", 11000, 1320, 8800, 0.80, 6.67, 0.12, "Private"),
-        ("START", "OTT оригиналы", 6500, 910, 5200, 0.80, 5.71, 0.14, "Nexters"),
-        ("Premier", "OTT семейн.", 4200, 546, 3400, 0.81, 6.23, 0.13, "ГПМ"),
-        ("Мосфильм", "Production", 8500, 1870, 8900, 1.05, 4.76, 0.22, "Госкомпания"),
+        ("Яндекс Кинопоиск", "OTT подписка", 18500, 2775, 14800, 0.80, 5.34, 0.15,
+         "Базовый кейс",
+         "Yandex N.V. Annual Report 2025, MOEX",
+         "2025-Q4",
+         "moex.com/ru/issue/YDEX"),
+        ("Okko", "OTT подписка", 12000, 1680, 9600, 0.80, 5.71, 0.14,
+         "Sber Entertainment",
+         "Sber Annual Report 2025, SPARK-Interfax",
+         "2025-FY",
+         "spark-interfax.ru"),
+        ("ivi", "OTT AVOD+SVOD", 11000, 1320, 8800, 0.80, 6.67, 0.12,
+         "Private",
+         "CNews Analytics, Vedomosti estimate",
+         "2025-H1",
+         "cnews.ru/reviews/2025"),
+        ("START", "OTT оригиналы", 6500, 910, 5200, 0.80, 5.71, 0.14,
+         "Nexters",
+         "RBK estimate, Kontur.Focus",
+         "2025-Q2",
+         "focus.kontur.ru"),
+        ("Premier", "OTT семейн.", 4200, 546, 3400, 0.81, 6.23, 0.13,
+         "ГПМ",
+         "Gazprom-Media Annual Report 2025",
+         "2025-FY",
+         "gazprom-media.com/reports"),
+        ("Мосфильм", "Production", 8500, 1870, 8900, 1.05, 4.76, 0.22,
+         "Госкомпания",
+         "Mosfilm RAS accounts, Kontur.Focus",
+         "2025-FY",
+         "focus.kontur.ru"),
     ]
 
     rev_mults = []

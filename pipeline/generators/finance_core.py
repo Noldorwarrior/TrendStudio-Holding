@@ -174,6 +174,89 @@ def smooth_da_transition(
     return result
 
 
+# ─── Valuation Floor / Fair / Ceiling (R-011) ───────────────────────────
+
+
+def valuation_floor_fair_ceiling(
+    dcf_conservative: float,
+    comps_median: float,
+    mc_p75: float,
+) -> dict[str, float]:
+    """Compute Floor/Fair/Ceiling valuation range.
+
+    R-011 / F-007: Reconcile valuation spread to ≤ 2×.
+
+    Args:
+        dcf_conservative: DCF with WACC+300bps, growth-1%.
+        comps_median: Comparable company median EV.
+        mc_p75: Monte Carlo P75 EV.
+
+    Returns:
+        Dict with 'floor', 'fair', 'ceiling', 'spread'.
+    """
+    floor = dcf_conservative
+    fair = comps_median
+    ceiling = mc_p75
+
+    # Ensure ordering
+    if floor > fair:
+        floor, fair = fair, floor
+    if fair > ceiling:
+        fair, ceiling = ceiling, fair
+    if floor > fair:
+        floor, fair = fair, floor
+
+    spread = ceiling / floor if floor > 0 else float("inf")
+    return {
+        "floor": round(floor, 1),
+        "fair": round(fair, 1),
+        "ceiling": round(ceiling, 1),
+        "spread": round(spread, 2),
+    }
+
+
+# ─── CAPM Build-Up (R-019) ──────────────────────────────────────────────
+
+
+def capm_cost_of_equity(
+    rf: float,
+    beta: float,
+    erp: float,
+    country_premium: float,
+    size_premium: float,
+) -> dict[str, float]:
+    """CAPM build-up cost of equity with 5 sourced components.
+
+    R-019 / F-030: Each component must have documented source.
+
+    Returns:
+        Dict with ke, rf, beta_erp, country, size, total.
+    """
+    beta_erp = beta * erp
+    ke = rf + beta_erp + country_premium + size_premium
+    return {
+        "rf": rf,
+        "beta": beta,
+        "erp": erp,
+        "beta_erp": round(beta_erp, 4),
+        "country_premium": country_premium,
+        "size_premium": size_premium,
+        "ke": round(ke, 4),
+    }
+
+
+def wacc_from_capm(
+    ke: float,
+    kd_pre_tax: float,
+    tax_rate: float,
+    equity_weight: float,
+) -> float:
+    """Compute WACC from CAPM cost of equity and debt parameters."""
+    kd_after = kd_pre_tax * (1 - tax_rate)
+    debt_weight = 1 - equity_weight
+    return equity_weight * ke + debt_weight * kd_after
+
+
 # ─── Deprecated aliases ──────────────────────────────────────────────────
 
 

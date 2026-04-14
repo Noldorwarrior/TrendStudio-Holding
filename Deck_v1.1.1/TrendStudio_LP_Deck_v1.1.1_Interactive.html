@@ -5,284 +5,565 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Investor Deck</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>:root{--bg-primary:#0A0E1A;--bg-secondary:#141A2A;--accent-gold:#C9A961;--accent-gold-light:#E5C98A;--text-primary:#F5F5F5;--text-secondary:#9CA3AF;--success:#10B981;--warning:#F59E0B;--danger:#EF4444;--chart-1:#3B82F6;--chart-2:#8B5CF6}*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.light-mode body{background:#FAFAF7;color:#1A1A1A}#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--accent-gold);z-index:1000;transition:width 0.3s ease}.deck-container{width:100vw;height:100vh;overflow:hidden;position:relative}.slide{width:100%;height:100%;position:absolute;display:flex;flex-direction:column;justify-content:center;padding:60px 80px;box-sizing:border-box;opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;border-top:3px solid var(--accent-gold)}.slide.active{opacity:1;transform:none;pointer-events:auto}.slide-footer{position:absolute;bottom:20px;left:80px;right:80px;display:flex;justify-content:space-between;font-size:9pt;color:var(--text-secondary)}.slide h1{font-family:Georgia,serif;font-size:52px;color:var(--text-primary);margin-bottom:8px;border-bottom:3px solid var(--accent-gold);padding-bottom:12px;display:inline-block}.slide h2{font-family:Georgia,serif;font-size:24px;color:var(--accent-gold);margin-bottom:30px;font-weight:normal}.animate-in{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease-out,transform 0.6s ease-out}.animate-in.active{opacity:1;transform:translateY(0)}.controls{position:fixed;bottom:30px;right:80px;display:flex;gap:15px;z-index:100}.btn{padding:12px 24px;background:var(--accent-gold);color:var(--bg-primary);border:none;border-radius:6px;cursor:pointer;font-weight:500;transition:all 0.3s ease;font-size:14px}.btn:hover{background:var(--accent-gold-light);transform:translateY(-2px)}.btn:active{transform:translateY(0)}.btn.secondary{background:var(--bg-secondary);color:var(--text-primary);border:2px solid var(--accent-gold)}.btn.secondary:hover{background:var(--accent-gold);color:var(--bg-primary)}.keyboard-hint{position:fixed;bottom:30px;left:80px;font-size:12px;color:var(--text-secondary);z-index:100}@media(max-width:768px){.slide{padding:40px 20px}.controls{bottom:20px;right:20px}.keyboard-hint{left:20px;bottom:20px}.slide h1{font-size:32px}.slide h2{font-size:18px}}</style>
-</head>
-<body>
-<div id="progress-bar"></div>
-<div class="deck-container" id="deck">
-<div class="slide active" id="slide-1">
-<h1>TrendStudio</h1>
-<h2>Where Data Meets Design</h2>
-<p style="font-size:18px;color:var(--text-secondary);margin-top:40px;max-width:600px">Transform your data into compelling visual narratives. Built for investors, creatives, and visionaries who demand precision and beauty.</p>
-<div class="slide-footer">
-<span>Investor Presentation</span>
-<span id="slide-counter">1 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-2">
-<h1>The Problem</h1>
-<h2>Data Presentation Gap</h2>
-<ul style="font-size:16px;line-height:2;color:var(--text-secondary);max-width:700px">
-<li>Complex data often becomes oversimplified or inaccessible</li>
-<li>Beautiful designs frequently sacrifice analytical depth</li>
-<li>Teams struggle to create consistent, professional visualizations</li>
-<li>Time-to-insight remains prohibitively long</li>
-</ul>
-<div class="slide-footer">
-<span>Problem Statement</span>
-<span id="slide-counter">2 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-3">
-<h1>The Solution</h1>
-<h2>TrendStudio Platform</h2>
-<p style="font-size:16px;color:var(--text-secondary);margin:30px 0;max-width:700px">An integrated platform combining:</p>
-<ul style="font-size:16px;line-height:2;color:var(--text-secondary);max-width:700px">
-<li><strong style="color:var(--accent-gold)">Intelligent Data Processing</strong> - Automatic insights and pattern detection</li>
-<li><strong style="color:var(--accent-gold)">Design System</strong> - Enterprise-grade visual components</li>
-<li><strong style="color:var(--accent-gold)">Collaboration Tools</strong> - Real-time teamwork and versioning</li>
-<li><strong style="color:var(--accent-gold)">Export Capabilities</strong> - Multi-format output for any platform</li>
-</ul>
-<div class="slide-footer">
-<span>Solution Overview</span>
-<span id="slide-counter">3 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-4">
-<h1>Market Opportunity</h1>
-<h2>TAM Analysis</h2>
-<div style="display:flex;gap:40px;margin-top:40px">
-<div>
-<div style="font-size:36px;color:var(--accent-gold);font-weight:bold">$8.5B</div>
-<div style="color:var(--text-secondary);margin-top:10px">Total Addressable Market</div>
-</div>
-<div>
-<div style="font-size:36px;color:var(--accent-gold);font-weight:bold">27%</div>
-<div style="color:var(--text-secondary);margin-top:10px">CAGR 2024-2030</div>
-</div>
-<div>
-<div style="font-size:36px;color:var(--accent-gold);font-weight:bold">1.2M</div>
-<div style="color:var(--text-secondary);margin-top:10px">Potential Users</div>
-</div>
-</div>
-<div class="slide-footer">
-<span>Market Analysis</span>
-<span id="slide-counter">4 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-5">
-<h1>Business Model</h1>
-<h2>Revenue Streams</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;max-width:800px">
-<div style="background:var(--bg-secondary);padding:30px;border-radius:8px;border-left:4px solid var(--accent-gold)">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">SaaS Subscription</div>
-<div style="color:var(--text-secondary);font-size:14px">Monthly/annual plans starting at $49/month. Premium tier at $299/month for enterprise features.</div>
-</div>
-<div style="background:var(--bg-secondary);padding:30px;border-radius:8px;border-left:4px solid var(--accent-gold)">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">Enterprise Licensing</div>
-<div style="color:var(--text-secondary);font-size:14px">Custom contracts for large organizations with dedicated support and on-premise deployment.</div>
-</div>
-</div>
-<div class="slide-footer">
-<span>Monetization Strategy</span>
-<span id="slide-counter">5 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-6">
-<h1>Competitive Advantage</h1>
-<h2>Why We Win</h2>
-<ul style="font-size:16px;line-height:2.2;color:var(--text-secondary);max-width:700px">
-<li><strong style="color:var(--accent-gold)">AI-Powered Insights</strong> - Proprietary algorithm detects patterns 10x faster</li>
-<li><strong style="color:var(--accent-gold)">Design-First Approach</strong> - Professional visuals out-of-the-box</li>
-<li><strong style="color:var(--accent-gold)">Developer-Friendly</strong> - Comprehensive API and integrations</li>
-<li><strong style="color:var(--accent-gold)">Privacy-Centric</strong> - Enterprise-grade data protection and compliance</li>
-<li><strong style="color:var(--accent-gold)">Community</strong> - Growing ecosystem of creators and contributors</li>
-</ul>
-<div class="slide-footer">
-<span>Competitive Position</span>
-<span id="slide-counter">6 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-7">
-<h1>Technology Stack</h1>
-<h2>Built for Scale</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;max-width:800px">
-<div>
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">Frontend</div>
-<ul style="color:var(--text-secondary);font-size:14px;line-height:1.8">
-<li>React + TypeScript</li>
-<li>Tailwind CSS</li>
-<li>D3.js & Canvas API</li>
-<li>WebGL for performance</li>
-</ul>
-</div>
-<div>
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">Backend</div>
-<ul style="color:var(--text-secondary);font-size:14px;line-height:1.8">
-<li>Node.js / Python</li>
-<li>PostgreSQL</li>
-<li>Redis Cache</li>
-<li>Kubernetes</li>
-</ul>
-</div>
-</div>
-<div class="slide-footer">
-<span>Technical Architecture</span>
-<span id="slide-counter">7 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-8">
-<h1>Team</h1>
-<h2>Experienced Leaders</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px;max-width:800px">
-<div>
-<div style="color:var(--accent-gold);font-weight:bold">CEO & Founder</div>
-<div style="color:var(--text-secondary);font-size:14px;margin-top:8px">Former VP Product at Design Co. 15+ years in design tools.</div>
-</div>
-<div>
-<div style="color:var(--accent-gold);font-weight:bold">CTO</div>
-<div style="color:var(--text-secondary);font-size:14px;margin-top:8px">Ex-Google Engineer. Expert in ML and scalable systems.</div>
-</div>
-<div>
-<div style="color:var(--accent-gold);font-weight:bold">COO</div>
-<div style="color:var(--text-secondary);font-size:14px;margin-top:8px">Growth strategist from Series B startup unicorn.</div>
-</div>
-<div>
-<div style="color:var(--accent-gold);font-weight:bold">VP Design</div>
-<div style="color:var(--text-secondary);font-size:14px;margin-top:8px">Award-winning designer. Built design systems at Scale.</div>
-</div>
-</div>
-<div class="slide-footer">
-<span>Organization</span>
-<span id="slide-counter">8 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-9">
-<h1>Traction</h1>
-<h2>Early Success Metrics</h2>
-<div style="display:flex;gap:40px;margin-top:40px;justify-content:space-between;max-width:900px">
-<div style="text-align:center">
-<div style="font-size:32px;color:var(--success);font-weight:bold">2,500+</div>
-<div style="color:var(--text-secondary);margin-top:10px;font-size:14px">Beta Users</div>
-</div>
-<div style="text-align:center">
-<div style="font-size:32px;color:var(--success);font-weight:bold">$150K</div>
-<div style="color:var(--text-secondary);margin-top:10px;font-size:14px">MRR (Current)</div>
-</div>
-<div style="text-align:center">
-<div style="font-size:32px;color:var(--success);font-weight:bold">35%</div>
-<div style="color:var(--text-secondary);margin-top:10px;font-size:14px">Month-over-Month Growth</div>
-</div>
-<div style="text-align:center">
-<div style="font-size:32px;color:var(--success);font-weight:bold">4.8/5</div>
-<div style="color:var(--text-secondary);margin-top:10px;font-size:14px">User Rating</div>
-</div>
-</div>
-<div class="slide-footer">
-<span>Metrics</span>
-<span id="slide-counter">9 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-10">
-<h1>Use Cases</h1>
-<h2>Real-World Applications</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;max-width:800px">
-<div style="background:var(--bg-secondary);padding:25px;border-radius:8px">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:12px">Investor Presentations</div>
-<div style="color:var(--text-secondary);font-size:14px">Create compelling pitch decks with live data integration.</div>
-</div>
-<div style="background:var(--bg-secondary);padding:25px;border-radius:8px">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:12px">Marketing Analytics</div>
-<div style="color:var(--text-secondary);font-size:14px">Track campaigns and ROI with professional dashboards.</div>
-</div>
-<div style="background:var(--bg-secondary);padding:25px;border-radius:8px">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:12px">Scientific Research</div>
-<div style="color:var(--text-secondary);font-size:14px">Visualize complex datasets for publications.</div>
-</div>
-<div style="background:var(--bg-secondary);padding:25px;border-radius:8px">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:12px">Executive Reporting</div>
-<div style="color:var(--text-secondary);font-size:14px">Real-time business intelligence and KPI tracking.</div>
-</div>
-</div>
-<div class="slide-footer">
-<span>Applications</span>
-<span id="slide-counter">10 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-11">
-<h1>Funding Ask</h1>
-<h2>Series A Investment</h2>
-<div style="margin-top:40px;max-width:700px">
-<div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--bg-secondary)">
-<span style="color:var(--text-secondary)">Raising</span>
-<span style="font-size:28px;color:var(--accent-gold);font-weight:bold">$5M</span>
-</div>
-<div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--bg-secondary)">
-<span style="color:var(--text-secondary)">Post-Money Valuation</span>
-<span style="font-size:28px;color:var(--accent-gold);font-weight:bold">$25M</span>
-</div>
-<div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--bg-secondary)">
-<span style="color:var(--text-secondary)">Use of Funds</span>
-<span style="font-size:18px;color:var(--accent-gold)">Product: 40% | Sales: 35% | Team: 20%</span>
-</div>
-</div>
-<p style="color:var(--text-secondary);font-size:14px;margin-top:30px">18-month runway. Path to profitability with current growth trajectory.</p>
-<div class="slide-footer">
-<span>Financing</span>
-<span id="slide-counter">11 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-12">
-<h1>Roadmap</h1>
-<h2>12-Month Vision</h2>
-<div style="margin-top:40px;max-width:700px">
-<div style="margin-bottom:25px">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:8px">Q2 2026: AI Co-pilot</div>
-<div style="color:var(--text-secondary);font-size:14px">Natural language data querying and automatic visualization suggestions.</div>
-</div>
-<div style="margin-bottom:25px">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:8px">Q3 2026: Mobile App</div>
-<div style="color:var(--text-secondary);font-size:14px">iOS/Android apps for on-the-go presentations and monitoring.</div>
-</div>
-<div style="margin-bottom:25px">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:8px">Q4 2026: Enterprise Suite</div>
-<div style="color:var(--text-secondary);font-size:14px">Advanced security, SSO, and white-label options.</div>
-</div>
-<div>
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:8px">Q1 2027: AI Analytics</div>
-<div style="color:var(--text-secondary);font-size:14px">Predictive modeling and advanced statistical analysis.</div>
-</div>
-</div>
-<div class="slide-footer">
-<span>Future Plans</span>
-<span id="slide-counter">12 / 13</span>
-</div>
-</div>
-<div class="slide" id="slide-13">
-<h1>Let's Build Together</h1>
-<h2>Contact & Next Steps</h2>
-<div style="margin-top:60px;max-width:600px">
-<p style="font-size:18px;color:var(--text-secondary);margin-bottom:40px">We're excited to discuss how TrendStudio can transform data visualization for your organization.</p>
-<div style="background:var(--bg-secondary);padding:30px;border-radius:8px;border-left:4px solid var(--accent-gold)">
-<div style="color:var(--accent-gold);font-weight:bold;margin-bottom:15px">Get in Touch</div>
-<div style="color:var(--text-secondary);font-size:14px;line-height:1.8">
-Email: invest@trendstudio.com<br>
-Website: www.trendstudio.com<br>
-Schedule Demo: calendly.com/trendstudio
-</div>
-</div>
-</div>
-<div class="slide-footer">
-<span>Thank You</span>
-<span id="slide-counter">13 / 13</span>
-</div>
-</div>
-</div>
-<div class="keyboard-hint">Use arrow keys to navigate • ESC for exit</div>
-<div class="controls">
-<button class="btn secondary" id="prev-btn">Previous</button>
-<button class="btn" id="next-btn">Next</button>
-</div>
-<script>let currentSlide=0;const slides=document.querySelectorAll('.slide');const totalSlides=slides.length;const progressBar=document.getElementById('progress-bar');const nextBtn=document.getElementById('next-btn');const prevBtn=document.getElementById('prev-btn');const deckContainer=document.getElementById('deck');function updateProgress(){const progress=(currentSlide+1)/totalSlides*100;progressBar.style.width=progress+'%'}function showSlide(n){slides.forEach(slide=>slide.classList.remove('active'));if(n>=totalSlides){currentSlide=0}else if(n<0){currentSlide=totalSlides-1}else{currentSlide=n}slides[currentSlide].classList.add('active');updateProgress()}function nextSlide(){showSlide(currentSlide+1)}function prevSlide(){showSlide(currentSlide-1)}nextBtn.addEventListener('click',nextSlide);prevBtn.addEventListener('click',prevSlide);document.addEventListener('keydown',(e)=>{if(e.key==='ArrowRight'){nextSlide()}else if(e.key==='ArrowLeft'){prevSlide()}else if(e.key==='Escape'){document.body.classList.toggle('light-mode')}});deckContainer.addEventListener('click',(e)=>{if(e.clientX>window.innerWidth/2){nextSlide()}else{prevSlide()}});updateProgress();showSlide(0);</script>
-</body>
-</html>
+<style>:root{--bg-primary:#0A0E1A;--bg-secondary:#141A2A;--accent-gold:#C9A961;--accent-gold-light:#E5C98A;--text-primary:#F5F5F5;--text-secondary:#9CA3AF;--success:#10B981;--warning:#F59E0B;--danger:#EF4444;--chart-1:#3B82F6;--chart-2:#8B5CF6}*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.light-mode body{background:#FAFAF7;color:#1A1A1A}#progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--accent-gold);z-index:1000;transition:width 0.3s ease}.deck-container{width:100vw;height:100vh;overflow:hidden;position:relative}.slide{width:100%;height:100%;position:absolute;display:flex;flex-direction:column;justify-content:center;padding:60px 80px;box-sizing:border-box;opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;border-top:3px solid var(--accent-gold)}.slide.active{opacity:1;transform:none;pointer-events:auto}.slide-footer{position:absolute;bottom:20px;left:80px;right:80px;display:flex;justify-content:space-between;font-size:9pt;color:var(--text-secondary)}.slide h1{font-family:Georgia,serif;font-size:52px;color:var(--text-primary);margin-bottom:8px;border-bottom:3px solid var(--accent-gold);padding-bottom:12px;display:inline-block}.slide h2{font-family:Georgia,serif;font-size:24px;color:var(--accent-gold);margin-bottom:30px;font-weight:normal}.animate-in{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease-out,transform 0.6s ease-out}.animate-in.visible{opacity:1;transform:none}.stagger-1{transition-delay:0.1s}.stagger-2{transition-delay:0.2s}.stagger-3{transition-delay:0.3s}.stagger-4{transition-delay:0.4s}.stagger-5{transition-delay:0.5s}.stagger-6{transition-delay:0.6s}.stagger-7{transition-delay:0.7s}.stagger-8{transition-delay:0.8s}.stat-card{background:var(--bg-secondary);border-radius:12px;padding:30px;text-align:center;border:1px solid rgba(201,169,97,0.2)}.stat-value{font-family:Georgia,serif;font-size:48px;color:var(--accent-gold)}.stat-label{font-family:'Inter',sans-serif;font-size:14px;color:var(--text-secondary);margin-top:8px}.badge{display:inline-block;padding:6px 16px;border-radius:20px;border:1px solid var(--accent-gold);color:var(--accent-gold);font-size:13px;margin:4px}.data-table{width:100%;border-collapse:collapse}.data-table th{background:var(--bg-secondary);color:var(--accent-gold);padding:12px 16px;text-align:left;font-size:14px}.data-table td{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:14px}.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}.kpi-card{background:var(--bg-secondary);border-radius:8px;padding:20px;border-left:3px solid var(--accent-gold)}.thesis-card{background:var(--bg-secondary);border-radius:12px;padding:24px;margin-bottom:16px;border-left:4px solid var(--accent-gold)}.pipeline-table{width:100%;border-collapse:collapse}.pipeline-table th{background:var(--bg-secondary);color:var(--accent-gold);padding:12px 16px;text-align:left;font-size:14px;font-weight:600}.pipeline-table td{padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:14px}.pipeline-table tr:hover td{background:rgba(201,169,97,0.05)}.nav-arrow{position:fixed;top:50%;transform:translateY(-50%);z-index:100;width:50px;height:50px;background:rgba(201,169,97,0.15);border-radius:50%;color:var(--accent-gold);cursor:pointer;border:none;font-size:24px;display:flex;align-items:center;justify-content:center;transition:background 0.2s ease}.nav-arrow:hover{background:rgba(201,169,97,0.3)}.nav-prev{left:20px}.nav-next{right:20px}#help-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:2000;display:none;place-items:center}.help-content{background:var(--bg-secondary);border-radius:16px;padding:40px;max-width:500px}#presenter-panel{position:fixed;bottom:0;left:0;right:0;height:150px;background:#000;color:#ccc;padding:20px;transform:translateY(100%);transition:transform 0.3s ease;z-index:900;border-top:2px solid var(--accent-gold);font-size:14px;overflow-y:auto}body.presenter-mode #presenter-panel{transform:none}.dark-toggle{position:fixed;top:20px;right:20px;z-index:1000;background:transparent;border:1px solid var(--accent-gold);color:var(--accent-gold);padding:8px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;transition:background 0.2s ease}.dark-toggle:hover{background:rgba(201,169,97,0.1)}.slide-cover{text-align:center;align-items:center}.slide-cover h1{font-size:64px}.slide-cover h2{font-size:28px}.parallax-bg,.parallax-mid,.parallax-fg{position:absolute;top:0;left:0;width:100%;height:100%;transition:transform 0.1s ease-out;pointer-events:none}.parallax-bg{z-index:0}.parallax-mid{z-index:1}.parallax-fg{z-index:2}.chart-container{width:100%;height:350px;position:relative}.chart-container canvas{width:100% !important;height:100% !important}.mc-tooltip{position:absolute;background:#1a1a2e;border:1px solid var(--accent-gold);border-radius:8px;padding:10px 14px;font-size:12px;pointer-events:none;z-index:50;display:none}.heatmap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}.heatmap-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer;font-weight:bold;font-size:18px;transition:transform 0.2s ease,box-shadow 0.2s ease}.heatmap-cell:hover{transform:scale(1.05)}.hm-0{background:transparent;border:1px dashed rgba(255,255,255,0.1)}.hm-1{background:rgba(16,185,129,0.3)}.hm-2{background:rgba(245,158,11,0.4)}.hm-3{background:rgba(245,158,11,0.7)}.hm-4{background:rgba(239,68,68,0.6)}.hm-5{background:rgba(239,68,68,0.9)}.heatmap-sidebar{position:absolute;right:0;top:0;width:300px;height:100%;background:var(--bg-secondary);padding:20px;border-left:2px solid var(--accent-gold);transform:translateX(100%);transition:transform 0.3s ease;z-index:10;overflow-y:auto}.heatmap-sidebar.open{transform:none}.wf-bar-group{display:flex;flex-direction:column;align-items:center}.wf-bar{border-radius:4px 4px 0 0;transition:height 0.5s ease;min-width:60px}.wf-toggle{display:flex;gap:10px;margin-bottom:20px}.wf-toggle button{padding:8px 20px;border-radius:6px;border:1px solid var(--accent-gold);background:transparent;color:var(--text-primary);cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;transition:background 0.2s ease,color 0.2s ease}.wf-toggle button.active{background:var(--accent-gold);color:#0A0E1A}.calc-container{background:var(--bg-secondary);border-radius:16px;padding:30px}.slider-group{margin-bottom:20px}.slider-group label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px}.slider-group input[type="range"]{width:100%;accent-color:var(--accent-gold);height:6px;cursor:pointer}.calc-result{text-align:center;font-family:Georgia,serif;font-size:64px;color:var(--accent-gold)}.exit-card{background:var(--bg-secondary);border-radius:8px;padding:16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-left:3px solid var(--accent-gold)}.prob-bar{height:6px;border-radius:3px;background:var(--accent-gold);transition:width 0.8s ease}.governance-card{background:var(--bg-secondary);border-radius:8px;padding:20px;margin-bottom:12px}.terms-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.contact-card{background:var(--bg-secondary);border-radius:12px;padding:20px;text-align:center;border:1px solid rgba(201,169,97,0.2)}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}.formula-box{background:rgba(201,169,97,0.1);border:1px solid var(--accent-gold);border-radius:8px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:16px;text-align:center;margin:20px 0}.gantt-container{width:100%;overflow-x:auto}.gantt-row{display:flex;align-items:center;margin-bottom:6px;height:32px}.gantt-label{width:160px;font-size:13px;flex-shrink:0}.gantt-track{flex:1;position:relative;height:100%;background:rgba(255,255,255,0.03);border-radius:4px}.gantt-bar{position:absolute;height:100%;border-radius:4px;background:var(--accent-gold);opacity:0.8;cursor:pointer;transition:opacity 0.2s ease}.gantt-bar:hover{opacity:1}.gantt-header{display:flex}.gantt-header-label{width:160px;flex-shrink:0}.gantt-quarters{flex:1;display:grid;grid-template-columns:repeat(12,1fr);font-size:10px;color:var(--text-secondary);text-align:center}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--bg-primary)}::-webkit-scrollbar-thumb{background:var(--accent-gold);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--accent-gold-light)}@media (max-width:1200px){.slide{padding:40px 50px}.slide h1{font-size:38px}.slide h2{font-size:20px}.slide-cover h1{font-size:48px}.slide-cover h2{font-size:22px}.stat-value{font-size:36px}.calc-result{font-size:48px}.slide-footer{left:50px;right:50px}.two-col{gap:20px}.kpi-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}.nav-arrow{width:40px;height:40px;font-size:18px}body{font-size:14px}}@media print{body{background:#FFFFFF !important;color:#1A1A1A !important}.slide{opacity:1 !important;transform:none !important;pointer-events:auto !important;position:relative !important;page-break-after:always;border-top-color:#8B7355 !important}.slide h1{color:#1A1A1A !important;border-bottom-color:#8B7355 !important}.slide h2{color:#8B7355 !important}.stat-card,.thesis-card,.kpi-card,.governance-card,.exit-card,.contact-card,.calc-container{background:#F5F5F5 !important}.stat-value{color:#8B7355 !important}.nav-arrow,.dark-toggle,#progress-bar,#help-overlay,#presenter-panel{display:none !important}}.light-mode body{background:#FAFAF7;color:#1A1A1A}.light-mode .slide{border-top-color:#8B7355}.light-mode .slide h1{color:#1A1A1A;border-bottom-color:#8B7355}.light-mode .slide h2{color:#8B7355}.light-mode .stat-card,.light-mode .thesis-card,.light-mode .kpi-card,.light-mode .governance-card,.light-mode .exit-card,.light-mode .contact-card,.light-mode .calc-container{background:#FFFFFF;border-color:rgba(139,115,85,0.2)}.light-mode .stat-value{color:#8B7355}.light-mode .data-table th{background:#F0EDE8;color:#8B7355}.light-mode .data-table td{border-bottom-color:rgba(0,0,0,0.08)}.light-mode .badge{border-color:#8B7355;color:#8B7355}.light-mode .nav-arrow{background:rgba(139,115,85,0.1);color:#8B7355}.light-mode .nav-arrow:hover{background:rgba(139,115,85,0.2)}.light-mode .slide-footer{color:#9CA3AF}.light-mode .formula-box{background:rgba(139,115,85,0.08);border-color:#8B7355}.light-mode #presenter-panel{background:#F0EDE8;color:#333;border-top-color:#8B7355}</style></head><body>
+<div class="deck-container"><!-- SLIDE 1: Cover --><div class="slide slide-cover active" id="slide-1"><div class="parallax-bg"></div><div class="parallax-mid"></div><div class="parallax-fg"><h1>TrendStudio Kinoholding</h1><h2>Российский кинохолдинг нового поколения</h2><p>Инвестиционный пакет для ограниченных партнёров (LP) · 2026–2028</p><div class="badge-row"><span class="badge">Det IRR 20.09%</span><span class="badge">MoIC 2.0×</span><span class="badge">3 000 млн ₽</span></div></div><div class="slide-footer"><span>Конфиденциально · Для квалифицированных инвесторов</span><span>1 / 25</span></div></div><!-- SLIDE 2: Executive Summary --><div class="slide" id="slide-2"><h1>Executive Summary</h1><h2>Четыре ключевых факта</h2><div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);"><div class="stat-card animate-in stagger-1"><div class="stat-value count-up">20.09%</div><div class="stat-label">Det IRR (главная метрика)</div></div><div class="stat-card animate-in stagger-2"><div class="stat-value count-up">2.0×</div><div class="stat-label">MoIC на горизонте 5 лет</div></div><div class="stat-card animate-in stagger-3"><div class="stat-value count-up">3 000</div><div class="stat-label">млн ₽ якорь фонда</div></div><div class="stat-card animate-in stagger-4"><div class="stat-value count-up">19.05%</div><div class="stat-label">WACC (CAPM build-up)</div></div></div><p style="font-size: 12px; color: var(--text-secondary); margin-top: 20px;">MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C.</p><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>2 / 25</span></div></div><!-- SLIDE 3: Investment Thesis --><div class="slide" id="slide-3"><h1>Investment Thesis</h1><h2>Четыре столпа тезиса</h2><div class="thesis-grid"><div class="thesis-card animate-in stagger-1"><strong>T1: Рыночное окно</strong><p>Нацпроект «Семья» + госзаказ формируют 5-летний попутный ветер</p></div><div class="thesis-card animate-in stagger-2"><strong>T2: Pipeline-готовность</strong><p>7 проектов в разной стадии готовности; scripted, bankable, de-risked</p></div><div class="thesis-card animate-in stagger-3"><strong>T3: Капитал-дисциплина</strong><p>Ограничение 3 000 млн ₽ якорь + waterfall W₃ защищает LP от размывания</p></div><div class="thesis-card animate-in stagger-4"><strong>T4: Exit-routes</strong><p>7 каналов выхода: M&A, стриминг-sell-off, secondary, IPO по субхолдингу</p></div></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>3 / 25</span></div></div><!-- SLIDE 4: Thesis 1 — Market Window --><div class="slide" id="slide-4"><h1>Тезис 1 — Рыночное окно</h1><h2>Государственная политика как долгосрочный драйвер</h2><div class="two-col"><div class="col-left"><ul><li class="animate-in stagger-1">Нацпроект «Семья» (2025–2030): ₽500+ млрд на культурную политику, в т.ч. кино</li><li class="animate-in stagger-2">ФП «Многодетная семья»: квота семейного контента +40% к 2028</li><li class="animate-in stagger-3">Фонд Кино + ИРИ: субсидии на скрипты, производство, дистрибуцию</li><li class="animate-in stagger-4">Запрет иностранного контента на госплатформах → вакуум для локального</li><li class="animate-in stagger-5">Стриминг-рынок РФ ~₽65 млрд, CAGR 18% (2025–2030)</li></ul></div><div class="col-right"><div class="kpi-card animate-in stagger-1"><div class="kpi-metric">TAM РФ-кино 2028E</div><div class="kpi-value">₽180 млрд</div></div><div class="kpi-card animate-in stagger-2"><div class="kpi-metric">SAM (наш сегмент)</div><div class="kpi-value">₽45 млрд</div></div><div class="kpi-card animate-in stagger-3"><div class="kpi-metric">SOM к 2028 (план)</div><div class="kpi-value">₽4.5 млрд (10%)</div></div></div></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>4 / 25</span></div></div><!-- SLIDE 5: Thesis 2 — Pipeline Readiness --><div class="slide" id="slide-5" style="padding-right: 100px;"><h1>Тезис 2 — Pipeline-готовность</h1><h2>7 проектов: 5 фильмов + 2 сериала</h2><table class="data-table animate-in"><thead><tr><th>Код</th><th>Название</th><th>Тип</th><th>Стадия</th><th>Бюджет (млн ₽)</th><th>Релиз</th></tr></thead><tbody><tr><td>P1</td><td>«Крылья Родины»</td><td>film</td><td>Production</td><td>650</td><td>Q3 2026</td></tr><tr><td>P2</td><td>«Северный путь»</td><td>film</td><td>Post-Production</td><td>480</td><td>Q1 2027</td></tr><tr><td>P3</td><td>«Дом на Арбате»</td><td>series</td><td>Development</td><td>720</td><td>Q4 2027</td></tr><tr><td>P4</td><td>«Огонь и вода»</td><td>film</td><td>Pre-Production</td><td>550</td><td>Q2 2027</td></tr><tr><td>P5</td><td>«Наследники»</td><td>series</td><td>Development</td><td>890</td><td>Q3 2028</td></tr><tr><td>P6</td><td>«Песнь горизонта»</td><td>film</td><td>Script</td><td>420</td><td>Q1 2028</td></tr><tr><td>P7</td><td>«Время идти»</td><td>film</td><td>Script</td><td>390</td><td>Q4 2028</td></tr></tbody></table><p style="font-size: 12px; font-style: italic; color: var(--text-secondary); margin-top: 16px;">Коды и названия — иллюстративные. Real-pipeline в NDA-приложении.</p><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>5 / 25</span></div></div><!-- SLIDE 6: Thesis 3 — Capital Discipline --><div class="slide" id="slide-6"><h1>Тезис 3 — Капитал-дисциплина</h1><h2>Ограничения на размывание + дисциплинированный бюджет</h2><ul><li class="animate-in stagger-1">Якорь 3 000 млн ₽ — hard cap, не увеличиваем без LP-одобрения</li><li class="animate-in stagger-2">Waterfall W₃ Public: 4 приоритетных уровня с защитой LP первого порядка</li><li class="animate-in stagger-3">Revenue blend 0.79 + 0.30 × hit_rate — E[blend] = 1.00 при hit_rate = 0.70 (base)</li><li class="animate-in stagger-4">Каждый проект ≤ 30% якоря — диверсификация внутри портфеля</li><li class="animate-in stagger-5">Нет cross-collateralisation между проектами на уровне equity</li></ul><div class="formula-box">Revenue_project = Budget × (0.79 + 0.30 × hit_rate_i), i ∈ {P1..P7}</div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>6 / 25</span></div></div><!-- SLIDE 7: Thesis 4 — Exit Routes --><div class="slide" id="slide-7"><h1>Тезис 4 — Exit-routes</h1><h2>7 альтернативных каналов выхода</h2><div class="exit-cards"><div class="exit-card animate-in stagger-1"><div class="exit-left"><div class="exit-name">E1: Secondary sale LP-stake</div><div class="exit-timing">Y3-Y5</div></div><div class="exit-right"><div class="prob-bar" style="width: 45%;"></div></div></div><div class="exit-card animate-in stagger-2"><div class="exit-left"><div class="exit-name">E2: M&A стратегическому игроку</div><div class="exit-timing">Y4-Y6</div></div><div class="exit-right"><div class="prob-bar" style="width: 30%;"></div></div></div><div class="exit-card animate-in stagger-3"><div class="exit-left"><div class="exit-name">E3: IPO субхолдинга на МосБирже</div><div class="exit-timing">Y5-Y7</div></div><div class="exit-right"><div class="prob-bar" style="width: 15%;"></div></div></div><div class="exit-card animate-in stagger-4"><div class="exit-left"><div class="exit-name">E4: Streaming catalog sell-off</div><div class="exit-timing">Y2-Y5</div></div><div class="exit-right"><div class="prob-bar" style="width: 60%;"></div></div></div><div class="exit-card animate-in stagger-5"><div class="exit-left"><div class="exit-name">E5: Theatrical distribution rights</div><div class="exit-timing">Y1-Y3</div></div><div class="exit-right"><div class="prob-bar" style="width: 80%;"></div></div></div><div class="exit-card animate-in stagger-6"><div class="exit-left"><div class="exit-name">E6: Franchise/IP licensing</div><div class="exit-timing">Y3+</div></div><div class="exit-right"><div class="prob-bar" style="width: 40%;"></div></div></div><div class="exit-card animate-in stagger-7"><div class="exit-left"><div class="exit-name">E7: Management buyout</div><div class="exit-timing">Y5+</div></div><div class="exit-right"><div class="prob-bar" style="width: 20%;"></div></div></div></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>7 / 25</span></div></div><!-- SLIDE 8: Market TAM/SAM/SOM --><div class="slide" id="slide-8"><h1>Market — TAM/SAM/SOM</h1><h2>Российский кинорынок 2028E</h2><div class="funnel-bars"><div style="width: 100%; height: 60px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 8px auto; color: white; font-weight: bold; background: rgba(var(--chart-1-rgb), 0.3); background-color: var(--chart-1, #4A90D9); opacity: 0.85;">
+TAM: 180 млрд ₽ — Весь РФ-кинорынок
+</div><div style="width: 50%; height: 60px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 8px auto; color: white; font-weight: bold; background: rgba(var(--chart-1-rgb), 0.5); background-color: var(--chart-1, #4A90D9); opacity: 0.9;">
+SAM: 45 млрд ₽ — Наш сегмент: mid-budget RU-language
+</div><div style="width: 20%; height: 60px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 8px auto; color: white; font-weight: bold; background-color: var(--accent-gold, #D4A843);">
+SOM: 4.5 млрд ₽ — Плановая доля (10%)
+</div></div><p style="font-size: 12px; color: var(--text-secondary); margin-top: 16px;">Источники: Фонд Кино 2025 Annual, ИРИ Statistical Report 2025, PwC Media Outlook.</p><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>8 / 25</span></div></div><!-- SLIDE 9: Market Drivers --><div class="slide" id="slide-9"><h1>Market Drivers — 5 КПЭ нацпроекта</h1><h2>Индикаторы госполитики 2025–2030</h2><div class="kpi-grid" style="grid-template-columns: repeat(5, 1fr);"><div class="stat-card animate-in stagger-1"><div class="stat-label">Доля отечественного контента</div><div class="stat-value">52→75</div><div class="stat-unit">%</div><div class="progress-bar"><div class="progress-fill" style="width: 69%;"></div></div></div><div class="stat-card animate-in stagger-2"><div class="stat-label">Объём производства (фильмов/год)</div><div class="stat-value">125→180</div><div class="stat-unit">шт</div><div class="progress-bar"><div class="progress-fill" style="width: 69%;"></div></div></div><div class="stat-card animate-in stagger-3"><div class="stat-label">Субсидии Фонд Кино</div><div class="stat-value">12→28</div><div class="stat-unit">млрд ₽</div><div class="progress-bar"><div class="progress-fill" style="width: 43%;"></div></div></div><div class="stat-card animate-in stagger-4"><div class="stat-label">Экспорт кинопродукции</div><div class="stat-value">0.8→3.5</div><div class="stat-unit">млрд ₽</div><div class="progress-bar"><div class="progress-fill" style="width: 23%;"></div></div></div><div class="stat-card animate-in stagger-5"><div class="stat-label">Количество кинотеатров</div><div class="stat-value">2150→2800</div><div class="stat-unit">шт</div><div class="progress-bar"><div class="progress-fill" style="width: 77%;"></div></div></div></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>9 / 25</span></div></div><!-- SLIDE 10: Pipeline Overview --><div class="slide" id="slide-10"><h1>Pipeline — 7 проектов</h1><h2>Разные стадии, сбалансированный риск</h2><div class="two-col"><div class="col-left"><div class="summary-stats"><p><strong>Фильмов:</strong> 5</p><p><strong>Сериалов:</strong> 2</p><p><strong>Общий бюджет:</strong> 4 100 млн ₽</p></div></div><div class="col-right"><div class="stages-breakdown"><div class="stage-row"><span class="stage-name">Script</span><div class="stage-bar" style="width: 28.5%;"></div><span class="stage-count">2</span></div><div class="stage-row"><span class="stage-name">Development</span><div class="stage-bar" style="width: 28.5%;"></div><span class="stage-count">2</span></div><div class="stage-row"><span class="stage-name">Pre-Production</span><div class="stage-bar" style="width: 14.3%;"></div><span class="stage-count">1</span></div><div class="stage-row"><span class="stage-name">Production</span><div class="stage-bar" style="width: 14.3%;"></div><span class="stage-count">1</span></div><div class="stage-row"><span class="stage-name">Post-Production</span><div class="stage-bar" style="width: 14.3%;"></div><span class="stage-count">1</span></div></div></div></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>10 / 25</span></div></div><!-- SLIDE 11: Pipeline Timeline --><div class="slide" id="slide-11"><h1>Pipeline Timeline 2026–2028</h1><h2>Релиз-календарь и cash flow</h2><div class="gantt-container" id="gantt-chart"></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>11 / 25</span></div></div><!-- SLIDE 12: Unit Economics --><div class="slide" id="slide-12"><h1>Unit Economics</h1><h2>Revenue blend model</h2><div class="formula-box">Revenue_i = Budget_i × (0.79 + 0.30 × hit_rate_i)</div><div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);"><div class="stat-card animate-in stagger-1"><div class="stat-label">Downside</div><div class="stat-value">hit_rate = 0.4</div><div class="stat-detail">blend = 0.91</div><div class="stat-detail">revenue_mult = 0.91</div></div><div class="stat-card animate-in stagger-2"><div class="stat-label">Base</div><div class="stat-value">hit_rate = 0.7</div><div class="stat-detail">blend = 1.0</div><div class="stat-detail">revenue_mult = 1.0</div></div><div class="stat-card animate-in stagger-3"><div class="stat-label">Upside</div><div class="stat-value">hit_rate = 1.0</div><div class="stat-detail">blend = 1.09</div><div class="stat-detail">revenue_mult = 1.09</div></div></div><p style="font-size: 12px; color: var(--text-secondary); margin-top: 16px;">E[blend] = 1.00 при hit_rate = 0.70, что соответствует средним историческим данным по RU-mid-budget (Фонд Кино 2020–2024).</p><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>12 / 25</span></div></div><!-- SLIDE 13: Financial Summary --><div class="slide" id="slide-13"><h1>Financial Summary 3Y</h1><h2>Consolidated P&L</h2><table class="data-table animate-in"><thead><tr><th>Показатель</th><th>Y1</th><th>Y2</th><th>Y3</th><th>Итого</th></tr></thead><tbody><tr><td>Revenue</td><td>650</td><td>1 750</td><td>2 145</td><td>4 545</td></tr><tr><td>COGS (direct)</td><td>390</td><td>1 050</td><td>1 287</td><td>2 727</td></tr><tr><td>Gross Profit</td><td>260</td><td>700</td><td>858</td><td>1 818</td></tr><tr><td>OPEX</td><td>80</td><td>150</td><td>220</td><td>450</td></tr><tr class="row-highlight"><td>EBITDA</td><td>180</td><td>550</td><td>1 437</td><td style="color: var(--accent-gold, #D4A843); font-weight: bold;">2 167</td></tr><tr class="row-highlight"><td>NDP (к распределению)</td><td>75</td><td>340</td><td>970</td><td style="color: var(--accent-gold, #D4A843); font-weight: bold;">1 385</td></tr></tbody></table><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>13 / 25</span></div></div><!-- ═══════════════════════════════════════════════════════════════════ --><!-- SLIDE 14 — Valuation — 40/60 Blend --><!-- ═══════════════════════════════════════════════════════════════════ --><div class="slide" id="slide-14"><h1>Valuation — 40/60 Blend</h1><h2>DCF 40% + Trading Multiples 60%</h2><table class="data-table animate-in"><thead><tr><th>Метод</th><th>Вес</th><th>Стоимость (млрд ₽)</th></tr></thead><tbody><tr><td>DCF (5Y, WACC 19.05%)</td><td>40%</td><td>6.2</td></tr><tr><td>Trading Multiples (6.5× EBITDA)</td><td>60%</td><td>6.5</td></tr><tr style="font-weight:bold;color:#C9A961;"><td>Blended EV</td><td>100%</td><td>6.38</td></tr></tbody></table><div class="kpi-grid"><div class="stat-card animate-in stagger-1"><div class="stat-value count-up">6.38 млрд</div><div class="stat-label">EV</div></div><div class="stat-card animate-in stagger-2"><div class="stat-value count-up">-0.5 млрд</div><div class="stat-label">Net Debt</div></div><div class="stat-card animate-in stagger-3"><div class="stat-value count-up">6.88 млрд</div><div class="stat-label">Equity</div></div><div class="stat-card animate-in stagger-4"><div class="stat-value count-up">2.0×</div><div class="stat-label">MoIC</div></div></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>14 / 25</span></div></div><!-- ═══════════════════════════════════════════════════════════════════ --><!-- SLIDE 15 — WACC Derivation --><!-- ═══════════════════════════════════════════════════════════════════ --><div class="slide" id="slide-15"><h1>WACC Derivation</h1><h2>CAPM build-up approach</h2><table class="data-table animate-in"><thead><tr><th>Компонент</th><th>Значение (%)</th><th>Источник</th></tr></thead><tbody><tr><td>Risk-free rate (ОФЗ 10Y)</td><td>14.5</td><td>Cbonds/MoEx 2026-04</td></tr><tr><td>Beta (levered, peer-adj)</td><td>0.8</td><td>Bloomberg/Capital IQ</td></tr><tr><td>Equity Risk Premium</td><td>7.0</td><td>Damodaran 2026</td></tr><tr><td>Country Risk Premium</td><td>2.0</td><td>Damodaran CRP</td></tr><tr><td>Size Premium</td><td>1.0</td><td>Kroll/D&amp;P</td></tr><tr style="font-weight:bold;"><td>Cost of Equity (Ke)</td><td>23.1</td><td>CAPM sum</td></tr><tr><td>Cost of Debt (after tax)</td><td>9.6</td><td>weighted bank terms</td></tr><tr><td>D/(D+E)</td><td>30.0</td><td>target capital structure</td></tr><tr><td>E/(D+E)</td><td>70.0</td><td>target capital structure</td></tr><tr style="font-weight:bold;color:#C9A961;"><td>WACC</td><td>19.05</td><td>0.70×23.1 + 0.30×9.6</td></tr></tbody></table><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>15 / 25</span></div></div><!-- ═══════════════════════════════════════════════════════════════════ --><!-- SLIDE 16 — Monte Carlo — Methodology --><!-- ═══════════════════════════════════════════════════════════════════ --><div class="slide" id="slide-16"><h1>Monte Carlo — Methodology</h1><h2>N = 50 000 · seed = 42 · 5 stochastic variables</h2><div class="kpi-grid"><div class="kpi-card animate-in stagger-1"><div style="font-size:14px;">Hit rate per project</div><div style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#C9A961;">Triangular(0.40, 0.70, 1.00)</div></div><div class="kpi-card animate-in stagger-2"><div style="font-size:14px;">Budget overrun</div><div style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#C9A961;">LogNormal(μ=0, σ=0.15)</div></div><div class="kpi-card animate-in stagger-3"><div style="font-size:14px;">Release delay (quarters)</div><div style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#C9A961;">Poisson(λ=0.5)</div></div><div class="kpi-card animate-in stagger-4"><div style="font-size:14px;">Distribution margin</div><div style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#C9A961;">Normal(35%, 5%)</div></div><div class="kpi-card animate-in stagger-5"><div style="font-size:14px;">Exit multiple</div><div style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#C9A961;">Triangular(5.5×, 6.5×, 7.5×)</div></div></div><p style="font-size:12px;color:#9CA3AF;margin-top:20px;">Det IRR — главная метрика (single best-estimate сценарий). MC — stress-тест CF-timing-риска.</p><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>16 / 25</span></div></div><!-- ═══════════════════════════════════════════════════════════════════ --><!-- SLIDE 17 — Monte Carlo — IRR Distribution --><!-- ═══════════════════════════════════════════════════════════════════ --><div class="slide" id="slide-17"><h1>Monte Carlo — IRR Distribution</h1><h2>Результаты 50 000 сценариев</h2><div class="chart-container" id="mc-histogram" style="height:300px;position:relative;"></div><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;"><div style="flex:1;min-width:100px;background:#141A2A;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-family:Georgia,serif;color:#C9A961;">-2.1%</div><div style="font-size:11px;color:#9CA3AF;">P5</div></div><div style="flex:1;min-width:100px;background:#141A2A;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-family:Georgia,serif;color:#C9A961;">3.4%</div><div style="font-size:11px;color:#9CA3AF;">P25</div></div><div style="flex:1;min-width:100px;background:#141A2A;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-family:Georgia,serif;color:#C9A961;">7.1%</div><div style="font-size:11px;color:#9CA3AF;">P50</div></div><div style="flex:1;min-width:100px;background:#141A2A;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-family:Georgia,serif;color:#C9A961;">7.24%</div><div style="font-size:11px;color:#9CA3AF;">Mean</div></div><div style="flex:1;min-width:100px;background:#141A2A;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-family:Georgia,serif;color:#C9A961;">11.2%</div><div style="font-size:11px;color:#9CA3AF;">P75</div></div><div style="flex:1;min-width:100px;background:#141A2A;border-radius:8px;padding:12px;text-align:center;"><div style="font-size:20px;font-family:Georgia,serif;color:#C9A961;">15.8%</div><div style="font-size:11px;color:#9CA3AF;">P95</div></div></div><p style="font-size:12px;color:#9CA3AF;margin-top:12px;">Вертикальная пунктирная линия на 20.09% — Det IRR (главный таргет).</p><button id="mc-replay-btn" class="badge" style="cursor:pointer;margin-top:10px;">&#9654; Запустить MC N=50 000</button><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>17 / 25</span></div></div><!-- ═══════════════════════════════════════════════════════════════════ --><!-- SLIDE 18 — Det vs Stoch IRR — методологическая справка --><!-- ═══════════════════════════════════════════════════════════════════ --><div class="slide" id="slide-18"><h1 style="margin-bottom:0;">Det vs Stoch IRR — методологическая справка</h1><h2 style="margin-top:20px;">Почему 20.09% и 7.24% — не противоречие</h2><table class="data-table animate-in"><thead><tr><th>Аспект</th><th>Det IRR</th><th>MC (Stoch)</th></tr></thead><tbody><tr><td>Что отражает</td><td>Best-estimate сценарий с базовыми допущениями</td><td>Стресс-распределение при timing-uncertainty</td></tr><tr><td>Допущения по CF</td><td>Квартальные релизы по плану</td><td>Delay Poisson(0.5), до 4 кварталов сдвига</td></tr><tr><td>Hit rate</td><td>0.70 (historical median)</td><td>Triangular(0.40, 0.70, 1.00)</td></tr><tr><td>Использование</td><td>Главная метрика, valuation, LP-return</td><td>Risk framework, stress-тест, lower-bound</td></tr></tbody></table><div class="formula-box">Det 20.09% — то, что мы целим. MC 7.24% — то, что мы выдержим при ухудшении таймингов.</div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>18 / 25</span></div></div><!-- ═══════════════════════════════════════════════════════════════════ --><!-- SLIDE 19 — Risk Framework — Heat Map 5×5 --><!-- ═══════════════════════════════════════════════════════════════════ --><div class="slide" id="slide-19"><h1>Risk Framework — Heat Map 5×5</h1><h2>30 рисков × 5 категорий</h2><div style="position:relative;"><div style="display:flex;gap:20px;align-items:start;"><!-- Left labels --><div style="display:flex;flex-direction:column;gap:2px;padding-top:30px;width:140px;font-size:11px;color:#9CA3AF;text-align:right;padding-right:8px;"><div style="height:60px;display:flex;align-items:center;justify-content:flex-end;">Катастрофический</div><div style="height:60px;display:flex;align-items:center;justify-content:flex-end;">Критический</div><div style="height:60px;display:flex;align-items:center;justify-content:flex-end;">Существенный</div><div style="height:60px;display:flex;align-items:center;justify-content:flex-end;">Умеренный</div><div style="height:60px;display:flex;align-items:center;justify-content:flex-end;">Незначительный</div></div><!-- Heatmap grid --><div id="risk-heatmap" style="display:grid;grid-template-columns:repeat(5,60px);gap:2px;"><!-- Row 0: Катастрофический --><div class="heatmap-cell hm-0"></div><div class="heatmap-cell hm-0"></div><div class="heatmap-cell hm-1">1</div><div class="heatmap-cell hm-1">1</div><div class="heatmap-cell hm-0"></div><!-- Row 1: Критический --><div class="heatmap-cell hm-0"></div><div class="heatmap-cell hm-2">2</div><div class="heatmap-cell hm-2">2</div><div class="heatmap-cell hm-1">1</div><div class="heatmap-cell hm-0"></div><!-- Row 2: Существенный --><div class="heatmap-cell hm-1">1</div><div class="heatmap-cell hm-3">3</div><div class="heatmap-cell hm-4">4</div><div class="heatmap-cell hm-3">3</div><div class="heatmap-cell hm-1">1</div><!-- Row 3: Умеренный --><div class="heatmap-cell hm-2">2</div><div class="heatmap-cell hm-3">3</div><div class="heatmap-cell hm-3">3</div><div class="heatmap-cell hm-2">2</div><div class="heatmap-cell hm-0"></div><!-- Row 4: Незначительный --><div class="heatmap-cell hm-0"></div><div class="heatmap-cell hm-1">1</div><div class="heatmap-cell hm-0"></div><div class="heatmap-cell hm-0"></div><div class="heatmap-cell hm-0"></div></div></div><!-- Bottom labels --><div style="display:flex;gap:2px;margin-left:148px;"><div style="width:60px;text-align:center;font-size:10px;color:#9CA3AF;padding-top:4px;">Редкий</div><div style="width:60px;text-align:center;font-size:10px;color:#9CA3AF;padding-top:4px;">Маловер.</div><div style="width:60px;text-align:center;font-size:10px;color:#9CA3AF;padding-top:4px;">Возможн.</div><div style="width:60px;text-align:center;font-size:10px;color:#9CA3AF;padding-top:4px;">Вероятн.</div><div style="width:60px;text-align:center;font-size:10px;color:#9CA3AF;padding-top:4px;">Почти нав.</div></div></div><div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;"><span class="badge" style="border-color:#EF4444;color:#EF4444;">CRITICAL: 2</span><span class="badge" style="border-color:#F59E0B;color:#F59E0B;">HIGH: 5</span><span class="badge" style="border-color:#C9A961;color:#C9A961;">MEDIUM: 12</span><span class="badge" style="border-color:#10B981;color:#10B981;">LOW: 11</span></div><p style="font-size:12px;color:#9CA3AF;margin-top:12px;font-style:italic;">Полная матрица — Appendix A (30 рисков с митигациями, owner, trigger).</p><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>19 / 25</span></div></div><!-- SLIDE 20 --><div class="slide" id="slide-20"><h1>Топ-10 рисков</h1><h2>Ранжировано по severity × likelihood</h2><table class="data-table animate-in"><thead><tr><th>#</th><th>Риск</th><th>Категория</th><th>Уровень</th><th>Митигация</th></tr></thead><tbody><tr><td style="font-size:13px;">1</td><td style="font-size:13px;">Низкий hit rate флагманских проектов</td><td style="font-size:13px;">Market</td><td style="font-size:13px;"><span style="color:#EF4444;">CRITICAL</span></td><td style="font-size:13px;">Портфельная диверсификация × 7</td></tr><tr><td style="font-size:13px;">2</td><td style="font-size:13px;">Budget overrun >15%</td><td style="font-size:13px;">Operational</td><td style="font-size:13px;"><span style="color:#EF4444;">CRITICAL</span></td><td style="font-size:13px;">Completion bond + milestones</td></tr><tr><td style="font-size:13px;">3</td><td style="font-size:13px;">Delay релиз-календаря</td><td style="font-size:13px;">Operational</td><td style="font-size:13px;"><span style="color:#F59E0B;">HIGH</span></td><td style="font-size:13px;">Буфер 2Q в финмодели</td></tr><tr><td style="font-size:13px;">4</td><td style="font-size:13px;">Изменение гос-квот</td><td style="font-size:13px;">Regulatory</td><td style="font-size:13px;"><span style="color:#F59E0B;">HIGH</span></td><td style="font-size:13px;">Диверсификация по жанрам</td></tr><tr><td style="font-size:13px;">5</td><td style="font-size:13px;">Кассовый провал (2+ проекта)</td><td style="font-size:13px;">Market</td><td style="font-size:13px;"><span style="color:#F59E0B;">HIGH</span></td><td style="font-size:13px;">Revenue blend, secondary rights</td></tr><tr><td style="font-size:13px;">6</td><td style="font-size:13px;">Ключ-персонал отход</td><td style="font-size:13px;">Operational</td><td style="font-size:13px;"><span style="color:#F59E0B;">HIGH</span></td><td style="font-size:13px;">Retention pool 5%, successor plan</td></tr><tr><td style="font-size:13px;">7</td><td style="font-size:13px;">Девальвация ₽ (имп. оборудование)</td><td style="font-size:13px;">Financial</td><td style="font-size:13px;"><span style="color:#F59E0B;">HIGH</span></td><td style="font-size:13px;">Хедж 60% валютных расходов</td></tr><tr><td style="font-size:13px;">8</td><td style="font-size:13px;">Изменение налогового режима</td><td style="font-size:13px;">Regulatory</td><td style="font-size:13px;"><span style="color:#C9A961;">MEDIUM</span></td><td style="font-size:13px;">Налоговое планирование, резерв</td></tr><tr><td style="font-size:13px;">9</td><td style="font-size:13px;">Конкуренция со стриминг-in-house</td><td style="font-size:13px;">Strategic</td><td style="font-size:13px;"><span style="color:#C9A961;">MEDIUM</span></td><td style="font-size:13px;">Эксклюзивные windowing-сделки</td></tr><tr><td style="font-size:13px;">10</td><td style="font-size:13px;">Задержка выплат дистрибьюторов</td><td style="font-size:13px;">Financial</td><td style="font-size:13px;"><span style="color:#C9A961;">MEDIUM</span></td><td style="font-size:13px;">Аванс 30%, факторинг</td></tr></tbody></table><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>20 / 25</span></div></div><!-- SLIDE 21 --><div class="slide" id="slide-21"><h1>Governance Structure</h1><h2>4 комитета + 3-tier reporting</h2><div class="two-col"><div><div class="governance-card animate-in stagger-1"><strong>Investment Committee (IC)</strong><br>
+Состав: 3 LP + 2 GP + 1 independent<br>
+Частота: Ежеквартально<br>
+Сфера: Проекты >₽300 млн
+</div><div class="governance-card animate-in stagger-2"><strong>Audit Committee</strong><br>
+Состав: 2 LP + 1 independent<br>
+Частота: Полугодовой<br>
+Сфера: Финансовая отчётность, IFRS-аудит
+</div><div class="governance-card animate-in stagger-3"><strong>Risk &amp; Compliance</strong><br>
+Состав: 1 LP + 2 GP + CRO<br>
+Частота: Ежемесячно<br>
+Сфера: Risk register, compliance
+</div><div class="governance-card animate-in stagger-4"><strong>Nomination &amp; Comp</strong><br>
+Состав: 2 LP + 1 independent<br>
+Частота: Годовой<br>
+Сфера: Ключевые назначения, вознаграждение
+</div></div><div><h3 style="color:#C9A961;font-size:20px;">Reporting</h3><ul><li>Monthly ops dashboard</li><li>Quarterly IFRS report</li><li>Annual audited financials + LP letter</li></ul></div></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>21 / 25</span></div></div><!-- SLIDE 22 --><div class="slide" id="slide-22"><h1>Waterfall W₃ — Public Distribution</h1><h2>4 приоритетных уровня</h2><div class="wf-toggle"><button data-scenario="bear">Bear</button><button data-scenario="base" class="active">Base</button><button data-scenario="bull">Bull</button></div><div class="chart-container" id="waterfall-chart" style="height:280px;position:relative;"></div><div class="kpi-grid" style="margin-top:20px;grid-template-columns:repeat(4,1fr);"><div class="kpi-card"><div class="kpi-label">Tier 1 ROC</div><div class="kpi-value">LP получают 100% капитала</div><small>до 3 000 млн ₽</small></div><div class="kpi-card"><div class="kpi-label">Tier 2 Pref</div><div class="kpi-value">8% IRR преференциальная доходность</div></div><div class="kpi-card"><div class="kpi-label">Tier 3 Catch-up</div><div class="kpi-value">GP catch-up до пропорции 80/20</div></div><div class="kpi-card"><div class="kpi-label">Tier 4 Carry</div><div class="kpi-value">80% LP / 20% GP свыше порога</div></div></div><p style="font-size:12px;color:#9CA3AF;margin-top:12px;font-style:italic;">Полная mechanics + примеры — Section 7 Memo.</p><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>22 / 25</span></div></div><!-- SLIDE 23 --><div class="slide" id="slide-23"><h1>Terms &amp; Exit Strategy</h1><h2>Ключевые условия инвестирования</h2><div class="terms-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start;"><table class="data-table"><tbody><tr><td style="color:#9CA3AF;font-size:13px;">Fund size (hard cap)</td><td style="color:#F5F5F5;font-size:14px;">3 000 млн ₽</td></tr><tr><td style="color:#9CA3AF;font-size:13px;">Minimum LP commitment</td><td style="color:#F5F5F5;font-size:14px;">300 млн ₽</td></tr><tr><td style="color:#9CA3AF;font-size:13px;">Fund term</td><td style="color:#F5F5F5;font-size:14px;">7 лет + 2×1-year extension</td></tr><tr><td style="color:#9CA3AF;font-size:13px;">Investment period</td><td style="color:#F5F5F5;font-size:14px;">3 года (2026–2028)</td></tr><tr><td style="color:#9CA3AF;font-size:13px;">Management fee</td><td style="color:#F5F5F5;font-size:14px;">2.0% committed (during IP), 1.5% (after)</td></tr></tbody></table><table class="data-table"><tbody><tr><td style="color:#9CA3AF;font-size:13px;">Carried interest</td><td style="color:#F5F5F5;font-size:14px;">20% с 8% pref + catch-up</td></tr><tr><td style="color:#9CA3AF;font-size:13px;">GP commitment</td><td style="color:#F5F5F5;font-size:14px;">2% (60 млн ₽)</td></tr><tr><td style="color:#9CA3AF;font-size:13px;">Capital call notice</td><td style="color:#F5F5F5;font-size:14px;">15 рабочих дней</td></tr><tr><td style="color:#9CA3AF;font-size:13px;">Key-person clause</td><td style="color:#F5F5F5;font-size:14px;">Да, 2 co-founders</td></tr></tbody></table></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>23 / 25</span></div></div><!-- SLIDE 24 --><div class="slide" id="slide-24"><h1>Appendices Overview</h1><h2>5 приложений к Memo</h2><div class="thesis-card animate-in stagger-1"><span class="badge" style="margin-right:12px;">A</span><strong>Risk Register</strong><p style="font-size:13px;color:#9CA3AF;margin-top:6px;">30 рисков × 5 категорий + heat map 5×5</p></div><div class="thesis-card animate-in stagger-2"><span class="badge" style="margin-right:12px;">B</span><strong>Stress Tests</strong><p style="font-size:13px;color:#9CA3AF;margin-top:6px;">5 сценариев (10/20/40/20/10 prob) + Tornado Top-8</p></div><div class="thesis-card animate-in stagger-3"><span class="badge" style="margin-right:12px;">C</span><strong>MC Report</strong><p style="font-size:13px;color:#9CA3AF;margin-top:6px;">N=50 000, percentiles, histogram, методология</p></div><div class="thesis-card animate-in stagger-4"><span class="badge" style="margin-right:12px;">D</span><strong>Peer Comps</strong><p style="font-size:13px;color:#9CA3AF;margin-top:6px;">6+ сопоставимых транзакций RU + Global</p></div><div class="thesis-card animate-in stagger-5"><span class="badge" style="margin-right:12px;">E</span><strong>CAPM Build-Up</strong><p style="font-size:13px;color:#9CA3AF;margin-top:6px;">Полная источник-атрибуция (Damodaran/Bloomberg/Cbonds/Kroll)</p></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>24 / 25</span></div></div><!-- SLIDE 25 --><div class="slide" id="slide-25"><h1>Contact &amp; Next Steps</h1><h2>Готовы к обсуждению</h2><div class="two-col"><div><div style="background:#141A2A;border-radius:12px;padding:20px;text-align:center;border:1px solid rgba(201,169,97,0.2);margin-bottom:12px;" class="animate-in stagger-1"><div style="font-size:12px;color:#9CA3AF;">Managing Partner</div><strong>[Имя]</strong><br><span style="color:#C9A961;font-size:14px;">mp@trendstudio.ru</span></div><div style="background:#141A2A;border-radius:12px;padding:20px;text-align:center;border:1px solid rgba(201,169,97,0.2);margin-bottom:12px;" class="animate-in stagger-2"><div style="font-size:12px;color:#9CA3AF;">CFO</div><strong>[Имя]</strong><br><span style="color:#C9A961;font-size:14px;">cfo@trendstudio.ru</span></div><div style="background:#141A2A;border-radius:12px;padding:20px;text-align:center;border:1px solid rgba(201,169,97,0.2);margin-bottom:12px;" class="animate-in stagger-3"><div style="font-size:12px;color:#9CA3AF;">LP Relations</div><strong>[Имя]</strong><br><span style="color:#C9A961;font-size:14px;">lp@trendstudio.ru</span></div></div><div class="animate-in stagger-4"><h3 style="color:#C9A961;font-size:20px;margin-bottom:16px;">Следующие шаги</h3><ol style="line-height:2;font-size:15px;"><li>NDA + Data Room access (5 рабочих дней)</li><li>Management presentation (1 час, онлайн/офлайн)</li><li>LP onboarding Q&amp;A (10 рабочих дней)</li><li>Subscription documents (2 недели)</li><li>First capital call Q3 2026</li></ol></div></div><p style="font-size:11px;color:#9CA3AF;font-style:italic;margin-top:30px;">Материал носит конфиденциальный характер. Не является публичной офертой. Forward-looking statements основаны на допущениях, подлежат рискам.</p><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>25 / 25</span></div></div><!-- SLIDE 26 — IRR Calculator --><div class="slide" id="slide-26"><h1>IRR Calculator</h1><h2>Интерактивный сценарный анализ</h2><div style="background:#141A2A;border-radius:16px;padding:30px;max-width:700px;margin:0 auto;"><div style="margin-bottom:18px;"><label style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;">Hit Rate<span class="slider-val">0.70</span></label><input type="range" id="sl-hit" min="0.2" max="1.0" step="0.05" value="0.70" style="width:100%;accent-color:#C9A961;"></div><div style="margin-bottom:18px;"><label style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;">Budget Overrun<span class="slider-val">0%</span></label><input type="range" id="sl-overrun" min="0" max="0.50" step="0.05" value="0" style="width:100%;accent-color:#C9A961;"></div><div style="margin-bottom:18px;"><label style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;">Release Delay (Q)<span class="slider-val">0</span></label><input type="range" id="sl-delay" min="0" max="4" step="1" value="0" style="width:100%;accent-color:#C9A961;"></div><div style="margin-bottom:18px;"><label style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;">Distribution Margin<span class="slider-val">35%</span></label><input type="range" id="sl-margin" min="0.20" max="0.50" step="0.01" value="0.35" style="width:100%;accent-color:#C9A961;"></div><div style="margin-bottom:18px;"><label style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;">Exit Multiple<span class="slider-val">6.5×</span></label><input type="range" id="sl-exit" min="4.0" max="9.0" step="0.5" value="6.5" style="width:100%;accent-color:#C9A961;"></div><div style="text-align:center;margin-top:24px;"><div style="font-size:16px;color:#9CA3AF;margin-bottom:8px;">Расчётный IRR</div><div id="irr-result" style="font-family:Georgia,serif;font-size:64px;color:#C9A961;">20.09%</div><canvas id="irr-sparkline" width="300" height="60" style="margin-top:12px;opacity:0.7;"></canvas></div></div><div class="slide-footer"><span>ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</span><span>IRR Calc</span></div></div><!-- UI OVERLAY ELEMENTS --><button class="nav-arrow nav-prev" style="position:fixed;top:50%;left:20px;transform:translateY(-50%);z-index:100;width:44px;height:44px;background:rgba(201,169,97,0.15);border:none;border-radius:50%;color:#C9A961;font-size:22px;cursor:pointer;">&#8249;</button><button class="nav-arrow nav-next" style="position:fixed;top:50%;right:20px;transform:translateY(-50%);z-index:100;width:44px;height:44px;background:rgba(201,169,97,0.15);border:none;border-radius:50%;color:#C9A961;font-size:22px;cursor:pointer;">&#8250;</button><button id="dark-toggle" style="position:fixed;top:20px;right:20px;z-index:1000;background:transparent;border:1px solid #C9A961;color:#C9A961;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;">&#9728; Light</button><div id="progress-bar" style="position:fixed;top:0;left:0;height:3px;background:#C9A961;z-index:1000;width:0%;transition:width 0.3s;"></div><div id="help-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;display:none;place-items:center;"><div style="background:#141A2A;border-radius:16px;padding:40px;max-width:420px;border:1px solid #C9A961;"><h2 style="color:#C9A961;font-family:Georgia;margin-bottom:20px;">Горячие клавиши</h2><table style="color:white;font-size:14px;line-height:2.2;"><tr><td>← / →</td><td>Навигация по слайдам</td></tr><tr><td>Home / End</td><td>Первый / последний слайд</td></tr><tr><td>F</td><td>Полноэкранный режим</td></tr><tr><td>P</td><td>Режим презентера</td></tr><tr><td>?</td><td>Показать/скрыть помощь</td></tr><tr><td>Esc</td><td>Закрыть</td></tr></table><button onclick="document.getElementById('help-overlay').style.display='none';" style="margin-top:20px;padding:8px 24px;background:#C9A961;color:#0A0E1A;border:none;border-radius:6px;cursor:pointer;font-size:14px;">Закрыть</button></div></div><div id="presenter-panel" style="position:fixed;bottom:0;left:0;right:0;height:140px;background:#000;color:#ccc;padding:16px 30px;transform:translateY(100%);transition:transform 0.3s;z-index:900;border-top:2px solid #C9A961;font-size:14px;display:flex;gap:30px;align-items:start;overflow-y:auto;"><div><span style="color:#C9A961;font-family:'JetBrains Mono';font-size:18px;" id="presenter-timer">00:00</span></div><div id="presenter-notes" style="flex:1;line-height:1.6;">Обложка. Представиться, назвать фонд и цель встречи.</div></div></div>
+<script>let currentSlide = 1;
+const totalSlides = 26;
+const TOTAL_DISPLAY = 25; // for progress calculation (slide 26 is bonus)
+function goToSlide(n) {
+if (n < 1 || n > totalSlides) return;
+const prev = document.getElementById('slide-' + currentSlide);
+const next = document.getElementById('slide-' + n);
+if (prev) prev.classList.remove('active');
+if (next) next.classList.add('active');
+currentSlide = n;
+const pct = Math.min(((n - 1) / (TOTAL_DISPLAY - 1)) * 100, 100);
+document.getElementById('progress-bar').style.width = pct + '%';
+history.replaceState(null, '', '#slide-' + n);
+triggerAnimations(next);
+updatePresenterNotes(n);
+if (n === 17) setTimeout(drawMCHistogram, 100);
+if (n === 11) setTimeout(drawGantt, 100);
+if (n === 22) setTimeout(function(){ drawWaterfall(currentScenario); }, 100);
+}
+function nextSlide() { goToSlide(currentSlide + 1); }
+function prevSlide() { goToSlide(currentSlide - 1); }
+document.addEventListener('keydown', function(e) {
+switch(e.key) {
+case 'ArrowRight': case 'ArrowDown': case ' ':
+e.preventDefault(); nextSlide(); break;
+case 'ArrowLeft': case 'ArrowUp':
+e.preventDefault(); prevSlide(); break;
+case 'Home': e.preventDefault(); goToSlide(1); break;
+case 'End': e.preventDefault(); goToSlide(totalSlides); break;
+case 'f': case 'F':
+if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+else document.exitFullscreen();
+break;
+case 'p': case 'P':
+document.body.classList.toggle('presenter-mode');
+if (document.body.classList.contains('presenter-mode') && !presenterTimerRunning) startPresenterTimer();
+break;
+case '?':
+toggleHelp(); break;
+case 'Escape':
+document.getElementById('help-overlay').style.display = 'none';
+document.body.classList.remove('presenter-mode');
+break;
+}
+});
+document.querySelector('.nav-prev').addEventListener('click', prevSlide);
+document.querySelector('.nav-next').addEventListener('click', nextSlide);
+let touchStartX = 0;
+document.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].screenX; });
+document.addEventListener('touchend', function(e) {
+const delta = e.changedTouches[0].screenX - touchStartX;
+if (delta > 50) prevSlide();
+else if (delta < -50) nextSlide();
+});
+function toggleHelp() {
+const h = document.getElementById('help-overlay');
+h.style.display = h.style.display === 'grid' ? 'none' : 'grid';
+}
+function triggerAnimations(slide) {
+if (!slide) return;
+const els = slide.querySelectorAll('.animate-in');
+els.forEach(function(el, i) {
+el.classList.remove('visible');
+setTimeout(function() { el.classList.add('visible'); }, 80 * i);
+});
+const nums = slide.querySelectorAll('.count-up');
+nums.forEach(function(el) {
+if (el.dataset.counted) return;
+el.dataset.counted = '1';
+const text = el.textContent;
+const match = text.match(/([\d\s,.]+)/);
+if (!match) return;
+const raw = match[1].replace(/\s/g, '').replace(',', '.');
+const target = parseFloat(raw);
+if (isNaN(target)) return;
+const prefix = text.substring(0, text.indexOf(match[1]));
+const suffix = text.substring(text.indexOf(match[1]) + match[1].length);
+const hasDecimal = raw.includes('.');
+const decimals = hasDecimal ? (raw.split('.')[1] || '').length : 0;
+const duration = 1500;
+const start = performance.now();
+function animate(now) {
+const t = Math.min((now - start) / duration, 1);
+const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+const val = target * eased;
+var formatted;
+if (decimals > 0) formatted = val.toFixed(decimals);
+else formatted = Math.round(val).toLocaleString('ru-RU');
+el.textContent = prefix + formatted + suffix;
+if (t < 1) requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+});
+}
+document.getElementById('dark-toggle').addEventListener('click', function() {
+document.body.classList.toggle('light-mode');
+this.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark' : '☀ Light';
+if (currentSlide === 17) setTimeout(drawMCHistogram, 50);
+if (currentSlide === 22) setTimeout(function(){ drawWaterfall(currentScenario); }, 50);
+});
+let presenterTimerRunning = false;
+let presenterSeconds = 0;
+let presenterInterval = null;
+function startPresenterTimer() {
+presenterTimerRunning = true;
+presenterSeconds = 0;
+if (presenterInterval) clearInterval(presenterInterval);
+presenterInterval = setInterval(function() {
+presenterSeconds++;
+const m = String(Math.floor(presenterSeconds / 60)).padStart(2, '0');
+const s = String(presenterSeconds % 60).padStart(2, '0');
+const el = document.getElementById('presenter-timer');
+if (el) el.textContent = m + ':' + s;
+}, 1000);
+}
+const presenterNotes = {
+1: 'Обложка. Представиться, назвать фонд и цель встречи.',
+2: 'Четыре ключевые метрики. Det IRR — главная, MC Mean — stress. Объяснить разницу кратко.',
+3: 'Четыре столпа тезиса. Пройти по каждому кратко, детали — на следующих слайдах.',
+4: 'Тезис 1: Рыночное окно. Нацпроект Семья, госзаказ, стриминг CAGR 18%.',
+5: 'Тезис 2: Pipeline. 7 проектов, разные стадии. Упомянуть NDA для реальных названий.',
+6: 'Тезис 3: Капитал-дисциплина. Hard cap, waterfall W3, revenue blend формула.',
+7: 'Тезис 4: Exit-routes. 7 каналов, наиболее вероятные — theatrical и streaming sell-off.',
+8: 'TAM/SAM/SOM. Визуализация воронки рынка. SOM 10% = ₽4.5 млрд.',
+9: 'Market Drivers. 5 КПЭ нацпроекта — все растут, попутный ветер.',
+10: 'Pipeline Overview. 5 фильмов + 2 сериала, общий бюджет 4 100 млн.',
+11: 'Pipeline Timeline. Интерактивный Gantt. Hover для деталей проекта.',
+12: 'Unit Economics. Revenue blend модель. Base case при hit rate 0.70.',
+13: 'Financial Summary 3Y. P&L consolidated. EBITDA 2 167, NDP 1 385.',
+14: 'Valuation. DCF 40% + Multiples 60% = EV 6.38 млрд. MoIC 2.0×.',
+15: 'WACC. CAPM build-up. Risk-free 14.5%, итого WACC 19.05%.',
+16: 'MC Methodology. 5 стохастических переменных, N=50 000.',
+17: 'MC Distribution. Гистограмма. Det IRR золотая линия, Mean синяя, WACC красная.',
+18: 'Det vs Stoch. Объяснить почему 20.09% и 7.24% не противоречат друг другу.',
+19: 'Risk Heatmap. 30 рисков, 2 critical, 5 high. Детали в Appendix A.',
+20: 'Топ-10 рисков. Пройти по критическим и high, объяснить митигации.',
+21: 'Governance. 4 комитета, 3-tier reporting. IC — ежеквартально.',
+22: 'Waterfall W3. Переключить Bear/Base/Bull. Показать LP protection.',
+23: 'Terms & Exit. Ключевые условия. Hard cap, pref 8%, carry 20%.',
+24: 'Appendices. 5 приложений доступны в Data Room.',
+25: 'Contact & Next Steps. NDA → Data Room → Management presentation.',
+26: 'IRR Calculator. Интерактивный — двигать слайдеры для сценариев.'
+};
+function updatePresenterNotes(n) {
+const el = document.getElementById('presenter-notes');
+if (el) el.textContent = presenterNotes[n] || '';
+}
+const slide1 = document.getElementById('slide-1');
+if (slide1) {
+slide1.addEventListener('mousemove', function(e) {
+const rect = this.getBoundingClientRect();
+const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+const bg = this.querySelector('.parallax-bg');
+const mid = this.querySelector('.parallax-mid');
+const fg = this.querySelector('.parallax-fg');
+if (bg) bg.style.transform = 'translate(' + (x * 8) + 'px,' + (y * 8) + 'px)';
+if (mid) mid.style.transform = 'translate(' + (x * 15) + 'px,' + (y * 15) + 'px)';
+if (fg) fg.style.transform = 'translate(' + (x * 4) + 'px,' + (y * 4) + 'px)';
+});
+}
+function initFromHash() {
+const hash = location.hash;
+const m = hash.match(/slide-(\d+)/);
+if (m) { goToSlide(parseInt(m[1])); }
+else { goToSlide(1); triggerAnimations(document.getElementById('slide-1')); }
+}
+const mcBins = [
+{x:-12.74,c:84},{x:-11.94,c:103},{x:-11.14,c:148},{x:-10.34,c:182},
+{x:-9.53,c:231},{x:-8.73,c:297},{x:-7.93,c:313},{x:-7.13,c:455},
+{x:-6.33,c:504},{x:-5.53,c:576},{x:-4.72,c:693},{x:-3.92,c:784},
+{x:-3.12,c:879},{x:-2.32,c:1018},{x:-1.52,c:1181},{x:-0.72,c:1189},
+{x:0.08,c:1383},{x:0.89,c:1507},{x:1.69,c:1657},{x:2.49,c:1738},
+{x:3.29,c:1756},{x:4.09,c:1926},{x:4.89,c:2048},{x:5.69,c:2069},
+{x:6.5,c:2087},{x:7.3,c:2035},{x:8.1,c:2173},{x:8.9,c:1997},
+{x:9.7,c:1976},{x:10.5,c:1813},{x:11.3,c:1752},{x:12.11,c:1663},
+{x:12.91,c:1443},{x:13.71,c:1381},{x:14.51,c:1281},{x:15.31,c:1060},
+{x:16.11,c:1005},{x:16.92,c:958},{x:17.72,c:760},{x:18.52,c:696},
+{x:19.32,c:572},{x:20.12,c:471},{x:20.92,c:391},{x:21.72,c:324},
+{x:22.53,c:244},{x:23.33,c:206},{x:24.13,c:177},{x:24.93,c:136},
+{x:25.73,c:93},{x:26.53,c:85}
+];
+const MC_TOTAL = 50000;
+const DET_IRR = 20.09;
+const WACC_LINE = 19.05;
+const MC_MEAN = 7.24;
+function drawMCHistogram(animationProgress) {
+const container = document.getElementById('mc-histogram');
+if (!container || container.offsetWidth === 0) return;
+let canvas = container.querySelector('canvas');
+if (!canvas) {
+canvas = document.createElement('canvas');
+container.appendChild(canvas);
+}
+let tooltip = container.querySelector('.mc-tooltip');
+if (!tooltip) {
+tooltip = document.createElement('div');
+tooltip.className = 'mc-tooltip';
+tooltip.style.cssText = 'position:absolute;background:#1a1a2e;border:1px solid #C9A961;border-radius:8px;padding:10px 14px;font-size:12px;pointer-events:none;z-index:50;display:none;color:#F5F5F5;';
+container.appendChild(tooltip);
+}
+const isLight = document.body.classList.contains('light-mode');
+const dpr = window.devicePixelRatio || 1;
+const W = container.offsetWidth;
+const H = container.offsetHeight;
+canvas.width = W * dpr;
+canvas.height = H * dpr;
+canvas.style.width = W + 'px';
+canvas.style.height = H + 'px';
+const ctx = canvas.getContext('2d');
+ctx.scale(dpr, dpr);
+ctx.clearRect(0, 0, W, H);
+const pad = { top: 20, right: 30, bottom: 40, left: 50 };
+const chartW = W - pad.left - pad.right;
+const chartH = H - pad.top - pad.bottom;
+const xMin = mcBins[0].x - 1;
+const xMax = mcBins[mcBins.length - 1].x + 1;
+const maxCount = Math.max.apply(null, mcBins.map(function(b){ return b.c; }));
+const barW = chartW / mcBins.length - 1;
+const prog = (animationProgress !== undefined) ? animationProgress : 1;
+ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)';
+ctx.lineWidth = 1;
+for (var g = 0; g <= 4; g++) {
+var gy = pad.top + chartH - (chartH * g / 4);
+ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(pad.left + chartW, gy); ctx.stroke();
+}
+mcBins.forEach(function(bin, i) {
+var x = pad.left + (i / mcBins.length) * chartW;
+var h = (bin.c / maxCount) * chartH * prog;
+var y = pad.top + chartH - h;
+if (bin.x < 0) {
+ctx.fillStyle = 'rgba(239,68,68,0.45)';
+} else {
+ctx.fillStyle = 'rgba(59,130,246,0.55)';
+}
+ctx.fillRect(x, y, barW, h);
+ctx.strokeStyle = bin.x < 0 ? 'rgba(239,68,68,0.7)' : 'rgba(59,130,246,0.7)';
+ctx.lineWidth = 0.5;
+ctx.strokeRect(x, y, barW, h);
+});
+function drawVLine(irrVal, color, label, dashPattern) {
+var xPos = pad.left + ((irrVal - xMin) / (xMax - xMin)) * chartW;
+if (xPos < pad.left || xPos > pad.left + chartW) return;
+ctx.save();
+ctx.setLineDash(dashPattern || [6, 4]);
+ctx.strokeStyle = color;
+ctx.lineWidth = 2;
+ctx.beginPath(); ctx.moveTo(xPos, pad.top); ctx.lineTo(xPos, pad.top + chartH); ctx.stroke();
+ctx.restore();
+ctx.fillStyle = color;
+ctx.font = '11px Inter, sans-serif';
+ctx.textAlign = 'center';
+ctx.fillText(label, xPos, pad.top - 5);
+}
+if (prog >= 1) {
+drawVLine(MC_MEAN, '#3B82F6', 'Mean 7.24%', [4, 3]);
+drawVLine(WACC_LINE, '#EF4444', 'WACC 19.05%', [6, 4]);
+drawVLine(DET_IRR, '#C9A961', 'Det IRR 20.09%', [8, 4]);
+}
+ctx.fillStyle = isLight ? '#666' : '#9CA3AF';
+ctx.font = '10px Inter, sans-serif';
+ctx.textAlign = 'center';
+for (var xi = 0; xi < mcBins.length; xi += 5) {
+var lx = pad.left + (xi / mcBins.length) * chartW + barW / 2;
+ctx.fillText(mcBins[xi].x.toFixed(0) + '%', lx, pad.top + chartH + 16);
+}
+ctx.textAlign = 'right';
+for (var yi = 0; yi <= 4; yi++) {
+var val = Math.round(maxCount * yi / 4);
+var yy = pad.top + chartH - (chartH * yi / 4);
+ctx.fillText(val.toLocaleString(), pad.left - 6, yy + 4);
+}
+canvas.onmousemove = function(e) {
+var rect = canvas.getBoundingClientRect();
+var mx = e.clientX - rect.left;
+var my = e.clientY - rect.top;
+var idx = Math.floor(((mx - pad.left) / chartW) * mcBins.length);
+if (idx < 0 || idx >= mcBins.length) { tooltip.style.display = 'none'; return; }
+var bin = mcBins[idx];
+var binWidth = mcBins.length > 1 ? mcBins[1].x - mcBins[0].x : 1;
+var cumCount = 0;
+for (var ci = 0; ci <= idx; ci++) cumCount += mcBins[ci].c;
+var cumPct = ((cumCount / MC_TOTAL) * 100).toFixed(1);
+tooltip.innerHTML = '<strong>IRR: ' + bin.x.toFixed(1) + '% – ' + (bin.x + binWidth).toFixed(1) + '%</strong><br>' +
+'Count: ' + bin.c.toLocaleString() + '<br>' +
+'Cumulative P(≤' + (bin.x + binWidth).toFixed(1) + '%) = ' + cumPct + '%';
+tooltip.style.display = 'block';
+tooltip.style.left = Math.min(mx + 12, W - 200) + 'px';
+tooltip.style.top = (my - 70) + 'px';
+};
+canvas.onmouseleave = function() { tooltip.style.display = 'none'; };
+}
+var mcReplayBtn = document.getElementById('mc-replay-btn');
+if (mcReplayBtn) {
+mcReplayBtn.addEventListener('click', function() {
+var startTime = performance.now();
+var duration = 3000;
+function animateFrame(now) {
+var progress = Math.min((now - startTime) / duration, 1);
+var eased = 1 - Math.pow(1 - progress, 2);
+drawMCHistogram(eased);
+if (progress < 1) requestAnimationFrame(animateFrame);
+}
+requestAnimationFrame(animateFrame);
+});
+}
+const ganttQuarters = ['26Q1','26Q2','26Q3','26Q4','27Q1','27Q2','27Q3','27Q4','28Q1','28Q2','28Q3','28Q4'];
+const ganttProjects = [
+{id:'P1',name:'Крылья Родины',type:'Фильм',budget:680,start:'26Q1',release:'27Q2',stage:'Pre-prod'},
+{id:'P2',name:'Северный путь',type:'Фильм',budget:540,start:'26Q2',release:'27Q3',stage:'Development'},
+{id:'P3',name:'Дом на Арбате',type:'Сериал 8ep',budget:720,start:'26Q2',release:'27Q4',stage:'Pre-prod'},
+{id:'P4',name:'Огонь и вода',type:'Фильм',budget:430,start:'26Q3',release:'28Q1',stage:'Development'},
+{id:'P5',name:'Наследники',type:'Сериал 10ep',budget:890,start:'26Q4',release:'28Q2',stage:'Greenlight'},
+{id:'P6',name:'Песнь горизонта',type:'Фильм',budget:510,start:'27Q1',release:'28Q3',stage:'Development'},
+{id:'P7',name:'Время идти',type:'Фильм',budget:390,start:'27Q2',release:'28Q4',stage:'Concept'}
+];
+function drawGantt() {
+var container = document.getElementById('gantt-chart');
+if (!container || container.offsetWidth === 0) return;
+var html = '';
+html += '<div style="display:flex;margin-bottom:8px;">';
+html += '<div style="width:170px;flex-shrink:0;font-size:12px;color:#9CA3AF;font-weight:600;">Проект</div>';
+html += '<div style="flex:1;display:grid;grid-template-columns:repeat(12,1fr);font-size:10px;color:#9CA3AF;text-align:center;">';
+ganttQuarters.forEach(function(q) { html += '<div>' + q + '</div>'; });
+html += '</div></div>';
+ganttProjects.forEach(function(p) {
+var si = ganttQuarters.indexOf(p.start);
+var ri = ganttQuarters.indexOf(p.release);
+if (si === -1) si = 0;
+if (ri === -1) ri = 11;
+var leftPct = (si / 12 * 100).toFixed(2);
+var widthPct = ((ri - si + 1) / 12 * 100).toFixed(2);
+var barColor = p.type.indexOf('Сериал') !== -1 ? '#8B5CF6' : '#3B82F6';
+html += '<div style="display:flex;align-items:center;margin-bottom:6px;height:34px;">';
+html += '<div style="width:170px;flex-shrink:0;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + p.name + '">';
+html += '<span style="color:#C9A961;font-weight:600;margin-right:6px;">' + p.id + '</span>' + p.name;
+html += '</div>';
+html += '<div style="flex:1;position:relative;height:100%;background:rgba(255,255,255,0.03);border-radius:4px;">';
+html += '<div class="gantt-bar-item" data-project=\'' + JSON.stringify(p) + '\' style="position:absolute;height:100%;border-radius:4px;background:' + barColor + ';opacity:0.75;cursor:pointer;left:' + leftPct + '%;width:' + widthPct + '%;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center;font-size:10px;color:white;font-weight:600;">';
+html += p.budget + ' млн';
+html += '</div></div></div>';
+});
+container.innerHTML = html;
+var ganttTooltip = document.createElement('div');
+ganttTooltip.style.cssText = 'position:fixed;background:#1a1a2e;border:1px solid #C9A961;border-radius:8px;padding:12px 16px;font-size:13px;pointer-events:none;z-index:50;display:none;color:#F5F5F5;max-width:250px;';
+document.body.appendChild(ganttTooltip);
+container.querySelectorAll('.gantt-bar-item').forEach(function(bar) {
+bar.addEventListener('mouseenter', function(e) {
+var proj = JSON.parse(this.getAttribute('data-project'));
+ganttTooltip.innerHTML = '<strong style="color:#C9A961;">' + proj.id + ' — ' + proj.name + '</strong><br>' +
+'Тип: ' + proj.type + '<br>' +
+'Бюджет: ' + proj.budget + ' млн ₽<br>' +
+'Стадия: ' + proj.stage + '<br>' +
+'Период: ' + proj.start + ' → ' + proj.release;
+ganttTooltip.style.display = 'block';
+this.style.opacity = '1';
+});
+bar.addEventListener('mousemove', function(e) {
+ganttTooltip.style.left = (e.clientX + 15) + 'px';
+ganttTooltip.style.top = (e.clientY - 80) + 'px';
+});
+bar.addEventListener('mouseleave', function() {
+ganttTooltip.style.display = 'none';
+this.style.opacity = '0.75';
+});
+});
+}
+var currentScenario = 'base';
+var wfData = {
+bear: {gross:4800, roc:3000, pref:240, catchup:60, gp_carry:300, lp_net:4200},
+base: {gross:8200, roc:3000, pref:240, catchup:240, gp_carry:944, lp_net:7016},
+bull: {gross:12500, roc:3000, pref:240, catchup:420, gp_carry:1768, lp_net:10732}
+};
+function drawWaterfall(scenario) {
+currentScenario = scenario || 'base';
+var container = document.getElementById('waterfall-chart');
+if (!container || container.offsetWidth === 0) return;
+var d = wfData[currentScenario];
+var isLight = document.body.classList.contains('light-mode');
+var canvas = container.querySelector('canvas');
+if (!canvas) {
+canvas = document.createElement('canvas');
+container.appendChild(canvas);
+}
+var dpr = window.devicePixelRatio || 1;
+var W = container.offsetWidth;
+var H = container.offsetHeight;
+canvas.width = W * dpr;
+canvas.height = H * dpr;
+canvas.style.width = W + 'px';
+canvas.style.height = H + 'px';
+var ctx = canvas.getContext('2d');
+ctx.scale(dpr, dpr);
+ctx.clearRect(0, 0, W, H);
+var pad = {top: 30, right: 20, bottom: 50, left: 20};
+var chartW = W - pad.left - pad.right;
+var chartH = H - pad.top - pad.bottom;
+var bars = [
+{label: 'Gross', value: d.gross, color: '#60A5FA'},
+{label: 'ROC', value: d.roc, color: '#3B82F6'},
+{label: '8% Pref', value: d.pref, color: '#8B5CF6'},
+{label: 'Catch-up', value: d.catchup, color: '#F59E0B'},
+{label: 'GP Carry', value: d.gp_carry, color: '#EF4444'},
+{label: 'LP Net', value: d.lp_net, color: '#C9A961'}
+];
+var maxVal = d.gross * 1.1; // gross is the largest
+var barCount = bars.length;
+var barW = chartW / (barCount * 1.5);
+var gap = barW * 0.5;
+bars.forEach(function(bar, i) {
+var x = pad.left + i * (barW + gap) + gap / 2;
+var h = (bar.value / maxVal) * chartH;
+var y = pad.top + chartH - h;
+ctx.fillStyle = bar.color;
+ctx.beginPath();
+var r = 4;
+ctx.moveTo(x, y + r);
+ctx.arcTo(x, y, x + r, y, r);
+ctx.arcTo(x + barW, y, x + barW, y + r, r);
+ctx.lineTo(x + barW, pad.top + chartH);
+ctx.lineTo(x, pad.top + chartH);
+ctx.closePath();
+ctx.fill();
+ctx.fillStyle = isLight ? '#333' : '#F5F5F5';
+ctx.font = '12px Inter, sans-serif';
+ctx.textAlign = 'center';
+ctx.fillText((bar.value / 1000).toFixed(1) + ' млрд', x + barW / 2, y - 8);
+ctx.fillStyle = isLight ? '#666' : '#9CA3AF';
+ctx.font = '11px Inter, sans-serif';
+ctx.fillText(bar.label, x + barW / 2, pad.top + chartH + 18);
+});
+ctx.fillStyle = '#C9A961';
+ctx.font = 'bold 14px Georgia, serif';
+ctx.textAlign = 'right';
+ctx.fillText(currentScenario.charAt(0).toUpperCase() + currentScenario.slice(1) + ' scenario', W - pad.right, pad.top - 8);
+var btns = document.querySelectorAll('.wf-toggle button');
+btns.forEach(function(btn) {
+btn.classList.toggle('active', btn.getAttribute('data-scenario') === currentScenario);
+});
+}
+document.querySelectorAll('.wf-toggle button').forEach(function(btn) {
+btn.addEventListener('click', function() {
+drawWaterfall(this.getAttribute('data-scenario'));
+});
+});
+var irrHistory = [];
+function updateIRR() {
+var hitRate = parseFloat(document.getElementById('sl-hit').value);
+var overrun = parseFloat(document.getElementById('sl-overrun').value);
+var delay = parseFloat(document.getElementById('sl-delay').value);
+var margin = parseFloat(document.getElementById('sl-margin').value);
+var exitMult = parseFloat(document.getElementById('sl-exit').value);
+var vals = document.querySelectorAll('.slider-val');
+document.getElementById('sl-hit').nextElementSibling && 0; // skip
+var hitDisp = document.getElementById('sl-hit').parentElement.querySelector('.slider-val');
+var overrunDisp = document.getElementById('sl-overrun').parentElement.querySelector('.slider-val');
+var delayDisp = document.getElementById('sl-delay').parentElement.querySelector('.slider-val');
+var marginDisp = document.getElementById('sl-margin').parentElement.querySelector('.slider-val');
+var exitDisp = document.getElementById('sl-exit').parentElement.querySelector('.slider-val');
+if (hitDisp) hitDisp.textContent = hitRate.toFixed(2);
+if (overrunDisp) overrunDisp.textContent = (overrun * 100).toFixed(0) + '%';
+if (delayDisp) delayDisp.textContent = delay.toFixed(0);
+if (marginDisp) marginDisp.textContent = (margin * 100).toFixed(0) + '%';
+if (exitDisp) exitDisp.textContent = exitMult.toFixed(1) + '×';
+var baseIrr = 20.09;
+var hitEffect = (hitRate - 0.70) * 30;
+var overrunEffect = -overrun * 25;
+var delayEffect = -delay * 3.5;
+var marginEffect = (margin - 0.35) * 40;
+var exitEffect = (exitMult - 6.5) * 4;
+var irr = baseIrr + hitEffect + overrunEffect + delayEffect + marginEffect + exitEffect;
+var resultEl = document.getElementById('irr-result');
+if (resultEl) {
+resultEl.textContent = irr.toFixed(2) + '%';
+if (irr >= 19.05) resultEl.style.color = '#10B981';
+else if (irr > 0) resultEl.style.color = '#C9A961';
+else resultEl.style.color = '#EF4444';
+}
+irrHistory.push(irr);
+if (irrHistory.length > 20) irrHistory.shift();
+drawSparkline();
+}
+function drawSparkline() {
+var canvas = document.getElementById('irr-sparkline');
+if (!canvas || irrHistory.length < 2) return;
+var ctx = canvas.getContext('2d');
+var W = canvas.width;
+var H = canvas.height;
+ctx.clearRect(0, 0, W, H);
+var min = Math.min.apply(null, irrHistory) - 2;
+var max = Math.max.apply(null, irrHistory) + 2;
+var range = max - min || 1;
+ctx.strokeStyle = '#C9A961';
+ctx.lineWidth = 2;
+ctx.beginPath();
+irrHistory.forEach(function(v, i) {
+var x = (i / (irrHistory.length - 1)) * W;
+var y = H - ((v - min) / range) * H;
+if (i === 0) ctx.moveTo(x, y);
+else ctx.lineTo(x, y);
+});
+ctx.stroke();
+if (min < 0 && max > 0) {
+var zeroY = H - ((0 - min) / range) * H;
+ctx.strokeStyle = 'rgba(239,68,68,0.4)';
+ctx.lineWidth = 1;
+ctx.setLineDash([4, 3]);
+ctx.beginPath(); ctx.moveTo(0, zeroY); ctx.lineTo(W, zeroY); ctx.stroke();
+ctx.setLineDash([]);
+}
+}
+['sl-hit','sl-overrun','sl-delay','sl-margin','sl-exit'].forEach(function(id) {
+var el = document.getElementById(id);
+if (el) el.addEventListener('input', updateIRR);
+});
+document.addEventListener('click', function(e) {
+if (e.target.classList.contains('copy-link-btn')) {
+navigator.clipboard.writeText(window.location.href).then(function() {
+var orig = e.target.textContent;
+e.target.textContent = 'Copied!';
+setTimeout(function() { e.target.textContent = orig; }, 1500);
+});
+}
+});
+document.addEventListener('DOMContentLoaded', function() {
+initFromHash();
+setTimeout(function() {
+drawGantt();
+drawMCHistogram();
+drawWaterfall('base');
+updateIRR();
+}, 200);
+window.addEventListener('resize', function() {
+if (currentSlide === 17) drawMCHistogram();
+if (currentSlide === 11) drawGantt();
+if (currentSlide === 22) drawWaterfall(currentScenario);
+});
+});</script></body></html>

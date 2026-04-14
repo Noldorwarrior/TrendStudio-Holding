@@ -39,3 +39,6 @@ structure.json
 
 # Bundle files (large, stored separately)
 *.bundle
+
+# SSH key for sandbox → GitHub (account-wide, account: Noldorwarrior)
+.git-ssh/

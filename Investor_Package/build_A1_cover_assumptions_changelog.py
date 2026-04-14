@@ -301,7 +301,7 @@ def build_assumptions(wb):
         ("A. МАКРО-ДОПУЩЕНИЯ", [
             ("Инфляция РФ (CPI), годовая",           0.065,  "%",        "ЦБ РФ прогноз, Base 6.5% 2026–2028"),
             ("Ключевая ставка (среднегодовая)",      0.14,   "%",        "ЦБ РФ, Base 14% 2026"),
-            ("WACC для DCF (Russian media)",          0.20,   "%",        "Russian media benchmark 18–22%, Base 20%"),
+            ("WACC для DCF (CAPM build-up)",          0.1905, "%",        "Rf 14.5% + β×ERP 5.6% + Country 2% + Size 1%, WACC 19.05%"),
             ("Налог на прибыль РФ",                  0.20,   "%",        "НК РФ, Глава 25"),
             ("Страховые взносы (работодатель)",      0.30,   "%",        "ПФР+ФОМС+ФСС, 30% + 0.2% НС (округл. 30%)"),
             ("Ставка дисконта для payback (nominal)", 0.15,   "%",        "Инвестор-ориентир, консервативная"),
@@ -401,7 +401,7 @@ def build_assumptions(wb):
             ("Exit horizon 1 (Y3)",                  2028,   "год",      "Q4 2028"),
             ("Exit horizon 2 (Y5)",                  2030,   "год",      "Q4 2030"),
             ("Exit horizon 3 (Y7)",                  2032,   "год",      "Q4 2032"),
-            ("Target IRR (инвестор)",                0.30,   "%",        "30% minimum hurdle rate"),
+            ("Hurdle Rate (инвестор)",               0.18,   "%",        "18% hurdle rate (Named Range HURDLE_RATE)"),
             ("Target MOIC (инвестор)",               2.5,    "×",        "Multiple of Invested Capital"),
         ]),
     ]

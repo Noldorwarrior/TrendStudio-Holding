@@ -725,7 +725,7 @@ methodology = [
     ("23_Valuation_Multiples", "EV/EBITDA median по 32_Comparables. Применён discount 10% за liquidity + 5% за size."),
     ("25_Exit_Scenarios", "Probability-weighted EV = Σ (p × EV) по 7 маршрутам. Weighted = 6 038 млн ₽."),
     ("26_Sensitivity", "Tornado по 8 переменным с ±20% impact. Top driver: Box Office revenue (±420 на EBITDA)."),
-    ("27_Scenario_Analysis", "5 сценариев: Worst / Pessimistic / Base / Optimistic / Best с вероятностями 10/20/40/20/10."),
+    ("27_Scenario_Analysis", "5 сценариев: Worst / Pessimistic / Base / Optimistic / Best с вероятностями 5/15/50/20/10 (PROB_VECTOR_BASE SSOT)."),
     ("28_Monte_Carlo_Summary", "n=1000, seed=42. 5 стохастических переменных (triangular, lognormal, gauss, binomial). VaR 95% = 561."),
     ("29_Risk_Register", "30 рисков × 5 категорий (Market, Production, Financial, Regulatory, Operational). Max score 20 (R17)."),
     ("30/31/32_Market", "TAM/SAM/SOM + benchmark KPI + precedent transactions. RU comps median 8.0×, Global 9.8×, blend 8.9×."),

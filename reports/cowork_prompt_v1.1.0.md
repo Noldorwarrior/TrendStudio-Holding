@@ -103,13 +103,12 @@ JSON-отчёт с 32/32 PASS. Если < 32 — список FAIL с обосн
 | Метрика | Значение | Источник |
 |---------|----------|----------|
 | Revenue 3Y cumul | 4 545 млн ₽ | 09_P&L_Statement |
-| EBITDA 3Y cumul (GAAP) | 2 152 млн ₽ | 02_Assumptions D140 |
+| EBITDA 3Y cumul (GAAP) | 2 167 млн ₽ | 09_P&L T28 (actual sum), 02_Assumptions D140 |
 | NDP (anchor) | 3 000 млн ₽ | 02_Assumptions D139, Named Range NDP_ANCHOR |
-| Net Profit 3Y | 1 689 млн ₽ | 02_Assumptions D141 |
-| IRR Public W₃ (deterministic) | **20.09%** | 24_Investor_Returns, 36_Executive_Summary |
-| MoIC W₃ Base (T1 cash-on-cash) | 2.0× | 24_Investor_Returns |
-| MoIC aggregate (exit-weighted) | 4.8× | 36_Executive_Summary |
-| Payback | 3.75 лет | 24_Investor_Returns |
+| Net Profit 3Y | 1 698 млн ₽ | 09_P&L T36 (actual sum), 02_Assumptions D141 |
+| IRR Public W₃ (deterministic) | **20.09%** | 24_Investor_Returns H22, 36_Executive_Summary |
+| MoIC W₃ Base (T1 cash-on-cash) | 2.0× | 24_Investor_Returns I22 |
+| Payback | 3.23 лет | 24_Investor_Returns G37, 36_ES E27 |
 | WACC | 19.05% | 22_Valuation_DCF, Named Range WACC_BASE |
 | CAPM Ke | 23.1% | Rf 14.5% + β(0.80)×ERP(7.0%) + Country 2.0% + Size 1.0% |
 | Investment T₁ | 1 250 млн ₽ | 02_Assumptions D134 (4 транша) |

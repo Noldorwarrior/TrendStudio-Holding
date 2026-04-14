@@ -365,11 +365,11 @@ print()
 print("[LOGICAL] Логические механизмы")
 
 # №10 Скрытые допущения
-# Зафиксированы явно: WACC 19%, g 3%, exit mult 6.5×, P-weights 10/20/40/20/10
+# Зафиксированы явно: WACC 19.05%, g 3%, exit mult 5×, P-weights 5/15/50/20/10
 hidden_ok = True  # документировано в 22_Valuation_DCF и 27_Scenario_Analysis
 check(10, "LOG", "Скрытые допущения (WACC/g/exit mult/p-weights)",
       hidden_ok,
-      "WACC 19%, g 3%, exit mult 6.5×, scenario p-weights 10/20/40/20/10 — все зафиксированы в 02_Assumptions, 22_Valuation_DCF, 27_Scenario_Analysis")
+      "WACC 19.05%, g 3%, exit mult 5×, scenario p-weights 5/15/50/20/10 — все зафиксированы в 02_Assumptions, 22_Valuation_DCF, 27_Scenario_Analysis")
 
 # №11 Парадоксы
 # Проверяем отсутствие логических парадоксов:

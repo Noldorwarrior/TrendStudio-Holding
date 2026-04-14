@@ -71,17 +71,35 @@ def clear_sheet_if_exists(wb, name):
         del wb[name]
 
 
-# ─── IRR helper (Newton's method) ────────────────────────────────────
+# ─── IRR helper (R-008: unified on numpy_financial.irr) ─────────────
+import numpy_financial as _npf_a11
+
+
 def xnpv(rate, cashflows, periods):
     return sum(cf / (1 + rate) ** p for cf, p in zip(cashflows, periods))
 
 
 def irr(cashflows, periods, guess=0.15):
-    """Returns IRR. periods in years (can be fractional)."""
+    """Returns IRR using numpy_financial.irr (R-008).
+
+    For irregular periods, falls back to xnpv-based Newton solver.
+    Regular annual periods → numpy_financial.irr directly.
+    """
+    # Check if periods are regular annual (0, 1, 2, ...)
+    is_regular = all(
+        abs(p - i) < 0.01 for i, p in enumerate(periods)
+    )
+    if is_regular:
+        try:
+            result = _npf_a11.irr(cashflows)
+            if result == result:  # not NaN
+                return result
+        except Exception:
+            pass
+    # Fallback for irregular periods: Newton on xnpv
     r = guess
     for _ in range(200):
         npv = xnpv(r, cashflows, periods)
-        # numerical derivative
         d = (xnpv(r + 1e-6, cashflows, periods) - npv) / 1e-6
         if abs(d) < 1e-12:
             break

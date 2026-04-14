@@ -1,0 +1,246 @@
+{
+  "version": "v1.1.0 LP Package",
+  "date": "2026-04-14",
+  "preset": "П5 Максимум 32/32 (applied to LP deliverables)",
+  "files_verified": {
+    "memo": "/sessions/bold-magical-gauss/mnt/Холдинг/LP_Investor_Memo_v1.1.0.docx",
+    "A": "/sessions/bold-magical-gauss/mnt/Холдинг/LP_Appendix_A_Risk_Register_v1.1.0.xlsx",
+    "B": "/sessions/bold-magical-gauss/mnt/Холдинг/LP_Appendix_B_Stress_Tests_v1.1.0.xlsx",
+    "C": "/sessions/bold-magical-gauss/mnt/Холдинг/LP_Appendix_C_MC_Report_v1.1.0.xlsx",
+    "D": "/sessions/bold-magical-gauss/mnt/Холдинг/LP_Appendix_D_Peer_Comps_v1.1.0.xlsx",
+    "E": "/sessions/bold-magical-gauss/mnt/Холдинг/LP_Appendix_E_CAPM_BuildUp_v1.1.0.xlsx"
+  },
+  "total": 32,
+  "summary": {
+    "PASS": 32,
+    "FAIL": 0,
+    "WARN": 0
+  },
+  "pass_pct": 100.0,
+  "results": [
+    {
+      "id": "Ф1",
+      "cat": "Factual",
+      "name": "NDP=3 000 млн ₽ присутствует в Memo+Appendices",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Ф2",
+      "cat": "Factual",
+      "name": "Revenue 3Y = 4 545 млн ₽ в Memo",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Ф3",
+      "cat": "Factual",
+      "name": "EBITDA 3Y = 2 167 млн ₽ в Memo",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Ф4",
+      "cat": "Factual",
+      "name": "IRR 20.09% указан как основная метрика",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Ф5",
+      "cat": "Factual",
+      "name": "WACC 19.05% в Memo + Appendix E",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Ф6",
+      "cat": "Factual",
+      "name": "Investment T₁ = 1 250 млн ₽ в Memo",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Н1",
+      "cat": "Numerical",
+      "name": "EBITDA margin consistency (47.7% = 2167/4545)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Н2",
+      "cat": "Numerical",
+      "name": "WACC расчёт 0.70×23.1% + 0.30×9.6% = 19.05%",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Н3",
+      "cat": "Numerical",
+      "name": "Monte Carlo N=50 000 в Appendix C и Memo",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Н4",
+      "cat": "Numerical",
+      "name": "MC Mean IRR 7.24% указан с методологической справкой",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Н5",
+      "cat": "Numerical",
+      "name": "Scenario probabilities sum to 100% (10+20+40+20+10)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Н6",
+      "cat": "Numerical",
+      "name": "MoIC 2.0× ≈ (P·preferred + recovery)/capital",
+      "status": "PASS",
+      "detail": "MoIC 2.0× consistent с IRR 20.09% на holding 4-6Y"
+    },
+    {
+      "id": "Л1",
+      "cat": "Logical",
+      "name": "Методологическая справка det↔stoch присутствует",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Л2",
+      "cat": "Logical",
+      "name": "CAPM build-up: Rf+β·ERP+CRP+SMB = 23.1%",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Л3",
+      "cat": "Logical",
+      "name": "Valuation blend 40/60 DCF/Multiples в Memo",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Л4",
+      "cat": "Logical",
+      "name": "Waterfall W₃ 4 priority levels",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Л5",
+      "cat": "Logical",
+      "name": "Стресс-сценарии убывают: Worst < Base < Best (revenue 2727<4545<6363)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Л6",
+      "cat": "Logical",
+      "name": "Exit routes 7 маршрутов prob=100%",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "И1",
+      "cat": "Source",
+      "name": "CAPM sources attributed (Damodaran/Bloomberg/Cbonds/Kroll)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "И2",
+      "cat": "Source",
+      "name": "Peers ≥ 6 в Appendix D",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "И3",
+      "cat": "Source",
+      "name": "Tax ННП 20% + НДС 0% cinema",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "И4",
+      "cat": "Source",
+      "name": "Нацпроекты (Культура/Семья/Молодёжь и дети)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "И5",
+      "cat": "Source",
+      "name": "MC seed=42 и N=50 000 явно указаны",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "И6",
+      "cat": "Source",
+      "name": "Источники Damodaran/Bloomberg/Kroll полно в Appendix E",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Д1",
+      "cat": "Document",
+      "name": "Нет Internal / W₅ / V-D leakage в Memo",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Д2",
+      "cat": "Document",
+      "name": "Confidentiality disclaimer присутствует",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Д3",
+      "cat": "Document",
+      "name": "Forward-looking disclaimer присутствует",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Д4",
+      "cat": "Document",
+      "name": "Header + Footer (pagination) в Memo",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "Д5",
+      "cat": "Document",
+      "name": "Memo page estimate 15-20 (≥8 sections + table blocks)",
+      "status": "PASS",
+      "detail": "paragraphs=104"
+    },
+    {
+      "id": "Д6",
+      "cat": "Document",
+      "name": "Все 5 Appendices созданы и непустые",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "А1",
+      "cat": "Audience",
+      "name": "LP DD-grade: нет L3/V-D/Internal утечек",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "А2",
+      "cat": "Audience",
+      "name": "Тональность LP: тезисы + метрики + disclaimers",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

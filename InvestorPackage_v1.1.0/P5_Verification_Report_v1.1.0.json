@@ -1,0 +1,283 @@
+{
+  "version": "v1.1.0",
+  "date": "2026-04-14",
+  "preset": "П5 Максимум 32/32",
+  "total": 32,
+  "summary": {
+    "PASS": 31,
+    "FAIL": 1,
+    "WARN": 0
+  },
+  "pass_pct": 96.9,
+  "results": [
+    {
+      "id": "Ф1",
+      "cat": "Factual",
+      "name": "NDP anchor = 3 000 млн ₽ (Assumptions D139)",
+      "status": "PASS",
+      "detail": "D139=3000"
+    },
+    {
+      "id": "Ф2",
+      "cat": "Factual",
+      "name": "Revenue cumul 3Y ≈ 4 545 млн ₽ (22_DCF D22+E22+F22)",
+      "status": "PASS",
+      "detail": "2026+2027+2028 = 4545"
+    },
+    {
+      "id": "Ф3",
+      "cat": "Factual",
+      "name": "EBITDA cumul = 2 167 млн ₽ (Assumptions D140)",
+      "status": "PASS",
+      "detail": "D140=2167.4"
+    },
+    {
+      "id": "Ф4",
+      "cat": "Factual",
+      "name": "IRR Public W₃ = 20.09% (det., 24_Investor_Returns H22)",
+      "status": "PASS",
+      "detail": "H22=20.09"
+    },
+    {
+      "id": "Ф5",
+      "cat": "Factual",
+      "name": "WACC = 19.05% (22_DCF build-up + text)",
+      "status": "PASS",
+      "detail": "text='19.05%' in sheet=True; Ke=0.231, Kd_at=0.096, D/V=0.3, E/V=0.7, calc WACC=0.1905"
+    },
+    {
+      "id": "Ф6",
+      "cat": "Factual",
+      "name": "Investment T₁ = 1 250 млн ₽ (Assumptions D134)",
+      "status": "PASS",
+      "detail": "D134=1250"
+    },
+    {
+      "id": "Н1",
+      "cat": "Numerical",
+      "name": "EBITDA формула даёт правдоподобную маржу (Rev−COGS−P&A−OpEx)",
+      "status": "PASS",
+      "detail": "Rev 3Y=4545, EBITDA 3Y=2151.5, margin=47.3%"
+    },
+    {
+      "id": "Н2",
+      "cat": "Numerical",
+      "name": "WACC = 0.70×23.1% + 0.30×9.6% = 19.05%",
+      "status": "PASS",
+      "detail": "0.7×0.231 + 0.3×0.096 = 0.1905"
+    },
+    {
+      "id": "Н3",
+      "cat": "Numerical",
+      "name": "MC N=50 000 (28_MC header + histogram bins sum=50000)",
+      "status": "PASS",
+      "detail": "header '50,000'=True, histogram sum=50000"
+    },
+    {
+      "id": "Н4",
+      "cat": "Numerical",
+      "name": "D&A ramp 3→3→175→348→520 (22_DCF R24)",
+      "status": "PASS",
+      "detail": "C24-G24 = [3.0, 3.0, 175.0, 348.0, 520.0]"
+    },
+    {
+      "id": "Н5",
+      "cat": "Numerical",
+      "name": "Revenue blend 0.79+0.30×hit_rate, E[blend]=1.00",
+      "status": "PASS",
+      "detail": "0.79+0.30×0.70=1.0"
+    },
+    {
+      "id": "Н6",
+      "cat": "Numerical",
+      "name": "MoIC W₃ Base T1 ≈ 2.0× (24_IR I22)",
+      "status": "PASS",
+      "detail": "I22=2"
+    },
+    {
+      "id": "Л1",
+      "cat": "Logical",
+      "name": "Единый метод IRR (numpy_financial.irr в production)",
+      "status": "PASS",
+      "detail": "npf usage in builds: 11, bisect usage in builds: 0"
+    },
+    {
+      "id": "Л2",
+      "cat": "Logical",
+      "name": "PROB_VECTOR_BASE = [0.05, 0.15, 0.50, 0.20, 0.10] SSOT",
+      "status": "PASS",
+      "detail": "SSOT mentions: 12"
+    },
+    {
+      "id": "Л3",
+      "cat": "Logical",
+      "name": "Valuation range: DCF floor ≤ Weighted EV ≤ Comps ceiling",
+      "status": "PASS",
+      "detail": "explicit Floor/Market/Expected text=True"
+    },
+    {
+      "id": "Л4",
+      "cat": "Logical",
+      "name": "Risk rubric 5×5 калиброван (CRITICAL + score 15+)",
+      "status": "PASS",
+      "detail": "CRITICAL text=True, score 15-25 present=True"
+    },
+    {
+      "id": "Л5",
+      "cat": "Logical",
+      "name": "Stress NDP снижается при шоках (27_Scenario)",
+      "status": "PASS",
+      "detail": "NDP-like range: 1013.4..3220"
+    },
+    {
+      "id": "Л6",
+      "cat": "Logical",
+      "name": "Reverse stress / breakeven hit_rate analysis",
+      "status": "PASS",
+      "detail": "reverse/breakeven text=True, hit-rate sensitivity=False"
+    },
+    {
+      "id": "И1",
+      "cat": "Source",
+      "name": "CAPM источники (ОФЗ/Damodaran/Bloomberg/Duff&Phelps) в модели",
+      "status": "FAIL",
+      "detail": "{'Rf_ОФЗ/Cbonds': False, 'Damodaran': False, 'Bloomberg': False, 'Duff&Phelps': False}"
+    },
+    {
+      "id": "И2",
+      "cat": "Source",
+      "name": "Peer comps (6+ peers)",
+      "status": "PASS",
+      "detail": "unique peers ≥ 6: Ivi, Okko, START, Premier, Амедиатека, Газпром-Медиа, Яндекс"
+    },
+    {
+      "id": "И3",
+      "cat": "Source",
+      "name": "Tax: ННП 20% + НДС 0% cinema (ст.149 НК РФ)",
+      "status": "PASS",
+      "detail": "art.149=True, 20%=True"
+    },
+    {
+      "id": "И4",
+      "cat": "Source",
+      "name": "Comparable Transactions (20+)",
+      "status": "PASS",
+      "detail": "non-empty rows=50"
+    },
+    {
+      "id": "И5",
+      "cat": "Source",
+      "name": "MC seed=42, N=50 000 в build_A12",
+      "status": "PASS",
+      "detail": "seed42=True, N50k=True"
+    },
+    {
+      "id": "И6",
+      "cat": "Source",
+      "name": "Requirements pinned (== format)",
+      "status": "PASS",
+      "detail": "pipeline/requirements.txt: 18 pinned"
+    },
+    {
+      "id": "Д1",
+      "cat": "Document",
+      "name": "0 occurrences 'Internal' (кроме 'Internal Rate of Return')",
+      "status": "PASS",
+      "detail": "hits=0, sample=[]"
+    },
+    {
+      "id": "Д2",
+      "cat": "Document",
+      "name": "0 absPath в workbook.xml",
+      "status": "PASS",
+      "detail": "ok"
+    },
+    {
+      "id": "Д3",
+      "cat": "Document",
+      "name": "Author=TrendStudio, no L3, no anchor в core.xml",
+      "status": "PASS",
+      "detail": "author_ts=True, L3=False, anchor3000=False"
+    },
+    {
+      "id": "Д4",
+      "cat": "Document",
+      "name": "Cover Letter v1.1.0, дата апр 2026, без placeholders",
+      "status": "PASS",
+      "detail": "v1.1.0=True, date=True, no_ph=True"
+    },
+    {
+      "id": "Д5",
+      "cat": "Document",
+      "name": "0 backup/bak/FUSE/lock файлов",
+      "status": "PASS",
+      "detail": "files=[]"
+    },
+    {
+      "id": "Д6",
+      "cat": "Document",
+      "name": "Print_Area на 42 листах (_xlnm.Print_Area в workbook.xml)",
+      "status": "PASS",
+      "detail": "Print_Area refs: 42"
+    },
+    {
+      "id": "А1",
+      "cat": "Audience",
+      "name": "LP DD-grade: нет W₅/V-D/L3 scenario leakage",
+      "status": "PASS",
+      "detail": "leaks=[]"
+    },
+    {
+      "id": "А2",
+      "cat": "Audience",
+      "name": "Нет Internal IRR 24.75% в Public",
+      "status": "PASS",
+      "detail": "hits=[]"
+    }
+  ],
+  "p13_auditor": {
+    "r_items_closed": [
+      "R-001",
+      "R-002",
+      "R-003",
+      "R-004",
+      "R-007",
+      "R-008",
+      "R-009",
+      "R-010",
+      "R-011",
+      "R-012",
+      "R-013",
+      "R-018",
+      "R-019",
+      "R-020",
+      "R-022",
+      "R-023",
+      "R-024",
+      "R-025"
+    ],
+    "f_items_closed": [
+      "F-006",
+      "F-007",
+      "F-012",
+      "F-013",
+      "F-014",
+      "F-015",
+      "F-016",
+      "F-017",
+      "F-018",
+      "F-019",
+      "F-027",
+      "F-028",
+      "F-030",
+      "F-033",
+      "F-035",
+      "F-036",
+      "F-037",
+      "F-038",
+      "F-039"
+    ],
+    "r_count": 18,
+    "f_count": 19
+  }
+}

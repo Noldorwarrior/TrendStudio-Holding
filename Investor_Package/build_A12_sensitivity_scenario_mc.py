@@ -299,40 +299,45 @@ def build_sensitivity(wb):
         cell.border = box_thin
     r += 1
 
-    # IRR impact function — approximate
+    # IRR impact function — unified numpy_financial.irr (R-008)
+    def _cf_irr(t1_inflow):
+        """Compute IRR from T₁ inflow using numpy_financial.irr."""
+        import numpy_financial as _npf
+        _cf = [-1250, 0, 0, 0,
+               t1_inflow * 0.20, t1_inflow * 0.50,
+               t1_inflow * 0.15, t1_inflow * 0.15]
+        try:
+            v = _npf.irr(_cf)
+            return v if v == v else BASE_IRR_T1  # NaN guard
+        except Exception:
+            return BASE_IRR_T1
+
     def irr_impact(driver, delta):
-        # Base IRR = 7.7%. Sensitivity via MOIC link.
         if driver == "Revenue":
-            # Revenue ↑20% → Rev 3Y → NDP ↑ → T₁ upside ↑
             new_ndp = BASE_NDP * delta
-            new_inflow = 1250 + 15 + (new_ndp - 2215) * 0.569 - 458.33
-            new_moic = (1250 + 15 + 458.33 + (new_ndp - 3000) * 0.569) / 1250
-            return (new_moic ** (1/6.5) - 1)
+            new_inflow = 1250 + 15 + 458.33 + (new_ndp - 3000) * 0.569
+            return _cf_irr(max(new_inflow, 1))
         elif driver == "EBITDA margin":
             new_ebitda = BASE_REVENUE_3Y * BASE_EBITDA_MARGIN * delta
             new_ndp = new_ebitda + 600 + 248
-            new_moic = (1250 + 15 + 458.33 + (new_ndp - 3000) * 0.569) / 1250
-            return (new_moic ** (1/6.5) - 1)
+            new_inflow = 1250 + 15 + 458.33 + (new_ndp - 3000) * 0.569
+            return _cf_irr(max(new_inflow, 1))
         elif driver == "Production CAPEX":
-            # CAPEX ↑ → больше долг → меньше EBITDA → IRR ↓
             return BASE_IRR_T1 - (delta - 1) * 0.15
         elif driver == "P&A ratio":
             return BASE_IRR_T1 - (delta - 1) * 0.03
         elif driver == "OpEx":
             return BASE_IRR_T1 - (delta - 1) * 0.01
         elif driver == "Interest":
-            # Interest ↑ = T₁ inflow ↑ slight
             return BASE_IRR_T1 + (delta - 1) * 0.003
         elif driver == "Exit Multiple":
-            # Exit mult ↑ = upside exit return ↑ → IRR ↑ (больше W₁ share)
             new_ev = 2152 * 5 * delta
-            new_moic = (1250 + 15 + 458.33 + (new_ev - 10760) * 0.569 / 1000) / 1250
-            new_moic = max(new_moic, 0.1)
-            return (new_moic ** (1/6.5) - 1)
+            new_inflow = 1250 + 15 + 458.33 + (new_ev - 10760) * 0.569 / 1000
+            return _cf_irr(max(new_inflow, 1))
         elif driver == "Attendance":
             new_ndp = BASE_NDP * delta
-            new_moic = (1250 + 15 + 458.33 + (new_ndp - 3000) * 0.569) / 1250
-            return (new_moic ** (1/6.5) - 1)
+            new_inflow = 1250 + 15 + 458.33 + (new_ndp - 3000) * 0.569
+            return _cf_irr(max(new_inflow, 1))
         return BASE_IRR_T1
 
     tornado2 = []
@@ -561,7 +566,8 @@ def build_scenarios(wb):
     c.alignment = C_LEFT
     r += 1
 
-    probs = [0.05, 0.15, 0.50, 0.20, 0.10]
+    # R-007: единый вектор вероятностей (SSOT — finance_core.PROB_VECTOR_BASE)
+    probs = [0.05, 0.15, 0.50, 0.20, 0.10]  # PROB_VECTOR_BASE
     pw_revenue = sum(BASE_REVENUE_3Y * m * p for m, p in zip(scen_mults, probs))
     pw_ebitda = sum(BASE_EBITDA_3Y * m * p for m, p in zip(scen_mults, probs))
     pw_ndp = sum(BASE_NDP * m * p for m, p in zip(scen_mults, probs))
@@ -698,7 +704,7 @@ def build_monte_carlo(wb):
         hit_rate = sum(1 for _ in range(12) if random.random() < 0.70) / 12
 
         # Derived
-        rev = BASE_REVENUE_3Y * rev_m * (0.85 + 0.30 * hit_rate)  # blend
+        rev = BASE_REVENUE_3Y * rev_m * (0.79 + 0.30 * hit_rate)  # blend centred at 1.0 (R-009)
         margin = max(BASE_EBITDA_MARGIN + margin_shock, 0.10)
         ebitda = rev * margin
         ndp = max(ebitda + 600 + 248 * (1 - (capex_overrun - 1)), 500)
@@ -708,9 +714,16 @@ def build_monte_carlo(wb):
         if ndp >= 1723:
             t1_inflow = min(t1_inflow, 1250 + 15 + ndp * t1_share * 0.3)
         moic = t1_inflow / 1250
-        # IRR approximation: (moic)^(1/6.5) - 1
+        # IRR: numpy_financial.irr on actual cash flows (R-008)
+        # Pattern: invest Y0, returns spread 20/50/15/15 over Y4-Y7
+        _cf = [-1250, 0, 0, 0,
+               t1_inflow * 0.20, t1_inflow * 0.50,
+               t1_inflow * 0.15, t1_inflow * 0.15]
         try:
-            irr_v = moic ** (1 / 6.5) - 1 if moic > 0 else -0.2
+            import numpy_financial as _npf
+            irr_v = _npf.irr(_cf)
+            if irr_v != irr_v:  # NaN check
+                irr_v = -0.2
         except Exception:
             irr_v = -0.2
         ev = ebitda * exit_mult

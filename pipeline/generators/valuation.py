@@ -57,45 +57,18 @@ def _discounted_tv(tv: float, wacc: float, horizon_years: int = 3) -> float:
 
 
 def _irr(fcf: List[float]) -> float:
+    """Compute IRR using unified numpy_financial.irr (R-008).
+
+    Delegates to finance_core.compute_irr — single method across all scripts.
     """
-    Численный IRR по bisect.
-
-    fcf[0] — начальный отток (отрицательный),
-    fcf[1:] — положительные потоки.
-    Возвращает 0.0, если IRR не удалось локализовать.
-    """
-    if not fcf or fcf[0] >= 0:
-        return 0.0
-    lo, hi = -0.99, 5.0
-
-    def npv_at(rate: float) -> float:
-        return sum(cf / ((1.0 + rate) ** t) for t, cf in enumerate(fcf))
-
-    f_lo = npv_at(lo)
-    f_hi = npv_at(hi)
-    if f_lo * f_hi > 0:
-        return 0.0
-    for _ in range(80):
-        mid = 0.5 * (lo + hi)
-        f_mid = npv_at(mid)
-        if abs(f_mid) < 1e-6:
-            return mid
-        if f_lo * f_mid < 0:
-            hi = mid
-            f_hi = f_mid
-        else:
-            lo = mid
-            f_lo = f_mid
-    return 0.5 * (lo + hi)
+    from .finance_core import compute_irr
+    return compute_irr(fcf)
 
 
 def _moic(fcf: List[float]) -> float:
-    """Сумма положительных потоков / модуль начального оттока."""
-    if not fcf or fcf[0] >= 0:
-        return 0.0
-    invested = -fcf[0]
-    returned = sum(max(0.0, cf) for cf in fcf[1:])
-    return returned / invested if invested > 0 else 0.0
+    """Compute MOIC using unified finance_core.compute_moic (R-008)."""
+    from .finance_core import compute_moic
+    return compute_moic(fcf)
 
 
 def _payback_years(fcf: List[float]) -> float:

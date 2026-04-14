@@ -75,10 +75,12 @@ REVENUE = {
 EBITDA_M = {2026: 0.130, 2027: 0.384, 2028: 0.586,
             2029: 0.40, 2030: 0.40}
 
-# D&A — 2026-2028 build phase minimal (контент ещё не списывается),
-# 2029+ — steady state = CAPEX (replacement)
-DA = {2026: 3.0, 2027: 3.0, 2028: 3.0,
-      2029: 500.0, 2030: 520.0}
+# D&A — 2026-2027 build phase minimal (контент ещё не списывается),
+# 2028-2030 linear ramp to steady state (R-012: smooth 167× jump)
+# Rationale: content assets commissioned gradually during 2028 (first releases),
+# reaching full replacement-level D&A by 2030.
+DA = {2026: 3.0, 2027: 3.0, 2028: 175.0,
+      2029: 348.0, 2030: 520.0}
 
 # CAPEX — 2026-2028 факт модели, 2029-2030 replacement level
 CAPEX = {2026: 402.5, 2027: 853.0, 2028: 594.5,
@@ -87,7 +89,11 @@ CAPEX = {2026: 402.5, 2027: 853.0, 2028: 594.5,
 # ΔNWC: grows with revenue (25% AR − 30% AP on OpEx)
 NWC_PCT = 0.10  # approx ΔNWC as 10% of ΔRevenue
 
-TAX_RATE = 0.20
+# R-018 / F-027: Tax separation — this is Profit Tax (ННП) only.
+# НДС = 0% for cinema production (ст. 149 НК РФ, pass-through).
+# ННП = 20% (17% regional + 3% federal).
+TAX_RATE_PROFIT = 0.20  # ННП 20%
+TAX_RATE = TAX_RATE_PROFIT  # alias for backward compatibility
 
 # WACC build-up — realistic for mature pre-IPO media in RF
 RISK_FREE = 0.145      # ОФЗ 10Y 2026

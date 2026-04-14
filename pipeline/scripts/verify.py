@@ -136,13 +136,14 @@ def run_verification(preset: str = "П3+М2") -> Report:
     ))
 
     # 4. Сверка вход-выход
-    inputs_count = 14
+    from schemas.inputs import INPUT_FILES as _IF
+    inputs_count = len(_IF)
     scenarios_count = len(run.models)
-    io_ok = inputs_count == 14 and scenarios_count == 3
+    io_ok = inputs_count == len(_IF) and scenarios_count == 3
     report.results.append(VerificationResult(
         mechanism="№21 Сверка вход-выход",
         passed=io_ok,
-        details=f"inputs=14, scenarios={scenarios_count}, categories=7",
+        details=f"inputs={inputs_count}, scenarios={scenarios_count}, categories=7",
     ))
 
     # 5. Согласованность файлов (xlsx + docx существуют)
@@ -155,14 +156,14 @@ def run_verification(preset: str = "П3+М2") -> Report:
         details=f"xlsx={'есть' if xlsx.exists() else 'нет'}, docx={'есть' if docx.exists() else 'нет'}",
     ))
 
-    # 6. Полнота (все 14 YAML использованы)
+    # 6. Полнота (все YAML использованы — динамический подсчёт)
     from schemas.inputs import INPUT_FILES
     used = [alias for alias in INPUT_FILES.keys() if getattr(inputs, alias, None) is not None]
-    completeness_ok = len(used) == 14
+    completeness_ok = len(used) == len(INPUT_FILES)
     report.results.append(VerificationResult(
         mechanism="№15 Полнота входов",
         passed=completeness_ok,
-        details=f"использовано {len(used)}/14",
+        details=f"использовано {len(used)}/{len(INPUT_FILES)}",
     ))
 
     # 7. Метаморфическое тестирование: +5% revenue → EBITDA растёт

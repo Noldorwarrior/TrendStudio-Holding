@@ -126,7 +126,7 @@ JSON-отчёт с 32/32 PASS. Если < 32 — список FAIL с обосн
 | MC P(IRR>18% hurdle) | **0.0%** | ⚠ Следствие CF timing, не модельного риска |
 | MC P(IRR>8% floor) | **19.4%** | |
 | MC P(loss IRR<0) | **0.0%** | |
-| MC Mean NDP | **3 510 млн ₽** | Выше anchor (positive skew) |
+| MC Mean NDP | **3 509.8 млн ₽** | Выше anchor (positive skew) |
 | MC Median EV | **13 042 млн ₽** | |
 | MC N | 50 000 | seed=42, 5 stochastic vars |
 | Blend formula | 0.79 + 0.30×hit_rate | E[blend]=1.00 при E[hr]=0.70 (unbiased) |

@@ -76,15 +76,15 @@ Audit verdict: CONDITIONAL FAIL → target PASS.
 ### R-items Status (25 total)
 | Status | Count |
 |--------|-------|
-| DONE | 22 |
-| Partial (requires Cowork/LP package) | 3 |
+| DONE | 25 |
+| Partial | 0 |
 
 ### Findings Status (39 total)
 | Severity | Total | Closed | Open |
 |----------|-------|--------|------|
 | CRITICAL | 5 | 5 | 0 |
 | HIGH | 14 | 14 | 0 |
-| MEDIUM | 15 | 14 | 1* |
-| LOW | 5 | 5 | 0 |
+| MEDIUM | 15 | **15** | 0 |
+| LOW | 5 | **5** | 0 |
 
-*Remaining: F-032 (Cover Letter personalization — Cowork).
+All 39 findings closed.

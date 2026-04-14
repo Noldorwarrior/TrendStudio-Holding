@@ -24,11 +24,15 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DOWNLOADS = Path("/Users/noldorwarrior/Downloads")
-# Linux-mount fallback
-if not DOWNLOADS.exists():
-    DOWNLOADS = Path("/sessions/cool-serene-johnson/mnt/Downloads")
-sys.path.insert(0, str(DOWNLOADS))
+# R-025: no hardcoded paths — use env var or ~/Downloads fallback
+import os as _os
+
+_RAKHMAN_DIR = _os.environ.get("TRENDSTUDIO_RAKHMAN_DIR", "")
+for _p in filter(None, [_RAKHMAN_DIR, str(Path.home() / "Downloads")]):
+    _pp = Path(_p)
+    if _pp.exists() and (_pp / "rakhman_docs.py").exists():
+        sys.path.insert(0, str(_pp))
+        break
 
 from rakhman_docs import DocxBuilder  # noqa: E402
 

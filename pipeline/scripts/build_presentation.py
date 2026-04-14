@@ -18,12 +18,14 @@ PIPELINE = HERE.parent
 STRESS = PIPELINE / "artifacts" / "stress_matrix"
 ARTIFACTS = PIPELINE / "artifacts"
 
-# ---------- rakhman_docs import ----------
-_DL = Path("/Users/noldorwarrior/Downloads")
-_DL_LINUX = Path("/sessions/cool-serene-johnson/mnt/Downloads")
-for _p in (_DL, _DL_LINUX):
-    if _p.exists():
-        sys.path.insert(0, str(_p))
+# ---------- rakhman_docs import (R-025: no hardcoded paths) ----------
+import os as _os
+
+_RAKHMAN_DIR = _os.environ.get("TRENDSTUDIO_RAKHMAN_DIR", "")
+for _p in filter(None, [_RAKHMAN_DIR, str(Path.home() / "Downloads")]):
+    _pp = Path(_p)
+    if _pp.exists() and (_pp / "rakhman_docs.py").exists():
+        sys.path.insert(0, str(_pp))
         break
 from rakhman_docs import PptxBuilder  # noqa: E402
 

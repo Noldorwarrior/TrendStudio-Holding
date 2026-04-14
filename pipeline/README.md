@@ -1,7 +1,7 @@
 # Холдинг Кино «ТрендСтудио» — Финмодель Pipeline
 
-**Версия:** v1.4.4 (Final Bundle — П5 Максимум verified)
-**Архитектура:** L4 (348 автотестов + Pydantic StrictModel + provenance) + N3 (auto-generated navigation + CALLGRAPH)
+**Версия:** v1.1.0-rc (Remediation from v1.0.2 audit — 39 findings addressed)
+**Архитектура:** L4 (434+ автотестов + Pydantic StrictModel + provenance) + N3 (auto-generated navigation + CALLGRAPH)
 
 **Главный инвариант:** `cumulative EBITDA 2026–2028 Base = 3 000 млн ₽ ± 1%` (см. [ADR-001](docs/adr/ADR-001-anchor-invariant-3000-mln-rub.md))
 
@@ -17,7 +17,7 @@ make all          # validate → build → test → verify → nav → manifest
 
 Ожидаемое время полного прогона: **3–5 минут**.
 
-Успех: `logs/audit_log.jsonl` содержит запись с `tests_passed: 78, tests_failed: 0`.
+Успех: `logs/audit_log.jsonl` содержит запись с `tests_passed: 434, tests_failed: 0`.
 
 ---
 
@@ -48,7 +48,7 @@ pipeline/
 | `make install` | Создать venv и установить зависимости |
 | `make validate` | Прогнать Pydantic контракты на `inputs/` |
 | `make build` | Собрать xlsx + docx |
-| `make test` | Запустить 78 автотестов |
+| `make test` | Запустить 434+ автотестов |
 | `make mutation` | Запустить mutation testing (mutmut, ≥85%) |
 | `make verify` | Прогнать 32 механизма П3+М2 верификации |
 | `make nav` | Перестроить navigation/ из schemas + generators |

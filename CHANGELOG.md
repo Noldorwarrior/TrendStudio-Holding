@@ -58,7 +58,7 @@ Audit verdict: CONDITIONAL FAIL → target PASS.
 - **R-022/F-018**: requirements.txt pinned with ==
 - **R-023/F-019**: Added plotly, python-pptx, numpy-financial to deps
 - **R-025/F-017**: Replaced 3 hardcoded /Users/ paths with env var + fallback
-- **F-038**: README updated (78→445+ tests, v1.1.0)
+- **F-038**: README updated (78→462 tests, v1.1.0)
 - **F-035**: Fixed counter 62→45 in 40_Investor_Checklist
 - **F-037**: Set Print_Area on all 42 sheets
 - +11 new tests
@@ -68,10 +68,10 @@ Audit verdict: CONDITIONAL FAIL → target PASS.
 ### Test Summary
 | Metric | v1.0.2 Baseline | v1.1.0 |
 |--------|----------------|--------|
-| Tests passed | 323 | 445 |
+| Tests passed | 323 | 462 |
 | Tests skipped | 5 | 5 |
 | Tests failed | 0 | 0 |
-| New tests added | — | +122 |
+| New tests added | — | +139 |
 
 ### R-items Status (25 total)
 | Status | Count |

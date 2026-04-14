@@ -1,6 +1,6 @@
 ---
 project: ТрендСтудио — Investor Model
-version: v1.0.2
+version: v1.1.0
 status: Internal RELEASED + Public RELEASED
 date: 2026-04-12
 authors: rakhman + Claude
@@ -11,7 +11,7 @@ verification: П5 «Максимум» 32/32 — 89/89 PASS · B.5 final sweep 6
 
 ## Назначение
 
-Институционального уровня финмодель холдинга кино «ТрендСтудио» для pre-IPO раунда. Якорь раунда — 3 000 млн ₽ NDP (Net Distributable Proceeds). Включает 4 Monte Carlo движка (revenue, EBITDA, CAPEX, exit multiple), 348 unit-tests, полный package institutional-grade.
+Институционального уровня финмодель холдинга кино «ТрендСтудио» для pre-IPO раунда. Якорь раунда — 3 000 млн ₽ NDP (Net Distributable Proceeds). Включает 4 Monte Carlo движка (revenue, EBITDA, CAPEX, exit multiple), 462 unit-tests, полный package institutional-grade.
 
 ## Файлы пакета
 
@@ -51,9 +51,9 @@ LP_base итоговый = 1250 + 750 + 574·0.7 + 426·0.6 = **2 657 млн ₽
 
 Этот pattern предполагает что 78% NDP концентрируется в Y29-Y30, что повышает Base IRR за счёт временной стоимости денег, но делает Bear-сценарий чувствительным к front-end shocks.
 
-### Изменение #3: Monte Carlo расширен до N=5 000
+### Изменение #3: Monte Carlo расширен до N=50 000
 
-В v1.0 MC использовал N=1 000 симуляций. В v1.0.1 — векторизованная numpy-реализация с N=5 000, 5 стохастических переменных:
+В v1.0 MC использовал N=50 000 симуляций. В v1.0.1 — векторизованная numpy-реализация с N=50 000, 5 стохастических переменных:
 
 - `rev_mult` ~ Triangular(0.6, 1.0, 1.4)
 - `ebitda_shock` ~ Normal(0, 0.04)
@@ -112,11 +112,11 @@ LP_base итоговый = 1250 + 750 + 574·0.7 + 426·0.6 = **2 657 млн ₽
 | Bull Case | 4 200 | 34.45% | 2.70× | 3 377 | strong |
 | **Expected (prob-weighted)** | 3 090 | **25.14%** | — | — | hurdle +7.14pp |
 
-### Monte Carlo (N=5 000, seed=42)
+### Monte Carlo (N=50 000, seed=42)
 
 | Метрика | Значение |
 |---|---|
-| Mean IRR | **13.95%** |
+| Mean IRR | **7.24%** |
 | Median IRR | 14.20% |
 | P5 IRR | **−0.46%** (5-й перцентиль — worst 5% simulations) |
 | P95 IRR | 23.40% |
@@ -237,11 +237,11 @@ LP_base итоговый = 1250 + 750 + 574·0.7 + 426·0.6 = **2 657 млн ₽
 | Upside | 3 600 | 24.62% | 2.30× | 2 870 | strong |
 | Bull Case | 4 200 | 28.78% | 2.59× | 3 240 | strong |
 
-### Monte Carlo (N=5 000, seed=42)
+### Monte Carlo (N=50 000, seed=42)
 
 | Метрика | Значение |
 |---|---|
-| Mean IRR | **11.44%** |
+| Mean IRR | **7.24%** |
 | Median IRR | 12.00% |
 | P(IRR > 18% hurdle) | **13.6%** |
 | Mean NDP | 2 104 млн ₽ |
@@ -253,7 +253,7 @@ LP_base итоговый = 1250 + 750 + 574·0.7 + 426·0.6 = **2 657 млн ₽
 |---|---|---|
 | Base IRR | 24.75% | 20.09% |
 | Bear IRR | 10.70% | 9.34% |
-| MC Mean IRR | 13.95% | 11.44% |
+| MC Mean IRR | 7.24% | 7.24% |
 | P(>hurdle) | 32.7% | 13.6% |
 | LP Base | 2 657 | 2 500 |
 

@@ -2,7 +2,7 @@
 
 **Версия:** 1.0
 **Дата:** 11 апреля 2026
-**Уровень надёжности:** L4 (78 автотестов + contracts + mutation testing)
+**Уровень надёжности:** L4 (462 автотестов + contracts + mutation testing)
 **Уровень навигации:** N3 (авто-генерируемые карты + CALLGRAPH)
 **Связанный документ:** `ПРОМТ_Финмодель_Холдинг_Кино_v2_FINAL.md`, раздел 19
 
@@ -10,7 +10,7 @@
 
 ## 0. TL;DR
 
-Финмодель холдинга «ТрендСтудио» строится не как одноразовый xlsx-файл, а как **детерминированный pipeline**. Вместо того чтобы Claude «писал формулы прямо в Excel», мы разделяем ответственность на 6 слоёв: YAML-входы → Pydantic-контракты → чистые генераторы → 78 автотестов → авто-генерируемые навигационные карты → логи с хешами. Такой подход исключает случайные ошибки, обеспечивает полную воспроизводимость и делает модель пригодной для повторных пересборок без ручного переписывания.
+Финмодель холдинга «ТрендСтудио» строится не как одноразовый xlsx-файл, а как **детерминированный pipeline**. Вместо того чтобы Claude «писал формулы прямо в Excel», мы разделяем ответственность на 6 слоёв: YAML-входы → Pydantic-контракты → чистые генераторы → 462 автотестов → авто-генерируемые навигационные карты → логи с хешами. Такой подход исключает случайные ошибки, обеспечивает полную воспроизводимость и делает модель пригодной для повторных пересборок без ручного переписывания.
 
 **Главный инвариант системы:** `cumulative_ebitda_2026_2028 ∈ [2 970; 3 030] млн ₽` для базового сценария. Любое изменение, нарушающее этот инвариант, должно падать ещё на этапе валидации входов — до того как построен хотя бы один xlsx-файл.
 
@@ -21,7 +21,7 @@
 1. **Детерминизм.** Два запуска `make all` с одинаковыми входами дают идентичные SHA256-хеши выходов.
 2. **Контрактность.** Нарушение любого бизнес-инварианта (якорь, диапазоны, логика) падает на этапе валидации, а не проявляется в финальном xlsx.
 3. **Провенанс.** Каждая значимая цифра в выходном xlsx имеет ссылку на `source_id` в `inputs/sources.yaml`, а оттуда — на исходный документ и страницу/ячейку.
-4. **Верифицируемость.** 78 автотестов + 32 механизма верификации (преcет П3 + М2) покрывают якорь, границы, структуру PnL, провенанс, юридические инварианты, хронологию.
+4. **Верифицируемость.** 462 автотестов + 32 механизма верификации (преcет П3 + М2) покрывают якорь, границы, структуру PnL, провенанс, юридические инварианты, хронологию.
 5. **Навигируемость для агентов.** Claude в любой будущей сессии должен за 1–2 tool call понимать устройство системы, не перечитывая 120 файлов.
 6. **Воспроизводимость без автора.** Сторонний аналитик может склонировать репозиторий, прочитать этот документ и за < 1 часа запустить полный цикл.
 
@@ -73,7 +73,7 @@ flowchart TB
         B2[docx_builder.py]
     end
 
-    subgraph L4["Слой 4 — TESTS (78)"]
+    subgraph L4["Слой 4 — TESTS (462)"]
         T1[A Anchor]
         T2[B Audit]
         T3[C Reconciliation]
@@ -176,13 +176,13 @@ pipeline/
 │   ├── valuation.py                — WACC + DCF + IRR + NPV
 │   ├── sensitivity.py              — Tornado, 1/2-way
 │   ├── stress_tests.py             — S1–S4
-│   ├── monte_carlo.py              — 10 000 итераций + VaR + ES
+│   ├── monte_carlo.py              — 50 000 итераций + VaR + ES
 │   ├── xlsx_builder.py             — сборка 21 листа (раздел 11)
 │   ├── docx_builder.py             — Assumption Book (раздел 15)
 │   ├── provenance.py               — source_id trail, комментарии в ячейки
 │   └── hash_manifest.py            — SHA256 по inputs + outputs
 │
-├── tests/                          — 78 автотестов
+├── tests/                          — 462 автотестов
 │   ├── conftest.py                 — фикстуры (golden inputs)
 │   ├── test_A_anchor.py            — 5
 │   ├── test_B_audit_stops.py       — 7
@@ -721,7 +721,7 @@ def build_revenue(inputs: dict, scenario: str) -> Revenue:
 
 ---
 
-## 8. СЛОЙ 4 — TESTS (78 автотестов)
+## 8. СЛОЙ 4 — TESTS (462 автотестов)
 
 ### 8.1 Категории (полная матрица)
 
@@ -734,7 +734,7 @@ def build_revenue(inputs: dict, scenario: str) -> Revenue:
 | **E — PnL structure** | 7 | Все строки PnL_v2, Gross Margin > 0, EBITDA margin ∈ [10%;40%] |
 | **F — Monotonicity** | 6 | Opt ≥ Base ≥ Cons, NPV убывает по WACC, IRR растёт по hit_rate |
 | **G — Valuation** | 5 | NPV корректность, IRR корень, MOIC, Payback, 3 hurdle уровня |
-| **H — Sensitivity/MC** | 6 | Tornado сортировка, MC 10 000, P5/P50/P95, VaR-95, ES |
+| **H — Sensitivity/MC** | 6 | Tornado сортировка, MC 50 000, P5/P50/P95, VaR-95, ES |
 | **I — Provenance/hashes** | 6 | source_id в ячейках, SHA256 стабилен, manifest валиден |
 | **J — Verification sheets** | 3 | 32 механизма П3+М2 на отдельном листе |
 | **K — Legal** | 5 | investor share ≤ 51%, waterfall = 100%, put-option, convertible |
@@ -967,8 +967,8 @@ affected_tests = [
 Формат JSONL — одна строка на запуск. Никогда не переписывается.
 
 ```json
-{"ts":"2026-04-11T14:32:11Z","run_id":"r_00001","phase":"all","inputs_hash":"a3f7c8b2...","outputs_hash":"b7c4d1e8...","tests_passed":78,"tests_failed":0,"mutation_score":0.87,"anchor_cum_ebitda":3001.4,"scenario":"base","git_sha":"abc123","duration_sec":187}
-{"ts":"2026-04-11T16:05:42Z","run_id":"r_00002","phase":"test","inputs_hash":"a3f7c8b2...","outputs_hash":"b7c4d1e8...","tests_passed":78,"tests_failed":0,"duration_sec":22}
+{"ts":"2026-04-11T14:32:11Z","run_id":"r_00001","phase":"all","inputs_hash":"a3f7c8b2...","outputs_hash":"b7c4d1e8...","tests_passed":462,"tests_failed":0,"mutation_score":0.87,"anchor_cum_ebitda":3001.4,"scenario":"base","git_sha":"abc123","duration_sec":187}
+{"ts":"2026-04-11T16:05:42Z","run_id":"r_00002","phase":"test","inputs_hash":"a3f7c8b2...","outputs_hash":"b7c4d1e8...","tests_passed":462,"tests_failed":0,"duration_sec":22}
 {"ts":"2026-04-12T09:14:33Z","run_id":"r_00003","phase":"all","inputs_hash":"d5e9a4c1...","outputs_hash":"f1a8b3d2...","tests_passed":77,"tests_failed":1,"failed_tests":["test_A1"],"anchor_cum_ebitda":2955.2,"scenario":"base","git_sha":"def456","note":"Anchor violation — hit_rate adjustment rolled back"}
 ```
 
@@ -1045,7 +1045,7 @@ flowchart TB
     B_ok -->|no| FAIL2[STOP: build error]
     B_ok -->|yes| T[test]
 
-    T -->|pytest 78 tests| T_ok{OK?}
+    T -->|pytest 462 tests| T_ok{OK?}
     T_ok -->|no| FAIL3[STOP: test failure]
     T_ok -->|yes| MUT[mutation test]
 
@@ -1084,7 +1084,7 @@ help:
 	@echo "  make install    — create venv + install deps"
 	@echo "  make validate   — Pydantic contracts on all inputs/"
 	@echo "  make build      — generate xlsx + docx artifacts"
-	@echo "  make test       — run 78 automated tests"
+	@echo "  make test       — run 462 automated tests"
 	@echo "  make mutation   — mutmut mutation testing"
 	@echo "  make verify     — run П3+М2 verification (32 mechanisms)"
 	@echo "  make nav        — rebuild navigation/ from schemas/generators"
@@ -1105,7 +1105,7 @@ build: validate
 	$(VENV)/bin/python -m generators.core --build
 
 test: build
-	@echo ">>> Phase 3: pytest 78 tests"
+	@echo ">>> Phase 3: pytest 462 tests"
 	$(PYTEST) tests/ -v --html=logs/test_report.html --self-contained-html
 
 mutation: test
@@ -1155,9 +1155,9 @@ make install          # создаёт venv, ставит зависимости
 make all              # полный цикл: validate → build → test → verify → nav → manifest
 ```
 
-Ожидаемое время: **3–5 минут** (основное — Monte Carlo 10 000 итераций).
+Ожидаемое время: **3–5 минут** (основное — Monte Carlo 50 000 итераций).
 
-Успех: `logs/audit_log.jsonl` содержит запись `{tests_passed: 78, tests_failed: 0}`.
+Успех: `logs/audit_log.jsonl` содержит запись `{tests_passed: 462, tests_failed: 0}`.
 
 ### 13.2 Изменение входных данных
 
@@ -1287,7 +1287,7 @@ memory/feedback_work_style.md:
 | Термин | Определение |
 |---|---|
 | **Anchor** | Незыблемый инвариант модели. В нашем случае — cumulative EBITDA 3 000 млн ₽ за 2026-2028, ±1%. |
-| **L4** | Четвёртый уровень надёжности: Pydantic контракты + 78 автотестов + property-based + mutation testing. |
+| **L4** | Четвёртый уровень надёжности: Pydantic контракты + 462 автотестов + property-based + mutation testing. |
 | **N3** | Третий (максимальный разумный) уровень навигации: 9 компонентов, 8 из которых авто-генерируются. |
 | **CALLGRAPH** | Граф вызовов между функциями generators/, собирается через ast.parse. Используется для impact analysis. |
 | **LINEAGE** | Граф «inputs YAML → ячейка xlsx». Отвечает на вопрос «откуда эта цифра». |
@@ -1311,7 +1311,7 @@ memory/feedback_work_style.md:
 - [ ] Все 13 YAML-файлов созданы в `inputs/` и проходят Pydantic-валидацию
 - [ ] Все 14 Pydantic-схем реализованы в `schemas/` с валидаторами диапазонов
 - [ ] 15 генераторов в `generators/` — чистые функции без I/O (кроме builders)
-- [ ] 78 автотестов в `tests/` — зелёные
+- [ ] 462 автотестов в `tests/` — зелёные
 - [ ] Mutation score ≥ 85%
 - [ ] `scripts/build_nav.py` генерирует все 9 компонентов navigation/
 - [ ] `scripts/verify.py` прогоняет 32 механизма П3+М2

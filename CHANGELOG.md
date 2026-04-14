@@ -59,6 +59,8 @@ Audit verdict: CONDITIONAL FAIL → target PASS.
 - **R-023/F-019**: Added plotly, python-pptx, numpy-financial to deps
 - **R-025/F-017**: Replaced 3 hardcoded /Users/ paths with env var + fallback
 - **F-038**: README updated (78→445+ tests, v1.1.0)
+- **F-035**: Fixed counter 62→45 in 40_Investor_Checklist
+- **F-037**: Set Print_Area on all 42 sheets
 - +11 new tests
 
 ---
@@ -82,7 +84,7 @@ Audit verdict: CONDITIONAL FAIL → target PASS.
 |----------|-------|--------|------|
 | CRITICAL | 5 | 5 | 0 |
 | HIGH | 14 | 14 | 0 |
-| MEDIUM | 15 | 13 | 2* |
-| LOW | 5 | 4 | 1* |
+| MEDIUM | 15 | 14 | 1* |
+| LOW | 5 | 5 | 0 |
 
-*Remaining: F-032 (Cover Letter personalization — Cowork), F-035 (counter 62→45 — cosmetic), F-037 (Print_Area — requires LibreOffice).
+*Remaining: F-032 (Cover Letter personalization — Cowork).

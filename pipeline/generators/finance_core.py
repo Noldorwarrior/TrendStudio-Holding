@@ -257,6 +257,127 @@ def wacc_from_capm(
     return equity_weight * ke + debt_weight * kd_after
 
 
+# ─── Risk Scoring Rubric (R-020 / F-028) ─────────────────────────────────
+
+RISK_PROBABILITY_SCALE = {
+    1: ("Rare", "<5%"),
+    2: ("Unlikely", "5–15%"),
+    3: ("Possible", "15–40%"),
+    4: ("Likely", "40–70%"),
+    5: ("Almost certain", ">70%"),
+}
+
+RISK_IMPACT_SCALE = {
+    1: ("Negligible", "<2% NDP"),
+    2: ("Minor", "2–5% NDP"),
+    3: ("Moderate", "5–10% NDP"),
+    4: ("Major", "10–20% NDP"),
+    5: ("Catastrophic", ">20% NDP"),
+}
+
+
+def risk_score(probability: int, impact: int) -> dict:
+    """Compute risk score from probability × impact (5×5 heat-map).
+
+    R-020: Calibrated risk scoring rubric.
+    """
+    if not (1 <= probability <= 5 and 1 <= impact <= 5):
+        raise ValueError(f"probability and impact must be 1-5, got {probability}, {impact}")
+    score = probability * impact
+    if score >= 15:
+        severity = "CRITICAL"
+    elif score >= 10:
+        severity = "HIGH"
+    elif score >= 5:
+        severity = "MEDIUM"
+    else:
+        severity = "LOW"
+    return {
+        "probability": probability,
+        "impact": impact,
+        "score": score,
+        "severity": severity,
+        "prob_label": RISK_PROBABILITY_SCALE[probability][0],
+        "impact_label": RISK_IMPACT_SCALE[impact][0],
+    }
+
+
+# ─── Stress Test Scenarios (Phase 5) ────────────────────────────────────
+
+
+def stress_wacc(ndp_base: float, irr_base: float, wacc_delta_bps: int = 500) -> dict:
+    """Stress: WACC + delta bps → impact on NDP and IRR."""
+    wacc_shock = wacc_delta_bps / 10000
+    # Simplified: higher WACC reduces PV of future cash flows
+    # Approximate NDP impact: -NDP × wacc_shock × duration (~3 years)
+    ndp_impact = ndp_base * wacc_shock * 3
+    return {
+        "scenario": f"WACC +{wacc_delta_bps}bps",
+        "ndp_impact": round(-ndp_impact, 1),
+        "ndp_stressed": round(ndp_base - ndp_impact, 1),
+        "irr_impact": round(-wacc_shock, 4),
+    }
+
+
+def stress_cost_overrun(ndp_base: float, overrun_pct: float = 0.30, n_films: int = 2) -> dict:
+    """Stress: Cost overrun on top N films → NDP impact."""
+    avg_budget = 154.0  # млн ₽ per film (1850/12)
+    overrun_cost = avg_budget * overrun_pct * n_films
+    return {
+        "scenario": f"Cost +{overrun_pct:.0%} on {n_films} films",
+        "ndp_impact": round(-overrun_cost, 1),
+        "ndp_stressed": round(ndp_base - overrun_cost, 1),
+    }
+
+
+def stress_timing_shift(ndp_base: float, delay_months: int = 12) -> dict:
+    """Stress: Release timing shift → cash flow delay."""
+    # 12 month delay = ~1 year of lost revenue timing
+    annual_rev = 4545 / 3  # average annual revenue
+    timing_cost = annual_rev * (delay_months / 12) * 0.15  # 15% of delayed revenue
+    return {
+        "scenario": f"Timing shift +{delay_months}mo",
+        "ndp_impact": round(-timing_cost, 1),
+        "ndp_stressed": round(ndp_base - timing_cost, 1),
+    }
+
+
+def stress_tax_reform(ndp_base: float, vat_increase_pct: float = 0.02) -> dict:
+    """Stress: VAT increase → NDP impact."""
+    rev_3y = 4545.0
+    vat_cost = rev_3y * vat_increase_pct
+    return {
+        "scenario": f"НДС +{vat_increase_pct:.0%}",
+        "ndp_impact": round(-vat_cost, 1),
+        "ndp_stressed": round(ndp_base - vat_cost, 1),
+    }
+
+
+def reverse_stress_hit_rate(
+    ndp_base: float = 3000.0,
+    hurdle: float = 0.18,
+    base_hit_rate: float = 0.70,
+) -> dict:
+    """Reverse stress: what hit_rate makes IRR = hurdle?
+
+    At base, IRR ~20.09% > hurdle 18%.
+    Lower hit_rate reduces revenue → reduces IRR.
+    """
+    # Simplified: IRR is approximately linear in hit_rate around base
+    # IRR ≈ 20.09% at hit_rate=0.70, IRR ≈ 0% at hit_rate~0.35
+    # Linear: IRR = (20.09/0.70) * hit_rate ≈ 28.7% per unit hit_rate
+    irr_base = 0.2009
+    slope = irr_base / base_hit_rate  # ≈ 0.287
+    # IRR = slope * hit_rate → hit_rate_breakeven = hurdle / slope
+    hit_rate_breakeven = hurdle / slope
+    return {
+        "breakeven_hit_rate": round(hit_rate_breakeven, 3),
+        "base_hit_rate": base_hit_rate,
+        "hurdle": hurdle,
+        "margin": round(base_hit_rate - hit_rate_breakeven, 3),
+    }
+
+
 # ─── Deprecated aliases ──────────────────────────────────────────────────
 
 

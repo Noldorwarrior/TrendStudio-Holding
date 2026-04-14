@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, initial-scale=1, user-scalable=no">
+  <title>ТрендСтудио · LP Deck v1.1.1</title>
+  <meta name="description" content="TrendStudio Holding · LP Deck v1.1.1 · Confidential">
+
+  <!-- === S26: FONTS =============================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <!-- === /S26 FONTS =============================================== -->
+
+  <!-- === S26: CDN (Macro stack ~800KB) =========================== -->
+  <!-- GSAP + ScrollTrigger + Flip -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <!-- D3 v7 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <!-- Chart.js 4.4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Three.js r160 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <!-- Matter.js physics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <!-- tsParticles -->
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.3.0/tsparticles.engine.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3.3.0/tsparticles.slim.bundle.min.js"></script>
+  <!-- === /S26 CDN ================================================ -->
+
+  <style>
+  /* === S26: DESIGN SYSTEM v2 =================================== */
+  :root {
+    --bg-primary:     #0A0E1A;
+    --bg-secondary:   #141A2A;
+    --bg-tertiary:    #1E2640;
+    --bg-glass:       rgba(20,26,42,0.65);
+
+    --gold:           #C9A961;
+    --gold-light:     #E5C98A;
+    --gold-dark:      #8B7538;
+    --gold-glow:      rgba(201,169,97,0.45);
+
+    --text-primary:   #F5F5F5;
+    --text-secondary: #9CA3AF;
+    --text-muted:     #6B7280;
+
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger:  #EF4444;
+    --info:    #60A5FA;
+
+    --grad-cinema: linear-gradient(135deg, #0A0E1A 0%, #141A2A 50%, #1E2640 100%);
+    --grad-gold:   linear-gradient(135deg, #8B7538 0%, #C9A961 50%, #E5C98A 100%);
+    --grad-risk:   linear-gradient(90deg, #10B981 0%, #F59E0B 50%, #EF4444 100%);
+
+    --shadow-sm:   0 2px 8px rgba(0,0,0,0.30);
+    --shadow-md:   0 8px 24px rgba(0,0,0,0.45);
+    --shadow-lg:   0 20px 60px rgba(0,0,0,0.60);
+    --shadow-gold: 0 0 40px rgba(201,169,97,0.35);
+
+    --border-subtle: 1px solid rgba(255,255,255,0.06);
+    --border-gold:   1px solid rgba(201,169,97,0.25);
+
+    --r-sm:  6px;  --r-md: 12px;  --r-lg: 20px;  --r-xl: 32px;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-q: cubic-bezier(0.76, 0, 0.24, 1);
+    --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --t-fast: 160ms;  --t-base: 320ms;  --t-slow: 720ms;  --t-epic: 1600ms;
+
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Georgia', serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+
+  [data-theme="light"] {
+    --bg-primary:     #F8F7F2;
+    --bg-secondary:   #FFFFFF;
+    --bg-tertiary:    #EEECE4;
+    --bg-glass:       rgba(255,255,255,0.7);
+    --text-primary:   #111827;
+    --text-secondary: #4B5563;
+    --text-muted:     #9CA3AF;
+    --border-subtle:  1px solid rgba(0,0,0,0.08);
+    --shadow-md:      0 8px 24px rgba(15,15,15,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100vw; height: 100vh; overflow: hidden; background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+  body { opacity: 0; transition: opacity var(--t-slow) var(--ease-out-expo); }
+  body.fonts-loaded { opacity: 1; }
+
+  #app-root { position: relative; width: 100vw; height: 100vh; }
+
+  /* Progress bar (S27) */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+    box-shadow: var(--shadow-gold);
+    transition: width var(--t-base) var(--ease-out-expo);
+    z-index: 100;
+  }
+
+  /* Deck container */
+  #deck { position: relative; width: 100%; height: 100%; }
+
+  /* Slide base (16:9) */
+  .slide {
+    position: absolute; top: 50%; left: 50%;
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    transform: translate(-50%, -50%);
+    background: var(--bg-primary);
+    opacity: 0; pointer-events: none;
+    transition: opacity var(--t-base) var(--ease-in-out-q);
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  /* Gold accent line top of each slide */
+  .slide::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0); transform-origin: center;
+    transition: transform var(--t-slow) var(--ease-out-expo) 0.15s;
+  }
+  .slide.active::before { transform: scaleX(1); }
+
+  /* Safe area */
+  .slide-inner {
+    position: absolute; top: 8%; right: 6%; bottom: 8%; left: 6%;
+    display: flex; flex-direction: column;
+  }
+
+  /* Utilities */
+  .glass {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: var(--border-subtle);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, var(--gold-dark) 0%, var(--gold-light) 50%, var(--gold-dark) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  .gold-text { background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  h1, .h1 { font-family: var(--font-display); font-size: clamp(36px, 4vw, 64px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; }
+  h2, .h2 { font-family: var(--font-display); font-size: clamp(24px, 2.4vw, 32px); font-weight: 400; line-height: 1.2; }
+  .num-display { font-family: var(--font-display); font-size: clamp(60px, 8vw, 120px); font-weight: 400; line-height: 1; }
+
+  /* Footer */
+  #deck-footer {
+    position: fixed; bottom: 16px; left: 6%; right: 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase;
+    z-index: 50; pointer-events: none;
+  }
+
+  /* Slide dots (S27) */
+  #slide-dots {
+    position: fixed; bottom: 40px; right: 6%;
+    display: flex; gap: 8px; z-index: 60;
+  }
+  #slide-dots button {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--text-muted); border: none; cursor: pointer;
+    transition: all var(--t-fast) var(--ease-out-expo);
+  }
+  #slide-dots button.active { background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); transform: scale(1.4); }
+  #slide-dots button:hover { background: var(--gold-light); transform: scale(1.2); }
+
+  /* Overlay / modal */
+  #overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 200; opacity: 0; transition: opacity var(--t-base);
+  }
+  #overlay.active { display: flex; opacity: 1; }
+  #overlay .overlay-body { max-width: 80vw; max-height: 80vh; overflow: auto; padding: 40px; }
+
+  /* Cursor trail */
+  #cursor-trail {
+    position: fixed; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--gold); box-shadow: 0 0 20px var(--gold-glow);
+    pointer-events: none; z-index: 300;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  /* === /S26 DESIGN SYSTEM ====================================== */
+  </style>
+</head>
+<body>
+  <!-- === S26: ROOT =============================================== -->
+  <div id="app-root">
+    <div id="progress-bar"></div>
+
+    <main id="deck">
+      <!-- === S01: COVER ========================================== -->
+      <section id="slide-01" class="slide" data-slide="1" data-agent="S01"></section>
+      <!-- === /S01 ================================================ -->
+
+      <!-- === S02: EXEC_SUMMARY =================================== -->
+      <section id="slide-02" class="slide" data-slide="2" data-agent="S02"></section>
+      <!-- === /S02 ================================================ -->
+
+      <!-- === S03: THESIS_OVERVIEW ================================ -->
+      <section id="slide-03" class="slide" data-slide="3" data-agent="S03"></section>
+      <!-- === /S03 ================================================ -->
+
+      <!-- === S04: THESIS_DETAIL_1 ================================ -->
+      <section id="slide-04" class="slide" data-slide="4" data-agent="S04"></section>
+      <!-- === /S04 ================================================ -->
+
+      <!-- === S05: THESIS_DETAIL_2 ================================ -->
+      <section id="slide-05" class="slide" data-slide="5" data-agent="S05"></section>
+      <!-- === /S05 ================================================ -->
+
+      <!-- === S06: THESIS_DETAIL_3 ================================ -->
+      <section id="slide-06" class="slide" data-slide="6" data-agent="S06"></section>
+      <!-- === /S06 ================================================ -->
+
+      <!-- === S07: THESIS_DETAIL_4 ================================ -->
+      <section id="slide-07" class="slide" data-slide="7" data-agent="S07"></section>
+      <!-- === /S07 ================================================ -->
+
+      <!-- === S08: MARKET ========================================= -->
+      <section id="slide-08" class="slide" data-slide="8" data-agent="S08"></section>
+      <!-- === /S08 ================================================ -->
+
+      <!-- === S09: MARKET_DRIVERS ================================= -->
+      <section id="slide-09" class="slide" data-slide="9" data-agent="S09"></section>
+      <!-- === /S09 ================================================ -->
+
+      <!-- === S10: PIPELINE_OVERVIEW ============================== -->
+      <section id="slide-10" class="slide" data-slide="10" data-agent="S10"></section>
+      <!-- === /S10 ================================================ -->
+
+      <!-- === S11: PIPELINE_TIMELINE ============================== -->
+      <section id="slide-11" class="slide" data-slide="11" data-agent="S11"></section>
+      <!-- === /S11 ================================================ -->
+
+      <!-- === S12: UNIT_ECON ====================================== -->
+      <section id="slide-12" class="slide" data-slide="12" data-agent="S12"></section>
+      <!-- === /S12 ================================================ -->
+
+      <!-- === S13: FIN_SUMMARY ==================================== -->
+      <section id="slide-13" class="slide" data-slide="13" data-agent="S13"></section>
+      <!-- === /S13 ================================================ -->
+
+      <!-- === S14: VALUATION ====================================== -->
+      <section id="slide-14" class="slide" data-slide="14" data-agent="S14"></section>
+      <!-- === /S14 ================================================ -->
+
+      <!-- === S15: WACC =========================================== -->
+      <section id="slide-15" class="slide" data-slide="15" data-agent="S15"></section>
+      <!-- === /S15 ================================================ -->
+
+      <!-- === S16: MC_METHODOLOGY ================================= -->
+      <section id="slide-16" class="slide" data-slide="16" data-agent="S16"></section>
+      <!-- === /S16 ================================================ -->
+
+      <!-- === S17: MC_PERCENTILES + IRR_CALCULATOR ================ -->
+      <section id="slide-17" class="slide" data-slide="17" data-agent="S17"></section>
+      <!-- === /S17 ================================================ -->
+
+      <!-- === S18: DET_VS_STOCH =================================== -->
+      <section id="slide-18" class="slide" data-slide="18" data-agent="S18"></section>
+      <!-- === /S18 ================================================ -->
+
+      <!-- === S19: RISK_HEATMAP =================================== -->
+      <section id="slide-19" class="slide" data-slide="19" data-agent="S19"></section>
+      <!-- === /S19 ================================================ -->
+
+      <!-- === S20: TOP_RISKS ====================================== -->
+      <section id="slide-20" class="slide" data-slide="20" data-agent="S20"></section>
+      <!-- === /S20 ================================================ -->
+
+      <!-- === S21: GOVERNANCE ===================================== -->
+      <section id="slide-21" class="slide" data-slide="21" data-agent="S21"></section>
+      <!-- === /S21 ================================================ -->
+
+      <!-- === S22: WATERFALL ====================================== -->
+      <section id="slide-22" class="slide" data-slide="22" data-agent="S22"></section>
+      <!-- === /S22 ================================================ -->
+
+      <!-- === S23: TERMS_EXIT ===================================== -->
+      <section id="slide-23" class="slide" data-slide="23" data-agent="S23"></section>
+      <!-- === /S23 ================================================ -->
+
+      <!-- === S24: APPENDICES ===================================== -->
+      <section id="slide-24" class="slide" data-slide="24" data-agent="S24"></section>
+      <!-- === /S24 ================================================ -->
+
+      <!-- === S25: CTA ============================================ -->
+      <section id="slide-25" class="slide" data-slide="25" data-agent="S25"></section>
+      <!-- === /S25 ================================================ -->
+    </main>
+
+    <footer id="deck-footer">
+      <div class="footer-left">ТрендСтудио Холдинг · LP Deck v1.1.1 · Confidential</div>
+      <div class="footer-right"><span id="current-slide">1</span> / <span id="total-slides">25</span></div>
+    </footer>
+
+    <div id="slide-dots"></div>
+    <div id="overlay"><div class="overlay-body glass"></div></div>
+    <div id="cursor-trail"></div>
+  </div>
+  <!-- === /S26 ROOT ============================================== -->
+
+  <!-- === S26: DATA INLINE ======================================= -->
+  <script type="application/json" id="deck-content">
+    /* TODO S26: paste contents of deck_content.json here */
+    {}
+  </script>
+  <script type="application/json" id="viz-data">
+    /* TODO S26: paste contents of viz_data.json here */
+    {}
+  </script>
+  <!-- === /S26 DATA ============================================== -->
+
+  <!-- === S26: BOOTSTRAP ========================================= -->
+  <script>
+  (function() {
+    'use strict';
+
+    // Parse inline data
+    window.TS = window.TS || {};
+    try {
+      window.TS.data = {
+        deck: JSON.parse(document.getElementById('deck-content').textContent),
+        viz:  JSON.parse(document.getElementById('viz-data').textContent),
+      };
+    } catch (e) {
+      console.error('[S26] Failed to parse inline JSON:', e);
+      window.TS.data = { deck: { slides: [] }, viz: {} };
+    }
+    window.TS.slide = (n) => window.TS.data.deck.slides[n - 1];
+    window.TS.state = {};
+
+    // Theme
+    window.THEME = {
+      current: 'dark',
+      _listeners: [],
+      toggle() { this.apply(this.current === 'dark' ? 'light' : 'dark'); },
+      apply(name) {
+        this.current = name;
+        document.documentElement.setAttribute('data-theme', name);
+        this._listeners.forEach(cb => cb(name));
+      },
+      on(_, cb) { this._listeners.push(cb); },
+      off(_, cb) { this._listeners = this._listeners.filter(x => x !== cb); },
+    };
+
+    // Fonts
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
+    } else {
+      document.body.classList.add('fonts-loaded');
+    }
+  })();
+  </script>
+  <!-- === /S26 BOOTSTRAP ========================================= -->
+
+  <!-- ========================================================== -->
+  <!--  S27 Navigation: implements window.NAV                       -->
+  <!--  S28 Animation Engine: implements window.ANIM                -->
+  <!--  S29 Chart Engine: implements window.CHARTS                  -->
+  <!--  S01…S25: each registers via window.NAV.registerSlide(n,...) -->
+  <!--  S30 QA: external verify_html.py                             -->
+  <!-- ========================================================== -->
+
+  <!-- === S27: NAVIGATION ======================================== -->
+  <script>
+  /* TODO S27: implement window.NAV per CONTRACTS.md §3 */
+  </script>
+  <!-- === /S27 =================================================== -->
+
+  <!-- === S28: ANIMATION_ENGINE ================================== -->
+  <script>
+  /* TODO S28: implement window.ANIM per CONTRACTS.md §4 */
+  </script>
+  <!-- === /S28 =================================================== -->
+
+  <!-- === S29: CHART_ENGINE ====================================== -->
+  <script>
+  /* TODO S29: implement window.CHARTS per CONTRACTS.md §5 */
+  </script>
+  <!-- === /S29 =================================================== -->
+
+  <!-- === SLIDE AGENTS (S01..S25) registerSlide calls ============ -->
+  <!-- Each slide agent appends its logic here in its own namespace block -->
+  <!-- === /SLIDE AGENTS ========================================== -->
+
+  <!-- === S26: FINAL BOOT ======================================== -->
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    // Wait a tick to allow S27..S29 + S01..S25 to register.
+    setTimeout(() => {
+      if (window.NAV && typeof window.NAV.goto === 'function') {
+        const hash = window.location.hash.match(/#slide-(\d+)/);
+        const n = hash ? Math.max(1, Math.min(25, parseInt(hash[1], 10))) : 1;
+        window.NAV.goto(n, { animate: false });
+      } else {
+        // Fallback: activate slide 1
+        const first = document.getElementById('slide-01');
+        if (first) first.classList.add('active');
+      }
+    }, 50);
+  });
+  </script>
+  <!-- === /S26 FINAL BOOT ======================================== -->
+</body>
+</html>

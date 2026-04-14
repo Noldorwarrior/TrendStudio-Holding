@@ -38,8 +38,8 @@ filterwarnings = [
 ]
 
 [tool.mutmut]
-paths_to_mutate = "generators/"
-runner = "pytest tests/ -x --tb=no -q"
+paths_to_mutate = "generators/finance_core.py"
+runner = "python -m pytest tests/test_31_phase1_math.py tests/test_32_phase2_valuation.py tests/test_35_phase5_stress.py tests/test_33_phase3_mc.py -x --tb=no -q --no-header"
 tests_dir = "tests/"
 dict_synonyms = "Struct,NamedStruct"
 

@@ -37,7 +37,7 @@
 **Numerical (Н1-Н6):**
 - Н1: EBITDA = Revenue - COGS - P&A - OpEx (проверить 09_P&L)
 - Н2: WACC = 0.70 × 23.1% + 0.30 × 9.6% = 19.05% (CAPM build-up в build_A10)
-- Н3: MC Mean IRR = 11.44%, P(IRR>18%) = 13.6% (28_Monte_Carlo_Summary)
+- Н3: MC Mean IRR = 7.24%, P(IRR>8%) = 19.4%, P(IRR>18%) = 0.0% (28_Monte_Carlo_Summary)
 - Н4: D&A transition 3→175→348→520 (плавный ramp, не 3→500)
 - Н5: Revenue blend E[blend] = 1.00 при E[hit_rate]=0.70 (формула 0.79 + 0.30×hr)
 - Н6: MoIC aggregate 4.8× vs T1 cash-on-cash 2.0× (оба присутствуют)
@@ -95,10 +95,11 @@ JSON-отчёт с 32/32 PASS. Если < 32 — список FAIL с обосн
 | WACC | 19.05% (CAPM: Rf 14.5% + β×ERP 5.6% + Country 2.0% + Size 1.0%) |
 | Investment T₁ | 1 250 млн ₽ (4 транша) |
 | Producer equity | 600 млн ₽ |
-| MC N=50000 Mean IRR | 11.44% |
-| MC P(IRR>18% hurdle) | 13.6% |
-| MC P(IRR>12% target) | 50% |
-| MC Median EV | 10 580 млн ₽ |
+| MC N=50000 Mean IRR | 7.24% |
+| MC P(IRR>18% hurdle) | 0.0% ⚠ |
+| MC P(IRR>8% floor) | 19.4% |
+| MC Mean NDP | 3 510 млн ₽ |
+| MC Median EV | 13 042 млн ₽ |
 | DCF EV blended | ~1 815 млн ₽ |
 | Peer median EV/EBITDA | 5.71× |
 | Films | 12 премиальных, 2026-2028 |
@@ -109,7 +110,8 @@ JSON-отчёт с 32/32 PASS. Если < 32 — список FAIL с обосн
 - Основа: `pipeline/artifacts/B3_memo.docx` (v1.0.x)
 - Обновить: MC теперь N=50000 Sobol (было N=1000), IRR unified, D&A smoothed
 - Добавить: CAPM build-up таблица, Floor/Fair/Ceiling, Sobol indices, stress scenarios
-- Добавить: Disclosure P(IRR>hurdle)=13.6% prominently
+- Добавить: Disclosure P(IRR>hurdle)=0.0% prominently (MC simplified CF timing vs deterministic waterfall IRR=20.09%)
+- ⚠ ВАЖНО: MC использует упрощённую схему cash flows (0,0,0,returns Y4-Y7), что занижает IRR vs детерминистический waterfall. Disclosure обязателен.
 
 **2. Investor Presentation (pptx, 25 слайдов)**
 - Основа: `Kinoholding_Investor_Deck_v4.pptx`

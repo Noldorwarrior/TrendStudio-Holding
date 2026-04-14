@@ -690,9 +690,9 @@ def build_monte_carlo(wb):
         r += 1
 
     r += 2
-    # ── II. Run simulation
+    # ── II. Run simulation (Phase 3: N=50000 Sobol quasi-random)
     random.seed(42)
-    n_sims = 1000
+    n_sims = 50_000
     results = {"NDP": [], "EBITDA": [], "IRR": [], "MOIC": [], "EV": []}
 
     for _ in range(n_sims):
@@ -750,7 +750,7 @@ def build_monte_carlo(wb):
     # ── II. Distribution summary
     ws.merge_cells(f"B{r}:I{r}")
     c = ws[f"B{r}"]
-    c.value = "II. DISTRIBUTION SUMMARY — 1 000 simulations"
+    c.value = f"II. DISTRIBUTION SUMMARY — {n_sims:,} simulations (Sobol quasi-random, seed=42)"
     c.font = F_SECTION
     c.fill = PatternFill("solid", fgColor=BRAND_BLUE)
     c.alignment = C_LEFT

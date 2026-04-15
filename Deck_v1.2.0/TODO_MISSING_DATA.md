@@ -14,4 +14,4 @@ Generated: 2026-04-15 (Phase 1)
 ## Notes:
 
 - All Phase 1 critical data (8 LP charts + 25 slide text) is complete in deck_data_v1.2.0.json
-- SSOT numbers verified: revenue_3y=4545, ebitda_3y=2167, ndp_3y=1385
+- SSOT numbers verified: mc_mean_irr=11.44, ndp_3y=3000, revenue_3y=4545, ebitda_3y=2167

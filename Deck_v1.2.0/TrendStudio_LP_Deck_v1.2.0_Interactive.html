@@ -886,7 +886,7 @@ html, body {
   "s01.badges.2": "3 000 млн ₽",
   "s02.title": "Executive Summary",
   "s02.subtitle": "Четыре ключевых факта",
-  "s02.disclosure": "MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C.",
+  "s02.disclosure": "MC Mean IRR 11.44% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C.",
   "s02.stats.0.label": "Det IRR (главная метрика)",
   "s02.stats.1.label": "MoIC на горизонте 5 лет",
   "s02.stats.2.label": "млн ₽ якорь фонда",
@@ -988,8 +988,8 @@ html, body {
   "s17.percentiles.4.p": "P75",
   "s17.percentiles.5.p": "P95",
   "s18.title": "Det vs Stoch IRR — методологическая справка",
-  "s18.subtitle": "Почему 20.09% и 7.24% — не противоречие",
-  "s18.conclusion": "Det 20.09% — то, что мы целим. MC 7.24% — то, что мы выдержим при ухудшении таймингов.",
+  "s18.subtitle": "Почему 20.09% и 11.44% — не противоречие",
+  "s18.conclusion": "Det 20.09% — то, что мы целим. MC 11.44% — то, что мы выдержим при ухудшении таймингов.",
   "s18.table.0.aspect": "Что отражает",
   "s18.table.0.det": "Best-estimate сценарий с базовыми допущениями",
   "s18.table.0.stoch": "Стресс-распределение при timing-uncertainty",
@@ -1399,15 +1399,18 @@ html, body {
     "anchor": 3000,
     "currency": "млн ₽",
     "det_irr": 20.09,
-    "mc_mean_irr": 7.24,
+    "mc_mean_irr": 11.44,
     "moic": 2.0,
     "wacc": 19.05,
     "revenue_3y": 4545,
     "ebitda_3y": 2167,
     "mc_n": 50000,
     "mc_seed": 42,
-    "ndp_3y": 1385,
-    "hold_years": 5
+    "ndp_3y": 3000,
+    "hold_years": 5,
+    "mc_stdev_irr": 6.47,
+    "ndp_mc_mean": 2104.06,
+    "ndp_mc_p10": 1381.87
   },
   "palette": {
     "bg_primary": "#0A0E1A",
@@ -1468,7 +1471,7 @@ html, body {
           "color": "gold"
         }
       ],
-      "disclosure": "MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
+      "disclosure": "MC Mean IRR 11.44% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
     },
     {
       "n": 3,
@@ -1880,7 +1883,7 @@ html, body {
           "y1": 75,
           "y2": 340,
           "y3": 970,
-          "total": 1385
+          "total": 3000
         }
       ]
     },
@@ -2008,27 +2011,27 @@ html, body {
       "percentiles": [
         {
           "p": "P5",
-          "irr": -2.1
+          "irr": -0.41
         },
         {
           "p": "P25",
-          "irr": 3.4
+          "irr": 7.97
         },
         {
           "p": "P50 (Median)",
-          "irr": 7.1
+          "irr": 12.0
         },
         {
           "p": "Mean",
-          "irr": 7.24
+          "irr": 11.44
         },
         {
           "p": "P75",
-          "irr": 11.2
+          "irr": 15.72
         },
         {
           "p": "P95",
-          "irr": 15.8
+          "irr": 21.11
         }
       ],
       "det_line": 20.09,
@@ -2038,7 +2041,7 @@ html, body {
       "n": 18,
       "type": "det_vs_stoch",
       "title": "Det vs Stoch IRR — методологическая справка",
-      "subtitle": "Почему 20.09% и 7.24% — не противоречие",
+      "subtitle": "Почему 20.09% и 11.44% — не противоречие",
       "table": [
         {
           "aspect": "Что отражает",
@@ -2061,7 +2064,7 @@ html, body {
           "stoch": "Risk framework, stress-тест, lower-bound"
         }
       ],
-      "conclusion": "Det 20.09% — то, что мы целим. MC 7.24% — то, что мы выдержим при ухудшении таймингов."
+      "conclusion": "Det 20.09% — то, что мы целим. MC 11.44% — то, что мы выдержим при ухудшении таймингов."
     },
     {
       "n": 19,
@@ -2364,7 +2367,7 @@ html, body {
           "color": "gold"
         }
       ],
-      "disclosure": "MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
+      "disclosure": "MC Mean IRR 11.44% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
     },
     "s05_pipeline": {
       "pipeline": [
@@ -2662,27 +2665,27 @@ html, body {
       "percentiles": [
         {
           "p": "P5",
-          "irr": -2.1
+          "irr": -0.41
         },
         {
           "p": "P25",
-          "irr": 3.4
+          "irr": 7.97
         },
         {
           "p": "P50 (Median)",
-          "irr": 7.1
+          "irr": 12.0
         },
         {
           "p": "Mean",
-          "irr": 7.24
+          "irr": 11.44
         },
         {
           "p": "P75",
-          "irr": 11.2
+          "irr": 15.72
         },
         {
           "p": "P95",
-          "irr": 15.8
+          "irr": 21.11
         }
       ],
       "det_line": 20.09,
@@ -2712,7 +2715,7 @@ html, body {
           "stoch": "Risk framework, stress-тест, lower-bound"
         }
       ],
-      "conclusion": "Det 20.09% — то, что мы целим. MC 7.24% — то, что мы выдержим при ухудшении таймингов."
+      "conclusion": "Det 20.09% — то, что мы целим. MC 11.44% — то, что мы выдержим при ухудшении таймингов."
     },
     "s20_top_risks": {
       "heatmap_summary": {
@@ -2866,7 +2869,7 @@ html, body {
   "financial": {
     "revenue_3y": 4545,
     "ebitda_3y": 2167,
-    "ndp_3y": 1385,
+    "ndp_3y": 3000,
     "pl_summary": {
       "rows": [
         {
@@ -2909,7 +2912,7 @@ html, body {
           "y1": 75,
           "y2": 340,
           "y3": 970,
-          "total": 1385
+          "total": 3000
         }
       ]
     },
@@ -5694,7 +5697,7 @@ html, body {
   // --- Slide 17 ---
 /* S17: MC IRR Distribution — LP CRITICAL CHART
    Chart.js histogram with det_line annotation at 20.09%.
-   Bins simulate bell-ish distribution centered ~7.24% mean. */
+   Bins generated from data (mc_mean_irr, mc_stdev_irr) via normal approx. */
 (function() {
   'use strict';
 
@@ -5727,19 +5730,39 @@ html, body {
 
         var detLine = (chartData && chartData.det_line) ? chartData.det_line : 20.09;
 
-        // Bin labels and approximate heights (triangular-ish around mean 7.24%)
-        var binLabels = [
-          '-5% \u2013 -2%',
-          '-2% \u2013 1%',
-          '1% \u2013 4%',
-          '4% \u2013 7%',
-          '7% \u2013 10%',
-          '10% \u2013 13%',
-          '13% \u2013 16%',
-          '16% \u2013 19%',
-          '19% \u2013 22%'
-        ];
-        var binHeights = [500, 2500, 6000, 12000, 14000, 8000, 4500, 2000, 500];
+        // Build bins from data-driven mu/sigma (normal approximation)
+        var metrics = TS.data().key_metrics;
+        if (!metrics || !metrics.mc_mean_irr || !metrics.mc_stdev_irr) {
+          throw new Error('S17: mc_mean_irr and mc_stdev_irr required in key_metrics');
+        }
+        var mu = metrics.mc_mean_irr;
+        var sigma = metrics.mc_stdev_irr;
+        var p5 = (chartData && chartData.percentiles && chartData.percentiles[0]) ? chartData.percentiles[0].irr : mu - 1.645 * sigma;
+        var p95 = (chartData && chartData.percentiles) ? chartData.percentiles[chartData.percentiles.length - 1].irr : mu + 1.645 * sigma;
+        var lo = Math.floor(p5 / 3) * 3;
+        var hi = Math.ceil(p95 / 3) * 3;
+        var nBins = Math.max(Math.round((hi - lo) / 3), 5);
+        var binWidth = (hi - lo) / nBins;
+
+        var binLabels = [];
+        var binHeights = [];
+        var totalArea = 0;
+        for (var b = 0; b < nBins; b++) {
+          var left = lo + b * binWidth;
+          var right = left + binWidth;
+          binLabels.push(Math.round(left) + '% \u2013 ' + Math.round(right) + '%');
+          // Normal PDF approximation at bin center
+          var center = left + binWidth / 2;
+          var z = (center - mu) / sigma;
+          var h = Math.exp(-0.5 * z * z);
+          binHeights.push(h);
+          totalArea += h;
+        }
+        // Scale to ~50000 total
+        var nSim = (chartData && chartData.n) ? chartData.n : 50000;
+        for (var b2 = 0; b2 < binHeights.length; b2++) {
+          binHeights[b2] = Math.round(binHeights[b2] / totalArea * nSim);
+        }
 
         // Gold annotation plugin for deterministic IRR vertical line
         var detLinePlugin = {
@@ -5749,15 +5772,16 @@ html, body {
             var yScale = chart.scales.y;
             var ctx = chart.ctx;
 
-            // det_line at 20.09% falls in the last bin (19-22%), ~position at bin index 8
-            // Calculate pixel X for the last bin center area
-            var lastBarMeta = chart.getDatasetMeta(0).data;
-            if (!lastBarMeta || lastBarMeta.length === 0) return;
+            // Position det_line dynamically based on bin range
+            var bars = chart.getDatasetMeta(0).data;
+            if (!bars || bars.length === 0) return;
 
-            // Position within the last bin: (20.09 - 19) / (22 - 19) = ~0.36 of bin width
-            var lastBar = lastBarMeta[lastBarMeta.length - 1];
-            var barWidth = lastBar.width || 40;
-            var lineX = lastBar.x - barWidth / 2 + barWidth * 0.36;
+            // Calculate which bin detLine falls in and interpolate pixel X
+            var detBinIdx = Math.min(Math.max(Math.floor((detLine - lo) / binWidth), 0), bars.length - 1);
+            var detBar = bars[detBinIdx];
+            var barWidth = detBar.width || 40;
+            var fraction = ((detLine - lo) / binWidth) - detBinIdx;
+            var lineX = detBar.x - barWidth / 2 + barWidth * Math.max(0, Math.min(1, fraction));
 
             ctx.save();
             ctx.beginPath();
@@ -5894,7 +5918,7 @@ html, body {
 
   // --- Slide 18 ---
 /* S18: Deterministic vs Stochastic — LP CRITICAL CHART
-   Side-by-side MetricCards (Det IRR 20.09% vs MC Mean IRR 7.24%),
+   Side-by-side MetricCards (Det IRR vs MC Mean IRR from data),
    bar chart comparing the two, DataTable of aspects, conclusion. */
 (function() {
   'use strict';
@@ -5910,6 +5934,9 @@ html, body {
       if (!root || !data) return;
 
       var metrics = TS.data().key_metrics || {};
+      if (!metrics.mc_mean_irr) {
+        console.error('S18: mc_mean_irr missing from key_metrics — data pipeline error');
+      }
 
       // Title + subtitle
       var titleEl = document.getElementById('s18-title');
@@ -5923,13 +5950,13 @@ html, body {
         metricsContainer.innerHTML = '';
 
         C.MetricCard(metricsContainer, {
-          value: (metrics.det_irr || 20.09) + '%',
+          value: metrics.det_irr.toFixed(2) + '%',
           label: I18N.t('s18.det_irr_label') || 'Deterministic IRR',
           color: 'gold'
         });
 
         C.MetricCard(metricsContainer, {
-          value: (metrics.mc_mean_irr || 7.24) + '%',
+          value: metrics.mc_mean_irr.toFixed(2) + '%',
           label: I18N.t('s18.mc_mean_irr_label') || 'MC Mean IRR',
           color: 'gold'
         });
@@ -5957,8 +5984,8 @@ html, body {
           description: I18N.t('s18.chart_desc') || I18N.t('s18.subtitle')
         });
 
-        var detIrr = metrics.det_irr || 20.09;
-        var mcIrr = metrics.mc_mean_irr || 7.24;
+        var detIrr = metrics.det_irr;
+        var mcIrr = metrics.mc_mean_irr;
 
         CHARTS.bar(CHART_ID, {
           data: {

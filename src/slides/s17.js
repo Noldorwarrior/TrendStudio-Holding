@@ -1,6 +1,6 @@
 /* S17: MC IRR Distribution — LP CRITICAL CHART
    Chart.js histogram with det_line annotation at 20.09%.
-   Bins simulate bell-ish distribution centered ~7.24% mean. */
+   Bins generated from data (mc_mean_irr, mc_stdev_irr) via normal approx. */
 (function() {
   'use strict';
 
@@ -33,19 +33,39 @@
 
         var detLine = (chartData && chartData.det_line) ? chartData.det_line : 20.09;
 
-        // Bin labels and approximate heights (triangular-ish around mean 7.24%)
-        var binLabels = [
-          '-5% \u2013 -2%',
-          '-2% \u2013 1%',
-          '1% \u2013 4%',
-          '4% \u2013 7%',
-          '7% \u2013 10%',
-          '10% \u2013 13%',
-          '13% \u2013 16%',
-          '16% \u2013 19%',
-          '19% \u2013 22%'
-        ];
-        var binHeights = [500, 2500, 6000, 12000, 14000, 8000, 4500, 2000, 500];
+        // Build bins from data-driven mu/sigma (normal approximation)
+        var metrics = TS.data().key_metrics;
+        if (!metrics || !metrics.mc_mean_irr || !metrics.mc_stdev_irr) {
+          throw new Error('S17: mc_mean_irr and mc_stdev_irr required in key_metrics');
+        }
+        var mu = metrics.mc_mean_irr;
+        var sigma = metrics.mc_stdev_irr;
+        var p5 = (chartData && chartData.percentiles && chartData.percentiles[0]) ? chartData.percentiles[0].irr : mu - 1.645 * sigma;
+        var p95 = (chartData && chartData.percentiles) ? chartData.percentiles[chartData.percentiles.length - 1].irr : mu + 1.645 * sigma;
+        var lo = Math.floor(p5 / 3) * 3;
+        var hi = Math.ceil(p95 / 3) * 3;
+        var nBins = Math.max(Math.round((hi - lo) / 3), 5);
+        var binWidth = (hi - lo) / nBins;
+
+        var binLabels = [];
+        var binHeights = [];
+        var totalArea = 0;
+        for (var b = 0; b < nBins; b++) {
+          var left = lo + b * binWidth;
+          var right = left + binWidth;
+          binLabels.push(Math.round(left) + '% \u2013 ' + Math.round(right) + '%');
+          // Normal PDF approximation at bin center
+          var center = left + binWidth / 2;
+          var z = (center - mu) / sigma;
+          var h = Math.exp(-0.5 * z * z);
+          binHeights.push(h);
+          totalArea += h;
+        }
+        // Scale to ~50000 total
+        var nSim = (chartData && chartData.n) ? chartData.n : 50000;
+        for (var b2 = 0; b2 < binHeights.length; b2++) {
+          binHeights[b2] = Math.round(binHeights[b2] / totalArea * nSim);
+        }
 
         // Gold annotation plugin for deterministic IRR vertical line
         var detLinePlugin = {
@@ -55,15 +75,16 @@
             var yScale = chart.scales.y;
             var ctx = chart.ctx;
 
-            // det_line at 20.09% falls in the last bin (19-22%), ~position at bin index 8
-            // Calculate pixel X for the last bin center area
-            var lastBarMeta = chart.getDatasetMeta(0).data;
-            if (!lastBarMeta || lastBarMeta.length === 0) return;
+            // Position det_line dynamically based on bin range
+            var bars = chart.getDatasetMeta(0).data;
+            if (!bars || bars.length === 0) return;
 
-            // Position within the last bin: (20.09 - 19) / (22 - 19) = ~0.36 of bin width
-            var lastBar = lastBarMeta[lastBarMeta.length - 1];
-            var barWidth = lastBar.width || 40;
-            var lineX = lastBar.x - barWidth / 2 + barWidth * 0.36;
+            // Calculate which bin detLine falls in and interpolate pixel X
+            var detBinIdx = Math.min(Math.max(Math.floor((detLine - lo) / binWidth), 0), bars.length - 1);
+            var detBar = bars[detBinIdx];
+            var barWidth = detBar.width || 40;
+            var fraction = ((detLine - lo) / binWidth) - detBinIdx;
+            var lineX = detBar.x - barWidth / 2 + barWidth * Math.max(0, Math.min(1, fraction));
 
             ctx.save();
             ctx.beginPath();

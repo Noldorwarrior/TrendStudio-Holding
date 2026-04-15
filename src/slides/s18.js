@@ -1,5 +1,5 @@
 /* S18: Deterministic vs Stochastic — LP CRITICAL CHART
-   Side-by-side MetricCards (Det IRR 20.09% vs MC Mean IRR 7.24%),
+   Side-by-side MetricCards (Det IRR vs MC Mean IRR from data),
    bar chart comparing the two, DataTable of aspects, conclusion. */
 (function() {
   'use strict';
@@ -15,6 +15,9 @@
       if (!root || !data) return;
 
       var metrics = TS.data().key_metrics || {};
+      if (!metrics.mc_mean_irr) {
+        console.error('S18: mc_mean_irr missing from key_metrics — data pipeline error');
+      }
 
       // Title + subtitle
       var titleEl = document.getElementById('s18-title');
@@ -28,13 +31,13 @@
         metricsContainer.innerHTML = '';
 
         C.MetricCard(metricsContainer, {
-          value: (metrics.det_irr || 20.09) + '%',
+          value: metrics.det_irr.toFixed(2) + '%',
           label: I18N.t('s18.det_irr_label') || 'Deterministic IRR',
           color: 'gold'
         });
 
         C.MetricCard(metricsContainer, {
-          value: (metrics.mc_mean_irr || 7.24) + '%',
+          value: metrics.mc_mean_irr.toFixed(2) + '%',
           label: I18N.t('s18.mc_mean_irr_label') || 'MC Mean IRR',
           color: 'gold'
         });
@@ -62,8 +65,8 @@
           description: I18N.t('s18.chart_desc') || I18N.t('s18.subtitle')
         });
 
-        var detIrr = metrics.det_irr || 20.09;
-        var mcIrr = metrics.mc_mean_irr || 7.24;
+        var detIrr = metrics.det_irr;
+        var mcIrr = metrics.mc_mean_irr;
 
         CHARTS.bar(CHART_ID, {
           data: {

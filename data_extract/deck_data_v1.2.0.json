@@ -10,15 +10,18 @@
     "anchor": 3000,
     "currency": "млн ₽",
     "det_irr": 20.09,
-    "mc_mean_irr": 7.24,
+    "mc_mean_irr": 11.44,
     "moic": 2.0,
     "wacc": 19.05,
     "revenue_3y": 4545,
     "ebitda_3y": 2167,
     "mc_n": 50000,
     "mc_seed": 42,
-    "ndp_3y": 1385,
-    "hold_years": 5
+    "ndp_3y": 3000,
+    "hold_years": 5,
+    "mc_stdev_irr": 6.47,
+    "ndp_mc_mean": 2104.06,
+    "ndp_mc_p10": 1381.87
   },
   "palette": {
     "bg_primary": "#0A0E1A",
@@ -79,7 +82,7 @@
           "color": "gold"
         }
       ],
-      "disclosure": "MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
+      "disclosure": "MC Mean IRR 11.44% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
     },
     {
       "n": 3,
@@ -491,7 +494,7 @@
           "y1": 75,
           "y2": 340,
           "y3": 970,
-          "total": 1385
+          "total": 3000
         }
       ]
     },
@@ -619,27 +622,27 @@
       "percentiles": [
         {
           "p": "P5",
-          "irr": -2.1
+          "irr": -0.41
         },
         {
           "p": "P25",
-          "irr": 3.4
+          "irr": 7.97
         },
         {
           "p": "P50 (Median)",
-          "irr": 7.1
+          "irr": 12.0
         },
         {
           "p": "Mean",
-          "irr": 7.24
+          "irr": 11.44
         },
         {
           "p": "P75",
-          "irr": 11.2
+          "irr": 15.72
         },
         {
           "p": "P95",
-          "irr": 15.8
+          "irr": 21.11
         }
       ],
       "det_line": 20.09,
@@ -649,7 +652,7 @@
       "n": 18,
       "type": "det_vs_stoch",
       "title": "Det vs Stoch IRR — методологическая справка",
-      "subtitle": "Почему 20.09% и 7.24% — не противоречие",
+      "subtitle": "Почему 20.09% и 11.44% — не противоречие",
       "table": [
         {
           "aspect": "Что отражает",
@@ -672,7 +675,7 @@
           "stoch": "Risk framework, stress-тест, lower-bound"
         }
       ],
-      "conclusion": "Det 20.09% — то, что мы целим. MC 7.24% — то, что мы выдержим при ухудшении таймингов."
+      "conclusion": "Det 20.09% — то, что мы целим. MC 11.44% — то, что мы выдержим при ухудшении таймингов."
     },
     {
       "n": 19,
@@ -975,7 +978,7 @@
           "color": "gold"
         }
       ],
-      "disclosure": "MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
+      "disclosure": "MC Mean IRR 11.44% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
     },
     "s05_pipeline": {
       "pipeline": [
@@ -1273,27 +1276,27 @@
       "percentiles": [
         {
           "p": "P5",
-          "irr": -2.1
+          "irr": -0.41
         },
         {
           "p": "P25",
-          "irr": 3.4
+          "irr": 7.97
         },
         {
           "p": "P50 (Median)",
-          "irr": 7.1
+          "irr": 12.0
         },
         {
           "p": "Mean",
-          "irr": 7.24
+          "irr": 11.44
         },
         {
           "p": "P75",
-          "irr": 11.2
+          "irr": 15.72
         },
         {
           "p": "P95",
-          "irr": 15.8
+          "irr": 21.11
         }
       ],
       "det_line": 20.09,
@@ -1323,7 +1326,7 @@
           "stoch": "Risk framework, stress-тест, lower-bound"
         }
       ],
-      "conclusion": "Det 20.09% — то, что мы целим. MC 7.24% — то, что мы выдержим при ухудшении таймингов."
+      "conclusion": "Det 20.09% — то, что мы целим. MC 11.44% — то, что мы выдержим при ухудшении таймингов."
     },
     "s20_top_risks": {
       "heatmap_summary": {
@@ -1477,7 +1480,7 @@
   "financial": {
     "revenue_3y": 4545,
     "ebitda_3y": 2167,
-    "ndp_3y": 1385,
+    "ndp_3y": 3000,
     "pl_summary": {
       "rows": [
         {
@@ -1520,7 +1523,7 @@
           "y1": 75,
           "y2": 340,
           "y3": 970,
-          "total": 1385
+          "total": 3000
         }
       ]
     },

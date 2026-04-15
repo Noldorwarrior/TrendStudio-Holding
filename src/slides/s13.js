@@ -1,11 +1,16 @@
 /* S13: Financial Summary
-   P&L table with years as columns. EBITDA and NDP rows highlighted in gold. */
+   P&L table with years as columns. EBITDA and NDP rows highlighted in gold.
+   Null y_i values render as em-dash (deterministic NDP has no per-year breakdown). */
 (function() {
   'use strict';
 
   var C = window.TS.Components;
 
   var HIGHLIGHT_ROWS = ['EBITDA', 'NDP'];
+
+  function fmtCell(v) {
+    return v != null ? I18N.formatNumber(v) : '\u2014';
+  }
 
   NAV.registerSlide(13, {
     enter: function() {
@@ -30,10 +35,10 @@
           var r = pl[i];
           rows.push([
             r.row || '',
-            I18N.formatNumber(r.y1 || 0),
-            I18N.formatNumber(r.y2 || 0),
-            I18N.formatNumber(r.y3 || 0),
-            I18N.formatNumber(r.total || 0)
+            fmtCell(r.y1),
+            fmtCell(r.y2),
+            fmtCell(r.y3),
+            fmtCell(r.total)
           ]);
         }
 
@@ -57,7 +62,7 @@
             if (firstCell) {
               var cellText = (firstCell.textContent || '').trim();
               for (var h = 0; h < HIGHLIGHT_ROWS.length; h++) {
-                if (cellText === HIGHLIGHT_ROWS[h]) {
+                if (cellText.indexOf(HIGHLIGHT_ROWS[h]) !== -1) {
                   tbodyRows[k].style.cssText = 'background:rgba(201,169,97,0.08);';
                   var cells = tbodyRows[k].querySelectorAll('td');
                   for (var c = 0; c < cells.length; c++) {

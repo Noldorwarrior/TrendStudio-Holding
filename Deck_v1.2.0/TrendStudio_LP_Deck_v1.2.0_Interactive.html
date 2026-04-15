@@ -1120,8 +1120,28 @@ html, body {
   "s13.col_total": "Итого 3Y",
   "s15.col_component": "Компонент",
   "s15.col_value": "Значение, %",
-  "s15.col_source": "Источник"
-}, "en": {
+  "s15.col_source": "Источник",
+  "ui.drilldown_details": "Подробнее",
+  "ui.drilldown_metrics": "Метрики",
+  "ui.error": "Ошибка",
+  "ui.lang_en": "EN",
+  "ui.lang_ru": "RU",
+  "ui.lang_toggle": "Язык",
+  "ui.loading": "Загрузка…",
+  "ui.modal_close": "Закрыть",
+  "ui.no_data": "Нет данных",
+  "ui.scenario_base": "Базовый",
+  "ui.scenario_opt": "Позитивный",
+  "ui.scenario_pess": "Негативный",
+  "ui.scenario_toggle": "Сценарий",
+  "ui.slider_value": "Значение: {value}",
+  "a11y.lang_changed": "Язык изменён на {lang}",
+  "a11y.modal_closed": "Окно закрыто",
+  "a11y.modal_opened": "Окно открыто: {title}",
+  "a11y.scenario_changed": "Сценарий изменён: {scenario}",
+  "a11y.slide_announce": "Слайд {n} из {total}: {title}"
+}
+, "en": {
   "meta.title": "[EN:meta.title]",
   "meta.subtitle": "[EN:meta.subtitle]",
   "meta.audience": "[EN:meta.audience]",
@@ -1382,8 +1402,28 @@ html, body {
   "s13.col_total": "[EN:s13.col_total]",
   "s15.col_component": "[EN:s15.col_component]",
   "s15.col_value": "[EN:s15.col_value]",
-  "s15.col_source": "[EN:s15.col_source]"
-}}
+  "s15.col_source": "[EN:s15.col_source]",
+  "ui.scenario_toggle": "Scenario",
+  "ui.scenario_base": "Base",
+  "ui.scenario_opt": "Optimistic",
+  "ui.scenario_pess": "Pessimistic",
+  "ui.lang_toggle": "Language",
+  "ui.lang_ru": "RU",
+  "ui.lang_en": "EN",
+  "ui.modal_close": "Close",
+  "ui.slider_value": "Value: {value}",
+  "ui.drilldown_details": "Details",
+  "ui.drilldown_metrics": "Metrics",
+  "ui.loading": "Loading…",
+  "ui.error": "Error",
+  "ui.no_data": "No data",
+  "a11y.slide_announce": "Slide {n} of {total}: {title}",
+  "a11y.scenario_changed": "Scenario changed: {scenario}",
+  "a11y.lang_changed": "Language changed to {lang}",
+  "a11y.modal_opened": "Dialog opened: {title}",
+  "a11y.modal_closed": "Dialog closed"
+}
+}
   </script>
 
   <script id="deck-data" type="application/json">
@@ -1880,9 +1920,9 @@ html, body {
         },
         {
           "row": "NDP (к распределению)",
-          "y1": 75,
-          "y2": 340,
-          "y3": 970,
+          "y1": null,
+          "y2": null,
+          "y3": null,
           "total": 3000
         }
       ]
@@ -2874,47 +2914,28 @@ html, body {
       "rows": [
         {
           "row": "Revenue",
-          "y1": 650,
-          "y2": 1750,
-          "y3": 2145,
+          "y1": 385,
+          "y2": 1665,
+          "y3": 2495,
           "total": 4545
         },
         {
-          "row": "COGS (direct)",
-          "y1": 390,
-          "y2": 1050,
-          "y3": 1287,
-          "total": 2727
-        },
-        {
-          "row": "Gross Profit",
-          "y1": 260,
-          "y2": 700,
-          "y3": 858,
-          "total": 1818
-        },
-        {
-          "row": "OPEX",
-          "y1": 80,
-          "y2": 150,
-          "y3": 220,
-          "total": 450
-        },
-        {
           "row": "EBITDA",
-          "y1": 180,
-          "y2": 550,
-          "y3": 1437,
-          "total": 2167
+          "y1": 58.3,
+          "y2": 987.7,
+          "y3": 1121.4,
+          "total": 2167.4
         },
         {
           "row": "NDP (к распределению)",
-          "y1": 75,
-          "y2": 340,
-          "y3": 970,
+          "y1": null,
+          "y2": null,
+          "y3": null,
           "total": 3000
         }
-      ]
+      ],
+      "source": "21_KPI_Dashboard R8/R14/R16",
+      "note": "Deck shows headline Revenue/EBITDA/NDP. Full P&L — in financial model and Appendix."
     },
     "revenue_breakdown": [
       {
@@ -2974,28 +2995,157 @@ html, body {
         "y2028": 74.8
       }
     ],
-    "investor_returns": [
-      {
-        "scenario": "2029",
-        "W3_IRR": 990,
-        "W3_MOIC": -260
-      },
-      {
-        "scenario": "2030",
-        "W3_IRR": 1114,
-        "W3_MOIC": 854
-      },
-      {
-        "scenario": "2031",
-        "W3_IRR": 162,
-        "W3_MOIC": 1016
-      },
-      {
-        "scenario": "2032",
-        "W3_IRR": 234,
-        "W3_MOIC": 1250
-      }
-    ],
+    "investor_returns": {
+      "t1_cashflow": [
+        {
+          "period": "Q1 2026",
+          "action": "Tranche (Транш) disbursement",
+          "tranche": -250,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": -250,
+          "cum_cf": -250,
+          "type": "Out"
+        },
+        {
+          "period": "Q2 2026",
+          "action": "Tranche (Транш) disbursement",
+          "tranche": -350,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": -350,
+          "cum_cf": -600,
+          "type": "Out"
+        },
+        {
+          "period": "Q3 2026",
+          "action": "Tranche (Транш) disbursement",
+          "tranche": -350,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": -350,
+          "cum_cf": -950,
+          "type": "Out"
+        },
+        {
+          "period": "Q4 2026",
+          "action": "Tranche (Транш) disbursement",
+          "tranche": -300,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": -300,
+          "cum_cf": -1250,
+          "type": "Out"
+        },
+        {
+          "period": "2029",
+          "action": "Liq Pref (Ликвидационная привилегия) (partial, A+C Y29=33%)",
+          "tranche": 990,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": 990,
+          "cum_cf": -260,
+          "type": "In"
+        },
+        {
+          "period": "2030",
+          "action": "Liq Pref (Ликвидационная привилегия) final + coupon (купон) + carry (A+C Y30=45%)",
+          "tranche": 260,
+          "interest": 500,
+          "upside": 354,
+          "net_cf": 1114,
+          "cum_cf": 854,
+          "type": "In"
+        },
+        {
+          "period": "2031",
+          "action": "Carried interest share (доля) (A+C Y31=9%)",
+          "tranche": 0,
+          "interest": 0,
+          "upside": 162,
+          "net_cf": 162,
+          "cum_cf": 1016,
+          "type": "In"
+        },
+        {
+          "period": "2032",
+          "action": "Carried interest share (доля) (A+C Y32=13%)",
+          "tranche": 0,
+          "interest": 0,
+          "upside": 234,
+          "net_cf": 234,
+          "cum_cf": 1250,
+          "type": "In"
+        }
+      ],
+      "returns_matrix": [
+        {
+          "scenario": "Stress Bear (Стресс-пессимистичный)",
+          "W1_IRR": -3.56,
+          "W1_MOIC": 0.86,
+          "W2_IRR": -0.68,
+          "W2_MOIC": 0.97,
+          "W3_IRR": 9.34,
+          "W3_MOIC": 1.42,
+          "W4_IRR": 9.6,
+          "W4_MOIC": 1.44,
+          "best": "W₄",
+          "ndp": 1800.0
+        },
+        {
+          "scenario": "Downside (Нижний сценарий)",
+          "W1_IRR": 3.06,
+          "W1_MOIC": 1.13,
+          "W2_IRR": 6.74,
+          "W2_MOIC": 1.3,
+          "W3_IRR": 15.14,
+          "W3_MOIC": 1.71,
+          "W4_IRR": 16.61,
+          "W4_MOIC": 1.81,
+          "best": "W₄",
+          "ndp": 2400.0
+        },
+        {
+          "scenario": "Base Case (Базовый сценарий)",
+          "W1_IRR": 8.28,
+          "W1_MOIC": 1.37,
+          "W2_IRR": 12.97,
+          "W2_MOIC": 1.62,
+          "W3_IRR": 20.09,
+          "W3_MOIC": 2.0,
+          "W4_IRR": 21.81,
+          "W4_MOIC": 2.12,
+          "best": "W₄",
+          "ndp": 3000.0
+        },
+        {
+          "scenario": "Upside (Верхний сценарий)",
+          "W1_IRR": 12.91,
+          "W1_MOIC": 1.61,
+          "W2_IRR": 18.39,
+          "W2_MOIC": 1.95,
+          "W3_IRR": 24.61,
+          "W3_MOIC": 2.29,
+          "W4_IRR": 26.45,
+          "W4_MOIC": 2.43,
+          "best": "W₄",
+          "ndp": 3600.0
+        },
+        {
+          "scenario": "Bull Case (Оптимистичный)",
+          "W1_IRR": 17.08,
+          "W1_MOIC": 1.85,
+          "W2_IRR": 23.22,
+          "W2_MOIC": 2.27,
+          "W3_IRR": 28.78,
+          "W3_MOIC": 2.58,
+          "W4_IRR": 30.73,
+          "W4_MOIC": 2.74,
+          "best": "W₄",
+          "ndp": 4200.0
+        }
+      ]
+    },
     "capm": [
       {
         "component": "Risk-free rate (ОФЗ 10Y)",
@@ -3061,46 +3211,87 @@ html, body {
 
   <script>
   // === A11Y ===
-/* S34: Accessibility module — Phase 1
-   Owner: S34 | Provides: window.TS.A11y */
+/* S34: Accessibility module — Phase 2A (extended from Phase 1)
+   Owner: S34 | Provides: window.TS.A11y
+   Contract: trapFocus(el) -> handle, releaseFocus(handle), announce(msg, priority),
+             prefersReducedMotion() */
 
 (function() {
   'use strict';
 
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var liveRegion = null;
-  var focusTrapStack = [];
+  var handleCounter = 0;
+  var focusTrapHandles = {};
+
+  var FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  /**
+   * Ensure aria-live region exists in body.
+   * Creates one if #a11y-live not found.
+   */
+  function ensureLiveRegion() {
+    if (liveRegion) return liveRegion;
+    liveRegion = document.getElementById('a11y-live');
+    if (!liveRegion) {
+      liveRegion = document.createElement('div');
+      liveRegion.id = 'a11y-live';
+      liveRegion.setAttribute('aria-live', 'polite');
+      liveRegion.setAttribute('aria-atomic', 'true');
+      liveRegion.className = 'sr-only';
+      liveRegion.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;';
+      document.body.appendChild(liveRegion);
+    }
+    return liveRegion;
+  }
 
   var A11y = {
     prefersReducedMotion: function() {
       return reducedMotion;
     },
 
+    /**
+     * Announce message to screen readers via aria-live region.
+     * @param {string} message - Text to announce
+     * @param {string} priority - 'polite' (default) or 'assertive'
+     */
     announce: function(message, priority) {
-      if (!liveRegion) {
-        liveRegion = document.getElementById('a11y-live');
-      }
-      if (liveRegion) {
-        liveRegion.setAttribute('aria-live', priority === 'assertive' ? 'assertive' : 'polite');
-        liveRegion.textContent = '';
-        requestAnimationFrame(function() {
-          liveRegion.textContent = message;
-        });
-      }
+      var region = ensureLiveRegion();
+      region.setAttribute('aria-live', priority === 'assertive' ? 'assertive' : 'polite');
+      region.textContent = '';
+      requestAnimationFrame(function() {
+        region.textContent = message;
+      });
     },
 
-    trapFocus: function(container) {
-      if (!container) return;
-      var focusable = container.querySelectorAll(
-        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      );
-      if (focusable.length === 0) return;
+    /**
+     * Trap focus within a container element.
+     * Remembers previous activeElement for restoration.
+     * Tab/Shift+Tab cycle within container. Esc calls releaseFocus.
+     * @param {HTMLElement} el - Container to trap focus in
+     * @returns {object|null} handle - { id, container } for releaseFocus
+     */
+    trapFocus: function(el) {
+      if (!el) return null;
+      var focusable = el.querySelectorAll(FOCUSABLE_SELECTOR);
 
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
+      var previousActiveElement = document.activeElement;
+      var id = ++handleCounter;
 
       var handler = function(e) {
+        if (e.key === 'Escape') {
+          A11y.releaseFocus({ id: id, container: el });
+          return;
+        }
         if (e.key !== 'Tab') return;
+
+        // Re-query focusable elements (they may change dynamically)
+        var current = el.querySelectorAll(FOCUSABLE_SELECTOR);
+        if (current.length === 0) return;
+
+        var first = current[0];
+        var last = current[current.length - 1];
+
         if (e.shiftKey) {
           if (document.activeElement === first) {
             e.preventDefault();
@@ -3114,19 +3305,45 @@ html, body {
         }
       };
 
-      container.addEventListener('keydown', handler);
-      focusTrapStack.push({ container: container, handler: handler });
-      first.focus();
+      el.addEventListener('keydown', handler);
+
+      var handle = {
+        id: id,
+        container: el
+      };
+
+      focusTrapHandles[id] = {
+        container: el,
+        handler: handler,
+        previousActiveElement: previousActiveElement
+      };
+
+      // Focus first focusable element
+      if (focusable.length > 0) {
+        focusable[0].focus();
+      }
+
+      return handle;
     },
 
-    releaseFocus: function(container) {
-      for (var i = focusTrapStack.length - 1; i >= 0; i--) {
-        if (focusTrapStack[i].container === container) {
-          container.removeEventListener('keydown', focusTrapStack[i].handler);
-          focusTrapStack.splice(i, 1);
-          break;
-        }
+    /**
+     * Release focus trap and restore previous activeElement.
+     * @param {object} handle - Handle returned by trapFocus ({ id, container })
+     */
+    releaseFocus: function(handle) {
+      if (!handle || handle.id == null) return;
+
+      var entry = focusTrapHandles[handle.id];
+      if (!entry) return;
+
+      entry.container.removeEventListener('keydown', entry.handler);
+
+      // Restore focus to previous element
+      if (entry.previousActiveElement && typeof entry.previousActiveElement.focus === 'function') {
+        try { entry.previousActiveElement.focus(); } catch (e) { /* element may be gone */ }
       }
+
+      delete focusTrapHandles[handle.id];
     },
 
     describeChart: function(data) {
@@ -3165,7 +3382,7 @@ html, body {
     }
   };
 
-  // Listen for reduced-motion changes
+  // Listen for reduced-motion changes dynamically
   if (window.matchMedia) {
     var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mq.addEventListener) {
@@ -3890,9 +4107,336 @@ html, body {
 
   Components.ScenarioToggle = function() { return null; };
   Components.LangToggle = function() { return null; };
-  Components.Slider = function() { return null; };
-  Components.Modal = function() { return null; };
-  Components.DrilldownCard = function() { return null; };
+
+  /**
+   * Slider — debounced 16ms (requestAnimationFrame), a11y-ready.
+   * @param {HTMLElement} container - Parent element to render into
+   * @param {object} opts - { min, max, step, value, format(v)->string, onChange(v), a11y: { label, valuetext(v) } }
+   * @returns {{ setValue, getValue, destroy }}
+   */
+  Components.Slider = function(container, opts) {
+    opts = opts || {};
+    var min = opts.min != null ? opts.min : 0;
+    var max = opts.max != null ? opts.max : 100;
+    var step = opts.step != null ? opts.step : 1;
+    var currentValue = opts.value != null ? opts.value : min;
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'ts-slider';
+    wrapper.style.cssText = 'display:flex;align-items:center;gap:12px;';
+
+    // Label
+    var label = document.createElement('label');
+    label.className = 'ts-slider__label';
+    label.style.cssText = 'color:var(--text-secondary,#9CA3AF);font-size:13px;white-space:nowrap;';
+    var labelId = 'slider-' + (++Components._sliderId);
+    label.id = labelId;
+    label.textContent = (opts.a11y && opts.a11y.label) || '';
+
+    // Range input
+    var input = document.createElement('input');
+    input.type = 'range';
+    input.min = min;
+    input.max = max;
+    input.step = step;
+    input.value = currentValue;
+    input.className = 'ts-slider__input';
+    input.style.cssText = 'flex:1;cursor:pointer;accent-color:var(--gold,#C9A961);';
+    input.setAttribute('aria-labelledby', labelId);
+
+    // Value display
+    var valueDisplay = document.createElement('span');
+    valueDisplay.className = 'ts-slider__value';
+    valueDisplay.style.cssText = "font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold,#C9A961);min-width:50px;text-align:right;";
+
+    function formatValue(v) {
+      if (opts.format) return opts.format(v);
+      return String(v);
+    }
+
+    function updateDisplay(v) {
+      valueDisplay.textContent = formatValue(v);
+      if (opts.a11y && opts.a11y.valuetext) {
+        input.setAttribute('aria-valuetext', opts.a11y.valuetext(v));
+      }
+    }
+
+    updateDisplay(currentValue);
+
+    // Debounce via requestAnimationFrame (16ms)
+    var rafId = null;
+    var pendingValue = null;
+
+    function onInput() {
+      var v = parseFloat(input.value);
+      pendingValue = v;
+      currentValue = v;
+      updateDisplay(v);
+
+      if (rafId) return;
+      rafId = requestAnimationFrame(function() {
+        rafId = null;
+        if (opts.onChange && pendingValue !== null) {
+          opts.onChange(pendingValue);
+        }
+        pendingValue = null;
+      });
+    }
+
+    input.addEventListener('input', onInput);
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(input);
+    wrapper.appendChild(valueDisplay);
+
+    if (container) container.appendChild(wrapper);
+
+    return {
+      setValue: function(v) {
+        v = Math.max(min, Math.min(max, v));
+        currentValue = v;
+        input.value = v;
+        updateDisplay(v);
+      },
+      getValue: function() {
+        return currentValue;
+      },
+      destroy: function() {
+        input.removeEventListener('input', onInput);
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        if (wrapper.parentNode) wrapper.parentNode.removeChild(wrapper);
+      }
+    };
+  };
+  Components._sliderId = 0;
+
+  /**
+   * Modal — focus-trap, Esc close, overlay click close.
+   * @param {object} opts - { title, body (HTMLElement|string), footer, onOpen, onClose, closeOnOverlay }
+   * @returns {{ open, close, setBody, destroy }}
+   */
+  Components.Modal = function(opts) {
+    opts = opts || {};
+    var isOpen = false;
+    var trapHandle = null;
+    var modalId = 'modal-' + (++Components._modalId);
+
+    // Overlay
+    var overlay = document.createElement('div');
+    overlay.className = 'ts-modal-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9998;display:none;';
+    overlay.setAttribute('data-modal-id', modalId);
+
+    // Modal container
+    var modal = document.createElement('div');
+    modal.className = 'ts-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', modalId + '-title');
+    modal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg-card,#141A2A);border:1px solid rgba(201,169,97,0.25);border-radius:12px;padding:24px;z-index:9999;max-width:640px;width:90%;max-height:80vh;overflow-y:auto;display:none;';
+
+    // Header
+    var header = document.createElement('div');
+    header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;';
+
+    var titleEl = document.createElement('h2');
+    titleEl.id = modalId + '-title';
+    titleEl.style.cssText = 'margin:0;font-size:18px;color:var(--text-primary,#F5F5F5);';
+    titleEl.textContent = opts.title || '';
+
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'ts-modal__close';
+    closeBtn.setAttribute('aria-label', 'Close');
+    closeBtn.style.cssText = 'background:none;border:none;color:var(--text-secondary,#9CA3AF);font-size:20px;cursor:pointer;padding:4px 8px;';
+    closeBtn.innerHTML = '&#x2715;';
+
+    header.appendChild(titleEl);
+    header.appendChild(closeBtn);
+
+    // Body
+    var bodyContainer = document.createElement('div');
+    bodyContainer.className = 'ts-modal__body';
+
+    function setBodyContent(content) {
+      bodyContainer.innerHTML = '';
+      if (typeof content === 'string') {
+        bodyContainer.textContent = content;
+      } else if (content && content.nodeType) {
+        bodyContainer.appendChild(content);
+      }
+    }
+
+    if (opts.body) setBodyContent(opts.body);
+
+    // Footer
+    var footerContainer = document.createElement('div');
+    footerContainer.className = 'ts-modal__footer';
+    footerContainer.style.cssText = 'margin-top:16px;';
+    if (opts.footer) {
+      if (typeof opts.footer === 'string') {
+        footerContainer.textContent = opts.footer;
+      } else if (opts.footer.nodeType) {
+        footerContainer.appendChild(opts.footer);
+      }
+    }
+
+    modal.appendChild(header);
+    modal.appendChild(bodyContainer);
+    modal.appendChild(footerContainer);
+
+    var api = {
+      open: function() {
+        if (isOpen) return;
+        isOpen = true;
+        document.body.appendChild(overlay);
+        document.body.appendChild(modal);
+        overlay.style.display = 'block';
+        modal.style.display = 'block';
+
+        // Focus trap
+        if (window.TS && window.TS.A11y && window.TS.A11y.trapFocus) {
+          trapHandle = window.TS.A11y.trapFocus(modal);
+        }
+
+        // Announce
+        if (window.TS && window.TS.A11y && window.TS.A11y.announce) {
+          window.TS.A11y.announce(opts.title || 'Dialog opened', 'assertive');
+        }
+
+        // Emit event
+        if (window.TS && window.TS.emit) {
+          window.TS.emit('modal-open', { id: modalId });
+        }
+
+        if (opts.onOpen) opts.onOpen();
+      },
+      close: function() {
+        if (!isOpen) return;
+        isOpen = false;
+
+        // Release focus trap
+        if (trapHandle && window.TS && window.TS.A11y && window.TS.A11y.releaseFocus) {
+          window.TS.A11y.releaseFocus(trapHandle);
+          trapHandle = null;
+        }
+
+        overlay.style.display = 'none';
+        modal.style.display = 'none';
+
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        if (modal.parentNode) modal.parentNode.removeChild(modal);
+
+        // Emit event
+        if (window.TS && window.TS.emit) {
+          window.TS.emit('modal-close', { id: modalId });
+        }
+
+        if (opts.onClose) opts.onClose();
+      },
+      setBody: function(content) {
+        setBodyContent(content);
+      },
+      destroy: function() {
+        if (isOpen) api.close();
+        overlay = null;
+        modal = null;
+      }
+    };
+
+    // Close on button click
+    closeBtn.addEventListener('click', function() { api.close(); });
+
+    // Close on overlay click (if enabled, default true)
+    if (opts.closeOnOverlay !== false) {
+      overlay.addEventListener('click', function() { api.close(); });
+    }
+
+    return api;
+  };
+  Components._modalId = 0;
+
+  /**
+   * DrilldownCard — project/investor detail card for modals.
+   * @param {object} data - { title, subtitle, metrics: [{label, value}], description, links }
+   * @returns {HTMLElement}
+   */
+  Components.DrilldownCard = function(data) {
+    data = data || {};
+
+    var card = document.createElement('div');
+    card.className = 'ts-drilldown-card';
+    card.style.cssText = 'color:var(--text-primary,#F5F5F5);';
+
+    // Title
+    if (data.title) {
+      var title = document.createElement('h3');
+      title.style.cssText = 'margin:0 0 4px 0;font-size:16px;color:var(--gold,#C9A961);';
+      title.textContent = data.title;
+      card.appendChild(title);
+    }
+
+    // Subtitle
+    if (data.subtitle) {
+      var subtitle = document.createElement('p');
+      subtitle.style.cssText = 'margin:0 0 16px 0;font-size:13px;color:var(--text-secondary,#9CA3AF);';
+      subtitle.textContent = data.subtitle;
+      card.appendChild(subtitle);
+    }
+
+    // Metrics grid
+    if (data.metrics && data.metrics.length > 0) {
+      var grid = document.createElement('div');
+      grid.className = 'ts-drilldown-card__metrics';
+      grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px;';
+
+      data.metrics.forEach(function(m) {
+        var item = document.createElement('div');
+        item.style.cssText = 'background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;';
+
+        var val = document.createElement('div');
+        val.style.cssText = "font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--gold,#C9A961);margin-bottom:4px;";
+        val.textContent = m.value != null ? String(m.value) : '\u2014';
+
+        var lbl = document.createElement('div');
+        lbl.style.cssText = 'font-size:12px;color:var(--text-secondary,#9CA3AF);';
+        lbl.textContent = m.label || '';
+
+        item.appendChild(val);
+        item.appendChild(lbl);
+        grid.appendChild(item);
+      });
+
+      card.appendChild(grid);
+    }
+
+    // Description
+    if (data.description) {
+      var desc = document.createElement('p');
+      desc.style.cssText = 'font-size:14px;line-height:1.6;color:var(--text-secondary,#9CA3AF);margin:0;';
+      desc.textContent = data.description;
+      card.appendChild(desc);
+    }
+
+    // Links
+    if (data.links && data.links.length > 0) {
+      var linksContainer = document.createElement('div');
+      linksContainer.style.cssText = 'margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;';
+
+      data.links.forEach(function(link) {
+        var a = document.createElement('a');
+        a.href = link.href || '#';
+        a.textContent = link.text || link.href;
+        a.style.cssText = 'color:var(--gold,#C9A961);font-size:13px;text-decoration:none;';
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+        linksContainer.appendChild(a);
+      });
+
+      card.appendChild(linksContainer);
+    }
+
+    return card;
+  };
 
   Components._escHtml = function(str) {
     var d = document.createElement('div');
@@ -3906,14 +4450,108 @@ html, body {
 
 
   // === ORCHESTRATOR ===
-/* S32: Orchestrator — scenario/event bus + init sequence
-   Owner: S32 | Phase 1
+/* S32: Orchestrator — scenario state machine + event bus + init sequence
+   Owner: S32 | Phase 2A (extended from Phase 1)
    Dependencies: macros.js (TS, NAV, ANIM, CHARTS, I18N) */
 
 (function() {
   'use strict';
 
-  // Init sequence: called on DOMContentLoaded
+  // === URL State Utilities (public — consumed by S33 i18n) ===
+
+  /**
+   * Read a key from URL with priority cascade:
+   * 1. ?key=value (query param)
+   * 2. #key=value (hash param)
+   * 3. sessionStorage.getItem(key)
+   * 4. fallback
+   */
+  function readURLPriority(key, fallback) {
+    // 1. Query param
+    try {
+      var params = new URLSearchParams(window.location.search);
+      if (params.has(key)) return params.get(key);
+    } catch (e) { /* URLSearchParams not supported — skip */ }
+
+    // 2. Hash param
+    var hash = window.location.hash.replace(/^#/, '');
+    var hashParts = hash.split('&');
+    for (var i = 0; i < hashParts.length; i++) {
+      var pair = hashParts[i].split('=');
+      if (pair[0] === key && pair.length > 1) return pair[1];
+    }
+
+    // 3. sessionStorage
+    try {
+      var stored = sessionStorage.getItem(key);
+      if (stored !== null) return stored;
+    } catch (e) { /* sessionStorage blocked */ }
+
+    // 4. fallback
+    return fallback;
+  }
+
+  /**
+   * Update hash param without triggering navigation.
+   * Preserves other hash params.
+   */
+  function updateURLHash(key, value) {
+    var hash = window.location.hash.replace(/^#/, '');
+    var parts = hash ? hash.split('&') : [];
+    var found = false;
+    var newParts = [];
+    for (var i = 0; i < parts.length; i++) {
+      var pair = parts[i].split('=');
+      if (pair[0] === key) {
+        newParts.push(key + '=' + encodeURIComponent(value));
+        found = true;
+      } else if (parts[i]) {
+        newParts.push(parts[i]);
+      }
+    }
+    if (!found) newParts.push(key + '=' + encodeURIComponent(value));
+
+    var newHash = newParts.join('&');
+    if (typeof history !== 'undefined' && history.replaceState) {
+      history.replaceState(null, '', window.location.pathname + window.location.search + '#' + newHash);
+    } else {
+      window.location.hash = newHash;
+    }
+
+    // Also persist to sessionStorage
+    try { sessionStorage.setItem(key, value); } catch (e) { /* blocked */ }
+  }
+
+  // Expose URL utilities for S33 and other consumers
+  window.TS.readURLPriority = readURLPriority;
+  window.TS.updateURLHash = updateURLHash;
+
+  // === S32: Scenario State Machine ===
+
+  var VALID_SCENARIOS = ['base', 'opt', 'pess'];
+
+  // Read initial scenario from URL priority cascade
+  var initialScenario = readURLPriority('scenario', 'base');
+  if (VALID_SCENARIOS.indexOf(initialScenario) === -1) initialScenario = 'base';
+  window.TS.scenario = initialScenario;
+
+  /**
+   * Set scenario with validation, URL update, and event emission.
+   * Emits 'scenario-change' event with { old, new }.
+   */
+  TS.setScenario = function(v) {
+    if (VALID_SCENARIOS.indexOf(v) === -1) {
+      throw new Error('bad scenario: ' + v);
+    }
+    var old = TS.scenario;
+    if (old === v) return;
+    TS.scenario = v;
+    TS.emit('scenario-change', { old: old, 'new': v });
+    updateURLHash('scenario', v);
+  };
+
+  // === Init Sequence ===
+
   function init() {
     // 1. Init i18n
     if (window.I18N && I18N.init) I18N.init();
@@ -3962,12 +4600,6 @@ html, body {
       }, 50);
     });
   }
-
-  // Event bus: scenario change (Phase 2 stub)
-  window.TS.on('scenario:change', function(scenario) {
-    window.TS.scenario = scenario;
-    // Phase 2: update all slides with new scenario data
-  });
 
   // Run init
   if (document.readyState === 'loading') {
@@ -5350,13 +5982,18 @@ html, body {
 
   // --- Slide 13 ---
 /* S13: Financial Summary
-   P&L table with years as columns. EBITDA and NDP rows highlighted in gold. */
+   P&L table with years as columns. EBITDA and NDP rows highlighted in gold.
+   Null y_i values render as em-dash (deterministic NDP has no per-year breakdown). */
 (function() {
   'use strict';
 
   var C = window.TS.Components;
 
   var HIGHLIGHT_ROWS = ['EBITDA', 'NDP'];
+
+  function fmtCell(v) {
+    return v != null ? I18N.formatNumber(v) : '\u2014';
+  }
 
   NAV.registerSlide(13, {
     enter: function() {
@@ -5381,10 +6018,10 @@ html, body {
           var r = pl[i];
           rows.push([
             r.row || '',
-            I18N.formatNumber(r.y1 || 0),
-            I18N.formatNumber(r.y2 || 0),
-            I18N.formatNumber(r.y3 || 0),
-            I18N.formatNumber(r.total || 0)
+            fmtCell(r.y1),
+            fmtCell(r.y2),
+            fmtCell(r.y3),
+            fmtCell(r.total)
           ]);
         }
 
@@ -5408,7 +6045,7 @@ html, body {
             if (firstCell) {
               var cellText = (firstCell.textContent || '').trim();
               for (var h = 0; h < HIGHLIGHT_ROWS.length; h++) {
-                if (cellText === HIGHLIGHT_ROWS[h]) {
+                if (cellText.indexOf(HIGHLIGHT_ROWS[h]) !== -1) {
                   tbodyRows[k].style.cssText = 'background:rgba(201,169,97,0.08);';
                   var cells = tbodyRows[k].querySelectorAll('td');
                   for (var c = 0; c < cells.length; c++) {
@@ -5420,6 +6057,18 @@ html, body {
               }
             }
           }
+        }
+
+        // Source attribution footnote (BUGFIX v3)
+        var financial = (TS.data && TS.data.financial) || {};
+        var pl_summary = financial.pl_summary || {};
+        if (pl_summary.source) {
+          var footnote = document.createElement('div');
+          footnote.className = 's13-source-note';
+          footnote.style.cssText = 'margin-top:8px;font-size:11px;color:#888;font-style:italic;';
+          footnote.textContent = 'Источник: ' + pl_summary.source +
+            '. Полный P&L — в финмодели и Appendix.';
+          tableContainer.appendChild(footnote);
         }
 
         // Animate table

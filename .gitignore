@@ -42,3 +42,5 @@ structure.json
 
 # SSH key for sandbox → GitHub (account-wide, account: Noldorwarrior)
 .git-ssh/
+tmp_s29/
+tmp_slides/

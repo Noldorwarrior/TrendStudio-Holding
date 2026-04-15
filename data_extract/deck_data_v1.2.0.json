@@ -1,0 +1,1667 @@
+{
+  "meta": {
+    "version": "1.2.0",
+    "source_xlsx": "investor_model_v1.1.1_Public.xlsx",
+    "source_content": "deck_content.json",
+    "extracted": "2026-04-15",
+    "phase": 1
+  },
+  "key_metrics": {
+    "anchor": 3000,
+    "currency": "млн ₽",
+    "det_irr": 20.09,
+    "mc_mean_irr": 7.24,
+    "moic": 2.0,
+    "wacc": 19.05,
+    "revenue_3y": 4545,
+    "ebitda_3y": 2167,
+    "mc_n": 50000,
+    "mc_seed": 42,
+    "ndp_3y": 1385,
+    "hold_years": 5
+  },
+  "palette": {
+    "bg_primary": "#0A0E1A",
+    "bg_secondary": "#141A2A",
+    "accent_gold": "#C9A961",
+    "accent_gold_light": "#E5C98A",
+    "text_primary": "#F5F5F5",
+    "text_secondary": "#9CA3AF",
+    "success": "#10B981",
+    "warning": "#F59E0B",
+    "danger": "#EF4444",
+    "chart_1": "#3B82F6",
+    "chart_2": "#8B5CF6"
+  },
+  "fonts": {
+    "header": "Cinzel, Georgia, serif",
+    "body": "Inter, Calibri, sans-serif",
+    "mono": "JetBrains Mono, Consolas"
+  },
+  "slides": [
+    {
+      "n": 1,
+      "type": "cover",
+      "title": "TrendStudio Kinoholding",
+      "subtitle": "Российский кинохолдинг нового поколения",
+      "body": "Инвестиционный пакет для ограниченных партнёров (LP) · 2026–2028",
+      "footer": "Конфиденциально · Для квалифицированных инвесторов",
+      "badges": [
+        "Det IRR 20.09%",
+        "MoIC 2.0×",
+        "3 000 млн ₽"
+      ]
+    },
+    {
+      "n": 2,
+      "type": "exec_summary",
+      "title": "Executive Summary",
+      "subtitle": "Четыре ключевых факта",
+      "stats": [
+        {
+          "value": "20.09%",
+          "label": "Det IRR (главная метрика)",
+          "color": "gold"
+        },
+        {
+          "value": "2.0×",
+          "label": "MoIC на горизонте 5 лет",
+          "color": "gold"
+        },
+        {
+          "value": "3 000",
+          "label": "млн ₽ якорь фонда",
+          "color": "gold"
+        },
+        {
+          "value": "19.05%",
+          "label": "WACC (CAPM build-up)",
+          "color": "gold"
+        }
+      ],
+      "disclosure": "MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
+    },
+    {
+      "n": 3,
+      "type": "thesis_overview",
+      "title": "Investment Thesis",
+      "subtitle": "Четыре столпа тезиса",
+      "theses": [
+        {
+          "id": "T1",
+          "title": "Рыночное окно",
+          "short": "Нацпроект «Семья» + госзаказ формируют 5-летний попутный ветер"
+        },
+        {
+          "id": "T2",
+          "title": "Pipeline-готовность",
+          "short": "7 проектов в разной стадии готовности; scripted, bankable, de-risked"
+        },
+        {
+          "id": "T3",
+          "title": "Капитал-дисциплина",
+          "short": "Ограничение 3 000 млн ₽ якорь + waterfall W₃ защищает LP от размывания"
+        },
+        {
+          "id": "T4",
+          "title": "Exit-routes",
+          "short": "7 каналов выхода: M&A, стриминг-sell-off, secondary, IPO по субхолдингу"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "type": "thesis_detail",
+      "thesis_id": "T1",
+      "title": "Тезис 1 — Рыночное окно",
+      "subtitle": "Государственная политика как долгосрочный драйвер",
+      "points": [
+        "Нацпроект «Семья» (2025–2030): ₽500+ млрд на культурную политику, в т.ч. кино",
+        "ФП «Многодетная семья»: квота семейного контента +40% к 2028",
+        "Фонд Кино + ИРИ: субсидии на скрипты, производство, дистрибуцию",
+        "Запрет иностранного контента на госплатформах → вакуум для локального",
+        "Стриминг-рынок РФ ~₽65 млрд, CAGR 18% (2025–2030)"
+      ],
+      "kpi": [
+        {
+          "metric": "TAM РФ-кино 2028E",
+          "value": "₽180 млрд"
+        },
+        {
+          "metric": "SAM (наш сегмент)",
+          "value": "₽45 млрд"
+        },
+        {
+          "metric": "SOM к 2028 (план)",
+          "value": "₽4.5 млрд (10%)"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "type": "thesis_detail",
+      "thesis_id": "T2",
+      "title": "Тезис 2 — Pipeline-готовность",
+      "subtitle": "7 проектов: 5 фильмов + 2 сериала",
+      "pipeline": [
+        {
+          "code": "P1",
+          "name": "«Крылья Родины»",
+          "type": "film",
+          "stage": "Production",
+          "budget": 650,
+          "release": "Q3 2026"
+        },
+        {
+          "code": "P2",
+          "name": "«Северный путь»",
+          "type": "film",
+          "stage": "Post-Production",
+          "budget": 480,
+          "release": "Q1 2027"
+        },
+        {
+          "code": "P3",
+          "name": "«Дом на Арбате»",
+          "type": "series",
+          "stage": "Development",
+          "budget": 720,
+          "release": "Q4 2027"
+        },
+        {
+          "code": "P4",
+          "name": "«Огонь и вода»",
+          "type": "film",
+          "stage": "Pre-Production",
+          "budget": 550,
+          "release": "Q2 2027"
+        },
+        {
+          "code": "P5",
+          "name": "«Наследники»",
+          "type": "series",
+          "stage": "Development",
+          "budget": 890,
+          "release": "Q3 2028"
+        },
+        {
+          "code": "P6",
+          "name": "«Песнь горизонта»",
+          "type": "film",
+          "stage": "Script",
+          "budget": 420,
+          "release": "Q1 2028"
+        },
+        {
+          "code": "P7",
+          "name": "«Время идти»",
+          "type": "film",
+          "stage": "Script",
+          "budget": 390,
+          "release": "Q4 2028"
+        }
+      ],
+      "note": "Коды и названия — иллюстративные. Real-pipeline в NDA-приложении."
+    },
+    {
+      "n": 6,
+      "type": "thesis_detail",
+      "thesis_id": "T3",
+      "title": "Тезис 3 — Капитал-дисциплина",
+      "subtitle": "Ограничения на размывание + дисциплинированный бюджет",
+      "points": [
+        "Якорь 3 000 млн ₽ — hard cap, не увеличиваем без LP-одобрения",
+        "Waterfall W₃ Public: 4 приоритетных уровня с защитой LP первого порядка",
+        "Revenue blend 0.79 + 0.30 × hit_rate — E[blend] = 1.00 при hit_rate = 0.70 (base)",
+        "Каждый проект ≤ 30% якоря — диверсификация внутри портфеля",
+        "Нет cross-collateralisation между проектами на уровне equity"
+      ],
+      "formula_box": "Revenue_project = Budget × (0.79 + 0.30 × hit_rate_i), i ∈ {P1..P7}"
+    },
+    {
+      "n": 7,
+      "type": "thesis_detail",
+      "thesis_id": "T4",
+      "title": "Тезис 4 — Exit-routes",
+      "subtitle": "7 альтернативных каналов выхода",
+      "exits": [
+        {
+          "id": "E1",
+          "name": "Secondary sale LP-stake",
+          "timing": "Y3-Y5",
+          "prob": 0.45
+        },
+        {
+          "id": "E2",
+          "name": "M&A стратегическому игроку",
+          "timing": "Y4-Y6",
+          "prob": 0.3
+        },
+        {
+          "id": "E3",
+          "name": "IPO субхолдинга на МосБирже",
+          "timing": "Y5-Y7",
+          "prob": 0.15
+        },
+        {
+          "id": "E4",
+          "name": "Streaming catalog sell-off",
+          "timing": "Y2-Y5",
+          "prob": 0.6
+        },
+        {
+          "id": "E5",
+          "name": "Theatrical distribution rights",
+          "timing": "Y1-Y3",
+          "prob": 0.8
+        },
+        {
+          "id": "E6",
+          "name": "Franchise/IP licensing",
+          "timing": "Y3+",
+          "prob": 0.4
+        },
+        {
+          "id": "E7",
+          "name": "Management buyout",
+          "timing": "Y5+",
+          "prob": 0.2
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "type": "market",
+      "title": "Market — TAM/SAM/SOM",
+      "subtitle": "Российский кинорынок 2028E",
+      "funnel": [
+        {
+          "level": "TAM",
+          "value": 180,
+          "label": "Весь РФ-кинорынок"
+        },
+        {
+          "level": "SAM",
+          "value": 45,
+          "label": "Наш сегмент: mid-budget RU-language"
+        },
+        {
+          "level": "SOM",
+          "value": 4.5,
+          "label": "Плановая доля (10%)"
+        }
+      ],
+      "unit": "млрд ₽",
+      "note": "Источники: Фонд Кино 2025 Annual, ИРИ Statistical Report 2025, PwC Media Outlook."
+    },
+    {
+      "n": 9,
+      "type": "market_drivers",
+      "title": "Market Drivers — 5 КПЭ нацпроекта",
+      "subtitle": "Индикаторы госполитики 2025–2030",
+      "kpi_grid": [
+        {
+          "kpi": "Доля отечественного контента",
+          "from": 52,
+          "to": 75,
+          "unit": "%"
+        },
+        {
+          "kpi": "Объём производства (фильмов/год)",
+          "from": 125,
+          "to": 180,
+          "unit": "шт"
+        },
+        {
+          "kpi": "Субсидии Фонд Кино",
+          "from": 12,
+          "to": 28,
+          "unit": "млрд ₽"
+        },
+        {
+          "kpi": "Экспорт кинопродукции",
+          "from": 0.8,
+          "to": 3.5,
+          "unit": "млрд ₽"
+        },
+        {
+          "kpi": "Количество кинотеатров",
+          "from": 2150,
+          "to": 2800,
+          "unit": "шт"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "type": "pipeline_overview",
+      "title": "Pipeline — 7 проектов",
+      "subtitle": "Разные стадии, сбалансированный риск",
+      "split": {
+        "films": 5,
+        "series": 2,
+        "total_budget": 4100
+      },
+      "stages": {
+        "Script": 2,
+        "Development": 2,
+        "Pre-Production": 1,
+        "Production": 1,
+        "Post-Production": 1
+      }
+    },
+    {
+      "n": 11,
+      "type": "pipeline_timeline",
+      "title": "Pipeline Timeline 2026–2028",
+      "subtitle": "Релиз-календарь и cash flow",
+      "timeline": [
+        {
+          "q": "Q3 2026",
+          "releases": [
+            "P1"
+          ],
+          "cf_in": 650
+        },
+        {
+          "q": "Q4 2026",
+          "releases": [],
+          "cf_in": 0
+        },
+        {
+          "q": "Q1 2027",
+          "releases": [
+            "P2"
+          ],
+          "cf_in": 480
+        },
+        {
+          "q": "Q2 2027",
+          "releases": [
+            "P4"
+          ],
+          "cf_in": 550
+        },
+        {
+          "q": "Q3 2027",
+          "releases": [],
+          "cf_in": 0
+        },
+        {
+          "q": "Q4 2027",
+          "releases": [
+            "P3"
+          ],
+          "cf_in": 720
+        },
+        {
+          "q": "Q1 2028",
+          "releases": [
+            "P6"
+          ],
+          "cf_in": 420
+        },
+        {
+          "q": "Q3 2028",
+          "releases": [
+            "P5"
+          ],
+          "cf_in": 890
+        },
+        {
+          "q": "Q4 2028",
+          "releases": [
+            "P7"
+          ],
+          "cf_in": 390
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "type": "unit_economics",
+      "title": "Unit Economics",
+      "subtitle": "Revenue blend model",
+      "formula": "Revenue_i = Budget_i × (0.79 + 0.30 × hit_rate_i)",
+      "scenarios": [
+        {
+          "case": "Downside",
+          "hit_rate": 0.4,
+          "blend": 0.91,
+          "revenue_multiplier": 0.91
+        },
+        {
+          "case": "Base",
+          "hit_rate": 0.7,
+          "blend": 1.0,
+          "revenue_multiplier": 1.0
+        },
+        {
+          "case": "Upside",
+          "hit_rate": 1.0,
+          "blend": 1.09,
+          "revenue_multiplier": 1.09
+        }
+      ],
+      "note": "E[blend] = 1.00 при hit_rate = 0.70, что соответствует средним историческим данным по RU-mid-budget (Фонд Кино 2020–2024)."
+    },
+    {
+      "n": 13,
+      "type": "financial_summary",
+      "title": "Financial Summary 3Y",
+      "subtitle": "Consolidated P&L",
+      "pl": [
+        {
+          "row": "Revenue",
+          "y1": 650,
+          "y2": 1750,
+          "y3": 2145,
+          "total": 4545
+        },
+        {
+          "row": "COGS (direct)",
+          "y1": 390,
+          "y2": 1050,
+          "y3": 1287,
+          "total": 2727
+        },
+        {
+          "row": "Gross Profit",
+          "y1": 260,
+          "y2": 700,
+          "y3": 858,
+          "total": 1818
+        },
+        {
+          "row": "OPEX",
+          "y1": 80,
+          "y2": 150,
+          "y3": 220,
+          "total": 450
+        },
+        {
+          "row": "EBITDA",
+          "y1": 180,
+          "y2": 550,
+          "y3": 1437,
+          "total": 2167
+        },
+        {
+          "row": "NDP (к распределению)",
+          "y1": 75,
+          "y2": 340,
+          "y3": 970,
+          "total": 1385
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "type": "valuation",
+      "title": "Valuation — 40/60 Blend",
+      "subtitle": "DCF 40% + Trading Multiples 60%",
+      "components": [
+        {
+          "method": "DCF (5Y, WACC 19.05%)",
+          "weight": 0.4,
+          "value_bn": 6.2
+        },
+        {
+          "method": "Trading Multiples (6.5× EBITDA)",
+          "weight": 0.6,
+          "value_bn": 6.5
+        },
+        {
+          "method": "Blended EV",
+          "weight": 1.0,
+          "value_bn": 6.38
+        }
+      ],
+      "bridge": {
+        "ev": 6.38,
+        "net_debt": -0.5,
+        "equity": 6.88,
+        "moic_implied": 2.0
+      }
+    },
+    {
+      "n": 15,
+      "type": "wacc",
+      "title": "WACC Derivation",
+      "subtitle": "CAPM build-up approach",
+      "capm_rows": [
+        {
+          "component": "Risk-free rate (ОФЗ 10Y)",
+          "value": 14.5,
+          "source": "Cbonds/MoEx 2026-04"
+        },
+        {
+          "component": "Beta (levered, peer-adj)",
+          "value": 0.8,
+          "source": "Bloomberg/Capital IQ"
+        },
+        {
+          "component": "Equity Risk Premium",
+          "value": 7.0,
+          "source": "Damodaran 2026"
+        },
+        {
+          "component": "Country Risk Premium",
+          "value": 2.0,
+          "source": "Damodaran CRP"
+        },
+        {
+          "component": "Size Premium",
+          "value": 1.0,
+          "source": "Kroll/D&P"
+        },
+        {
+          "component": "Cost of Equity (Ke)",
+          "value": 23.1,
+          "source": "CAPM sum"
+        },
+        {
+          "component": "Cost of Debt (after tax)",
+          "value": 9.6,
+          "source": "weighted bank terms"
+        },
+        {
+          "component": "D/(D+E)",
+          "value": 30.0,
+          "source": "target capital structure"
+        },
+        {
+          "component": "E/(D+E)",
+          "value": 70.0,
+          "source": "target capital structure"
+        },
+        {
+          "component": "WACC",
+          "value": 19.05,
+          "source": "0.70×23.1 + 0.30×9.6"
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "type": "mc_methodology",
+      "title": "Monte Carlo — Methodology",
+      "subtitle": "N = 50 000 · seed = 42 · 5 stochastic variables",
+      "variables": [
+        {
+          "var": "Hit rate per project",
+          "dist": "Triangular(0.40, 0.70, 1.00)"
+        },
+        {
+          "var": "Budget overrun",
+          "dist": "LogNormal(μ=0, σ=0.15)"
+        },
+        {
+          "var": "Release delay (quarters)",
+          "dist": "Poisson(λ=0.5)"
+        },
+        {
+          "var": "Distribution margin",
+          "dist": "Normal(35%, 5%)"
+        },
+        {
+          "var": "Exit multiple",
+          "dist": "Triangular(5.5×, 6.5×, 7.5×)"
+        }
+      ],
+      "disclosure": "Det IRR — главная метрика (single best-estimate сценарий). MC — stress-тест CF-timing-риска."
+    },
+    {
+      "n": 17,
+      "type": "mc_percentiles",
+      "title": "Monte Carlo — IRR Distribution",
+      "subtitle": "Результаты 50 000 сценариев",
+      "percentiles": [
+        {
+          "p": "P5",
+          "irr": -2.1
+        },
+        {
+          "p": "P25",
+          "irr": 3.4
+        },
+        {
+          "p": "P50 (Median)",
+          "irr": 7.1
+        },
+        {
+          "p": "Mean",
+          "irr": 7.24
+        },
+        {
+          "p": "P75",
+          "irr": 11.2
+        },
+        {
+          "p": "P95",
+          "irr": 15.8
+        }
+      ],
+      "det_line": 20.09,
+      "note": "Вертикальная пунктирная линия на 20.09% — Det IRR (главный таргет). MC распределение учитывает 5 источников стохастики."
+    },
+    {
+      "n": 18,
+      "type": "det_vs_stoch",
+      "title": "Det vs Stoch IRR — методологическая справка",
+      "subtitle": "Почему 20.09% и 7.24% — не противоречие",
+      "table": [
+        {
+          "aspect": "Что отражает",
+          "det": "Best-estimate сценарий с базовыми допущениями",
+          "stoch": "Стресс-распределение при timing-uncertainty"
+        },
+        {
+          "aspect": "Допущения по CF",
+          "det": "Квартальные релизы по плану",
+          "stoch": "Delay Poisson(0.5), до 4 кварталов сдвига"
+        },
+        {
+          "aspect": "Hit rate",
+          "det": "0.70 (historical median)",
+          "stoch": "Triangular(0.40, 0.70, 1.00)"
+        },
+        {
+          "aspect": "Использование",
+          "det": "Главная метрика, valuation, LP-return",
+          "stoch": "Risk framework, stress-тест, lower-bound"
+        }
+      ],
+      "conclusion": "Det 20.09% — то, что мы целим. MC 7.24% — то, что мы выдержим при ухудшении таймингов."
+    },
+    {
+      "n": 19,
+      "type": "risk_heatmap",
+      "title": "Risk Framework — Heat Map 5×5",
+      "subtitle": "30 рисков × 5 категорий",
+      "categories": [
+        "Operational",
+        "Financial",
+        "Market",
+        "Regulatory",
+        "Strategic"
+      ],
+      "heatmap_summary": {
+        "critical": 2,
+        "high": 5,
+        "medium": 12,
+        "low": 11
+      },
+      "note": "Полная матрица — Appendix A (30 рисков с митигациями, owner, trigger)."
+    },
+    {
+      "n": 20,
+      "type": "top_risks",
+      "title": "Топ-10 рисков",
+      "subtitle": "Ранжировано по severity × likelihood",
+      "risks": [
+        {
+          "rank": 1,
+          "name": "Низкий hit rate флагманских проектов",
+          "cat": "Market",
+          "lvl": "CRITICAL",
+          "mitig": "Портфельная диверсификация × 7"
+        },
+        {
+          "rank": 2,
+          "name": "Budget overrun >15%",
+          "cat": "Operational",
+          "lvl": "CRITICAL",
+          "mitig": "Completion bond + milestones"
+        },
+        {
+          "rank": 3,
+          "name": "Delay релиз-календаря",
+          "cat": "Operational",
+          "lvl": "HIGH",
+          "mitig": "Буфер 2Q в финмодели"
+        },
+        {
+          "rank": 4,
+          "name": "Изменение гос-квот",
+          "cat": "Regulatory",
+          "lvl": "HIGH",
+          "mitig": "Диверсификация по жанрам"
+        },
+        {
+          "rank": 5,
+          "name": "Кассовый провал (2+ проекта)",
+          "cat": "Market",
+          "lvl": "HIGH",
+          "mitig": "Revenue blend, secondary rights"
+        },
+        {
+          "rank": 6,
+          "name": "Ключ-персонал отход",
+          "cat": "Operational",
+          "lvl": "HIGH",
+          "mitig": "Retention pool 5%, successor plan"
+        },
+        {
+          "rank": 7,
+          "name": "Девальвация ₽ (имп. оборудование)",
+          "cat": "Financial",
+          "lvl": "HIGH",
+          "mitig": "Хедж 60% валютных расходов"
+        },
+        {
+          "rank": 8,
+          "name": "Изменение налогового режима",
+          "cat": "Regulatory",
+          "lvl": "MEDIUM",
+          "mitig": "Налоговое планирование, резерв"
+        },
+        {
+          "rank": 9,
+          "name": "Конкуренция со стриминг-in-house",
+          "cat": "Strategic",
+          "lvl": "MEDIUM",
+          "mitig": "Эксклюзивные windowing-сделки"
+        },
+        {
+          "rank": 10,
+          "name": "Задержка выплат дистрибьюторов",
+          "cat": "Financial",
+          "lvl": "MEDIUM",
+          "mitig": "Аванс 30%, факторинг"
+        }
+      ]
+    },
+    {
+      "n": 21,
+      "type": "governance",
+      "title": "Governance Structure",
+      "subtitle": "4 комитета + 3-tier reporting",
+      "committees": [
+        {
+          "name": "Investment Committee (IC)",
+          "composition": "3 LP + 2 GP + 1 independent",
+          "meets": "Ежеквартально",
+          "scope": "Проекты >₽300 млн"
+        },
+        {
+          "name": "Audit Committee",
+          "composition": "2 LP + 1 independent",
+          "meets": "Полугодовой",
+          "scope": "Финансовая отчётность, IFRS-аудит"
+        },
+        {
+          "name": "Risk & Compliance",
+          "composition": "1 LP + 2 GP + CRO",
+          "meets": "Ежемесячно",
+          "scope": "Risk register, compliance"
+        },
+        {
+          "name": "Nomination & Comp",
+          "composition": "2 LP + 1 independent",
+          "meets": "Годовой",
+          "scope": "Ключевые назначения, вознаграждение"
+        }
+      ],
+      "reporting": [
+        "Monthly ops dashboard",
+        "Quarterly IFRS report",
+        "Annual audited financials + LP letter"
+      ]
+    },
+    {
+      "n": 22,
+      "type": "waterfall",
+      "title": "Waterfall W₃ — Public Distribution",
+      "subtitle": "4 приоритетных уровня",
+      "tiers": [
+        {
+          "tier": 1,
+          "name": "Return of Capital",
+          "desc": "LP получают 100% вложенного капитала назад",
+          "threshold": "до 3 000 млн ₽"
+        },
+        {
+          "tier": 2,
+          "name": "Preferred Return (pref)",
+          "desc": "LP получают 8% IRR pref",
+          "threshold": "8% IRR"
+        },
+        {
+          "tier": 3,
+          "name": "Catch-up",
+          "desc": "GP получают 20% catch-up до split 80/20",
+          "threshold": "до catch-up point"
+        },
+        {
+          "tier": 4,
+          "name": "Carried Interest 80/20",
+          "desc": "Свыше porog — 80% LP, 20% GP",
+          "threshold": "всё сверху"
+        }
+      ],
+      "note": "Полная mechanics + примеры — Section 7 Memo."
+    },
+    {
+      "n": 23,
+      "type": "terms_exit",
+      "title": "Terms & Exit Strategy",
+      "subtitle": "Ключевые условия инвестирования",
+      "terms": [
+        {
+          "k": "Fund size (hard cap)",
+          "v": "3 000 млн ₽"
+        },
+        {
+          "k": "Minimum LP commitment",
+          "v": "300 млн ₽"
+        },
+        {
+          "k": "Fund term",
+          "v": "7 лет + 2×1-year extension"
+        },
+        {
+          "k": "Investment period",
+          "v": "3 года (2026–2028)"
+        },
+        {
+          "k": "Management fee",
+          "v": "2.0% committed (during IP), 1.5% (after)"
+        },
+        {
+          "k": "Carried interest",
+          "v": "20% с 8% pref + catch-up"
+        },
+        {
+          "k": "GP commitment",
+          "v": "2% (60 млн ₽)"
+        },
+        {
+          "k": "Capital call notice",
+          "v": "15 рабочих дней"
+        },
+        {
+          "k": "Key-person clause",
+          "v": "Да, 2 co-founders"
+        }
+      ]
+    },
+    {
+      "n": 24,
+      "type": "appendices",
+      "title": "Appendices Overview",
+      "subtitle": "5 приложений к Memo",
+      "apps": [
+        {
+          "id": "A",
+          "name": "Risk Register",
+          "desc": "30 рисков × 5 категорий + heat map 5×5"
+        },
+        {
+          "id": "B",
+          "name": "Stress Tests",
+          "desc": "5 сценариев (10/20/40/20/10 prob) + Tornado Top-8"
+        },
+        {
+          "id": "C",
+          "name": "MC Report",
+          "desc": "N=50 000, percentiles, histogram, методология"
+        },
+        {
+          "id": "D",
+          "name": "Peer Comps",
+          "desc": "6+ сопоставимых транзакций RU + Global"
+        },
+        {
+          "id": "E",
+          "name": "CAPM Build-Up",
+          "desc": "Полная источник-атрибуция (Damodaran/Bloomberg/Cbonds/Kroll)"
+        }
+      ]
+    },
+    {
+      "n": 25,
+      "type": "cta",
+      "title": "Contact & Next Steps",
+      "subtitle": "Готовы к обсуждению",
+      "contacts": [
+        {
+          "role": "Managing Partner",
+          "name": "[Имя]",
+          "email": "mp@trendstudio.ru"
+        },
+        {
+          "role": "CFO",
+          "name": "[Имя]",
+          "email": "cfo@trendstudio.ru"
+        },
+        {
+          "role": "LP Relations",
+          "name": "[Имя]",
+          "email": "lp@trendstudio.ru"
+        }
+      ],
+      "next_steps": [
+        "NDA + Data Room access (5 рабочих дней)",
+        "Management presentation (1 час, онлайн/офлайн)",
+        "LP onboarding Q&A (10 рабочих дней)",
+        "Subscription documents (2 недели)",
+        "First capital call Q3 2026"
+      ],
+      "disclaimer": "Материал носит конфиденциальный характер. Не является публичной офертой. Forward-looking statements основаны на допущениях, подлежат рискам."
+    }
+  ],
+  "chart_data": {
+    "s02_exec_summary": {
+      "stats": [
+        {
+          "value": "20.09%",
+          "label": "Det IRR (главная метрика)",
+          "color": "gold"
+        },
+        {
+          "value": "2.0×",
+          "label": "MoIC на горизонте 5 лет",
+          "color": "gold"
+        },
+        {
+          "value": "3 000",
+          "label": "млн ₽ якорь фонда",
+          "color": "gold"
+        },
+        {
+          "value": "19.05%",
+          "label": "WACC (CAPM build-up)",
+          "color": "gold"
+        }
+      ],
+      "disclosure": "MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C."
+    },
+    "s05_pipeline": {
+      "pipeline": [
+        {
+          "code": "P1",
+          "name": "«Крылья Родины»",
+          "type": "film",
+          "stage": "Production",
+          "budget": 650,
+          "release": "Q3 2026"
+        },
+        {
+          "code": "P2",
+          "name": "«Северный путь»",
+          "type": "film",
+          "stage": "Post-Production",
+          "budget": 480,
+          "release": "Q1 2027"
+        },
+        {
+          "code": "P3",
+          "name": "«Дом на Арбате»",
+          "type": "series",
+          "stage": "Development",
+          "budget": 720,
+          "release": "Q4 2027"
+        },
+        {
+          "code": "P4",
+          "name": "«Огонь и вода»",
+          "type": "film",
+          "stage": "Pre-Production",
+          "budget": 550,
+          "release": "Q2 2027"
+        },
+        {
+          "code": "P5",
+          "name": "«Наследники»",
+          "type": "series",
+          "stage": "Development",
+          "budget": 890,
+          "release": "Q3 2028"
+        },
+        {
+          "code": "P6",
+          "name": "«Песнь горизонта»",
+          "type": "film",
+          "stage": "Script",
+          "budget": 420,
+          "release": "Q1 2028"
+        },
+        {
+          "code": "P7",
+          "name": "«Время идти»",
+          "type": "film",
+          "stage": "Script",
+          "budget": 390,
+          "release": "Q4 2028"
+        }
+      ],
+      "note": "Коды и названия — иллюстративные. Real-pipeline в NDA-приложении."
+    },
+    "s12_unit_economics": {
+      "formula": "Revenue_i = Budget_i × (0.79 + 0.30 × hit_rate_i)",
+      "scenarios": [
+        {
+          "case": "Downside",
+          "hit_rate": 0.4,
+          "blend": 0.91,
+          "revenue_multiplier": 0.91
+        },
+        {
+          "case": "Base",
+          "hit_rate": 0.7,
+          "blend": 1.0,
+          "revenue_multiplier": 1.0
+        },
+        {
+          "case": "Upside",
+          "hit_rate": 1.0,
+          "blend": 1.09,
+          "revenue_multiplier": 1.09
+        }
+      ],
+      "films": [
+        {
+          "name": "Название",
+          "genre": "Жанр",
+          "release": "Релиз",
+          "budget": "Бюджет",
+          "pa": "P&A (тиражирование и реклама)",
+          "total_cost": "Total (Итого) Cost",
+          "revenue": "Revenue (Выручка)\n(lifetime)",
+          "gross_profit": "Gross\nProfit (Прибыль)",
+          "margin_pct": 0,
+          "multiple": 0,
+          "roi_pct": 0,
+          "payback_q": "Payback (Окупаемость) (Q)",
+          "risk": "Risk (Риск)"
+        },
+        {
+          "name": "Родные стены",
+          "genre": "Драма",
+          "release": "Q4'26",
+          "budget": 150,
+          "pa": 22.5,
+          "total_cost": 172.5,
+          "revenue": 405.9,
+          "gross_profit": 233.4,
+          "margin_pct": 57.5,
+          "multiple": 2.71,
+          "roi_pct": 135.3,
+          "payback_q": 3.4,
+          "risk": "Low"
+        },
+        {
+          "name": "Два сердца",
+          "genre": "Мелодрама",
+          "release": "Q1'27",
+          "budget": 100,
+          "pa": 15,
+          "total_cost": 115,
+          "revenue": 309.3,
+          "gross_profit": 194.3,
+          "margin_pct": 62.8,
+          "multiple": 3.09,
+          "roi_pct": 169.0,
+          "payback_q": 3,
+          "risk": "Low"
+        },
+        {
+          "name": "Ночной патруль",
+          "genre": "Экшн",
+          "release": "Q2'27",
+          "budget": 220,
+          "pa": 33,
+          "total_cost": 253,
+          "revenue": 659.1,
+          "gross_profit": 406.1,
+          "margin_pct": 61.6,
+          "multiple": 3.0,
+          "roi_pct": 160.5,
+          "payback_q": 3.5,
+          "risk": "Medium (Средний)"
+        },
+        {
+          "name": "Последний экзамен",
+          "genre": "Комедия",
+          "release": "Q2'27",
+          "budget": 90,
+          "pa": 13.5,
+          "total_cost": 103.5,
+          "revenue": 304.4,
+          "gross_profit": 200.9,
+          "margin_pct": 66.0,
+          "multiple": 3.38,
+          "roi_pct": 194.1,
+          "payback_q": 2.7,
+          "risk": "Low"
+        },
+        {
+          "name": "Время героев",
+          "genre": "Блокбастер",
+          "release": "Q3'27",
+          "budget": 250,
+          "pa": 37.5,
+          "total_cost": 287.5,
+          "revenue": 797.4,
+          "gross_profit": 509.9,
+          "margin_pct": 63.9,
+          "multiple": 3.19,
+          "roi_pct": 177.4,
+          "payback_q": 3.6,
+          "risk": "High (Высокий)"
+        },
+        {
+          "name": "Красная заря",
+          "genre": "Исторический",
+          "release": "Q4'27",
+          "budget": 180,
+          "pa": 27,
+          "total_cost": 207,
+          "revenue": 504.5,
+          "gross_profit": 297.5,
+          "margin_pct": 59.0,
+          "multiple": 2.8,
+          "roi_pct": 143.7,
+          "payback_q": 3.7,
+          "risk": "Medium (Средний)"
+        },
+        {
+          "name": "Сказка наяву",
+          "genre": "Семейный",
+          "release": "Q1'28",
+          "budget": 170,
+          "pa": 25.5,
+          "total_cost": 195.5,
+          "revenue": 558.6,
+          "gross_profit": 363.1,
+          "margin_pct": 65.0,
+          "multiple": 3.29,
+          "roi_pct": 185.7,
+          "payback_q": 2.8,
+          "risk": "Low"
+        },
+        {
+          "name": "Неизвестный герой",
+          "genre": "Биография",
+          "release": "Q2'28",
+          "budget": 130,
+          "pa": 19.5,
+          "total_cost": 149.5,
+          "revenue": 351.8,
+          "gross_profit": 202.3,
+          "margin_pct": 57.5,
+          "multiple": 2.71,
+          "roi_pct": 135.3,
+          "payback_q": 3.8,
+          "risk": "Medium (Средний)"
+        },
+        {
+          "name": "Моё дело",
+          "genre": "Комедия",
+          "release": "Q2'28",
+          "budget": 80,
+          "pa": 12,
+          "total_cost": 92,
+          "revenue": 278.3,
+          "gross_profit": 186.3,
+          "margin_pct": 66.9,
+          "multiple": 3.48,
+          "roi_pct": 202.5,
+          "payback_q": 2.6,
+          "risk": "Low"
+        },
+        {
+          "name": "Северный ветер",
+          "genre": "Приключения",
+          "release": "Q3'28",
+          "budget": 180,
+          "pa": 27,
+          "total_cost": 207,
+          "revenue": 539.3,
+          "gross_profit": 332.3,
+          "margin_pct": 61.6,
+          "multiple": 3.0,
+          "roi_pct": 160.5,
+          "payback_q": 3.5,
+          "risk": "Medium (Средний)"
+        },
+        {
+          "name": "Полдень",
+          "genre": "Триллер",
+          "release": "Q3'28",
+          "budget": 140,
+          "pa": 21,
+          "total_cost": 161,
+          "revenue": 399.2,
+          "gross_profit": 238.2,
+          "margin_pct": 59.7,
+          "multiple": 2.85,
+          "roi_pct": 148.0,
+          "payback_q": 3.6,
+          "risk": "Medium (Средний)"
+        }
+      ]
+    },
+    "s14_valuation": {
+      "components": [
+        {
+          "method": "DCF (5Y, WACC 19.05%)",
+          "weight": 0.4,
+          "value_bn": 6.2
+        },
+        {
+          "method": "Trading Multiples (6.5× EBITDA)",
+          "weight": 0.6,
+          "value_bn": 6.5
+        },
+        {
+          "method": "Blended EV",
+          "weight": 1.0,
+          "value_bn": 6.38
+        }
+      ],
+      "bridge": {
+        "ev": 6.38,
+        "net_debt": -0.5,
+        "equity": 6.88,
+        "moic_implied": 2.0
+      },
+      "dcf_detail": {}
+    },
+    "s17_mc_distribution": {
+      "percentiles": [
+        {
+          "p": "P5",
+          "irr": -2.1
+        },
+        {
+          "p": "P25",
+          "irr": 3.4
+        },
+        {
+          "p": "P50 (Median)",
+          "irr": 7.1
+        },
+        {
+          "p": "Mean",
+          "irr": 7.24
+        },
+        {
+          "p": "P75",
+          "irr": 11.2
+        },
+        {
+          "p": "P95",
+          "irr": 15.8
+        }
+      ],
+      "det_line": 20.09,
+      "n": 50000,
+      "seed": 42
+    },
+    "s18_det_vs_stoch": {
+      "table": [
+        {
+          "aspect": "Что отражает",
+          "det": "Best-estimate сценарий с базовыми допущениями",
+          "stoch": "Стресс-распределение при timing-uncertainty"
+        },
+        {
+          "aspect": "Допущения по CF",
+          "det": "Квартальные релизы по плану",
+          "stoch": "Delay Poisson(0.5), до 4 кварталов сдвига"
+        },
+        {
+          "aspect": "Hit rate",
+          "det": "0.70 (historical median)",
+          "stoch": "Triangular(0.40, 0.70, 1.00)"
+        },
+        {
+          "aspect": "Использование",
+          "det": "Главная метрика, valuation, LP-return",
+          "stoch": "Risk framework, stress-тест, lower-bound"
+        }
+      ],
+      "conclusion": "Det 20.09% — то, что мы целим. MC 7.24% — то, что мы выдержим при ухудшении таймингов."
+    },
+    "s20_top_risks": {
+      "heatmap_summary": {
+        "critical": 2,
+        "high": 5,
+        "medium": 12,
+        "low": 11
+      },
+      "categories": [
+        "Operational",
+        "Financial",
+        "Market",
+        "Regulatory",
+        "Strategic"
+      ],
+      "top_risks": [
+        {
+          "rank": 1,
+          "name": "Низкий hit rate флагманских проектов",
+          "cat": "Market",
+          "lvl": "CRITICAL",
+          "mitig": "Портфельная диверсификация × 7"
+        },
+        {
+          "rank": 2,
+          "name": "Budget overrun >15%",
+          "cat": "Operational",
+          "lvl": "CRITICAL",
+          "mitig": "Completion bond + milestones"
+        },
+        {
+          "rank": 3,
+          "name": "Delay релиз-календаря",
+          "cat": "Operational",
+          "lvl": "HIGH",
+          "mitig": "Буфер 2Q в финмодели"
+        },
+        {
+          "rank": 4,
+          "name": "Изменение гос-квот",
+          "cat": "Regulatory",
+          "lvl": "HIGH",
+          "mitig": "Диверсификация по жанрам"
+        },
+        {
+          "rank": 5,
+          "name": "Кассовый провал (2+ проекта)",
+          "cat": "Market",
+          "lvl": "HIGH",
+          "mitig": "Revenue blend, secondary rights"
+        },
+        {
+          "rank": 6,
+          "name": "Ключ-персонал отход",
+          "cat": "Operational",
+          "lvl": "HIGH",
+          "mitig": "Retention pool 5%, successor plan"
+        },
+        {
+          "rank": 7,
+          "name": "Девальвация ₽ (имп. оборудование)",
+          "cat": "Financial",
+          "lvl": "HIGH",
+          "mitig": "Хедж 60% валютных расходов"
+        },
+        {
+          "rank": 8,
+          "name": "Изменение налогового режима",
+          "cat": "Regulatory",
+          "lvl": "MEDIUM",
+          "mitig": "Налоговое планирование, резерв"
+        },
+        {
+          "rank": 9,
+          "name": "Конкуренция со стриминг-in-house",
+          "cat": "Strategic",
+          "lvl": "MEDIUM",
+          "mitig": "Эксклюзивные windowing-сделки"
+        },
+        {
+          "rank": 10,
+          "name": "Задержка выплат дистрибьюторов",
+          "cat": "Financial",
+          "lvl": "MEDIUM",
+          "mitig": "Аванс 30%, факторинг"
+        }
+      ]
+    },
+    "s22_waterfall": {
+      "W3": {
+        "stages": [
+          {
+            "name": "1x Liquidation Preference",
+            "investor": 1250,
+            "producer": 0,
+            "rule": "Investor recoups 1x principal = 1250"
+          },
+          {
+            "name": "8% coupon cumulative x 5y",
+            "investor": 500,
+            "producer": 0,
+            "rule": "Preferred return: 1250 x 8% x 5y = 500"
+          },
+          {
+            "name": "60/40 carry on residual",
+            "investor": 750,
+            "producer": 500,
+            "rule": "Carried interest: 60% investor / 40% producer"
+          }
+        ],
+        "total": {
+          "ndp": 3000,
+          "investor": 2500,
+          "producer": 500,
+          "investor_pct": 83.3,
+          "moic": 2.0
+        }
+      },
+      "comparison": [
+        {
+          "variant": "W1: Hurdle 60/40 -> 50/50",
+          "investor": 1708.3,
+          "inv_pct": 56.9,
+          "producer": 1291.7,
+          "moic": 1.367
+        },
+        {
+          "variant": "W2: Pro-rata",
+          "investor": 2027,
+          "inv_pct": 67.6,
+          "producer": 973,
+          "moic": 1.622
+        },
+        {
+          "variant": "W3: 1x LiqPref + 8% + 60/40",
+          "investor": 2500,
+          "inv_pct": 83.3,
+          "producer": 500,
+          "moic": 2.0
+        },
+        {
+          "variant": "W4: 1x LiqPref + 12% + 65/35",
+          "investor": 2650,
+          "inv_pct": 88.3,
+          "producer": 350,
+          "moic": 2.12
+        }
+      ]
+    }
+  },
+  "financial": {
+    "revenue_3y": 4545,
+    "ebitda_3y": 2167,
+    "ndp_3y": 1385,
+    "pl_summary": {
+      "rows": [
+        {
+          "row": "Revenue",
+          "y1": 650,
+          "y2": 1750,
+          "y3": 2145,
+          "total": 4545
+        },
+        {
+          "row": "COGS (direct)",
+          "y1": 390,
+          "y2": 1050,
+          "y3": 1287,
+          "total": 2727
+        },
+        {
+          "row": "Gross Profit",
+          "y1": 260,
+          "y2": 700,
+          "y3": 858,
+          "total": 1818
+        },
+        {
+          "row": "OPEX",
+          "y1": 80,
+          "y2": 150,
+          "y3": 220,
+          "total": 450
+        },
+        {
+          "row": "EBITDA",
+          "y1": 180,
+          "y2": 550,
+          "y3": 1437,
+          "total": 2167
+        },
+        {
+          "row": "NDP (к распределению)",
+          "y1": 75,
+          "y2": 340,
+          "y3": 970,
+          "total": 1385
+        }
+      ]
+    },
+    "revenue_breakdown": [
+      {
+        "label": "Box Office (Кассовые сборы)",
+        "share": 0.48,
+        "y2026": 144,
+        "y2027": 840,
+        "y2028": 1197.6
+      },
+      {
+        "label": "Online SVOD (подписной стриминг)",
+        "share": 0.2,
+        "y2026": 60,
+        "y2027": 350,
+        "y2028": 499
+      },
+      {
+        "label": "TV (телевидение) rights",
+        "share": 0.08,
+        "y2026": 24,
+        "y2027": 140,
+        "y2028": 199.6
+      },
+      {
+        "label": "Международные продажи (Международные продажи)",
+        "share": 0.1,
+        "y2026": 30,
+        "y2027": 175,
+        "y2028": 249.5
+      },
+      {
+        "label": "VOD (транзакционный)",
+        "share": 0.04,
+        "y2026": 12,
+        "y2027": 70,
+        "y2028": 99.8
+      },
+      {
+        "label": "Спонсорство / продакт-плейсмент (Спонсорство / продакт-плейсмент)",
+        "share": 0.05,
+        "y2026": 15,
+        "y2027": 87.5,
+        "y2028": 124.8
+      },
+      {
+        "label": "Мерчандайзинг (Мерчандайзинг)",
+        "share": 0.02,
+        "y2026": 6,
+        "y2027": 35,
+        "y2028": 49.9
+      },
+      {
+        "label": "Господдержка (безвозвратная)",
+        "share": 0.03,
+        "y2026": 9,
+        "y2027": 52.5,
+        "y2028": 74.8
+      }
+    ],
+    "investor_returns": [
+      {
+        "scenario": "2029",
+        "W3_IRR": 990,
+        "W3_MOIC": -260
+      },
+      {
+        "scenario": "2030",
+        "W3_IRR": 1114,
+        "W3_MOIC": 854
+      },
+      {
+        "scenario": "2031",
+        "W3_IRR": 162,
+        "W3_MOIC": 1016
+      },
+      {
+        "scenario": "2032",
+        "W3_IRR": 234,
+        "W3_MOIC": 1250
+      }
+    ],
+    "capm": [
+      {
+        "component": "Risk-free rate (ОФЗ 10Y)",
+        "value": 14.5,
+        "source": "Cbonds/MoEx 2026-04"
+      },
+      {
+        "component": "Beta (levered, peer-adj)",
+        "value": 0.8,
+        "source": "Bloomberg/Capital IQ"
+      },
+      {
+        "component": "Equity Risk Premium",
+        "value": 7.0,
+        "source": "Damodaran 2026"
+      },
+      {
+        "component": "Country Risk Premium",
+        "value": 2.0,
+        "source": "Damodaran CRP"
+      },
+      {
+        "component": "Size Premium",
+        "value": 1.0,
+        "source": "Kroll/D&P"
+      },
+      {
+        "component": "Cost of Equity (Ke)",
+        "value": 23.1,
+        "source": "CAPM sum"
+      },
+      {
+        "component": "Cost of Debt (after tax)",
+        "value": 9.6,
+        "source": "weighted bank terms"
+      },
+      {
+        "component": "D/(D+E)",
+        "value": 30.0,
+        "source": "target capital structure"
+      },
+      {
+        "component": "E/(D+E)",
+        "value": 70.0,
+        "source": "target capital structure"
+      },
+      {
+        "component": "WACC",
+        "value": 19.05,
+        "source": "0.70×23.1 + 0.30×9.6"
+      }
+    ]
+  },
+  "appendix_refs": {
+    "A": "Risk Register (30 risks x 5 categories)",
+    "B": "Stress Tests (5 scenarios + Tornado top-8)",
+    "C": "MC Report (N=50000, seed=42)",
+    "D": "Peer Comps (6+ comparable transactions)",
+    "E": "CAPM Build-Up (full source attribution)"
+  }
+}

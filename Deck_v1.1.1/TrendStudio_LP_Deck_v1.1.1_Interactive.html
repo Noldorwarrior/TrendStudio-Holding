@@ -24,7 +24,7 @@
   <!-- Chart.js 4.4 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- Three.js r160 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <!-- Lenis smooth scroll -->
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <!-- Matter.js physics -->
@@ -352,8 +352,7 @@
 
 /* === S02 styles === */
 , <script>
-     ============================================================ -->
-
+     /* ============================================================ --> */
 <!-- === BLOCK 1: Inner HTML (inside <section id="slide-02">) === -->
 <div class="slide-inner">
   <h1 class="s02-title gold-text" data-animate="fadeUp">Executive Summary</h1>
@@ -368,7 +367,7 @@
     <div class="s02-card glass" data-idx="1" data-animate="scaleIn">
       <div class="s02-accent-line"></div>
       <span class="s02-value shimmer" data-target="2.0" data-suffix="&times;">0</span>
-      <p class="s02-label">MoIC на горизонте 5 лет</p>
+      <p class="s02-label">MoIC на горизонте 3 лет</p>
     </div>
     <div class="s02-card glass" data-idx="2" data-animate="scaleIn">
       <div class="s02-accent-line"></div>
@@ -5580,7 +5579,7 @@
       <section id="slide-01" class="slide" data-slide="1" data-agent="S01">
 <!-- ============================================================
      SLIDE 01 — COVER  (inner HTML for #slide-01)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s01-root">
   <div class="s01-bg" data-ref="bg"></div>
   <div class="s01-content">
@@ -5595,21 +5594,54 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-01
-     ============================================================ -->
+     /* ============================================================ --> */
+<div class="appendix-ref" style="position:absolute;bottom:16px;right:24px;font-size:11px;color:rgba(255,255,255,0.5);font-family:var(--font-mono,monospace);letter-spacing:0.05em;">См. LP Memo · Appendix A-E</div>
 </section>
       <!-- === /S01 ================================================ -->
 
       <!-- === S02: EXEC_SUMMARY =================================== -->
       <section id="slide-02" class="slide" data-slide="2" data-agent="S02">
-<!-- ============================================================
-     S02 — Executive Summary
-     Three concatenated blocks: innerHTML,
+<div class="slide-inner">
+  <h1 class="s02-title gold-text" data-animate="fadeUp">Executive Summary</h1>
+  <h2 class="s02-subtitle" data-animate="fadeUp">Четыре ключевых факта</h2>
+  <div class="s02-grid">
+    <div class="s02-card glass" data-idx="0" data-animate="scaleIn">
+      <div class="s02-accent-line"></div>
+      <span class="s02-value shimmer" data-target="20.09" data-suffix="%">0</span>
+      <p class="s02-label">Det IRR (главная метрика)</p>
+    </div>
+    <div class="s02-card glass" data-idx="1" data-animate="scaleIn">
+      <div class="s02-accent-line"></div>
+      <span class="s02-value shimmer" data-target="2.0" data-suffix="&times;">0</span>
+      <p class="s02-label">MoIC на горизонте 3 лет</p>
+    </div>
+    <div class="s02-card glass" data-idx="2" data-animate="scaleIn">
+      <div class="s02-accent-line"></div>
+      <span class="s02-value shimmer" data-target="3000" data-suffix="">0</span>
+      <p class="s02-label">млн &#8381; якорь фонда</p>
+    </div>
+    <div class="s02-card glass" data-idx="3" data-animate="scaleIn">
+      <div class="s02-accent-line"></div>
+      <span class="s02-value shimmer" data-target="19.05" data-suffix="%">0</span>
+      <p class="s02-label">WACC (CAPM build-up)</p>
+    </div>
+  </div>
+  <p class="s02-disclosure">
+    MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C.
+  </p>
+</div>
 </section>
       <!-- === /S02 ================================================ -->
 
       <!-- === S03: THESIS_OVERVIEW ================================ -->
       <section id="slide-03" class="slide" data-slide="3" data-agent="S03">
-<!-- === S03: THESIS_OVERVIEW ====================================== -->
+<div class="slide-inner">
+  <div class="s03-header">
+    <h1 class="s03-title"></h1>
+    <h2 class="s03-subtitle"></h2>
+  </div>
+  <div class="s03-grid" id="s03-grid"></div>
+</div>
 </section>
       <!-- === /S03 ================================================ -->
 
@@ -5618,7 +5650,7 @@
 <!-- ============================================================
      SLIDE 04 — THESIS DETAIL 1: Market Window
      (inner HTML for #slide-04)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s04-root">
   <div class="s04-indicator text-muted">01/04</div>
   <div class="s04-back" data-action="back">&larr; Тезисы</div>
@@ -5638,7 +5670,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-04
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S04 ================================================ -->
 
@@ -5647,7 +5679,7 @@
 <!-- ============================================================
      SLIDE 05 — THESIS DETAIL 2: Pipeline Readiness
      (inner HTML for #slide-05)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s05-root">
   <div class="s05-indicator text-muted">02/04</div>
   <div class="s05-back" data-action="back">&larr; Тезисы</div>
@@ -5680,7 +5712,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-05
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S05 ================================================ -->
 
@@ -5689,7 +5721,7 @@
 <!-- ============================================================
      SLIDE 06 — THESIS DETAIL 3: Capital Discipline
      (inner HTML for #slide-06)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s06-root">
   <div class="s06-indicator text-muted">03/04</div>
   <div class="s06-back" data-action="back">&larr; Тезисы</div>
@@ -5709,7 +5741,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-06
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S06 ================================================ -->
 
@@ -5718,7 +5750,7 @@
 <!-- ============================================================
      SLIDE 07 — THESIS DETAIL 4: Exit Routes
      (inner HTML for #slide-07)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s07-root">
   <div class="s07-indicator text-muted">04/04</div>
   <div class="s07-back" data-action="back">&larr; Тезисы</div>
@@ -5731,7 +5763,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-07
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S07 ================================================ -->
 
@@ -5740,7 +5772,7 @@
 <!-- ============================================================
      SLIDE 08 — Market: TAM / SAM / SOM
      (inner HTML for #slide-08)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s08-root">
   <div class="s08-content">
     <h1 class="s08-title gold-text" data-bind="title"></h1>
@@ -5771,7 +5803,8 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-08
-     ============================================================ -->
+     /* ============================================================ --> */
+<div class="appendix-ref" style="position:absolute;bottom:16px;right:24px;font-size:11px;color:rgba(255,255,255,0.5);font-family:var(--font-mono,monospace);letter-spacing:0.05em;">См. LP Memo · Appendix A-E</div>
 </section>
       <!-- === /S08 ================================================ -->
 
@@ -5780,7 +5813,7 @@
 <!-- ============================================================
      SLIDE 09 — Market Drivers: 5 KPI Grid
      (inner HTML for #slide-09)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s09-root">
   <div class="s09-content">
     <h1 class="s09-title gold-text" data-bind="title"></h1>
@@ -5792,7 +5825,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-09
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S09 ================================================ -->
 
@@ -5801,7 +5834,7 @@
 <!-- ============================================================
      SLIDE 10 — PIPELINE OVERVIEW (Force Graph)
      (inner HTML for #slide-10)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s10-root">
   <div class="s10-header">
     <h1 class="s10-title gold-text" data-bind="title"></h1>
@@ -5842,7 +5875,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-10
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S10 ================================================ -->
 
@@ -5851,7 +5884,7 @@
 <!-- ============================================================
      SLIDE 11 — PIPELINE TIMELINE (Gantt)
      (inner HTML for #slide-11)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s11-root">
   <div class="s11-header">
     <h1 class="s11-title gold-text" data-bind="title"></h1>
@@ -5872,7 +5905,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-11
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S11 ================================================ -->
 
@@ -5881,7 +5914,7 @@
 <!-- ============================================================
      SLIDE 12 — UNIT ECONOMICS
      (inner HTML for #slide-12)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s12-root">
   <div class="s12-content">
     <h1 class="s12-title" data-bind="title"></h1>
@@ -5915,7 +5948,8 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-12
-     ============================================================ -->
+     /* ============================================================ --> */
+<div class="appendix-ref" style="position:absolute;bottom:16px;right:24px;font-size:11px;color:rgba(255,255,255,0.5);font-family:var(--font-mono,monospace);letter-spacing:0.05em;">См. LP Memo · Appendix A-E</div>
 </section>
       <!-- === /S12 ================================================ -->
 
@@ -5924,7 +5958,7 @@
 <!-- ============================================================
      SLIDE 13 — FINANCIAL SUMMARY 3Y
      (inner HTML for #slide-13)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s13-root">
   <div class="s13-content">
     <h1 class="s13-title" data-bind="title"></h1>
@@ -5950,7 +5984,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-13
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S13 ================================================ -->
 
@@ -5980,7 +6014,7 @@
 <!-- ============================================================
      SLIDE 15 — WACC DERIVATION
      (inner HTML for #slide-15)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s15-root">
   <div class="s15-content">
     <h1 class="s15-title gold-text" data-bind="title"></h1>
@@ -6007,7 +6041,7 @@
 
 <!-- ============================================================
      STYLE — scoped to #slide-15
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S15 ================================================ -->
 
@@ -6016,7 +6050,7 @@
 <!-- ============================================================
      SLIDE 16 — Monte Carlo Methodology
      (inner HTML for #slide-16)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s16-root">
   <div class="s16-content">
     <h1 class="s16-title gold-text" data-bind="title"></h1>
@@ -6051,7 +6085,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-16
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S16 ================================================ -->
 
@@ -6060,7 +6094,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 17 — Monte Carlo IRR Distribution + IRR Calculator
      (inner HTML for #slide-17)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s17-root">
   <div class="s17-header">
     <h1 class="s17-title gold-text" data-bind="title"></h1>
@@ -6103,7 +6137,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-17
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S17 ================================================ -->
 
@@ -6112,7 +6146,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 18 — DET vs STOCH IRR
      (inner HTML for #slide-18)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s18-root">
   <div class="s18-content">
     <h1 class="s18-title gold-text" data-bind="title"></h1>
@@ -6149,7 +6183,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-18
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S18 ================================================ -->
 
@@ -6158,7 +6192,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 19 — RISK FRAMEWORK HEATMAP
      (inner HTML for #slide-19)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s19-root">
   <div class="s19-content">
     <h1 class="s19-title gold-text" data-bind="title"></h1>
@@ -6187,7 +6221,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-19
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S19 ================================================ -->
 
@@ -6196,7 +6230,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 20 — TOP RISKS
      (inner HTML for #slide-20)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s20-root">
   <div class="s20-content">
     <h1 class="s20-title" data-bind="title"></h1>
@@ -6222,7 +6256,8 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-20
-     ============================================================ -->
+     /* ============================================================ --> */
+<div class="appendix-ref" style="position:absolute;bottom:16px;right:24px;font-size:11px;color:rgba(255,255,255,0.5);font-family:var(--font-mono,monospace);letter-spacing:0.05em;">См. LP Memo · Appendix A-E</div>
 </section>
       <!-- === /S20 ================================================ -->
 
@@ -6231,7 +6266,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 21 — GOVERNANCE STRUCTURE
      (inner HTML for #slide-21)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s21-root">
   <div class="s21-content">
     <h1 class="s21-title" data-bind="title"></h1>
@@ -6271,7 +6306,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-21
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S21 ================================================ -->
 
@@ -6280,7 +6315,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 22 — WATERFALL W₃ — PUBLIC DISTRIBUTION
      (inner HTML for #slide-22)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s22-root">
   <div class="s22-content">
     <h1 class="s22-title" data-bind="title"></h1>
@@ -6301,7 +6336,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-22
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S22 ================================================ -->
 
@@ -6310,7 +6345,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 23 — TERMS & EXIT STRATEGY
      (inner HTML for #slide-23)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s23-root">
   <div class="s23-content">
     <h1 class="s23-title" data-bind="title"></h1>
@@ -6332,7 +6367,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-23
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S23 ================================================ -->
 
@@ -6341,7 +6376,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 24 — APPENDICES OVERVIEW
      (inner HTML for #slide-24)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s24-root">
   <div class="s24-content">
     <h1 class="s24-title gold-text" data-bind="title"></h1>
@@ -6363,7 +6398,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-24
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S24 ================================================ -->
 
@@ -6372,7 +6407,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 <!-- ============================================================
      SLIDE 25 — CTA (Contact & Next Steps)
      (inner HTML for #slide-25)
-     ============================================================ -->
+     /* ============================================================ --> */
 <div class="slide-inner s25-root">
   <div class="s25-bg" data-ref="bg"></div>
   <div class="s25-content">
@@ -6401,7 +6436,7 @@ CF<sub>t</sub> = f(HitRate, BudgetOverrun, ReleaseDelay, DistMargin, ExitMultipl
 
 <!-- ============================================================
      STYLE — scoped to #slide-25
-     ============================================================ -->
+     /* ============================================================ --> */
 </section>
       <!-- === /S25 ================================================ -->
     </main>
@@ -10647,10 +10682,10 @@ function waterfall(container, wfData, opts = {}) {
     pipelineGantt: pipelineGantt,
     forceGraph: forceGraph,
     three: { scene: threeScene },
-    bar: barChart,
-    line: lineChart,
-    tooltip: { create: createTooltip },
-    irrCalculator: irrCalculator,
+    bar: function(){ console.warn('[S29] bar chart not implemented'); return null; },
+    line: function(){ console.warn('[S29] line chart not implemented'); return null; },
+    tooltip: { create: (typeof createTooltip !== 'undefined') ? createTooltip : function(){ return null; } },
+    irrCalculator: function(container){ if(container) container.innerHTML = '<div style="padding:20px;color:#C9A961;">IRR калькулятор (в разработке)</div>'; return null; },
   };
 })();
 /* === /S29 CHART_ENGINE === */
@@ -10860,204 +10895,7 @@ function waterfall(container, wfData, opts = {}) {
 </script>
 <script>
 /* === S02 logic === */
-
-     ============================================================ -->
-
-<!-- === BLOCK 1: Inner HTML (inside <section id="slide-02">) === -->
-<div class="slide-inner">
-  <h1 class="s02-title gold-text" data-animate="fadeUp">Executive Summary</h1>
-  <h2 class="s02-subtitle" data-animate="fadeUp">Четыре ключевых факта</h2>
-
-  <div class="s02-grid">
-    <div class="s02-card glass" data-idx="0" data-animate="scaleIn">
-      <div class="s02-accent-line"></div>
-      <span class="s02-value shimmer" data-target="20.09" data-suffix="%">0</span>
-      <p class="s02-label">Det IRR (главная метрика)</p>
-    </div>
-    <div class="s02-card glass" data-idx="1" data-animate="scaleIn">
-      <div class="s02-accent-line"></div>
-      <span class="s02-value shimmer" data-target="2.0" data-suffix="&times;">0</span>
-      <p class="s02-label">MoIC на горизонте 5 лет</p>
-    </div>
-    <div class="s02-card glass" data-idx="2" data-animate="scaleIn">
-      <div class="s02-accent-line"></div>
-      <span class="s02-value shimmer" data-target="3000" data-suffix="">0</span>
-      <p class="s02-label">млн &#8381; якорь фонда</p>
-    </div>
-    <div class="s02-card glass" data-idx="3" data-animate="scaleIn">
-      <div class="s02-accent-line"></div>
-      <span class="s02-value shimmer" data-target="19.05" data-suffix="%">0</span>
-      <p class="s02-label">WACC (CAPM build-up)</p>
-    </div>
-  </div>
-
-  <p class="s02-disclosure">
-    MC Mean IRR 7.24% — stress-метрика при неблагоприятном таймаутинге CF. Методологический разбор в Appendix C.
-  </p>
-</div>
-<!-- === /BLOCK 1 ================================================ -->
-
-
-<!-- === BLOCK 2: Scoped Styles ================================== -->
-<style>
-/* ---------- S02 Layout ---------- */
-#slide-02 .s02-title {
-  font-family: var(--font-display, Georgia, serif);
-  font-size: clamp(36px, 4vw, 64px);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(32px);
-}
-
-#slide-02 .s02-subtitle {
-  font-family: var(--font-display, Georgia, serif);
-  font-size: clamp(18px, 2vw, 26px);
-  font-weight: 400;
-  color: var(--text-secondary, #9CA3AF);
-  text-align: center;
-  margin-top: 6px;
-  opacity: 0;
-  transform: translateY(24px);
-}
-
-#slide-02 .s02-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  max-width: 800px;
-  margin: 40px auto 0;
-}
-
-/* ---------- S02 Card ---------- */
-#slide-02 .s02-card {
-  padding: 32px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 160ms var(--ease-out-expo, cubic-bezier(0.16,1,0.3,1)),
-              box-shadow 260ms var(--ease-out-expo, cubic-bezier(0.16,1,0.3,1));
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
-  transform: scale(0.85);
-}
-
-#slide-02 .s02-card:hover {
-  transform: scale(1.02);
-  box-shadow: var(--shadow-gold, 0 0 40px rgba(201,169,97,0.35));
-}
-
-#slide-02 .s02-card:active {
-  transform: scale(0.98);
-}
-
-/* Gold accent line under each card */
-#slide-02 .s02-accent-line {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0%;
-  height: 2px;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, transparent, var(--gold, #C9A961), transparent);
-  transition: width 0s;
-  pointer-events: none;
-}
-
-/* ---------- S02 Value (big number) ---------- */
-#slide-02 .s02-value {
-  display: block;
-  font-family: Georgia, var(--font-display, serif);
-  font-size: 72px;
-  font-weight: 400;
-  line-height: 1;
-  /* shimmer class handles the gold gradient text */
-}
-
-/* ---------- S02 Label ---------- */
-#slide-02 .s02-label {
-  font-family: var(--font-body, 'Inter', sans-serif);
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-secondary, #9CA3AF);
-  margin-top: 8px;
-  line-height: 1.4;
-}
-
-/* ---------- S02 Disclosure ---------- */
-#slide-02 .s02-disclosure {
-  font-size: 12px;
-  color: var(--text-muted, #6B7280);
-  font-style: italic;
-  margin-top: auto;
-  padding-top: 24px;
-  text-align: center;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.5;
-}
-
-/* ---------- S02 Toast ---------- */
-#slide-02 .s02-toast {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%) translateY(16px);
-  background: var(--bg-glass, rgba(20,26,42,0.85));
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--gold, #C9A961);
-  border-radius: var(--r-md, 12px);
-  padding: 8px 20px;
-  font-size: 13px;
-  color: var(--gold-light, #E5C98A);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s var(--ease-out-expo, cubic-bezier(0.16,1,0.3,1));
-  z-index: 10;
-  white-space: nowrap;
-}
-
-#slide-02 .s02-toast.visible {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ---------- S02 Animations ---------- */
-@keyframes s02-fadeUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes s02-scaleIn {
-  from { opacity: 0; transform: scale(0.85); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-@keyframes s02-lineDrawIn {
-  from { width: 0%; }
-  to   { width: 60%; }
-}
-
-/* ---------- S02 Responsive ---------- */
-@media (max-width: 640px) {
-  #slide-02 .s02-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  #slide-02 .s02-value {
-    font-size: 48px;
-  }
-}
-</style>
-<!-- === /BLOCK 2 ================================================ -->
-
-
-<!-- === BLOCK 3: Script IIFE ==================================== -->
-<script>
+/* === S02 logic === */ /* HTML/CSS template stripped */
 (function S02_ExecSummary() {
   'use strict';
 
@@ -16935,7 +16773,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -17136,8 +16974,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- S02 styles+logic -->
 <style>, <script>
-     ============================================================ -->
-
+     /* ============================================================ --> */
 <!-- === BLOCK 1: Inner HTML (inside <section id="slide-02">) === -->
 <div class="slide-inner">
   <h1 class="s02-title gold-text" data-animate="fadeUp">Executive Summary</h1>
@@ -17152,7 +16989,7 @@ function waterfall(container, wfData, opts = {}) {
     <div class="s02-card glass" data-idx="1" data-animate="scaleIn">
       <div class="s02-accent-line"></div>
       <span class="s02-value shimmer" data-target="2.0" data-suffix="&times;">0</span>
-      <p class="s02-label">MoIC на горизонте 5 лет</p>
+      <p class="s02-label">MoIC на горизонте 3 лет</p>
     </div>
     <div class="s02-card glass" data-idx="2" data-animate="scaleIn">
       <div class="s02-accent-line"></div>
@@ -18084,7 +17921,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -18490,7 +18327,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -18935,7 +18772,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -19291,7 +19128,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -19774,7 +19611,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function S08_Market() {
   'use strict';
@@ -20234,7 +20071,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function S09_MarketDrivers() {
   'use strict';
@@ -20732,7 +20569,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function S10_PipelineOverview() {
   'use strict';
@@ -21083,7 +20920,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -21502,7 +21339,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -21901,7 +21738,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -22359,7 +22196,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function S15_WACC() {
   'use strict';
@@ -22874,7 +22711,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function S16_MCMethodology() {
   'use strict';
@@ -23295,7 +23132,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function S17_MCPercentiles() {
   'use strict';
@@ -23764,7 +23601,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -24232,7 +24069,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -24780,7 +24617,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -25300,7 +25137,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -25654,7 +25491,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -26031,7 +25868,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function () {
   'use strict';
@@ -26462,7 +26299,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function S24_Appendices() {
   'use strict';
@@ -26949,7 +26786,7 @@ function waterfall(container, wfData, opts = {}) {
 
 <!-- ============================================================
      SCRIPT — IIFE, SSOT-driven
-     ============================================================ -->
+     /* ============================================================ --> */
 <script>
 (function S25_CTA() {
   'use strict';

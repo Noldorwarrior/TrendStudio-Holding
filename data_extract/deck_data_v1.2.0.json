@@ -491,9 +491,9 @@
         },
         {
           "row": "NDP (к распределению)",
-          "y1": 75,
-          "y2": 340,
-          "y3": 970,
+          "y1": null,
+          "y2": null,
+          "y3": null,
           "total": 3000
         }
       ]
@@ -1520,9 +1520,9 @@
         },
         {
           "row": "NDP (к распределению)",
-          "y1": 75,
-          "y2": 340,
-          "y3": 970,
+          "y1": null,
+          "y2": null,
+          "y3": null,
           "total": 3000
         }
       ]
@@ -1585,28 +1585,157 @@
         "y2028": 74.8
       }
     ],
-    "investor_returns": [
-      {
-        "scenario": "2029",
-        "W3_IRR": 990,
-        "W3_MOIC": -260
-      },
-      {
-        "scenario": "2030",
-        "W3_IRR": 1114,
-        "W3_MOIC": 854
-      },
-      {
-        "scenario": "2031",
-        "W3_IRR": 162,
-        "W3_MOIC": 1016
-      },
-      {
-        "scenario": "2032",
-        "W3_IRR": 234,
-        "W3_MOIC": 1250
-      }
-    ],
+    "investor_returns": {
+      "t1_cashflow": [
+        {
+          "period": "Q1 2026",
+          "action": "Tranche disbursement",
+          "tranche": -250,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": -250,
+          "cum_cf": -250,
+          "type": "Out"
+        },
+        {
+          "period": "Q2 2026",
+          "action": "Tranche disbursement",
+          "tranche": -350,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": -350,
+          "cum_cf": -600,
+          "type": "Out"
+        },
+        {
+          "period": "Q3 2026",
+          "action": "Tranche disbursement",
+          "tranche": -350,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": -350,
+          "cum_cf": -950,
+          "type": "Out"
+        },
+        {
+          "period": "Q4 2026",
+          "action": "Tranche disbursement",
+          "tranche": -300,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": -300,
+          "cum_cf": -1250,
+          "type": "Out"
+        },
+        {
+          "period": "2029",
+          "action": "Liq Pref",
+          "tranche": 990,
+          "interest": 0,
+          "upside": 0,
+          "net_cf": 990,
+          "cum_cf": -260,
+          "type": "In"
+        },
+        {
+          "period": "2030",
+          "action": "Liq Pref + coupon + upside",
+          "tranche": 260,
+          "interest": 500,
+          "upside": 354,
+          "net_cf": 1114,
+          "cum_cf": 854,
+          "type": "In"
+        },
+        {
+          "period": "2031",
+          "action": "Carried interest share",
+          "tranche": 0,
+          "interest": 0,
+          "upside": 162,
+          "net_cf": 162,
+          "cum_cf": 1016,
+          "type": "In"
+        },
+        {
+          "period": "2032",
+          "action": "Carried interest share",
+          "tranche": 0,
+          "interest": 0,
+          "upside": 234,
+          "net_cf": 234,
+          "cum_cf": 1250,
+          "type": "In"
+        }
+      ],
+      "returns_matrix": [
+        {
+          "scenario": "Stress Bear",
+          "W1_IRR": -3.56,
+          "W1_MOIC": 0.86,
+          "W2_IRR": -0.68,
+          "W2_MOIC": 0.97,
+          "W3_IRR": 9.34,
+          "W3_MOIC": 1.42,
+          "W4_IRR": 9.6,
+          "W4_MOIC": 1.44,
+          "best": "W₄",
+          "ndp": 1800
+        },
+        {
+          "scenario": "Downside",
+          "W1_IRR": 3.06,
+          "W1_MOIC": 1.13,
+          "W2_IRR": 6.74,
+          "W2_MOIC": 1.3,
+          "W3_IRR": 15.14,
+          "W3_MOIC": 1.71,
+          "W4_IRR": 16.61,
+          "W4_MOIC": 1.81,
+          "best": "W₄",
+          "ndp": 2400
+        },
+        {
+          "scenario": "Base Case",
+          "W1_IRR": 8.28,
+          "W1_MOIC": 1.37,
+          "W2_IRR": 12.97,
+          "W2_MOIC": 1.62,
+          "W3_IRR": 20.09,
+          "W3_MOIC": 2.0,
+          "W4_IRR": 21.81,
+          "W4_MOIC": 2.12,
+          "best": "W₄",
+          "ndp": 3000
+        },
+        {
+          "scenario": "Upside",
+          "W1_IRR": 12.91,
+          "W1_MOIC": 1.61,
+          "W2_IRR": 18.39,
+          "W2_MOIC": 1.95,
+          "W3_IRR": 24.61,
+          "W3_MOIC": 2.29,
+          "W4_IRR": 26.45,
+          "W4_MOIC": 2.43,
+          "best": "W₄",
+          "ndp": 3600
+        },
+        {
+          "scenario": "Bull Case",
+          "W1_IRR": 17.08,
+          "W1_MOIC": 1.85,
+          "W2_IRR": 23.22,
+          "W2_MOIC": 2.27,
+          "W3_IRR": 28.78,
+          "W3_MOIC": 2.58,
+          "W4_IRR": 30.73,
+          "W4_MOIC": 2.74,
+          "best": "W₄",
+          "ndp": 4200
+        }
+      ]
+    },
     "capm": [
       {
         "component": "Risk-free rate (ОФЗ 10Y)",

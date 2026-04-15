@@ -45,6 +45,30 @@ def extract_pl(wb):
     return rows
 
 
+def extract_pl_summary_from_kpi(wb):
+    """
+    Read Revenue/EBITDA/NDP 3-year split from xlsx 21_KPI_Dashboard.
+    Returns list of 3 row dicts: {row, y1, y2, y3, total}.
+    NDP per-year is null (deterministic, not distributed by year).
+    """
+    ws = wb["21_KPI_Dashboard"]
+
+    def read_row(r):
+        # Columns: D=Y1, E=Y2, F=Y3, G=Total
+        return [ws.cell(r, c).value for c in range(4, 8)]
+
+    rev = read_row(8)
+    ebi = read_row(14)
+    ndp = read_row(16)
+
+    return [
+        {"row": "Revenue", "y1": rev[0], "y2": rev[1], "y3": rev[2], "total": rev[3]},
+        {"row": "EBITDA",  "y1": ebi[0], "y2": ebi[1], "y3": ebi[2], "total": ebi[3]},
+        # NDP: Y1/Y2/Y3 в xlsx = "—" (строка), нормализуем в null
+        {"row": "NDP (к распределению)", "y1": None, "y2": None, "y3": None, "total": ndp[3]},
+    ]
+
+
 def extract_revenue_breakdown(wb):
     ws = wb["07_Revenue_Breakdown"]
     sources = []
@@ -387,10 +411,9 @@ def main():
             "ebitda_3y": ebitda_3y,
             "ndp_3y": ndp_det,
             "pl_summary": {
-                "rows": [
-                    {"row": r["row"], "y1": r["y1"], "y2": r["y2"], "y3": r["y3"], "total": r["total"]}
-                    for r in content["slides"][12]["pl"]
-                ]
+                "rows": extract_pl_summary_from_kpi(wb),
+                "source": "21_KPI_Dashboard R8/R14/R16",
+                "note": "Deck shows headline Revenue/EBITDA/NDP. Full P&L — in financial model and Appendix."
             },
             "revenue_breakdown": extract_revenue_breakdown(wb),
             "investor_returns": {
@@ -457,6 +480,26 @@ def main():
         if "NDP" in row.get("row", "").upper():
             assert row["y1"] is None and row["y2"] is None and row["y3"] is None
             assert row["total"] == ndp_det
+
+    # BUGFIX v3 asserts: pl_summary sourced from 21_KPI_Dashboard (3 rows)
+    pl_rows = deck_data["financial"]["pl_summary"]["rows"]
+    assert len(pl_rows) == 3, f"pl_summary must have 3 rows (Revenue/EBITDA/NDP), got {len(pl_rows)}"
+    rev_row = pl_rows[0]
+    ebi_row = pl_rows[1]
+    ndp_row = pl_rows[2]
+    assert rev_row["row"] == "Revenue", f"row[0] must be Revenue, got {rev_row['row']}"
+    assert ebi_row["row"] == "EBITDA", f"row[1] must be EBITDA, got {ebi_row['row']}"
+    assert rev_row["total"] == deck_data["key_metrics"]["revenue_3y"], \
+        f"pl_summary Revenue total {rev_row['total']} != key_metrics.revenue_3y {deck_data['key_metrics']['revenue_3y']}"
+    assert abs(ebi_row["total"] - deck_data["key_metrics"]["ebitda_3y"]) < 1, \
+        f"pl_summary EBITDA total {ebi_row['total']} != key_metrics.ebitda_3y {deck_data['key_metrics']['ebitda_3y']}"
+    assert abs((rev_row["y1"] + rev_row["y2"] + rev_row["y3"]) - rev_row["total"]) < 1, \
+        f"Revenue y1+y2+y3 ({rev_row['y1']+rev_row['y2']+rev_row['y3']}) != total ({rev_row['total']})"
+    assert abs((ebi_row["y1"] + ebi_row["y2"] + ebi_row["y3"]) - ebi_row["total"]) < 1, \
+        f"EBITDA y1+y2+y3 != total"
+    assert ndp_row["total"] == 3000, f"NDP total must be 3000, got {ndp_row['total']}"
+    assert deck_data["financial"]["pl_summary"].get("source") == "21_KPI_Dashboard R8/R14/R16", \
+        "pl_summary.source attribution missing or wrong"
 
     ir = deck_data["financial"]["investor_returns"]
     assert "t1_cashflow" in ir and "returns_matrix" in ir

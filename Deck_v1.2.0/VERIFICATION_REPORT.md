@@ -131,6 +131,72 @@
 - `src/slides/s13.js` — null-safe cell formatting + indexOf highlight match
 - `Deck_v1.2.0/VERIFICATION_REPORT.md` — this section
 
+## BUGFIX v3 — pl_summary from 21_KPI_Dashboard
+
+**Date:** 2026-04-15
+**Issue:** B-3 from П5 Phase 1 Block B — legacy narrative drift.
+
+### Root cause
+`extract_investor_model.py` built `financial.pl_summary.rows` from static `Deck_v1.1.1/deck_content.json` slide s13.pl (6 rows hand-written for v1.1.1). Annual split differed from xlsx:
+
+| Source | Revenue Y1/Y2/Y3 | EBITDA Y1/Y2/Y3 |
+|---|---|---|
+| `deck_content` v1.1.1 | 650 / 1750 / 2145 | 180 / 550 / 1437 |
+| xlsx `09_P&L_Statement` | 310 / 1990 / 2245 | 58.3 / 987.7 / 1121.4 |
+| xlsx `21_KPI_Dashboard` (canonical) | **385 / 1665 / 2495** | **58.3 / 987.7 / 1121.4** |
+
+Totals (4545 / 2167) were correct, but per-year split was stale narrative.
+
+### Fix
+New function `extract_pl_summary_from_kpi(wb)` reads xlsx `21_KPI_Dashboard` R8/R14/R16 cols D-G and returns a 3-row headline:
+- Revenue — R8 (385/1665/2495/4545)
+- EBITDA — R14 (58.3/987.7/1121.4/2167.4)
+- NDP (к распределению) — R16 (null/null/null/3000)
+
+COGS/Gross Profit/OPEX removed from deck pl_summary (remain in financial model and Appendix). Deck is for LP; 21_KPI is the public dashboard designed for investors.
+
+New contract:
+```json
+"pl_summary": {
+  "rows": [ {row, y1, y2, y3, total} × 3 ],
+  "source": "21_KPI_Dashboard R8/R14/R16",
+  "note": "Deck shows headline Revenue/EBITDA/NDP. Full P&L — in financial model and Appendix."
+}
+```
+
+### New asserts (8)
+1. `len(pl_summary.rows) == 3`
+2. `rows[0].row == "Revenue"`, `rows[1].row == "EBITDA"`
+3. `rows[0].total == key_metrics.revenue_3y` (4545)
+4. `abs(rows[1].total - key_metrics.ebitda_3y) < 1` (2167.4 ≈ 2167)
+5. `abs(Σy_i - total) < 1` for Revenue
+6. `abs(Σy_i - total) < 1` for EBITDA
+7. `rows[2].total == 3000` (NDP anchor)
+8. `pl_summary.source == "21_KPI_Dashboard R8/R14/R16"`
+
+### Files changed
+- `data_extract/extract_investor_model.py` — `extract_pl_summary_from_kpi()` + 8 asserts
+- `src/slides/s13.js` — source attribution footnote under table
+- `data_extract/deck_data_v1.2.0.json` — regenerated (3 rows + source/note)
+- `Deck_v1.2.0/VERIFICATION_REPORT.md` — this section
+
+### Scope guards
+- NOT touched: `investor_returns` (closed in v2), `key_metrics` (closed in v1).
+- NOT touched: 09_P&L vs 21_KPI xlsx-internal mismatch (separate xlsx issue).
+- Revenue/EBITDA totals already correct — unchanged.
+
+### Verification output
+```
+Row count: 3
+  Revenue                   y1=385   y2=1665  y3=2495   total=4545
+  EBITDA                    y1=58.3  y2=987.7 y3=1121.4 total=2167.4
+  NDP (к распределению)     y1=None  y2=None  y3=None   total=3000
+Source: 21_KPI_Dashboard R8/R14/R16
+```
+All sanity checks PASSED (xlsx-sourced).
+
+---
+
 ## Escalations
 
 None. All 8 LP-critical charts completed within scope.

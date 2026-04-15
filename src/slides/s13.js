@@ -76,6 +76,18 @@
           }
         }
 
+        // Source attribution footnote (BUGFIX v3)
+        var financial = (TS.data && TS.data.financial) || {};
+        var pl_summary = financial.pl_summary || {};
+        if (pl_summary.source) {
+          var footnote = document.createElement('div');
+          footnote.className = 's13-source-note';
+          footnote.style.cssText = 'margin-top:8px;font-size:11px;color:#888;font-style:italic;';
+          footnote.textContent = 'Источник: ' + pl_summary.source +
+            '. Полный P&L — в финмодели и Appendix.';
+          tableContainer.appendChild(footnote);
+        }
+
         // Animate table
         ANIM.from(table, {
           opacity: 0,

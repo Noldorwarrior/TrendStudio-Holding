@@ -1485,38 +1485,17 @@
       "rows": [
         {
           "row": "Revenue",
-          "y1": 650,
-          "y2": 1750,
-          "y3": 2145,
+          "y1": 385,
+          "y2": 1665,
+          "y3": 2495,
           "total": 4545
         },
         {
-          "row": "COGS (direct)",
-          "y1": 390,
-          "y2": 1050,
-          "y3": 1287,
-          "total": 2727
-        },
-        {
-          "row": "Gross Profit",
-          "y1": 260,
-          "y2": 700,
-          "y3": 858,
-          "total": 1818
-        },
-        {
-          "row": "OPEX",
-          "y1": 80,
-          "y2": 150,
-          "y3": 220,
-          "total": 450
-        },
-        {
           "row": "EBITDA",
-          "y1": 180,
-          "y2": 550,
-          "y3": 1437,
-          "total": 2167
+          "y1": 58.3,
+          "y2": 987.7,
+          "y3": 1121.4,
+          "total": 2167.4
         },
         {
           "row": "NDP (к распределению)",
@@ -1525,7 +1504,9 @@
           "y3": null,
           "total": 3000
         }
-      ]
+      ],
+      "source": "21_KPI_Dashboard R8/R14/R16",
+      "note": "Deck shows headline Revenue/EBITDA/NDP. Full P&L — in financial model and Appendix."
     },
     "revenue_breakdown": [
       {
@@ -1589,7 +1570,7 @@
       "t1_cashflow": [
         {
           "period": "Q1 2026",
-          "action": "Tranche disbursement",
+          "action": "Tranche (Транш) disbursement",
           "tranche": -250,
           "interest": 0,
           "upside": 0,
@@ -1599,7 +1580,7 @@
         },
         {
           "period": "Q2 2026",
-          "action": "Tranche disbursement",
+          "action": "Tranche (Транш) disbursement",
           "tranche": -350,
           "interest": 0,
           "upside": 0,
@@ -1609,7 +1590,7 @@
         },
         {
           "period": "Q3 2026",
-          "action": "Tranche disbursement",
+          "action": "Tranche (Транш) disbursement",
           "tranche": -350,
           "interest": 0,
           "upside": 0,
@@ -1619,7 +1600,7 @@
         },
         {
           "period": "Q4 2026",
-          "action": "Tranche disbursement",
+          "action": "Tranche (Транш) disbursement",
           "tranche": -300,
           "interest": 0,
           "upside": 0,
@@ -1629,7 +1610,7 @@
         },
         {
           "period": "2029",
-          "action": "Liq Pref",
+          "action": "Liq Pref (Ликвидационная привилегия) (partial, A+C Y29=33%)",
           "tranche": 990,
           "interest": 0,
           "upside": 0,
@@ -1639,7 +1620,7 @@
         },
         {
           "period": "2030",
-          "action": "Liq Pref + coupon + upside",
+          "action": "Liq Pref (Ликвидационная привилегия) final + coupon (купон) + carry (A+C Y30=45%)",
           "tranche": 260,
           "interest": 500,
           "upside": 354,
@@ -1649,7 +1630,7 @@
         },
         {
           "period": "2031",
-          "action": "Carried interest share",
+          "action": "Carried interest share (доля) (A+C Y31=9%)",
           "tranche": 0,
           "interest": 0,
           "upside": 162,
@@ -1659,7 +1640,7 @@
         },
         {
           "period": "2032",
-          "action": "Carried interest share",
+          "action": "Carried interest share (доля) (A+C Y32=13%)",
           "tranche": 0,
           "interest": 0,
           "upside": 234,
@@ -1670,7 +1651,7 @@
       ],
       "returns_matrix": [
         {
-          "scenario": "Stress Bear",
+          "scenario": "Stress Bear (Стресс-пессимистичный)",
           "W1_IRR": -3.56,
           "W1_MOIC": 0.86,
           "W2_IRR": -0.68,
@@ -1680,10 +1661,10 @@
           "W4_IRR": 9.6,
           "W4_MOIC": 1.44,
           "best": "W₄",
-          "ndp": 1800
+          "ndp": 1800.0
         },
         {
-          "scenario": "Downside",
+          "scenario": "Downside (Нижний сценарий)",
           "W1_IRR": 3.06,
           "W1_MOIC": 1.13,
           "W2_IRR": 6.74,
@@ -1693,10 +1674,10 @@
           "W4_IRR": 16.61,
           "W4_MOIC": 1.81,
           "best": "W₄",
-          "ndp": 2400
+          "ndp": 2400.0
         },
         {
-          "scenario": "Base Case",
+          "scenario": "Base Case (Базовый сценарий)",
           "W1_IRR": 8.28,
           "W1_MOIC": 1.37,
           "W2_IRR": 12.97,
@@ -1706,10 +1687,10 @@
           "W4_IRR": 21.81,
           "W4_MOIC": 2.12,
           "best": "W₄",
-          "ndp": 3000
+          "ndp": 3000.0
         },
         {
-          "scenario": "Upside",
+          "scenario": "Upside (Верхний сценарий)",
           "W1_IRR": 12.91,
           "W1_MOIC": 1.61,
           "W2_IRR": 18.39,
@@ -1719,10 +1700,10 @@
           "W4_IRR": 26.45,
           "W4_MOIC": 2.43,
           "best": "W₄",
-          "ndp": 3600
+          "ndp": 3600.0
         },
         {
-          "scenario": "Bull Case",
+          "scenario": "Bull Case (Оптимистичный)",
           "W1_IRR": 17.08,
           "W1_MOIC": 1.85,
           "W2_IRR": 23.22,
@@ -1732,7 +1713,7 @@
           "W4_IRR": 30.73,
           "W4_MOIC": 2.74,
           "best": "W₄",
-          "ndp": 4200
+          "ndp": 4200.0
         }
       ]
     },

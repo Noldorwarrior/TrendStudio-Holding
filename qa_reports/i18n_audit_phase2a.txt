@@ -1,0 +1,1 @@
+Total Cyrillic matches in touched JS files: 0

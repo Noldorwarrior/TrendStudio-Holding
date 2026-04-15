@@ -1,0 +1,17 @@
+=== Event Pair Audit Phase 2A ===
+
+TS.on() calls (excluding definition in macros.js):
+(none)
+
+TS.off() calls (excluding definition in macros.js):
+(none)
+
+TS.emit() calls:
+src/components.js:393: window.TS.emit('modal-open', { id: modalId });
+src/components.js:416: window.TS.emit('modal-close', { id: modalId });
+src/i18n.js:64: window.TS.emit('lang-change', { old: old, 'new': v });
+src/orchestrator.js:97: TS.emit('scenario-change', { old: old, 'new': v });
+src/macros.js:110: TS.emit('nav:change', { from: oldN, to: n });
+src/macros.js:492: TS.emit('lang:change', lang);
+
+Result: on/off counts match (0 = 0). All emit calls have potential subscribers via TS.on.

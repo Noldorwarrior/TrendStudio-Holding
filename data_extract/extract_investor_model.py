@@ -100,7 +100,6 @@ def extract_mc_summary_from_xlsx(wb):
             continue
         label_lower = label.lower()
         if "irr" in label_lower and irr_row is None:
-            # Skip header rows — require numeric Mean in C4
             if isinstance(ws.cell(r, 4).value, (int, float)):
                 irr_row = r
         if "ndp" in label_lower and ndp_row is None:
@@ -130,7 +129,7 @@ def extract_mc_summary_from_xlsx(wb):
 
 
 def extract_ndp_det_from_kpi(wb):
-    """Read deterministic NDP 3Y from 21_KPI_Dashboard row 2.3, Σ 3Y column (C7)."""
+    """Read deterministic NDP 3Y from 21_KPI_Dashboard row 2.3, col C7."""
     ws = wb["21_KPI_Dashboard"]
     for r in range(6, ws.max_row + 1):
         label = ws.cell(r, 3).value
@@ -164,19 +163,96 @@ def extract_mc_percentiles_from_xlsx(wb):
     }
 
 
-def extract_investor_returns(wb):
+def extract_t1_cashflow(wb):
+    """Extract T1 investor cash flow schedule from Section I of 24_Investor_Returns (R8-R15).
+
+    Section I layout (cols): #(1), Period(3), Action(4), Tranche(5),
+    Interest(6), Equity Upside(7), Net CF(8), Cum CF(9), Peak Exposure(10), Type(11).
+    Rows: R8-R11 = Q1-Q4 2026 (Out), R12-R15 = 2029-2032 (In).
+    """
     ws = wb["24_Investor_Returns"]
-    scenarios = []
-    for r in range(12, 17):
-        label = ws.cell(r, 3).value
-        if not label:
+    result = []
+    for r in range(8, 16):
+        period = ws.cell(r, 3).value
+        if not period:
             continue
-        scenarios.append({
-            "scenario": str(label).strip(),
-            "W3_IRR": ws.cell(r, 8).value,
-            "W3_MOIC": ws.cell(r, 9).value
+        action = ws.cell(r, 4).value
+
+        def fv(row, col):
+            v = ws.cell(row, col).value
+            return int(round(float(v))) if isinstance(v, (int, float)) else 0
+
+        result.append({
+            "period": str(period).strip(),
+            "action": str(action).strip() if action else "",
+            "tranche": fv(r, 5),
+            "interest": fv(r, 6),
+            "upside": fv(r, 7),
+            "net_cf": fv(r, 8),
+            "cum_cf": fv(r, 9),
+            "type": str(ws.cell(r, 11).value or "").strip()
         })
-    return scenarios
+
+    # Sanity checks
+    if result:
+        total_net = sum(x["net_cf"] for x in result)
+        assert total_net == 1250, f"T1 total net CF must be 1250, got {total_net}"
+        assert result[-1]["cum_cf"] == 1250, \
+            f"T1 final cum_cf must be 1250, got {result[-1]['cum_cf']}"
+    print(f"  T1 cashflow: {len(result)} entries, total_net=1250, cum_cf_final=1250")
+    return result
+
+
+def extract_returns_matrix(wb):
+    """Extract Returns Matrix from Section II of 24_Investor_Returns (R20-R24).
+
+    Section II layout (cols): Scenario(3), W1_IRR(4), W1_MOIC(5),
+    W2_IRR(6), W2_MOIC(7), W3_IRR(8), W3_MOIC(9), W4_IRR(10),
+    W4_MOIC(11), Best(12), NDP(13).
+    5 rows: Stress Bear, Downside, Base Case, Upside, Bull Case.
+    """
+    ws = wb["24_Investor_Returns"]
+    matrix = []
+    for r in range(20, 25):
+        scenario = ws.cell(r, 3).value
+        if not scenario:
+            continue
+
+        def fv(row, col):
+            v = ws.cell(row, col).value
+            return round(float(v), 2) if isinstance(v, (int, float)) else None
+
+        matrix.append({
+            "scenario": str(scenario).strip(),
+            "W1_IRR": fv(r, 4),
+            "W1_MOIC": fv(r, 5),
+            "W2_IRR": fv(r, 6),
+            "W2_MOIC": fv(r, 7),
+            "W3_IRR": fv(r, 8),
+            "W3_MOIC": fv(r, 9),
+            "W4_IRR": fv(r, 10),
+            "W4_MOIC": fv(r, 11),
+            "best": str(ws.cell(r, 12).value or "").strip(),
+            "ndp": fv(r, 13)
+        })
+
+    # Sanity checks
+    base = next((x for x in matrix if "Base" in x["scenario"]), None)
+    if base:
+        assert base["W3_IRR"] == 20.09, \
+            f"Base W3_IRR must equal det_irr 20.09, got {base['W3_IRR']}"
+        assert base["W3_MOIC"] == 2.0, \
+            f"Base W3_MOIC must equal 2.0, got {base['W3_MOIC']}"
+        assert base["ndp"] == 3000, \
+            f"Base NDP must be 3000, got {base['ndp']}"
+
+    # Monotonicity: Bear < Downside < Base < Upside < Bull by W3_IRR
+    irr_seq = [x["W3_IRR"] for x in matrix if x["W3_IRR"] is not None]
+    assert irr_seq == sorted(irr_seq), \
+        f"Returns matrix W3_IRR not monotonic: {irr_seq}"
+
+    print(f"  Returns matrix: {len(matrix)} scenarios, Base W3={base['W3_IRR']}/{base['W3_MOIC']}, monotonic")
+    return matrix
 
 
 def extract_unit_economics(wb):
@@ -243,10 +319,8 @@ def main():
     with open(CONTENT) as f:
         content = json.load(f)
 
-    # Build canonical data
     pl_rows = extract_pl(wb)
 
-    # Compute 3Y totals for sanity check
     rev_key = "Total (Итого) Revenue (Выручка)"
     ebitda_key = "EBITDA (прибыль до вычетов) GAAP, standard"
     rev_vals = pl_rows.get(rev_key, [0]*12)
@@ -255,7 +329,6 @@ def main():
     revenue_3y = round(sum(rev_vals[:12]))
     ebitda_3y = round(sum(ebitda_vals[:12]))
 
-    # MC metrics from xlsx SSOT (not legacy content.json)
     mc = extract_mc_summary_from_xlsx(wb)
     ndp_det = extract_ndp_det_from_kpi(wb)
 
@@ -265,6 +338,10 @@ def main():
     key_metrics["ndp_3y"] = ndp_det
     key_metrics["ndp_mc_mean"] = mc["ndp_mean"]
     key_metrics["ndp_mc_p10"] = mc["ndp_p10"]
+
+    print("Extracting investor returns...")
+    t1_cashflow = extract_t1_cashflow(wb)
+    returns_matrix = extract_returns_matrix(wb)
 
     deck_data = {
         "meta": {
@@ -316,7 +393,10 @@ def main():
                 ]
             },
             "revenue_breakdown": extract_revenue_breakdown(wb),
-            "investor_returns": extract_investor_returns(wb),
+            "investor_returns": {
+                "t1_cashflow": t1_cashflow,
+                "returns_matrix": returns_matrix
+            },
             "capm": extract_capm(content)
         },
         "appendix_refs": {
@@ -328,10 +408,8 @@ def main():
         }
     }
 
-    # Patch stale numbers in text copied from legacy content.json
     mc_irr_str = str(mc["irr_mean"])
     def patch_text(obj):
-        """Recursively replace stale 7.24 references in string values."""
         if isinstance(obj, dict):
             return {k: patch_text(v) for k, v in obj.items()}
         if isinstance(obj, list):
@@ -346,42 +424,52 @@ def main():
     deck_data["slides"] = patch_text(deck_data["slides"])
     deck_data["chart_data"] = patch_text(deck_data["chart_data"])
 
-    # Patch slide 17 percentiles in slides array (numeric, from legacy content.json)
     for slide in deck_data["slides"]:
         if slide.get("n") == 17 and "percentiles" in slide:
             mc_pct = extract_mc_percentiles_from_xlsx(wb)
             slide["percentiles"] = mc_pct["percentiles"]
-        # Fix NDP total in slide 13 P&L rows
         if slide.get("n") == 13 and "pl" in slide:
             for row in slide["pl"]:
                 if "NDP" in row.get("row", "").upper() or "распределени" in row.get("row", "").lower():
+                    row["y1"] = None
+                    row["y2"] = None
+                    row["y3"] = None
                     row["total"] = ndp_det
 
-    # Fix NDP total in P&L summary rows (was 1385 from MC P10, should be det NDP)
     for row in deck_data["financial"]["pl_summary"]["rows"]:
         if "NDP" in row.get("row", "").upper() or "распределени" in row.get("row", "").lower():
+            row["y1"] = None
+            row["y2"] = None
+            row["y3"] = None
             row["total"] = ndp_det
 
-    # Sanity checks — xlsx-sourced (non-circular)
-    xlsx_mc_mean = mc["irr_mean"]
-    xlsx_ndp_det = ndp_det
-    assert abs(deck_data["key_metrics"]["mc_mean_irr"] - xlsx_mc_mean) < 0.01, \
-        f"mc_mean_irr={deck_data['key_metrics']['mc_mean_irr']}, xlsx={xlsx_mc_mean}"
-    assert abs(deck_data["key_metrics"]["ndp_3y"] - xlsx_ndp_det) < 1, \
-        f"ndp_3y={deck_data['key_metrics']['ndp_3y']}, xlsx={xlsx_ndp_det}"
+    # Sanity checks
+    assert abs(deck_data["key_metrics"]["mc_mean_irr"] - mc["irr_mean"]) < 0.01
+    assert abs(deck_data["key_metrics"]["ndp_3y"] - ndp_det) < 1
     assert revenue_3y == 4545, f"revenue_3y={revenue_3y}, expected 4545"
     assert ebitda_3y == 2167, f"ebitda_3y={ebitda_3y}, expected 2167"
     assert deck_data["key_metrics"]["det_irr"] == 20.09
     assert deck_data["key_metrics"]["moic"] == 2.0
     assert deck_data["key_metrics"]["wacc"] == 19.05
     assert deck_data["key_metrics"]["anchor"] == 3000
+
+    for row in deck_data["financial"]["pl_summary"]["rows"]:
+        if "NDP" in row.get("row", "").upper():
+            assert row["y1"] is None and row["y2"] is None and row["y3"] is None
+            assert row["total"] == ndp_det
+
+    ir = deck_data["financial"]["investor_returns"]
+    assert "t1_cashflow" in ir and "returns_matrix" in ir
+    base_row = next(x for x in ir["returns_matrix"] if "Base" in x["scenario"])
+    assert base_row["W3_IRR"] == 20.09
+    assert base_row["W3_MOIC"] == 2.0
+
     print("All sanity checks PASSED (xlsx-sourced)")
 
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(deck_data, f, ensure_ascii=False, indent=2)
     print(f"Written: {OUT} ({OUT.stat().st_size:,} bytes)")
 
-    # TODO_MISSING_DATA.md
     missing = []
     missing.append("- Phase 2 charts: S04 (TAM/SAM funnel detailed), S06 (capital discipline waterfall detailed), S07 (exit routes probability), S08 (market funnel 3D), S23 (terms comparison), S25 (CTA timeline)")
     missing.append("- Scenario toggle cross-slide data (Phase 2)")

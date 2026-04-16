@@ -12,7 +12,7 @@ LAYOUTS_DIR = SRC / "layouts"
 I18N_DIR = ROOT / "i18n"
 DATA_FILE = ROOT / "data_extract" / "deck_data_v1.2.0.json"
 OUT = ROOT / "Deck_v1.2.0" / "TrendStudio_LP_Deck_v1.2.0_Interactive.html"
-BUDGET = 450000  # bytes
+BUDGET = 650000  # bytes (Phase 2B: raised from 450K for 7 interactive charts + controls + drilldown)
 
 CDN_WHITELIST = [
     "https://fonts.googleapis.com",

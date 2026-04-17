@@ -16,7 +16,8 @@ module.exports = {
   testMatch: [
     '<rootDir>/src/cinematic/__tests__/*.test.js',
     '<rootDir>/src/slides/__tests__/*.test.js',
-    '<rootDir>/src/__tests__/*.test.js'
+    '<rootDir>/src/__tests__/*.test.js',
+    '<rootDir>/qa/__tests__/*.test.js'
   ],
   testPathIgnorePatterns: [
     '/node_modules/',

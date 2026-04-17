@@ -867,6 +867,13 @@ html, body {
   "a11y.chart.peers.label": "Диаграмма рассеяния по peer-компаниям: EV/EBITDA против IRR historic. 6 синтетических точек-peer и одна золотая звезда — проект TrendStudio. Используйте Tab для перехода по точкам, Enter для детализации.",
   "a11y.chart.pipeline.label": "Диаграмма Ганта пайплайна: 7 проектов на горизонте 2025-Q1 … 2028-Q4 с цветовой кодировкой по стадии и маркерами релиза",
   "a11y.chart.revenue.label": "Водопад выручки 2026–2028 по сценариям",
+  "a11y.control.horizon.label": "Слайдер: горизонт инвестирования в годах от 3 до 10",
+  "a11y.control.rate.label": "Слайдер: ставка дисконтирования в процентах от 10 до 25",
+  "a11y.control.scenario.base": "Базовый сценарий",
+  "a11y.control.scenario.bear": "Пессимистичный сценарий (bear)",
+  "a11y.control.scenario.bull": "Оптимистичный сценарий (bull)",
+  "a11y.control.scenario.group": "Переключатель сценария: Базовый, Оптимистичный, Пессимистичный",
+  "a11y.control.stress.label": "Слайдер: стресс-тест в процентах от 0 до 100",
   "a11y.drilldown.cashflow.label": "Окно детализации денежных потоков по выбранному году с методологией и числами",
   "a11y.drilldown.ebitda.label": "Окно детализации EBITDA breakdown с методологией и числами по годам",
   "a11y.drilldown.irr.label": "Окно детализации IRR Sensitivity с методологией WACC-якоря, формулой чувствительности и границами зон риска",
@@ -1196,24 +1203,69 @@ html, body {
   "ui.chart.revenue.legend.bull": "Bull",
   "ui.chart.revenue.title": "Выручка по годам",
   "ui.chart.revenue.total": "Итого 3Y",
+  "ui.control.horizon.format": "лет",
+  "ui.control.horizon.label": "Горизонт, лет",
+  "ui.control.rate.format": "%",
+  "ui.control.rate.label": "Ставка дисконтирования, %",
+  "ui.control.scenario.base": "Базовый",
+  "ui.control.scenario.bear": "Пессимистичный",
+  "ui.control.scenario.bull": "Оптимистичный",
+  "ui.control.scenario.label": "Сценарий",
+  "ui.control.stress.format": "%",
+  "ui.control.stress.label": "Стресс-тест, %",
+  "ui.drilldown.cashflow.cumulative": "Кумулятив",
   "ui.drilldown.cashflow.explanation": "Годовой денежный поток складывается из трёх компонентов: операционный (основная деятельность), инвестиционный (капитальные вложения в производство контента) и финансовый (привлечение капитала, погашение долга). Net CF = Op + Inv + Fin. Накопительная линия показывает совокупный Net CF на конец каждого года: портфель выходит в плюс после релизов 2030 года и завершает горизонт с cumulative ≈ 1 250 млн ₽.",
+  "ui.drilldown.cashflow.financing": "Финанс.",
+  "ui.drilldown.cashflow.investing": "Инвест.",
   "ui.drilldown.cashflow.methodology": "Источник: cashflow.yearly (deck_data v1.2.0) — пять опорных лет: 2026 (инвестиции), 2029 (финансирование), 2030 (первые операционные поступления и остаток финансирования), 2031–2032 (чисто операционные поступления пост-релиз). Сценарии: bull масштабирует operating и financing на ×1.2, bear на ×0.6; investing зафиксирован (CAPEX принят). Cumulative считается как накопительная сумма Net CF по годам от 2026 к 2032.",
+  "ui.drilldown.cashflow.net": "Чистый CF",
+  "ui.drilldown.cashflow.operating": "Операц.",
   "ui.drilldown.cashflow.title": "Денежные потоки — детализация по году",
+  "ui.drilldown.common.close": "Закрыть",
+  "ui.drilldown.common.data_source": "Источник данных",
+  "ui.drilldown.common.scenario": "Сценарий",
+  "ui.drilldown.common.title": "Детали",
+  "ui.drilldown.common.value": "Значение",
+  "ui.drilldown.common.warning_synthetic": "⚠ Данные-заглушка: peer-set обновится в Phase 2C после NDA",
+  "ui.drilldown.common.year": "Год",
+  "ui.drilldown.common.years": "лет",
+  "ui.drilldown.ebitda.ebitda": "EBITDA",
   "ui.drilldown.ebitda.explanation": "EBITDA складывается из выручки за вычетом прямых затрат (COGS) и операционных расходов (OPEX). Маржа — отношение EBITDA к выручке в процентах. В bull-сценарии EBITDA масштабируется × 1.25, в bear — × 0.60.",
+  "ui.drilldown.ebitda.margin": "Маржа",
   "ui.drilldown.ebitda.methodology": "Данные источника: pnl.ebitda_breakdown (deck_data v1.2.0) с тремя годами 2026–2028. COGS и OPEX приведены как отрицательные величины: Revenue + COGS + OPEX = EBITDA. Средняя маржа за 3 года в базовом сценарии — 47.7%. Bull/Bear — стресс-мультипликаторы EBITDA при неизменной выручке и затратах: маржа растёт/падает пропорционально EBITDA.",
+  "ui.drilldown.ebitda.revenue": "Выручка",
   "ui.drilldown.ebitda.title": "EBITDA breakdown — детализация",
   "ui.drilldown.irr.explanation": "Тепловая карта показывает устойчивость IRR портфеля к двум ключевым параметрам: ставке дисконтирования (discount rate, 10–25%) и горизонту инвестирования (3–10 лет). Цвет ячейки кодирует зону риска: красный (IRR < 10%) — ниже WACC, жёлтый (10–18%) — умеренная премия, зелёный (> 18%) — целевой возврат, тёмно-зелёный (> 25%) — премиальный сценарий. Активная ячейка подсвечена золотой рамкой и соответствует текущему положению слайдеров.",
+  "ui.drilldown.irr.horizon": "Горизонт",
+  "ui.drilldown.irr.irr": "IRR",
   "ui.drilldown.irr.methodology": "Опорная точка: WACC = 19%, горизонт = 5 лет, детерминированный IRR = 20.09% (anchor в deck_data.sensitivity.irr_matrix). Формула чувствительности: IRR(r, h) = IRR_det × (1 − α·(r − r₀)/r₀ + β·(h − h₀)/h₀), где α ≈ 0.28 (эластичность к ставке), β ≈ 0.14 (к горизонту), r₀ = 19%, h₀ = 5 лет. Матрица монотонна: при росте ставки IRR снижается, при росте горизонта растёт. Значения 7×4 = 28 ячеек предвычислены и валидированы в S41 audit.",
+  "ui.drilldown.irr.rate": "Ставка",
   "ui.drilldown.irr.title": "IRR Sensitivity — детализация",
+  "ui.drilldown.mc.bin": "Интервал IRR",
+  "ui.drilldown.mc.count": "Частота",
+  "ui.drilldown.mc.cumulative": "Накопит.",
   "ui.drilldown.mc.explanation": "Гистограмма показывает распределение IRR по результатам 50 000 симуляций Monte Carlo. Золотая пунктирная линия на 20,09% — детерминированный целевой IRR (главный таргет). Цветные маркеры — перцентили P5 (−0,4%), P50 (12,0%) и P95 (21,1%). Ползунок стресса смещает среднее и расширяет дисперсию согласно таблице stress_levels.",
   "ui.drilldown.mc.methodology": "Источник: mc.irr_distribution (30 бинов шириной 1,5 п.п.), mc.percentiles, mc.stress_levels. N = 50 000 итераций, seed = 42, 5 стохастических переменных: тайминг релизов (Poisson λ=0,5), hit-rate (Triangular 0,40/0,70/1,00), отклонение бюджета, дисконт-фактор, валютный риск. При stress > 0 бины пересчитываются аналитически как N(μ + mean_shift, σ · sigma_mult) с линейной интерполяцией между опорными уровнями 0/25/50/75/100.",
+  "ui.drilldown.mc.probability": "Вероятность",
   "ui.drilldown.mc.title": "Monte Carlo — детализация бина",
+  "ui.drilldown.peers.company": "Компания",
   "ui.drilldown.peers.explanation": "Все значения — synthetic-mock, real peer-set в Phase 2C после NDA. Сравнение только для иллюстрации позиционирования.",
   "ui.drilldown.peers.methodology": "Ось X: EV/EBITDA (×) — отношение enterprise value к EBITDA за последний отчётный период. Ось Y: IRR historic (%) — историческая доходность капитала по проектам студии за 3-5 лет. Размер точки пропорционален EV/Revenue. Цвет обозначает страну (RU/US/FR). Золотая звезда — проект TrendStudio с IRR-projected по базовому сценарию. Валидация мультипликаторов и NDA-доступ к trading comps — Phase 2C (v1.2.1).",
+  "ui.drilldown.peers.region": "Регион",
+  "ui.drilldown.peers.ticker": "Тикер",
   "ui.drilldown.peers.title": "Peer-сравнение: детали",
+  "ui.drilldown.pipeline.budget": "Бюджет",
+  "ui.drilldown.pipeline.code": "Код",
+  "ui.drilldown.pipeline.end": "Финиш",
   "ui.drilldown.pipeline.explanation": "Карточка проекта: код, жанр/тип (фильм или сериал), стадия производства (Script → Development → Pre-Production → Production → Post-Production → Release), горизонт производства по кварталам, релизная дата, бюджет и прогнозируемая выручка в млн ₽. Цвет полосы в диаграмме Ганта отражает текущую стадию; штриховка отличает сериал от фильма; пунктирная линия с шестерёнкой помечает дату релиза.",
   "ui.drilldown.pipeline.methodology": "Источник: pipeline.projects (deck_data v1.2.0). Горизонт 2025-Q1 … 2028-Q4 (16 кварталов). Бюджет указан как прямые продюсерские затраты, выручка — консолидированный план продаж по всем окнам (theatrical + цифровые + ТВ). Bull/Bear сценарии масштабируют выручку через мультипликаторы pipeline.revenue_by_year, производственные сроки и бюджет не меняются.",
+  "ui.drilldown.pipeline.name": "Название",
+  "ui.drilldown.pipeline.release": "Релиз",
+  "ui.drilldown.pipeline.revenue": "Выручка",
+  "ui.drilldown.pipeline.stage": "Стадия",
+  "ui.drilldown.pipeline.start": "Старт",
   "ui.drilldown.pipeline.title": "Проект пайплайна — детализация",
+  "ui.drilldown.pipeline.type": "Тип",
   "ui.drilldown.revenue.explanation": "Waterfall показывает вклад каждого года в трёхлетний итог 4 545 млн ₽ (base).",
   "ui.drilldown.revenue.methodology": "Base — консенсус-план. Bull +20%, Bear −30% — стрессы по channel-mix (box office volatility, SVOD pricing).",
   "ui.drilldown.revenue.title": "Выручка — разбор года",
@@ -1267,6 +1319,13 @@ html, body {
   "a11y.chart.peers.label": "Peer scatter chart: EV/EBITDA vs IRR historic. Six synthetic peer points and one gold star for the TrendStudio project. Use Tab to move between points, Enter to drill down.",
   "a11y.chart.pipeline.label": "Pipeline Gantt chart: 7 projects across the 2025-Q1 to 2028-Q4 horizon, colour-coded by stage with release markers",
   "a11y.chart.revenue.label": "Revenue waterfall 2026–2028 by scenario",
+  "a11y.control.horizon.label": "Slider: investment horizon in years from 3 to 10",
+  "a11y.control.rate.label": "Slider: discount rate in percent from 10 to 25",
+  "a11y.control.scenario.base": "Base scenario",
+  "a11y.control.scenario.bear": "Bear (pessimistic) scenario",
+  "a11y.control.scenario.bull": "Bull (optimistic) scenario",
+  "a11y.control.scenario.group": "Scenario switcher: Base, Bull, Bear",
+  "a11y.control.stress.label": "Slider: stress test in percent from 0 to 100",
   "a11y.drilldown.cashflow.label": "Cash flow detail dialog for the selected year with methodology and figures",
   "a11y.drilldown.ebitda.label": "EBITDA breakdown detail dialog with methodology and per-year figures",
   "a11y.drilldown.irr.label": "IRR Sensitivity detail dialog with WACC anchor methodology, sensitivity formula and risk-zone thresholds",
@@ -1596,24 +1655,69 @@ html, body {
   "ui.chart.revenue.legend.bull": "Bull",
   "ui.chart.revenue.title": "Revenue by year",
   "ui.chart.revenue.total": "Total 3Y",
+  "ui.control.horizon.format": "yrs",
+  "ui.control.horizon.label": "Horizon, years",
+  "ui.control.rate.format": "%",
+  "ui.control.rate.label": "Discount rate, %",
+  "ui.control.scenario.base": "Base",
+  "ui.control.scenario.bear": "Bear",
+  "ui.control.scenario.bull": "Bull",
+  "ui.control.scenario.label": "Scenario",
+  "ui.control.stress.format": "%",
+  "ui.control.stress.label": "Stress test, %",
+  "ui.drilldown.cashflow.cumulative": "Cumulative",
   "ui.drilldown.cashflow.explanation": "Annual cash flow consists of three components: operating (ongoing business), investing (capex into content production) and financing (capital raised, debt service). Net CF = Op + Inv + Fin. The cumulative line plots running Net CF at year end: the portfolio turns positive after 2030 releases and finishes the horizon at cumulative approx 1,250 RUB million.",
+  "ui.drilldown.cashflow.financing": "Financing",
+  "ui.drilldown.cashflow.investing": "Investing",
   "ui.drilldown.cashflow.methodology": "Source: cashflow.yearly (deck_data v1.2.0) with five anchor years: 2026 (investing), 2029 (financing), 2030 (first operating inflows plus remaining financing), 2031-2032 (pure operating inflows post-release). Scenarios: bull scales operating and financing by x1.2, bear by x0.6; investing is held flat (capex committed). Cumulative is the running sum of Net CF across years from 2026 to 2032.",
+  "ui.drilldown.cashflow.net": "Net CF",
+  "ui.drilldown.cashflow.operating": "Operating",
   "ui.drilldown.cashflow.title": "Cash flow — per-year detail",
+  "ui.drilldown.common.close": "Close",
+  "ui.drilldown.common.data_source": "Data source",
+  "ui.drilldown.common.scenario": "Scenario",
+  "ui.drilldown.common.title": "Details",
+  "ui.drilldown.common.value": "Value",
+  "ui.drilldown.common.warning_synthetic": "⚠ Synthetic data: peer-set will be updated in Phase 2C after NDA",
+  "ui.drilldown.common.year": "Year",
+  "ui.drilldown.common.years": "yrs",
+  "ui.drilldown.ebitda.ebitda": "EBITDA",
   "ui.drilldown.ebitda.explanation": "EBITDA equals revenue minus direct costs (COGS) and operating expenses (OPEX). Margin is the ratio of EBITDA to revenue in percent. Under the bull scenario EBITDA is scaled by x1.25, under bear by x0.60.",
+  "ui.drilldown.ebitda.margin": "Margin",
   "ui.drilldown.ebitda.methodology": "Source: pnl.ebitda_breakdown (deck_data v1.2.0) across three years 2026–2028. COGS and OPEX are expressed as negative values so Revenue + COGS + OPEX = EBITDA. Average 3-year margin in the base case is 47.7%. Bull/Bear apply stress multipliers to EBITDA while holding revenue and costs flat, so the margin moves proportionally with EBITDA.",
+  "ui.drilldown.ebitda.revenue": "Revenue",
   "ui.drilldown.ebitda.title": "EBITDA breakdown — detail view",
   "ui.drilldown.irr.explanation": "The heatmap shows how the portfolio IRR responds to two key inputs: the discount rate (10–25%) and the investment horizon (3–10 years). Cell color encodes the risk zone: red (IRR < 10%) is below WACC, yellow (10–18%) is a moderate premium, green (> 18%) is the target return, dark-green (> 25%) is a premium scenario. The active cell is outlined in gold and tracks the current slider position.",
+  "ui.drilldown.irr.horizon": "Horizon",
+  "ui.drilldown.irr.irr": "IRR",
   "ui.drilldown.irr.methodology": "Anchor: WACC = 19%, horizon = 5 years, deterministic IRR = 20.09% (anchor in deck_data.sensitivity.irr_matrix). Sensitivity formula: IRR(r, h) = IRR_det × (1 − α·(r − r₀)/r₀ + β·(h − h₀)/h₀), with α ≈ 0.28 (rate elasticity), β ≈ 0.14 (horizon elasticity), r₀ = 19%, h₀ = 5 years. The matrix is monotone: IRR falls as the rate rises and grows as the horizon extends. All 7×4 = 28 cells are pre-computed and validated in the S41 audit.",
+  "ui.drilldown.irr.rate": "Rate",
   "ui.drilldown.irr.title": "IRR Sensitivity — detail view",
+  "ui.drilldown.mc.bin": "IRR bin",
+  "ui.drilldown.mc.count": "Frequency",
+  "ui.drilldown.mc.cumulative": "Cumulative",
   "ui.drilldown.mc.explanation": "The histogram shows the IRR distribution across 50,000 Monte Carlo simulations. The gold dashed line at 20.09% marks the deterministic target IRR (primary headline metric). Coloured markers indicate percentiles P5 (-0.4%), P50 (12.0%) and P95 (21.1%). The stress slider shifts the mean and widens the dispersion according to the stress_levels table.",
   "ui.drilldown.mc.methodology": "Source: mc.irr_distribution (30 bins, 1.5 pp wide), mc.percentiles, mc.stress_levels. N = 50,000 iterations, seed = 42, 5 stochastic variables: release timing (Poisson lambda=0.5), hit rate (Triangular 0.40/0.70/1.00), budget variance, discount factor, FX risk. For stress > 0 the bins are re-sampled analytically as N(mu + mean_shift, sigma * sigma_mult) with linear interpolation between the 0/25/50/75/100 anchor levels.",
+  "ui.drilldown.mc.probability": "Probability",
   "ui.drilldown.mc.title": "Monte Carlo — bin detail",
+  "ui.drilldown.peers.company": "Company",
   "ui.drilldown.peers.explanation": "All values are synthetic-mock; a real peer set will arrive in Phase 2C after NDA access. Comparison is illustrative of positioning only.",
   "ui.drilldown.peers.methodology": "X-axis: EV/EBITDA (×) — enterprise value to EBITDA for the latest reporting period. Y-axis: IRR historic (%) — historical return on capital on the studio's 3–5 year project portfolio. Bubble size is proportional to EV/Revenue. Color encodes country (RU/US/FR). The gold star is the TrendStudio project with IRR-projected under the base scenario. Multiple validation and NDA access to trading comps — Phase 2C (v1.2.1).",
+  "ui.drilldown.peers.region": "Region",
+  "ui.drilldown.peers.ticker": "Ticker",
   "ui.drilldown.peers.title": "Peer comparison: details",
+  "ui.drilldown.pipeline.budget": "Budget",
+  "ui.drilldown.pipeline.code": "Code",
+  "ui.drilldown.pipeline.end": "End",
   "ui.drilldown.pipeline.explanation": "Project card: code, genre/type (film or series), production stage (Script → Development → Pre-Production → Production → Post-Production → Release), quarterly production horizon, release date, budget and projected revenue in RUB million. The Gantt bar colour reflects the current stage; diagonal stripes mark a series (vs. a solid bar for a film); a dashed line with a gear icon marks the release date.",
   "ui.drilldown.pipeline.methodology": "Source: pipeline.projects (deck_data v1.2.0). Horizon 2025-Q1 … 2028-Q4 (16 quarters). Budget covers direct producer costs; revenue is the consolidated sales plan across all windows (theatrical + digital + TV). Bull/Bear scenarios scale revenue via the pipeline.revenue_by_year multipliers; production timelines and budgets stay constant.",
+  "ui.drilldown.pipeline.name": "Title",
+  "ui.drilldown.pipeline.release": "Release",
+  "ui.drilldown.pipeline.revenue": "Revenue",
+  "ui.drilldown.pipeline.stage": "Stage",
+  "ui.drilldown.pipeline.start": "Start",
   "ui.drilldown.pipeline.title": "Pipeline project — detail view",
+  "ui.drilldown.pipeline.type": "Type",
   "ui.drilldown.revenue.explanation": "Waterfall shows each year's contribution to the 3Y total 4,545 M RUB (base).",
   "ui.drilldown.revenue.methodology": "Base — consensus plan. Bull +20%, Bear −30% — stresses from channel-mix (box office volatility, SVOD pricing).",
   "ui.drilldown.revenue.title": "Revenue — year drill-down",
@@ -6690,6 +6794,437 @@ if(TS&&TS.Charts&&typeof TS.Charts.register==='function')TS.Charts.register('pip
   });
 })();
 
+
+
+  // === LIVE-CONTROLS (S49) ===
+/* S49: Live-Controls — scenario switcher + 3 sliders (rate/horizon/stress)
+   Owner: S49 | Phase 2B
+   Depends: macros.js, orchestrator.js (TS.readURLPriority/updateURLHash/setScenario),
+            components.js (TS.Components.Slider), i18n.js (I18N.t)
+   Provides: window.TS.Controls.mount(container), window.TS.State (minimal store).
+   Scenario alias: event payload stays in {base,bull,bear} (charts S42-S48 expect this);
+   in parallel we call TS.setScenario('opt'|'pess'|'base') for orchestrator compatibility. */
+
+(function() {
+  'use strict';
+
+  var DEFAULTS = { scenario: 'base', rate: 15, horizon: 5, stress: 0 };
+  var SCENARIOS = ['base', 'bull', 'bear'];
+  var ORCH = { base: 'base', bull: 'opt', bear: 'pess' };
+  var DEBOUNCE_MS = 150;
+
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  function readPriority(key, fb) {
+    var TS = window.TS;
+    if (TS && typeof TS.readURLPriority === 'function') return TS.readURLPriority(key, fb);
+    try {
+      var sp = new URLSearchParams(window.location.search);
+      if (sp.has(key)) return sp.get(key);
+    } catch (e) { /* */ }
+    var hash = (window.location.hash || '').replace(/^#/, '');
+    var parts = hash ? hash.split('&') : [];
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i].split('=');
+      if (p[0] === key && p.length > 1) return decodeURIComponent(p[1]);
+    }
+    try {
+      if (typeof sessionStorage !== 'undefined') {
+        var s = sessionStorage.getItem(key);
+        if (s !== null) return s;
+      }
+    } catch (e) { /* */ }
+    return fb;
+  }
+
+  function updateHash(key, value) {
+    var TS = window.TS;
+    if (TS && typeof TS.updateURLHash === 'function') { TS.updateURLHash(key, value); return; }
+    try { if (typeof sessionStorage !== 'undefined') sessionStorage.setItem(key, String(value)); }
+    catch (e) { /* */ }
+  }
+
+  // Minimal TS.State store (created once per page)
+  function ensureState() {
+    window.TS = window.TS || {};
+    if (window.TS.State && typeof window.TS.State.get === 'function') return window.TS.State;
+    var store = {}, subs = {};
+    var State = {
+      get: function(k) { return store[k]; },
+      set: function(k, v, opts) {
+        var old = store[k];
+        if (old === v) return;
+        store[k] = v;
+        if (opts && opts.persist) updateHash(k, v);
+        (subs[k] || []).slice().forEach(function(fn) {
+          try { fn(v, old); } catch (e) { /* swallow */ }
+        });
+      },
+      subscribe: function(k, fn) {
+        if (!subs[k]) subs[k] = [];
+        subs[k].push(fn);
+        return function() { subs[k] = (subs[k] || []).filter(function(f) { return f !== fn; }); };
+      }
+    };
+    window.TS.State = State;
+    return State;
+  }
+
+  function initValues() {
+    var raw = {
+      scenario: readPriority('scenario', DEFAULTS.scenario),
+      rate:     readPriority('rate',     DEFAULTS.rate),
+      horizon:  readPriority('horizon',  DEFAULTS.horizon),
+      stress:   readPriority('stress',   DEFAULTS.stress)
+    };
+    if (SCENARIOS.indexOf(raw.scenario) === -1) raw.scenario = DEFAULTS.scenario;
+    raw.rate    = clamp(parseInt(raw.rate, 10)    || DEFAULTS.rate,    10, 25);
+    raw.horizon = clamp(parseInt(raw.horizon, 10) || DEFAULTS.horizon,  3, 10);
+    raw.stress  = clamp(parseInt(raw.stress, 10)  || DEFAULTS.stress,   0, 100);
+    return raw;
+  }
+
+  function tr(key, fb) {
+    if (window.I18N && typeof window.I18N.t === 'function') {
+      var v = window.I18N.t(key);
+      if (v && v.indexOf('[!') !== 0 && v.indexOf('[EN:') !== 0) return v;
+    }
+    return fb;
+  }
+
+  function debounce(fn, ms) {
+    var t = null;
+    var w = function() {
+      if (t) clearTimeout(t);
+      t = setTimeout(function() { t = null; fn(); }, ms);
+    };
+    w.cancel = function() { if (t) { clearTimeout(t); t = null; } };
+    return w;
+  }
+
+  function emitParam(state) {
+    if (window.TS && typeof window.TS.emit === 'function') {
+      window.TS.emit('param:changed', {
+        rate: state.get('rate'), horizon: state.get('horizon'), stress: state.get('stress')
+      });
+    }
+  }
+
+  function renderSwitch(container, state) {
+    var group = document.createElement('div');
+    group.className = 'ts-scenario-switch';
+    group.setAttribute('role', 'radiogroup');
+    group.setAttribute('aria-label', tr('a11y.control.scenario.group', 'Scenario switcher'));
+    group.style.cssText = 'display:flex;gap:8px;align-items:center;flex-wrap:wrap;';
+
+    var legend = document.createElement('span');
+    legend.className = 'ts-scenario-switch__legend';
+    legend.textContent = tr('ui.control.scenario.label', 'Scenario');
+    legend.style.cssText = 'color:var(--text-secondary,#9CA3AF);font-size:13px;margin-right:4px;';
+    group.appendChild(legend);
+
+    var buttons = {};
+
+    function setActive(v, opts) {
+      opts = opts || {};
+      if (SCENARIOS.indexOf(v) === -1) return;
+      Object.keys(buttons).forEach(function(k) {
+        var on = (k === v);
+        buttons[k].setAttribute('aria-checked', on ? 'true' : 'false');
+        buttons[k].tabIndex = on ? 0 : -1;
+        buttons[k].classList.toggle('is-active', on);
+      });
+      if (opts.focus) { try { buttons[v].focus(); } catch (e) { /* */ } }
+      state.set('scenario', v, { persist: true });
+      if (opts.silent) return;
+      if (window.TS && typeof window.TS.emit === 'function') {
+        window.TS.emit('scenario:changed', v);
+      }
+      var o = ORCH[v];
+      if (o && window.TS && typeof window.TS.setScenario === 'function') {
+        try { window.TS.setScenario(o); } catch (e) { /* different branch */ }
+      }
+    }
+
+    SCENARIOS.forEach(function(v) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('role', 'radio');
+      btn.setAttribute('data-value', v);
+      btn.setAttribute('aria-checked', 'false');
+      btn.setAttribute('aria-label', tr('a11y.control.scenario.' + v, v));
+      btn.className = 'ts-scenario-switch__btn';
+      btn.style.cssText = 'padding:6px 12px;border:1px solid rgba(201,169,97,0.35);background:transparent;color:var(--text-primary,#F5F5F5);border-radius:6px;cursor:pointer;font-size:13px;';
+      btn.textContent = tr('ui.control.scenario.' + v, v);
+      btn.addEventListener('click', function() { setActive(v, { focus: false }); });
+      btn.addEventListener('keydown', function(e) {
+        var idx = SCENARIOS.indexOf(v);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault(); setActive(SCENARIOS[(idx + 1) % SCENARIOS.length], { focus: true });
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault(); setActive(SCENARIOS[(idx - 1 + SCENARIOS.length) % SCENARIOS.length], { focus: true });
+        } else if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault(); setActive(v, { focus: true });
+        }
+      });
+      buttons[v] = btn;
+      group.appendChild(btn);
+    });
+
+    setActive(state.get('scenario') || DEFAULTS.scenario, { silent: true });
+    container.appendChild(group);
+    return { setActive: setActive, buttons: buttons, root: group };
+  }
+
+  function mountSlider(container, state, cfg, debounced) {
+    var Slider = window.TS && window.TS.Components && window.TS.Components.Slider;
+    if (typeof Slider !== 'function') return null;
+    return Slider(container, {
+      min: cfg.min, max: cfg.max, step: cfg.step,
+      value: state.get(cfg.key),
+      format: cfg.format,
+      a11y: { label: cfg.a11yLabel, valuetext: cfg.valuetext },
+      onChange: function(v) {
+        state.set(cfg.key, v, { persist: true });
+        debounced();
+      }
+    });
+  }
+
+  function mount(container) {
+    if (!container) throw new Error('TS.Controls.mount: container required');
+    var state = ensureState();
+    var init = initValues();
+    state.set('scenario', init.scenario, { persist: true });
+    state.set('rate',     init.rate,     { persist: true });
+    state.set('horizon',  init.horizon,  { persist: true });
+    state.set('stress',   init.stress,   { persist: true });
+
+    var root = document.createElement('div');
+    root.className = 'ts-controls';
+    root.style.cssText = 'display:flex;flex-direction:column;gap:12px;padding:12px;';
+
+    var sc = renderSwitch(root, state);
+
+    var box = document.createElement('div');
+    box.className = 'ts-controls__sliders';
+    box.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    root.appendChild(box);
+
+    var debounced = debounce(function() { emitParam(state); }, DEBOUNCE_MS);
+
+    var cfgs = [
+      { key: 'rate', min: 10, max: 25, step: 1,
+        a11yLabel: tr('a11y.control.rate.label', 'Discount rate, %'),
+        format: function(v) { return v + '%'; },
+        valuetext: function(v) { return v + ' percent'; } },
+      { key: 'horizon', min: 3, max: 10, step: 1,
+        a11yLabel: tr('a11y.control.horizon.label', 'Horizon, years'),
+        format: function(v) { return v + ' ' + tr('ui.control.horizon.format', 'yrs'); },
+        valuetext: function(v) { return v + ' years'; } },
+      { key: 'stress', min: 0, max: 100, step: 5,
+        a11yLabel: tr('a11y.control.stress.label', 'Stress, %'),
+        format: function(v) { return v + '%'; },
+        valuetext: function(v) { return v + ' percent stress'; } }
+    ];
+
+    var sliders = {};
+    cfgs.forEach(function(cfg) { sliders[cfg.key] = mountSlider(box, state, cfg, debounced); });
+
+    container.appendChild(root);
+
+    return {
+      root: root, scenario: sc, sliders: sliders, state: state,
+      destroy: function() {
+        debounced.cancel();
+        Object.keys(sliders).forEach(function(k) {
+          if (sliders[k] && typeof sliders[k].destroy === 'function') sliders[k].destroy();
+        });
+        if (root.parentNode) root.parentNode.removeChild(root);
+      }
+    };
+  }
+
+  window.TS = window.TS || {};
+  window.TS.Controls = {
+    mount: mount,
+    DEFAULTS: DEFAULTS,
+    SCENARIOS: SCENARIOS,
+    _ensureState: ensureState,
+    _initValues: initValues
+  };
+})();
+
+
+  // === DRILL-DOWN (S50) ===
+/* S50: Drill-Down coordinator (Phase 2B)
+   Owner: S50 | Deps: components.js (Modal, DrilldownCard), macros.js (TS.on/off),
+   i18n.js (window.I18N.t), charts.js (TS.Charts.formatValue).
+   Contract: 40_CONTRACTS.md §7. Listens 'drilldown:open' from 7 charts.
+   Exposes: window.TS.Drilldown = { init, open, close }. */
+(function() {
+  'use strict';
+  var TS = (window.TS = window.TS || {});
+  var _active = null, _inited = false, _handler = null;
+
+  function t(key, fb) {
+    var I = window.I18N;
+    if (I && typeof I.t === 'function') {
+      var v = I.t(key);
+      if (typeof v === 'string' && v.charAt(0) === '[') return fb != null ? fb : v;
+      return v;
+    }
+    return fb != null ? fb : key;
+  }
+  function money(v) {
+    if (v == null) return '\u2014';
+    if (TS.Charts && TS.Charts.formatValue) return TS.Charts.formatValue(v, 'currency');
+    var I = window.I18N;
+    if (I && I.formatCurrency) return I.formatCurrency(v);
+    return String(v);
+  }
+  function num(v, d) {
+    if (v == null) return '\u2014';
+    var I = window.I18N;
+    if (I && I.formatNumber) return I.formatNumber(v, d);
+    return String(v);
+  }
+  function pct(v, d) {
+    if (v == null || typeof v !== 'number') return v == null ? '\u2014' : String(v);
+    return v.toFixed(d != null ? d : 1) + '%';
+  }
+  function L(key, fb) { return t('ui.drilldown.common.' + key, fb); }
+
+  var MAP = {
+    revenue: function(p) { return [
+      { label: L('year', 'Год'),     value: p.year != null ? String(p.year) : '\u2014' },
+      { label: L('value', 'Значение'), value: money(p.value) },
+      { label: L('scenario', 'Сценарий'), value: p.scenario || '\u2014' }
+    ]; },
+    ebitda: function(p) { return [
+      { label: L('year', 'Год'),       value: p.year != null ? String(p.year) : '\u2014' },
+      { label: t('ui.drilldown.ebitda.revenue', 'Выручка'), value: money(p.revenue) },
+      { label: t('ui.drilldown.ebitda.ebitda', 'EBITDA'),   value: money(p.ebitda) },
+      { label: t('ui.drilldown.ebitda.margin', 'Маржа'),    value: pct(p.margin_pct, 1) },
+      { label: L('scenario', 'Сценарий'), value: p.scenario || '\u2014' }
+    ]; },
+    irr: function(p) { return [
+      { label: t('ui.drilldown.irr.rate', 'Ставка'),      value: p.rate != null ? p.rate + '%' : '\u2014' },
+      { label: t('ui.drilldown.irr.horizon', 'Горизонт'), value: p.horizon != null ? p.horizon + ' ' + L('years', 'лет') : '\u2014' },
+      { label: t('ui.drilldown.irr.irr', 'IRR'),          value: p.irr != null ? pct(p.irr, 1) : '\u2014' }
+    ]; },
+    pipeline: function(p) { return [
+      { label: t('ui.drilldown.pipeline.code', 'Код'),      value: p.code || '\u2014' },
+      { label: t('ui.drilldown.pipeline.name', 'Название'), value: p.name || '\u2014' },
+      { label: t('ui.drilldown.pipeline.stage', 'Стадия'),  value: p.stage_ru || p.stage || '\u2014' },
+      { label: t('ui.drilldown.pipeline.start', 'Старт'),   value: p.start || '\u2014' },
+      { label: t('ui.drilldown.pipeline.end', 'Финиш'),     value: p.end || '\u2014' },
+      { label: t('ui.drilldown.pipeline.release', 'Релиз'), value: p.release || '\u2014' },
+      { label: t('ui.drilldown.pipeline.budget', 'Бюджет'), value: money(p.budget_mrub) },
+      { label: t('ui.drilldown.pipeline.revenue', 'Выручка'), value: money(p.revenue_mrub) }
+    ]; },
+    cashflow: function(p) { return [
+      { label: L('year', 'Год'),           value: p.year != null ? String(p.year) : '\u2014' },
+      { label: t('ui.drilldown.cashflow.operating', 'Операц.'),  value: money(p.operating) },
+      { label: t('ui.drilldown.cashflow.investing', 'Инвест.'),  value: money(p.investing) },
+      { label: t('ui.drilldown.cashflow.financing', 'Финанс.'),  value: money(p.financing) },
+      { label: t('ui.drilldown.cashflow.net', 'Чистый CF'),      value: money(p.net) },
+      { label: t('ui.drilldown.cashflow.cumulative', 'Кумулятив'), value: money(p.cumulative) }
+    ]; },
+    mc: function(p) {
+      var m = [
+        { label: t('ui.drilldown.mc.bin', 'Интервал IRR'), value: (p.bin_lo != null && p.bin_hi != null) ? (p.bin_lo + '%\u2013' + p.bin_hi + '%') : '\u2014' },
+        { label: t('ui.drilldown.mc.count', 'Частота'),    value: p.count != null ? num(p.count, 0) : '\u2014' },
+        { label: t('ui.drilldown.mc.probability', 'Вероятность'), value: p.probability != null ? pct(p.probability * 100, 2) : '\u2014' }
+      ];
+      if (p.cumulative != null) m.push({ label: t('ui.drilldown.mc.cumulative', 'Накопит.'), value: pct(p.cumulative * 100, 1) });
+      return m;
+    },
+    peers: function(p) {
+      var m = [];
+      if (p.company) m.push({ label: t('ui.drilldown.peers.company', 'Компания'), value: p.company });
+      if (p.ticker)  m.push({ label: t('ui.drilldown.peers.ticker', 'Тикер'),    value: p.ticker });
+      if (p.ev_ebitda != null) m.push({ label: 'EV/EBITDA', value: String(p.ev_ebitda) + 'x' });
+      if (p.pe != null) m.push({ label: 'P/E', value: String(p.pe) + 'x' });
+      if (p.ps != null) m.push({ label: 'P/S', value: String(p.ps) + 'x' });
+      if (p.region) m.push({ label: t('ui.drilldown.peers.region', 'Регион'), value: p.region });
+      return m;
+    }
+  };
+
+  function metrics(chart, p) {
+    var fn = MAP[chart];
+    if (fn) { try { return fn(p || {}); } catch (e) { return []; } }
+    var list = [];
+    if (p && typeof p === 'object') Object.keys(p).forEach(function(k) { list.push({ label: k, value: String(p[k]) }); });
+    return list;
+  }
+
+  function buildBody(chart, payload) {
+    var wrap = document.createElement('div');
+    wrap.setAttribute('data-drilldown-chart', chart);
+
+    if (chart === 'peers' && payload && payload.synthetic === true) {
+      var w = document.createElement('div');
+      w.className = 'ts-drilldown-warning';
+      w.setAttribute('data-synthetic', 'true');
+      w.setAttribute('role', 'note');
+      w.style.cssText = 'background:rgba(255,180,0,0.08);border:1px solid rgba(255,180,0,0.35);border-radius:8px;padding:10px 12px;margin-bottom:12px;color:#FFB400;font-size:13px;';
+      w.textContent = t('ui.drilldown.common.warning_synthetic',
+        '\u26A0 Данные-заглушка: peer-set обновится в Phase 2C после NDA');
+      wrap.appendChild(w);
+    }
+
+    var card = (TS.Components && TS.Components.DrilldownCard)
+      ? TS.Components.DrilldownCard({
+          title: t('ui.drilldown.' + chart + '.title', chart),
+          subtitle: t('ui.drilldown.' + chart + '.explanation', '') || undefined,
+          metrics: metrics(chart, payload),
+          description: t('ui.drilldown.' + chart + '.methodology', '') || undefined
+        })
+      : document.createElement('div');
+    wrap.appendChild(card);
+    return wrap;
+  }
+
+  function open(chart, payload) {
+    close();
+    if (!TS.Components || !TS.Components.Modal) return null;
+    var title = t('ui.drilldown.' + chart + '.title', chart);
+    var aria  = t('a11y.drilldown.' + chart + '.label', title);
+    var m = TS.Components.Modal({
+      title: title,
+      body: buildBody(chart, payload),
+      ariaLabel: aria,
+      onClose: function() { if (_active === m) _active = null; }
+    });
+    _active = m;
+    m.open();
+    return m;
+  }
+
+  function close() {
+    if (_active && typeof _active.close === 'function') { try { _active.close(); } catch (e) {} }
+    _active = null;
+  }
+
+  function init() {
+    if (_inited || !TS.on) return;
+    _inited = true;
+    _handler = function(evt) {
+      if (!evt || !evt.chart) return;
+      open(evt.chart, evt.payload || {});
+    };
+    TS.on('drilldown:open', _handler);
+  }
+
+  TS.Drilldown = { init: init, open: open, close: close };
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  }
+})();
 
 
   // === SLIDES ===

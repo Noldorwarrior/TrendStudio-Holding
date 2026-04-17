@@ -1,0 +1,58 @@
+name: e2e
+
+on:
+  pull_request:
+    branches:
+      - main
+      - claude/deck-v1.2.0-phase2c
+  push:
+    branches:
+      - main
+      - claude/deck-v1.2.0-phase2c
+
+jobs:
+  jest:
+    name: Jest unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx jest --ci
+
+  legacy-tests:
+    name: Legacy tests (Phase 2A/2B invariants)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: node scripts/run-legacy-tests.js
+
+  e2e:
+    name: E2E gates (smoke + fps + memory + axe)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run e2e
+        run: npm run e2e
+      - name: Upload qa_reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report
+          path: qa_reports/
+          retention-days: 14

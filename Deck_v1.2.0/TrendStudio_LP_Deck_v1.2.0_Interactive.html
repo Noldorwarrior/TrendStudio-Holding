@@ -39,7 +39,7 @@
   /* Text */
   --text-primary:   #F5F5F5;
   --text-secondary: #9CA3AF;
-  --text-muted:     #6B7280;
+  --text-muted:     #8B93A6;  /* WCAG 2AA: 5.3:1 on #141A2A (was #6B7280, 3.58:1) */
 
   /* Semantic */
   --success: #10B981;
@@ -435,6 +435,137 @@ html, body {
   .slide[hidden] { display: block; }
 }
 
+
+  /* === Phase 2C CSS === */
+  /* --- cinematic.css --- */
+/* ========================================================================
+   Phase 2C Cinematic — global CSS variables, keyframes, z-index layers
+   See: Handoff_Phase2C/00_infra/INFRA_PROMPT.md §7
+   ======================================================================== */
+
+:root {
+  /* Z-index layers (Phase 2C reserves 100-999) */
+  --z-ambient: 100;           /* G8 canvas behind content */
+  --z-parallax: 110;          /* G12 depth layers */
+  --z-slide-content: 200;     /* base content */
+  --z-whatif-handle: 300;     /* G16 editable field markers */
+  --z-contextmenu: 500;       /* G14 menu */
+  --z-modal: 600;             /* Phase 2B modal (existing) */
+  --z-cinema-letterbox: 800;  /* G10 letterbox bars */
+  --z-cinema-grain: 810;      /* G10 grain overlay */
+
+  /* Animation timings */
+  --t-slide-enter: 3500ms;
+  --t-slide-exit: 700ms;
+  --t-crossfade: 600ms;
+  --t-micro: 200ms;
+
+  /* Easing */
+  --ease-enter: cubic-bezier(0.22, 0.61, 0.36, 1.0);
+  --ease-exit: cubic-bezier(0.42, 0.0, 0.58, 1.0);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1.0);
+
+  /* Ambient colors (base palette — must match TS.Charts.palette) */
+  --c-ambient-dust: rgba(255, 235, 180, 0.15);
+  --c-ambient-sparkle: rgba(255, 200, 100, 0.4);
+  --c-lightleak-warm: #FFCC66;
+  --c-lightleak-cold: #66CCFF;
+  --c-bg-cinema: #0A1628;
+
+  /* Grain */
+  --grain-density: 0.15;
+  --grain-fps: 8;
+}
+
+/* ========================================================================
+   Keyframes shared across modules
+   ======================================================================== */
+
+@keyframes ts-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ts-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes ts-slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes ts-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; }
+  50%      { box-shadow: 0 0 16px 4px currentColor; }
+}
+
+@keyframes ts-grain-flicker {
+  0%, 100% { opacity: var(--grain-density); }
+  50%      { opacity: calc(var(--grain-density) * 1.3); }
+}
+
+/* ========================================================================
+   Reduced-motion overrides (CRITICAL a11y)
+   ======================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Ambient/Parallax must stop — handled by JS (TS.Ambient.pause, TS.Parallax.disable) */
+}
+
+/* ========================================================================
+   Base classes (individual modules extend these)
+   ======================================================================== */
+
+.ts-ambient-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-ambient);
+}
+
+.ts-parallax-layer {
+  will-change: transform;
+  transition: transform 0.4s var(--ease-enter);
+}
+
+.ts-cinema-active .ts-slide {
+  filter: contrast(1.05) saturate(1.1);
+}
+
+.ts-whatif-editable {
+  position: relative;
+  cursor: pointer;
+  border-bottom: 1px dashed currentColor;
+  transition: background var(--t-micro);
+}
+
+.ts-whatif-editable:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* State classes (per INFRA §7.3) */
+.is-active  { /* toggled on by JS */ }
+.is-hidden  { display: none !important; }
+.is-dragging { cursor: grabbing; user-select: none; }
+.is-editing  { outline: 2px solid var(--c-ambient-sparkle); }
+
+  /* --- slides_phase2c.css --- */
+/* ========================================================================
+   Phase 2C slides — slide-specific overrides
+   Populated in Wave 6 as individual slides are implemented.
+   See: Handoff_Phase2C/99_meta/CC_CHECKLIST.md
+   ======================================================================== */
+
+/* Wave 6 will add: .ts-slide-01 { ... } through .ts-slide-25 { ... } */
+
+
   </style>
 </head>
 <body>
@@ -605,7 +736,7 @@ html, body {
     <p id="s11-subtitle" class="slide-subtitle"></p>
 
     <!-- Timeline container -->
-    <div id="s11-timeline" style="flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:0;padding:24px 0;overflow-x:auto;"></div>
+    <div id="s11-timeline" tabindex="0" style="flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:0;padding:24px 0;overflow-x:auto;"></div>
   </div>
 </section>
 
@@ -623,7 +754,7 @@ html, body {
     <div id="s12-chart" class="chart-wrapper" style="flex:1;min-height:260px;"></div>
 
     <!-- Film portfolio summary -->
-    <div id="s12-films" style="margin-top:20px;max-height:180px;overflow-y:auto;"></div>
+    <div id="s12-films" tabindex="0" style="margin-top:20px;max-height:180px;overflow-y:auto;"></div>
 
     <!-- Note -->
     <div id="s12-note" class="disclosure" style="margin-top:16px;"></div>
@@ -665,7 +796,7 @@ html, body {
     <p id="s15-subtitle" class="slide-subtitle"></p>
 
     <!-- CAPM build-up table -->
-    <div id="s15-table" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;"></div>
+    <div id="s15-table" tabindex="0" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;"></div>
   </div>
 </section>
 
@@ -716,7 +847,7 @@ html, body {
     <div id="s18-chart" class="chart-wrapper" style="flex:1;min-height:220px;"></div>
 
     <!-- Comparison table -->
-    <div id="s18-table" style="margin-top:20px;max-height:220px;overflow-y:auto;"></div>
+    <div id="s18-table" tabindex="0" style="margin-top:20px;max-height:220px;overflow-y:auto;"></div>
 
     <!-- Conclusion -->
     <div id="s18-conclusion" class="disclosure" style="margin-top:16px;"></div>
@@ -752,7 +883,7 @@ html, body {
     <div id="s20-chart" class="chart-wrapper" style="flex:1;min-height:260px;"></div>
 
     <!-- Risks table -->
-    <div id="s20-table" style="margin-top:20px;max-height:260px;overflow-y:auto;"></div>
+    <div id="s20-table" tabindex="0" style="margin-top:20px;max-height:260px;overflow-y:auto;"></div>
   </div>
 </section>
 
@@ -782,7 +913,7 @@ html, body {
     <div id="s22-chart" class="chart-wrapper" style="flex:1;min-height:280px;"></div>
 
     <!-- Comparison table: W1-W4 variants -->
-    <div id="s22-table" style="margin-top:20px;max-height:220px;overflow-y:auto;"></div>
+    <div id="s22-table" tabindex="0" style="margin-top:20px;max-height:220px;overflow-y:auto;"></div>
 
     <!-- Note -->
     <p id="s22-note" class="disclosure" style="margin-top:12px;"></p>
@@ -842,6 +973,26 @@ html, body {
   "a11y.chart.peers.label": "Диаграмма рассеяния по peer-компаниям: EV/EBITDA против IRR historic. 6 синтетических точек-peer и одна золотая звезда — проект TrendStudio. Используйте Tab для перехода по точкам, Enter для детализации.",
   "a11y.chart.pipeline.label": "Диаграмма Ганта пайплайна: 7 проектов на горизонте 2025-Q1 … 2028-Q4 с цветовой кодировкой по стадии и маркерами релиза",
   "a11y.chart.revenue.label": "Водопад выручки 2026–2028 по сценариям",
+  "a11y.cinematic.ambient.canvas": "Декоративный канвас — можно игнорировать",
+  "a11y.cinematic.ambient.paused": "Фон-эффект приостановлен",
+  "a11y.cinematic.cinema_mode.active": "Включён кино-режим",
+  "a11y.cinematic.cinema_mode.exited": "Кино-режим отключён",
+  "a11y.cinematic.context_menu.item_selected": "Выбран пункт: {label}",
+  "a11y.cinematic.context_menu.open": "Контекстное меню открыто",
+  "a11y.cinematic.drag.dropped": "Элемент перемещён",
+  "a11y.cinematic.drag.handle": "Ручка перетаскивания, используйте стрелки",
+  "a11y.cinematic.easter.found_announcement": "Вы нашли пасхалку номер {n}",
+  "a11y.cinematic.easter.region": "Область с пасхалкой",
+  "a11y.cinematic.keyboard.help": "Клавиатурные сокращения доступны (?)",
+  "a11y.cinematic.keyboard.shortcut_activated": "Сокращение активировано: {label}",
+  "a11y.cinematic.parallax.disabled": "Параллакс отключён",
+  "a11y.cinematic.parallax.layer": "Декоративный слой параллакса",
+  "a11y.cinematic.scroll_trigger.slide_entered": "Активирован слайд {n}",
+  "a11y.cinematic.scroll_trigger.slide_exited": "Слайд {n} скрыт",
+  "a11y.cinematic.sound.enabled": "Звук включён",
+  "a11y.cinematic.sound.muted": "Звук выключен",
+  "a11y.cinematic.whatif.field": "Поле с возможностью редактирования",
+  "a11y.cinematic.whatif.value_changed": "Значение изменено на {value}",
   "a11y.control.horizon.label": "Слайдер: горизонт инвестирования в годах от 3 до 10",
   "a11y.control.rate.label": "Слайдер: ставка дисконтирования в процентах от 10 до 25",
   "a11y.control.scenario.base": "Базовый сценарий",
@@ -1178,6 +1329,49 @@ html, body {
   "ui.chart.revenue.legend.bull": "Bull",
   "ui.chart.revenue.title": "Выручка по годам",
   "ui.chart.revenue.total": "Итого 3Y",
+  "ui.chart.s12.caveat.avg_film_linear_scale": "Показан усреднённый фильм портфеля (12 проектов). Линейное масштабирование revenue/budget. OPEX% 18% — среднее по индустрии (в исходных данных отсутствовало). Реальные проекты различаются.",
+  "ui.chart.s14.caveat.simplified_perpetuity": "Упрощённая perpetuity-модель. Не заменяет полный DCF с дисконтированием 5-летнего cash flow.",
+  "ui.chart.s17.caveat.linear_shift": "Линейный сдвиг всех 30 столбиков гистограммы сохраняет форму распределения. Не эквивалентно полной пересимуляции Монте-Карло (n=50 000, seed=42).",
+  "ui.cinematic.ambient.preset.data_stream": "Поток данных",
+  "ui.cinematic.ambient.preset.dust": "Пыль",
+  "ui.cinematic.ambient.preset.film_grain": "Киноплёнка",
+  "ui.cinematic.ambient.preset.light_leak": "Световая утечка",
+  "ui.cinematic.ambient.preset.sparkle": "Искры",
+  "ui.cinematic.ambient.toggle": "Фон-эффект",
+  "ui.cinematic.cinema_mode.enter": "Кино-режим",
+  "ui.cinematic.cinema_mode.exit": "Выйти из кино",
+  "ui.cinematic.cinema_mode.label": "Кино",
+  "ui.cinematic.context_menu.close": "Закрыть",
+  "ui.cinematic.context_menu.copy": "Копировать",
+  "ui.cinematic.context_menu.drilldown": "Подробности",
+  "ui.cinematic.context_menu.export": "Экспорт",
+  "ui.cinematic.context_menu.reset": "Сбросить",
+  "ui.cinematic.context_menu.share": "Поделиться",
+  "ui.cinematic.drag.drop_zone": "Отпустите здесь",
+  "ui.cinematic.drag.handle": "Перетащите",
+  "ui.cinematic.drag.reset": "Вернуть на место",
+  "ui.cinematic.easter.egg_found": "Вы нашли пасхалку!",
+  "ui.cinematic.easter.eggs_total": "Пасхалок найдено: {n}/7",
+  "ui.cinematic.easter.hint": "Подсказка",
+  "ui.cinematic.keyboard.cinema_toggle": "Переключить кино (C)",
+  "ui.cinematic.keyboard.help": "Справка (?)",
+  "ui.cinematic.keyboard.help_title": "Клавиатурные сокращения",
+  "ui.cinematic.keyboard.next_slide": "Следующий слайд (→)",
+  "ui.cinematic.keyboard.prev_slide": "Предыдущий слайд (←)",
+  "ui.cinematic.keyboard.sound_toggle": "Звук (S)",
+  "ui.cinematic.keyboard.theme_toggle": "Тема (T)",
+  "ui.cinematic.parallax.disable": "Отключить параллакс",
+  "ui.cinematic.parallax.enable": "Включить параллакс",
+  "ui.cinematic.scroll_trigger.jump_to_slide": "Перейти к слайду",
+  "ui.cinematic.scroll_trigger.top": "В начало",
+  "ui.cinematic.sound.disable": "Выключить звук",
+  "ui.cinematic.sound.enable": "Включить звук",
+  "ui.cinematic.sound.label": "Звук",
+  "ui.cinematic.whatif.applied": "Применено",
+  "ui.cinematic.whatif.cancel": "Отмена",
+  "ui.cinematic.whatif.commit": "Сохранить",
+  "ui.cinematic.whatif.edit_hint": "Двойной клик — изменить",
+  "ui.cinematic.whatif.reset": "Сбросить значения",
   "ui.control.horizon.format": "лет",
   "ui.control.horizon.label": "Горизонт, лет",
   "ui.control.rate.format": "%",
@@ -1284,6 +1478,26 @@ html, body {
   "ui.scenario_opt": "Позитивный",
   "ui.scenario_pess": "Негативный",
   "ui.scenario_toggle": "Сценарий",
+  "ui.slide.phase2c.common.help": "Справка",
+  "ui.slide.phase2c.common.home": "В начало",
+  "ui.slide.phase2c.common.next": "Далее",
+  "ui.slide.phase2c.common.prev": "Назад",
+  "ui.slide.phase2c.det_vs_stoch.subtitle": "Почему 20.09 % и 11.44 % — не противоречие",
+  "ui.slide.phase2c.det_vs_stoch.title": "Det vs Stoch IRR",
+  "ui.slide.phase2c.exec_summary.subtitle": "Главное за 30 секунд",
+  "ui.slide.phase2c.exec_summary.title": "Резюме для LP",
+  "ui.slide.phase2c.mc_percentiles.subtitle": "50 000 сценариев (N = 50 000, seed = 42)",
+  "ui.slide.phase2c.mc_percentiles.title": "Monte Carlo — распределение IRR",
+  "ui.slide.phase2c.pipeline.subtitle": "7 проектов: 5 фильмов + 2 сериала",
+  "ui.slide.phase2c.pipeline.title": "Pipeline проектов",
+  "ui.slide.phase2c.top_risks.subtitle": "Ранжировано по severity × likelihood",
+  "ui.slide.phase2c.top_risks.title": "Топ-10 рисков",
+  "ui.slide.phase2c.unit_economics.subtitle": "Формула Revenue на проект",
+  "ui.slide.phase2c.unit_economics.title": "Unit Economics",
+  "ui.slide.phase2c.valuation.subtitle": "DCF 40% + Trading Multiples 60%",
+  "ui.slide.phase2c.valuation.title": "Оценка стоимости",
+  "ui.slide.phase2c.waterfall.subtitle": "4 приоритетных уровня",
+  "ui.slide.phase2c.waterfall.title": "Waterfall W₃ — публичное распределение",
   "ui.slider_value": "Значение: {value}"
 }
 , "en": {
@@ -1294,6 +1508,26 @@ html, body {
   "a11y.chart.peers.label": "Peer scatter chart: EV/EBITDA vs IRR historic. Six synthetic peer points and one gold star for the TrendStudio project. Use Tab to move between points, Enter to drill down.",
   "a11y.chart.pipeline.label": "Pipeline Gantt chart: 7 projects across the 2025-Q1 to 2028-Q4 horizon, colour-coded by stage with release markers",
   "a11y.chart.revenue.label": "Revenue waterfall 2026–2028 by scenario",
+  "a11y.cinematic.ambient.canvas": "Decorative canvas — safe to ignore",
+  "a11y.cinematic.ambient.paused": "Ambient effect paused",
+  "a11y.cinematic.cinema_mode.active": "Cinema mode active",
+  "a11y.cinematic.cinema_mode.exited": "Cinema mode exited",
+  "a11y.cinematic.context_menu.item_selected": "Item selected: {label}",
+  "a11y.cinematic.context_menu.open": "Context menu opened",
+  "a11y.cinematic.drag.dropped": "Item dropped",
+  "a11y.cinematic.drag.handle": "Drag handle, use arrow keys",
+  "a11y.cinematic.easter.found_announcement": "You found easter egg #{n}",
+  "a11y.cinematic.easter.region": "Easter egg region",
+  "a11y.cinematic.keyboard.help": "Keyboard shortcuts available (?)",
+  "a11y.cinematic.keyboard.shortcut_activated": "Shortcut activated: {label}",
+  "a11y.cinematic.parallax.disabled": "Parallax disabled",
+  "a11y.cinematic.parallax.layer": "Decorative parallax layer",
+  "a11y.cinematic.scroll_trigger.slide_entered": "Slide {n} activated",
+  "a11y.cinematic.scroll_trigger.slide_exited": "Slide {n} exited",
+  "a11y.cinematic.sound.enabled": "Sound enabled",
+  "a11y.cinematic.sound.muted": "Sound muted",
+  "a11y.cinematic.whatif.field": "Editable field",
+  "a11y.cinematic.whatif.value_changed": "Value changed to {value}",
   "a11y.control.horizon.label": "Slider: investment horizon in years from 3 to 10",
   "a11y.control.rate.label": "Slider: discount rate in percent from 10 to 25",
   "a11y.control.scenario.base": "Base scenario",
@@ -1630,6 +1864,49 @@ html, body {
   "ui.chart.revenue.legend.bull": "Bull",
   "ui.chart.revenue.title": "Revenue by year",
   "ui.chart.revenue.total": "Total 3Y",
+  "ui.chart.s12.caveat.avg_film_linear_scale": "Portfolio-average film shown (12 projects). Linear revenue/budget scaling. OPEX% 18% = industry average (absent from source data). Real projects vary.",
+  "ui.chart.s14.caveat.simplified_perpetuity": "Simplified perpetuity model. Does not replace full DCF with 5-year cashflow discounting.",
+  "ui.chart.s17.caveat.linear_shift": "Linear shift of all 30 histogram bins preserves distribution shape. Not equivalent to full Monte Carlo re-simulation (n=50,000, seed=42).",
+  "ui.cinematic.ambient.preset.data_stream": "Data stream",
+  "ui.cinematic.ambient.preset.dust": "Dust",
+  "ui.cinematic.ambient.preset.film_grain": "Film grain",
+  "ui.cinematic.ambient.preset.light_leak": "Light leak",
+  "ui.cinematic.ambient.preset.sparkle": "Sparkle",
+  "ui.cinematic.ambient.toggle": "Ambient effect",
+  "ui.cinematic.cinema_mode.enter": "Cinema mode",
+  "ui.cinematic.cinema_mode.exit": "Exit cinema",
+  "ui.cinematic.cinema_mode.label": "Cinema",
+  "ui.cinematic.context_menu.close": "Close",
+  "ui.cinematic.context_menu.copy": "Copy",
+  "ui.cinematic.context_menu.drilldown": "Drill-down",
+  "ui.cinematic.context_menu.export": "Export",
+  "ui.cinematic.context_menu.reset": "Reset",
+  "ui.cinematic.context_menu.share": "Share",
+  "ui.cinematic.drag.drop_zone": "Drop here",
+  "ui.cinematic.drag.handle": "Drag handle",
+  "ui.cinematic.drag.reset": "Reset position",
+  "ui.cinematic.easter.egg_found": "Easter egg found!",
+  "ui.cinematic.easter.eggs_total": "Eggs found: {n}/7",
+  "ui.cinematic.easter.hint": "Hint",
+  "ui.cinematic.keyboard.cinema_toggle": "Toggle cinema (C)",
+  "ui.cinematic.keyboard.help": "Help (?)",
+  "ui.cinematic.keyboard.help_title": "Keyboard shortcuts",
+  "ui.cinematic.keyboard.next_slide": "Next slide (→)",
+  "ui.cinematic.keyboard.prev_slide": "Previous slide (←)",
+  "ui.cinematic.keyboard.sound_toggle": "Sound (S)",
+  "ui.cinematic.keyboard.theme_toggle": "Theme (T)",
+  "ui.cinematic.parallax.disable": "Disable parallax",
+  "ui.cinematic.parallax.enable": "Enable parallax",
+  "ui.cinematic.scroll_trigger.jump_to_slide": "Jump to slide",
+  "ui.cinematic.scroll_trigger.top": "To top",
+  "ui.cinematic.sound.disable": "Disable sound",
+  "ui.cinematic.sound.enable": "Enable sound",
+  "ui.cinematic.sound.label": "Sound",
+  "ui.cinematic.whatif.applied": "Applied",
+  "ui.cinematic.whatif.cancel": "Cancel",
+  "ui.cinematic.whatif.commit": "Commit",
+  "ui.cinematic.whatif.edit_hint": "Double-click to edit",
+  "ui.cinematic.whatif.reset": "Reset values",
   "ui.control.horizon.format": "yrs",
   "ui.control.horizon.label": "Horizon, years",
   "ui.control.rate.format": "%",
@@ -1736,6 +2013,26 @@ html, body {
   "ui.scenario_opt": "Optimistic",
   "ui.scenario_pess": "Pessimistic",
   "ui.scenario_toggle": "Scenario",
+  "ui.slide.phase2c.common.help": "Help",
+  "ui.slide.phase2c.common.home": "Home",
+  "ui.slide.phase2c.common.next": "Next",
+  "ui.slide.phase2c.common.prev": "Back",
+  "ui.slide.phase2c.det_vs_stoch.subtitle": "Why 20.09 % and 11.44 % are consistent",
+  "ui.slide.phase2c.det_vs_stoch.title": "Det vs stoch IRR",
+  "ui.slide.phase2c.exec_summary.subtitle": "Key points in 30 seconds",
+  "ui.slide.phase2c.exec_summary.title": "Executive summary for LPs",
+  "ui.slide.phase2c.mc_percentiles.subtitle": "50 000 scenarios (N = 50 000, seed = 42)",
+  "ui.slide.phase2c.mc_percentiles.title": "Monte Carlo — IRR distribution",
+  "ui.slide.phase2c.pipeline.subtitle": "7 projects: 5 films + 2 series",
+  "ui.slide.phase2c.pipeline.title": "Project pipeline",
+  "ui.slide.phase2c.top_risks.subtitle": "Ranked by severity × likelihood",
+  "ui.slide.phase2c.top_risks.title": "Top 10 risks",
+  "ui.slide.phase2c.unit_economics.subtitle": "Per-project revenue formula",
+  "ui.slide.phase2c.unit_economics.title": "Unit economics",
+  "ui.slide.phase2c.valuation.subtitle": "DCF 40% + Trading Multiples 60%",
+  "ui.slide.phase2c.valuation.title": "Valuation",
+  "ui.slide.phase2c.waterfall.subtitle": "4 priority tiers",
+  "ui.slide.phase2c.waterfall.title": "Waterfall W₃ — public distribution",
   "ui.slider_value": "Value: {value}"
 }
 }
@@ -7210,7 +7507,179 @@ if(TS&&TS.Charts&&typeof TS.Charts.register==='function')TS.Charts.register('pip
 })();
 
 
-  // === SLIDES ===
+  // === PHASE 2C CINEMATIC (G8-G17) ===
+  // --- cinematic: keyboard ---
+// G13 — TS.Keyboard global shortcut registry
+// See: Handoff_Phase2C/10_modules/g13_keyboard/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 2.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.Keyboard = {
+    register: function () { throw new Error('TS.Keyboard.register not implemented (Wave 2)'); },
+    unregister: function () { throw new Error('TS.Keyboard.unregister not implemented (Wave 2)'); },
+    list: function () { throw new Error('TS.Keyboard.list not implemented (Wave 2)'); },
+    enable: function () { throw new Error('TS.Keyboard.enable not implemented (Wave 2)'); },
+    disable: function () { throw new Error('TS.Keyboard.disable not implemented (Wave 2)'); },
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: scroll_trigger ---
+// G17 — TS.ScrollTrigger IntersectionObserver + slide lifecycle
+// See: Handoff_Phase2C/10_modules/g17_scroll_trigger/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 2.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.ScrollTrigger = {
+    register: function () { throw new Error('TS.ScrollTrigger.register not implemented (Wave 2)'); },
+    unregister: function () { throw new Error('TS.ScrollTrigger.unregister not implemented (Wave 2)'); },
+    refresh: function () { throw new Error('TS.ScrollTrigger.refresh not implemented (Wave 2)'); },
+    isVisible: function () { throw new Error('TS.ScrollTrigger.isVisible not implemented (Wave 2)'); },
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: ambient ---
+// G8 — TS.Ambient canvas particle system (5 presets)
+// See: Handoff_Phase2C/10_modules/g8_ambient/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 3.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.Ambient = {
+    start: function () { throw new Error('TS.Ambient.start not implemented (Wave 3)'); },
+    stop: function () { throw new Error('TS.Ambient.stop not implemented (Wave 3)'); },
+    pause: function () { throw new Error('TS.Ambient.pause not implemented (Wave 3)'); },
+    resume: function () { throw new Error('TS.Ambient.resume not implemented (Wave 3)'); },
+    setIntensity: function () { throw new Error('TS.Ambient.setIntensity not implemented (Wave 3)'); },
+    getActivePresets: function () { throw new Error('TS.Ambient.getActivePresets not implemented (Wave 3)'); },
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: sound ---
+// G9 — TS.Sound WebAudio procedural generator
+// See: Handoff_Phase2C/10_modules/g9_sound/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 3.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.Sound = {
+    enable: function () { throw new Error('TS.Sound.enable not implemented (Wave 3)'); },
+    disable: function () { throw new Error('TS.Sound.disable not implemented (Wave 3)'); },
+    isEnabled: function () { return false; }, // safe default
+    play: function () { throw new Error('TS.Sound.play not implemented (Wave 3)'); },
+    setMasterVolume: function () { throw new Error('TS.Sound.setMasterVolume not implemented (Wave 3)'); },
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: parallax ---
+// G12 — TS.Parallax mouse-based depth layers
+// See: Handoff_Phase2C/10_modules/g12_parallax/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 3.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.Parallax = {
+    enable: function () { throw new Error('TS.Parallax.enable not implemented (Wave 3)'); },
+    disable: function () { throw new Error('TS.Parallax.disable not implemented (Wave 3)'); },
+    setLerpFactor: function () { throw new Error('TS.Parallax.setLerpFactor not implemented (Wave 3)'); },
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: context_menu ---
+// G14 — TS.ContextMenu custom right-click menu
+// See: Handoff_Phase2C/10_modules/g14_context_menu/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 4.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.ContextMenu = {
+    open: function () { throw new Error('TS.ContextMenu.open not implemented (Wave 4)'); },
+    close: function () { throw new Error('TS.ContextMenu.close not implemented (Wave 4)'); },
+    registerForElement: function () { throw new Error('TS.ContextMenu.registerForElement not implemented (Wave 4)'); },
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: drag ---
+// G15 — TS.Drag framework with keyboard fallback
+// See: Handoff_Phase2C/10_modules/g15_drag/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 4.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.Drag = {
+    enable: function () { throw new Error('TS.Drag.enable not implemented (Wave 4)'); },
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: easter ---
+// G11 — TS.Easter eggs framework (7 eggs)
+// See: Handoff_Phase2C/10_modules/g11_easter/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 5.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.Easter = {
+    register: function () { throw new Error('TS.Easter.register not implemented (Wave 5)'); },
+    markFound: function () { throw new Error('TS.Easter.markFound not implemented (Wave 5)'); },
+    isFound: function () { return false; }, // safe default
+    listFound: function () { return []; },  // safe default
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: whatif ---
+// G16 — TS.WhatIf inline parameter editor
+// See: Handoff_Phase2C/10_modules/g16_whatif/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 5.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.WhatIf = {
+    register: function () { throw new Error('TS.WhatIf.register not implemented (Wave 5)'); },
+    activate: function () { throw new Error('TS.WhatIf.activate not implemented (Wave 5)'); },
+    deactivate: function () { throw new Error('TS.WhatIf.deactivate not implemented (Wave 5)'); },
+    reset: function () { throw new Error('TS.WhatIf.reset not implemented (Wave 5)'); },
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  // --- cinematic: cinema_mode ---
+// G10 — TS.Cinema fullscreen cinematic mode
+// See: Handoff_Phase2C/10_modules/g10_cinema/MODULE_PROMPT.md
+// Wave 1 SKELETON — implementation comes in Wave 5.
+
+(function (global) {
+  'use strict';
+  global.TS = global.TS || {};
+  global.TS.Cinema = {
+    enter: function () { return Promise.reject(new Error('TS.Cinema.enter not implemented (Wave 5)')); },
+    exit: function () { return Promise.reject(new Error('TS.Cinema.exit not implemented (Wave 5)')); },
+    toggle: function () { return Promise.reject(new Error('TS.Cinema.toggle not implemented (Wave 5)')); },
+    isActive: function () { return false; }, // safe default
+    _skeleton: true
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+
+
+  // === SLIDES (Phase 2A legacy) ===
   // --- Slide 01 ---
 /* S01: Cover — passive content, cinematic entrance */
 (function() {
@@ -8952,6 +9421,8 @@ if(TS&&TS.Charts&&typeof TS.Charts.register==='function')TS.Charts.register('pip
 
   var C = window.TS.Components;
   var CHART_ID = 'chart-17-mc-distribution';
+  // Hoisted for exit() cleanup — Chart.js v4 needs unregister(pluginObject).
+  var detLinePluginRef = null;
 
   NAV.registerSlide(17, {
     enter: function() {
@@ -9017,6 +9488,8 @@ if(TS&&TS.Charts&&typeof TS.Charts.register==='function')TS.Charts.register('pip
         var detLinePlugin = {
           id: 'detLineAnnotation',
           afterDatasetsDraw: function(chart) {
+            // Scope to this chart only (Chart.register is global in Chart.js v4).
+            if (chart.canvas && chart.canvas.id !== CHART_ID) return;
             var xScale = chart.scales.x;
             var yScale = chart.scales.y;
             var ctx = chart.ctx;
@@ -9096,13 +9569,20 @@ if(TS&&TS.Charts&&typeof TS.Charts.register==='function')TS.Charts.register('pip
           }
         });
 
-        // Register the annotation plugin on this chart instance
+        // Chart.js v4: config.plugins is a getter-only proxy — per-instance
+        // inline push throws TypeError. Register the plugin globally (scoped
+        // to this canvas via the CHART_ID guard inside afterDatasetsDraw);
+        // re-register on each enter() to refresh the detLine/lo/binWidth closure.
+        // Tracked in detLinePluginRef for exit() cleanup.
         var canvas = document.getElementById(CHART_ID);
         if (canvas) {
           var chartInstance = Chart.getChart(canvas);
           if (chartInstance) {
-            chartInstance.config.plugins = chartInstance.config.plugins || [];
-            chartInstance.config.plugins.push(detLinePlugin);
+            if (detLinePluginRef) {
+              try { Chart.unregister(detLinePluginRef); } catch (_) {}
+            }
+            detLinePluginRef = detLinePlugin;
+            Chart.register(detLinePlugin);
             chartInstance.update();
           }
         }
@@ -9161,6 +9641,11 @@ if(TS&&TS.Charts&&typeof TS.Charts.register==='function')TS.Charts.register('pip
     exit: function() {
       CHARTS.destroy(CHART_ID);
       ANIM.killAll();
+      // Cleanup global Chart.js plugin registry (Chart.js v4).
+      if (detLinePluginRef) {
+        try { Chart.unregister(detLinePluginRef); } catch (_) {}
+        detLinePluginRef = null;
+      }
     }
   });
 })();

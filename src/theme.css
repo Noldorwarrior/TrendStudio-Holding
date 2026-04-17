@@ -19,7 +19,7 @@
   /* Text */
   --text-primary:   #F5F5F5;
   --text-secondary: #9CA3AF;
-  --text-muted:     #6B7280;
+  --text-muted:     #8B93A6;  /* WCAG 2AA: 5.3:1 on #141A2A (was #6B7280, 3.58:1) */
 
   /* Semantic */
   --success: #10B981;

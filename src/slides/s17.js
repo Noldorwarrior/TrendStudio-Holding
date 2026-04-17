@@ -6,6 +6,8 @@
 
   var C = window.TS.Components;
   var CHART_ID = 'chart-17-mc-distribution';
+  // Hoisted for exit() cleanup — Chart.js v4 needs unregister(pluginObject).
+  var detLinePluginRef = null;
 
   NAV.registerSlide(17, {
     enter: function() {
@@ -71,6 +73,8 @@
         var detLinePlugin = {
           id: 'detLineAnnotation',
           afterDatasetsDraw: function(chart) {
+            // Scope to this chart only (Chart.register is global in Chart.js v4).
+            if (chart.canvas && chart.canvas.id !== CHART_ID) return;
             var xScale = chart.scales.x;
             var yScale = chart.scales.y;
             var ctx = chart.ctx;
@@ -150,13 +154,20 @@
           }
         });
 
-        // Register the annotation plugin on this chart instance
+        // Chart.js v4: config.plugins is a getter-only proxy — per-instance
+        // inline push throws TypeError. Register the plugin globally (scoped
+        // to this canvas via the CHART_ID guard inside afterDatasetsDraw);
+        // re-register on each enter() to refresh the detLine/lo/binWidth closure.
+        // Tracked in detLinePluginRef for exit() cleanup.
         var canvas = document.getElementById(CHART_ID);
         if (canvas) {
           var chartInstance = Chart.getChart(canvas);
           if (chartInstance) {
-            chartInstance.config.plugins = chartInstance.config.plugins || [];
-            chartInstance.config.plugins.push(detLinePlugin);
+            if (detLinePluginRef) {
+              try { Chart.unregister(detLinePluginRef); } catch (_) {}
+            }
+            detLinePluginRef = detLinePlugin;
+            Chart.register(detLinePlugin);
             chartInstance.update();
           }
         }
@@ -215,6 +226,11 @@
     exit: function() {
       CHARTS.destroy(CHART_ID);
       ANIM.killAll();
+      // Cleanup global Chart.js plugin registry (Chart.js v4).
+      if (detLinePluginRef) {
+        try { Chart.unregister(detLinePluginRef); } catch (_) {}
+        detLinePluginRef = null;
+      }
     }
   });
 })();

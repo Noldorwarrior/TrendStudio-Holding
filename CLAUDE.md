@@ -188,3 +188,4 @@ S51 обновляет «Факт» после финальной сборки.
 
 - 2026-04-17 21:11  PR #104 What-If formulas                → 7c93ab7 (squash)
 - 2026-04-17 22:04  PR #105 E2E runner + axe + FPS/memory   → b983e4c (squash)
+- 2026-04-17 22:46  PR #106 Deck hotfix (s17 + a11y AA)     → ea795e1 (squash)

@@ -187,3 +187,4 @@ S51 обновляет «Факт» после финальной сборки.
 ### Wave 2 merges log (Phase 2C)
 
 - 2026-04-17 21:11  PR #104 What-If formulas                → 7c93ab7 (squash)
+- 2026-04-17 22:04  PR #105 E2E runner + axe + FPS/memory   → b983e4c (squash)

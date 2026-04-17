@@ -1,0 +1,30 @@
+{
+  "ru": {
+    "ui.chart.revenue.title": "Выручка по годам",
+    "ui.chart.revenue.axis.x": "Год",
+    "ui.chart.revenue.axis.y": "млн ₽",
+    "ui.chart.revenue.legend.base": "Base",
+    "ui.chart.revenue.legend.bull": "Bull",
+    "ui.chart.revenue.legend.bear": "Bear",
+    "ui.chart.revenue.total": "Итого 3Y",
+    "ui.drilldown.revenue.title": "Выручка — разбор года",
+    "ui.drilldown.revenue.explanation": "Waterfall показывает вклад каждого года в трёхлетний итог 4 545 млн ₽ (base).",
+    "ui.drilldown.revenue.methodology": "Base — консенсус-план. Bull +20%, Bear −30% — стрессы по channel-mix (box office volatility, SVOD pricing).",
+    "a11y.chart.revenue.label": "Водопад выручки 2026–2028 по сценариям",
+    "a11y.drilldown.revenue.label": "Детали по году выручки"
+  },
+  "en": {
+    "ui.chart.revenue.title": "Revenue by year",
+    "ui.chart.revenue.axis.x": "Year",
+    "ui.chart.revenue.axis.y": "M RUB",
+    "ui.chart.revenue.legend.base": "Base",
+    "ui.chart.revenue.legend.bull": "Bull",
+    "ui.chart.revenue.legend.bear": "Bear",
+    "ui.chart.revenue.total": "Total 3Y",
+    "ui.drilldown.revenue.title": "Revenue — year drill-down",
+    "ui.drilldown.revenue.explanation": "Waterfall shows each year's contribution to the 3Y total 4,545 M RUB (base).",
+    "ui.drilldown.revenue.methodology": "Base — consensus plan. Bull +20%, Bear −30% — stresses from channel-mix (box office volatility, SVOD pricing).",
+    "a11y.chart.revenue.label": "Revenue waterfall 2026–2028 by scenario",
+    "a11y.drilldown.revenue.label": "Revenue year detail"
+  }
+}

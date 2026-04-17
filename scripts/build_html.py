@@ -50,6 +50,19 @@ def collect_layouts():
     return layouts
 
 
+def collect_charts():
+    """Phase 2B: collect src/charts.js (core) + src/charts/*.js (7 chart implementations)."""
+    core = read_file(SRC / "charts.js") if (SRC / "charts.js").exists() else ""
+    charts_dir = SRC / "charts"
+    impls = []
+    if charts_dir.exists():
+        for f in sorted(charts_dir.glob("*.js")):
+            if f.name.endswith(".test.js"):
+                continue
+            impls.append((f.stem, read_file(f)))
+    return core, impls
+
+
 def build_html():
     # Read all fragments
     theme_css = read_file(SRC / "theme.css") if (SRC / "theme.css").exists() else ""
@@ -57,6 +70,10 @@ def build_html():
     components_js = read_file(SRC / "components.js") if (SRC / "components.js").exists() else ""
     a11y_js = read_file(SRC / "a11y.js") if (SRC / "a11y.js").exists() else ""
     orchestrator_js = read_file(SRC / "orchestrator.js") if (SRC / "orchestrator.js").exists() else ""
+    # Phase 2B additions (S41 core + S42-S48 chart impls + S49 controls + S50 drilldown)
+    charts_core_js, charts_impls = collect_charts()
+    controls_js = read_file(SRC / "controls.js") if (SRC / "controls.js").exists() else ""
+    drilldown_js = read_file(SRC / "drilldown.js") if (SRC / "drilldown.js").exists() else ""
 
     # i18n data
     i18n_ru = read_file(I18N_DIR / "ru.json") if (I18N_DIR / "ru.json").exists() else "{}"
@@ -142,6 +159,22 @@ def build_html():
     html_parts.append(components_js)
     html_parts.append("\n\n  // === ORCHESTRATOR ===\n")
     html_parts.append(orchestrator_js)
+    # Phase 2B: TS.Charts core → 7 chart impls → Live-Controls → Drill-Down
+    if charts_core_js:
+        html_parts.append("\n\n  // === TS.CHARTS CORE (S41) ===\n")
+        html_parts.append(charts_core_js)
+    if charts_impls:
+        html_parts.append("\n\n  // === TS.CHARTS IMPLEMENTATIONS (S42-S48) ===\n")
+        for name, js in charts_impls:
+            html_parts.append(f"  // --- chart: {name} ---\n")
+            html_parts.append(js)
+            html_parts.append("\n")
+    if controls_js:
+        html_parts.append("\n\n  // === LIVE-CONTROLS (S49) ===\n")
+        html_parts.append(controls_js)
+    if drilldown_js:
+        html_parts.append("\n\n  // === DRILL-DOWN (S50) ===\n")
+        html_parts.append(drilldown_js)
     html_parts.append("\n\n  // === SLIDES ===\n")
     for n, js in slides_js:
         html_parts.append(f"  // --- Slide {n:02d} ---\n")

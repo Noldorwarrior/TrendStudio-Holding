@@ -42,3 +42,7 @@ structure.json
 
 # SSH key for sandbox → GitHub (account-wide, account: Noldorwarrior)
 .git-ssh/
+
+# Node dependencies (Phase 2B: jsdom for unit tests, playwright for e2e)
+node_modules/
+package-lock.json

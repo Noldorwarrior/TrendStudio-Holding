@@ -3205,6 +3205,534 @@ html, body {
     "C": "MC Report (N=50000, seed=42)",
     "D": "Peer Comps (6+ comparable transactions)",
     "E": "CAPM Build-Up (full source attribution)"
+  },
+  "_phase2b_audit": {
+    "audited_at": "2026-04-16",
+    "added_sections": [
+      "pipeline.revenue_by_year",
+      "pipeline.projects",
+      "pnl.ebitda_breakdown",
+      "sensitivity.irr_matrix",
+      "mc.irr_distribution",
+      "mc.stress_levels",
+      "peers.comparables",
+      "cashflow.yearly"
+    ]
+  },
+  "pipeline": {
+    "revenue_by_year": [
+      {
+        "year": 2026,
+        "base": 385,
+        "bull": 462.0,
+        "bear": 269.5
+      },
+      {
+        "year": 2027,
+        "base": 1665,
+        "bull": 1998.0,
+        "bear": 1165.5
+      },
+      {
+        "year": 2028,
+        "base": 2495,
+        "bull": 2994.0,
+        "bear": 1746.5
+      }
+    ],
+    "total_3y": {
+      "base": 4545,
+      "bull": 5454.0,
+      "bear": 3181.5
+    },
+    "projects": [
+      {
+        "id": "p1",
+        "code": "P1",
+        "name": "«Крылья Родины»",
+        "type": "film",
+        "stage": "prod",
+        "stage_ru": "Production",
+        "start": "2025-Q4",
+        "end": "2026-Q3",
+        "release": "Q3 2026",
+        "budget_mrub": 650,
+        "revenue_mrub": 1755.0
+      },
+      {
+        "id": "p2",
+        "code": "P2",
+        "name": "«Северный путь»",
+        "type": "film",
+        "stage": "post",
+        "stage_ru": "Post-Production",
+        "start": "2026-Q3",
+        "end": "2027-Q1",
+        "release": "Q1 2027",
+        "budget_mrub": 480,
+        "revenue_mrub": 1296.0
+      },
+      {
+        "id": "p3",
+        "code": "P3",
+        "name": "«Дом на Арбате»",
+        "type": "series",
+        "stage": "dev",
+        "stage_ru": "Development",
+        "start": "2026-Q2",
+        "end": "2027-Q4",
+        "release": "Q4 2027",
+        "budget_mrub": 720,
+        "revenue_mrub": 1944.0
+      },
+      {
+        "id": "p4",
+        "code": "P4",
+        "name": "«Огонь и вода»",
+        "type": "film",
+        "stage": "pre",
+        "stage_ru": "Pre-Production",
+        "start": "2026-Q2",
+        "end": "2027-Q2",
+        "release": "Q2 2027",
+        "budget_mrub": 550,
+        "revenue_mrub": 1485.0
+      },
+      {
+        "id": "p5",
+        "code": "P5",
+        "name": "«Наследники»",
+        "type": "series",
+        "stage": "dev",
+        "stage_ru": "Development",
+        "start": "2027-Q1",
+        "end": "2028-Q3",
+        "release": "Q3 2028",
+        "budget_mrub": 890,
+        "revenue_mrub": 2403.0
+      },
+      {
+        "id": "p6",
+        "code": "P6",
+        "name": "«Песнь горизонта»",
+        "type": "film",
+        "stage": "script",
+        "stage_ru": "Script",
+        "start": "2026-Q1",
+        "end": "2028-Q1",
+        "release": "Q1 2028",
+        "budget_mrub": 420,
+        "revenue_mrub": 1134.0
+      },
+      {
+        "id": "p7",
+        "code": "P7",
+        "name": "«Время идти»",
+        "type": "film",
+        "stage": "script",
+        "stage_ru": "Script",
+        "start": "2026-Q4",
+        "end": "2028-Q4",
+        "release": "Q4 2028",
+        "budget_mrub": 390,
+        "revenue_mrub": 1053.0
+      }
+    ]
+  },
+  "pnl": {
+    "ebitda_breakdown": [
+      {
+        "year": 2026,
+        "revenue": 385,
+        "cogs": -390,
+        "opex": -80,
+        "ebitda": 58.3,
+        "margin_pct": 15.1
+      },
+      {
+        "year": 2027,
+        "revenue": 1665,
+        "cogs": -1050,
+        "opex": -150,
+        "ebitda": 987.7,
+        "margin_pct": 59.3
+      },
+      {
+        "year": 2028,
+        "revenue": 2495,
+        "cogs": -1287,
+        "opex": -220,
+        "ebitda": 1121.4,
+        "margin_pct": 44.9
+      }
+    ],
+    "ebitda_total_3y": 2167.4,
+    "ebitda_margin_avg_pct": 47.7
+  },
+  "sensitivity": {
+    "irr_matrix": {
+      "rates": [
+        10,
+        12,
+        15,
+        18,
+        20,
+        22,
+        25
+      ],
+      "rates_unit": "% discount rate (WACC-proxy)",
+      "horizons": [
+        3,
+        5,
+        7,
+        10
+      ],
+      "horizons_unit": "years",
+      "anchor": {
+        "rate": 19,
+        "horizon": 5,
+        "irr": 20.09
+      },
+      "values": [
+        [
+          21.58,
+          22.48,
+          23.38,
+          24.72
+        ],
+        [
+          21.07,
+          21.95,
+          22.83,
+          24.14
+        ],
+        [
+          20.31,
+          21.16,
+          22.0,
+          23.27
+        ],
+        [
+          19.55,
+          20.37,
+          21.18,
+          22.4
+        ],
+        [
+          19.05,
+          19.84,
+          20.63,
+          21.82
+        ],
+        [
+          18.54,
+          19.31,
+          20.08,
+          21.24
+        ],
+        [
+          17.78,
+          18.52,
+          19.26,
+          20.37
+        ]
+      ],
+      "notes": "Monotonic in rate and horizon. Anchor reproduces Det IRR 20.09% near WACC=19% / 5Y."
+    }
+  },
+  "mc": {
+    "irr_distribution": [
+      {
+        "bin_low": -10.0,
+        "bin_high": -8.5,
+        "prob": 0.00056
+      },
+      {
+        "bin_low": -8.5,
+        "bin_high": -7.0,
+        "prob": 0.00114
+      },
+      {
+        "bin_low": -7.0,
+        "bin_high": -5.5,
+        "prob": 0.0022
+      },
+      {
+        "bin_low": -5.5,
+        "bin_high": -4.0,
+        "prob": 0.00404
+      },
+      {
+        "bin_low": -4.0,
+        "bin_high": -2.5,
+        "prob": 0.00703
+      },
+      {
+        "bin_low": -2.5,
+        "bin_high": -1.0,
+        "prob": 0.01159
+      },
+      {
+        "bin_low": -1.0,
+        "bin_high": 0.5,
+        "prob": 0.01809
+      },
+      {
+        "bin_low": 0.5,
+        "bin_high": 2.0,
+        "prob": 0.02677
+      },
+      {
+        "bin_low": 2.0,
+        "bin_high": 3.5,
+        "prob": 0.03755
+      },
+      {
+        "bin_low": 3.5,
+        "bin_high": 5.0,
+        "prob": 0.04991
+      },
+      {
+        "bin_low": 5.0,
+        "bin_high": 6.5,
+        "prob": 0.06287
+      },
+      {
+        "bin_low": 6.5,
+        "bin_high": 8.0,
+        "prob": 0.07503
+      },
+      {
+        "bin_low": 8.0,
+        "bin_high": 9.5,
+        "prob": 0.08488
+      },
+      {
+        "bin_low": 9.5,
+        "bin_high": 11.0,
+        "prob": 0.09099
+      },
+      {
+        "bin_low": 11.0,
+        "bin_high": 12.5,
+        "prob": 0.09243
+      },
+      {
+        "bin_low": 12.5,
+        "bin_high": 14.0,
+        "prob": 0.08899
+      },
+      {
+        "bin_low": 14.0,
+        "bin_high": 15.5,
+        "prob": 0.0812
+      },
+      {
+        "bin_low": 15.5,
+        "bin_high": 17.0,
+        "prob": 0.0702
+      },
+      {
+        "bin_low": 17.0,
+        "bin_high": 18.5,
+        "prob": 0.05752
+      },
+      {
+        "bin_low": 18.5,
+        "bin_high": 20.0,
+        "prob": 0.04467
+      },
+      {
+        "bin_low": 20.0,
+        "bin_high": 21.5,
+        "prob": 0.03287
+      },
+      {
+        "bin_low": 21.5,
+        "bin_high": 23.0,
+        "prob": 0.02291
+      },
+      {
+        "bin_low": 23.0,
+        "bin_high": 24.5,
+        "prob": 0.01515
+      },
+      {
+        "bin_low": 24.5,
+        "bin_high": 26.0,
+        "prob": 0.00949
+      },
+      {
+        "bin_low": 26.0,
+        "bin_high": 27.5,
+        "prob": 0.00563
+      },
+      {
+        "bin_low": 27.5,
+        "bin_high": 29.0,
+        "prob": 0.00316
+      },
+      {
+        "bin_low": 29.0,
+        "bin_high": 30.5,
+        "prob": 0.00169
+      },
+      {
+        "bin_low": 30.5,
+        "bin_high": 32.0,
+        "prob": 0.00085
+      },
+      {
+        "bin_low": 32.0,
+        "bin_high": 33.5,
+        "prob": 0.00041
+      },
+      {
+        "bin_low": 33.5,
+        "bin_high": 35.0,
+        "prob": 0.00018
+      }
+    ],
+    "percentiles": {
+      "p5": -0.41,
+      "p25": 7.97,
+      "p50": 12.0,
+      "mean": 11.44,
+      "p75": 15.72,
+      "p95": 21.11
+    },
+    "det_line": 20.09,
+    "n": 50000,
+    "seed": 42,
+    "stdev": 6.47,
+    "stress_levels": {
+      "0": {
+        "mean_shift": 0.0,
+        "sigma_mult": 1.0
+      },
+      "25": {
+        "mean_shift": -1.5,
+        "sigma_mult": 1.1
+      },
+      "50": {
+        "mean_shift": -3.5,
+        "sigma_mult": 1.25
+      },
+      "75": {
+        "mean_shift": -6.0,
+        "sigma_mult": 1.4
+      },
+      "100": {
+        "mean_shift": -9.0,
+        "sigma_mult": 1.6
+      }
+    }
+  },
+  "peers": {
+    "comparables": [
+      {
+        "code": "central_partnership",
+        "name": "Централ Партнершип",
+        "country": "RU",
+        "ev_revenue": 1.6,
+        "ev_ebitda": 7.2,
+        "irr_historic": 14.3,
+        "synthetic": true
+      },
+      {
+        "code": "kion",
+        "name": "KION (МТС Медиа)",
+        "country": "RU",
+        "ev_revenue": 2.4,
+        "ev_ebitda": 9.1,
+        "irr_historic": 12.8,
+        "synthetic": true
+      },
+      {
+        "code": "yandex_kinopoisk",
+        "name": "Яндекс Кинопоиск",
+        "country": "RU",
+        "ev_revenue": 3.1,
+        "ev_ebitda": 11.4,
+        "irr_historic": 16.5,
+        "synthetic": true
+      },
+      {
+        "code": "globalny_kapital",
+        "name": "Global Capital Pics.",
+        "country": "US",
+        "ev_revenue": 1.9,
+        "ev_ebitda": 9.4,
+        "irr_historic": 11.2,
+        "synthetic": true
+      },
+      {
+        "code": "uniglobal_media",
+        "name": "Uniglobal Media",
+        "country": "US",
+        "ev_revenue": 3.2,
+        "ev_ebitda": 13.1,
+        "irr_historic": 18.7,
+        "synthetic": true
+      },
+      {
+        "code": "europacorp",
+        "name": "EuropaCorp",
+        "country": "FR",
+        "ev_revenue": 1.4,
+        "ev_ebitda": 6.8,
+        "irr_historic": 9.5,
+        "synthetic": true
+      }
+    ],
+    "our_marker": {
+      "ev_revenue": 1.4,
+      "ev_ebitda": 6.5,
+      "irr_projected": 20.09,
+      "label": "TrendStudio (проект)"
+    },
+    "note": "Peers — illustrative mock для Phase 2B; real peer-set в Phase 2C после NDA-access к trading multiples.",
+    "synthetic": true
+  },
+  "cashflow": {
+    "yearly": [
+      {
+        "year": 2026,
+        "operating": 0,
+        "investing": -1250,
+        "financing": 0,
+        "net": -1250
+      },
+      {
+        "year": 2029,
+        "operating": 0,
+        "investing": 0,
+        "financing": 990,
+        "net": 990
+      },
+      {
+        "year": 2030,
+        "operating": 854,
+        "investing": 0,
+        "financing": 260,
+        "net": 1114
+      },
+      {
+        "year": 2031,
+        "operating": 162,
+        "investing": 0,
+        "financing": 0,
+        "net": 162
+      },
+      {
+        "year": 2032,
+        "operating": 234,
+        "investing": 0,
+        "financing": 0,
+        "net": 234
+      }
+    ],
+    "cumulative_last": 1250
   }
 }
   </script>
@@ -4607,6 +5135,455 @@ html, body {
   } else {
     init();
   }
+})();
+
+
+  // === TS.CHARTS CORE (S41) ===
+/* S41: TS.Charts core — Phase 2B
+   Owner: S41 | Provides: window.TS.Charts
+   Low-level helpers (canvas/svg/axis/tooltip/legend/palette/formatValue)
+   + chart registry (register/render/destroy).
+   Dependencies: macros.js (TS.emit/on), i18n.js (I18N.formatCurrency/formatNumber).
+   Consumers: S42-S48 (7 charts), S49 (controls), S50 (drilldown).
+   Contract frozen in .claude/phase2b/40_CONTRACTS.md §1. */
+
+(function() {
+  'use strict';
+
+  var registry = {};        // chartId -> renderFn
+  var instances = {};       // containerKey -> Controller
+  var ARIA_LIVE_ID = 'a11y-live';
+
+  function containerKey(chartId, container) {
+    if (!container) return chartId + '::default';
+    if (!container.__tsChartKey) {
+      container.__tsChartKey = chartId + '::' + (++TS.Charts._keyCounter);
+    }
+    return container.__tsChartKey;
+  }
+
+  // ============================================================
+  // Palette — frozen, referenced by charts via TS.Charts.palette
+  // ============================================================
+  var palette = {
+    base:     '#0070C0',
+    bull:     '#2E7D32',
+    bear:     '#C62828',
+    positive: '#4CAF50',
+    negative: '#F44336',
+    neutral:  '#757575',
+    gold:     '#C9A961',
+    stage: {
+      pre:     '#9E9E9E',
+      prod:    '#1976D2',
+      post:    '#7B1FA2',
+      release: '#388E3C',
+      script:  '#546E7A',
+      dev:     '#FF9800'
+    },
+    scenario: {
+      base: '#0070C0',
+      bull: '#2E7D32',
+      bear: '#C62828',
+      opt:  '#2E7D32',
+      pess: '#C62828'
+    }
+  };
+
+  function freeze(obj) {
+    if (Object.freeze) {
+      Object.keys(obj).forEach(function(k) {
+        if (obj[k] && typeof obj[k] === 'object') freeze(obj[k]);
+      });
+      return Object.freeze(obj);
+    }
+    return obj;
+  }
+  freeze(palette);
+
+  // ============================================================
+  // createCanvas — DPR-aware <canvas> factory
+  // ============================================================
+  function createCanvas(container, width, height) {
+    if (!container) throw new Error('createCanvas: container required');
+    width = width || container.clientWidth || 600;
+    height = height || container.clientHeight || 300;
+    var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+
+    var canvas = document.createElement('canvas');
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    canvas.__tsW = width;
+    canvas.__tsH = height;
+    canvas.__tsDpr = dpr;
+    container.appendChild(canvas);
+
+    var ctx = null;
+    try { ctx = canvas.getContext ? canvas.getContext('2d') : null; }
+    catch(e) { ctx = null; /* jsdom without canvas package */ }
+    if (ctx && ctx.scale) ctx.scale(dpr, dpr);
+    if (ctx) {
+      ctx.__canvas = canvas;
+      ctx.__tsW = width;
+      ctx.__tsH = height;
+    }
+    // Return a reference that chart impls can always use (canvas even if 2d unavailable in test env)
+    return ctx || { __canvas: canvas, __tsW: width, __tsH: height, __noContext: true };
+  }
+
+  // ============================================================
+  // createSVG — sized <svg> with viewBox
+  // ============================================================
+  function createSVG(container, width, height) {
+    if (!container) throw new Error('createSVG: container required');
+    width = width || container.clientWidth || 600;
+    height = height || container.clientHeight || 300;
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('width', String(width));
+    svg.setAttribute('height', String(height));
+    svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    container.appendChild(svg);
+    return svg;
+  }
+
+  // ============================================================
+  // axisX / axisY — minimal domain+ticks painter
+  // Works on CanvasRenderingContext2D OR SVGSVGElement.
+  // ============================================================
+  function axisX(target, domain, opts) {
+    opts = opts || {};
+    var ticks = opts.ticks || Math.min(domain.length || 6, 8);
+    var type = opts.type || 'category';
+    var fmt = opts.format || function(v) { return String(v); };
+    var w = _surfaceWidth(target);
+    var h = _surfaceHeight(target);
+    var pad = opts.padding || { left: 40, right: 10, top: 10, bottom: 26 };
+
+    var labels = _tickLabels(domain, ticks, type);
+    var count = labels.length;
+    var step = (w - pad.left - pad.right) / Math.max(count - 1, 1);
+
+    if (_isCanvas(target)) {
+      target.save();
+      target.strokeStyle = opts.color || 'rgba(255,255,255,0.3)';
+      target.fillStyle = opts.color || '#9CA3AF';
+      target.font = (opts.fontSize || 11) + 'px Inter, sans-serif';
+      target.beginPath();
+      target.moveTo(pad.left, h - pad.bottom);
+      target.lineTo(w - pad.right, h - pad.bottom);
+      target.stroke();
+      for (var i = 0; i < count; i++) {
+        var x = pad.left + i * step;
+        target.textAlign = 'center';
+        target.textBaseline = 'top';
+        target.fillText(fmt(labels[i]), x, h - pad.bottom + 4);
+      }
+      if (opts.label) {
+        target.textAlign = 'center';
+        target.fillText(opts.label, w / 2, h - 8);
+      }
+      target.restore();
+    } else {
+      // SVG fallback
+      var NS = 'http://www.w3.org/2000/svg';
+      var g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'ts-axis-x');
+      for (var j = 0; j < count; j++) {
+        var tx = pad.left + j * step;
+        var t = document.createElementNS(NS, 'text');
+        t.setAttribute('x', String(tx));
+        t.setAttribute('y', String(h - pad.bottom + 14));
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('fill', opts.color || '#9CA3AF');
+        t.setAttribute('font-size', String(opts.fontSize || 11));
+        t.textContent = fmt(labels[j]);
+        g.appendChild(t);
+      }
+      target.appendChild(g);
+    }
+    return labels;
+  }
+
+  function axisY(target, domain, opts) {
+    opts = opts || {};
+    var ticks = opts.ticks || 5;
+    var fmt = opts.format || function(v) { return String(v); };
+    var w = _surfaceWidth(target);
+    var h = _surfaceHeight(target);
+    var pad = opts.padding || { left: 40, right: 10, top: 10, bottom: 26 };
+    var min = Math.min.apply(null, domain);
+    var max = Math.max.apply(null, domain);
+    if (min === max) { max = min + 1; }
+    var values = [];
+    for (var i = 0; i <= ticks; i++) {
+      values.push(min + (max - min) * (i / ticks));
+    }
+
+    if (_isCanvas(target)) {
+      target.save();
+      target.strokeStyle = opts.color || 'rgba(255,255,255,0.08)';
+      target.fillStyle = opts.color || '#9CA3AF';
+      target.font = (opts.fontSize || 11) + 'px Inter, sans-serif';
+      for (var k = 0; k < values.length; k++) {
+        var ry = h - pad.bottom - (k / ticks) * (h - pad.top - pad.bottom);
+        target.beginPath();
+        target.moveTo(pad.left, ry);
+        target.lineTo(w - pad.right, ry);
+        target.stroke();
+        target.textAlign = 'right';
+        target.textBaseline = 'middle';
+        target.fillText(fmt(values[k]), pad.left - 4, ry);
+      }
+      target.restore();
+    } else {
+      var NS = 'http://www.w3.org/2000/svg';
+      var g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'ts-axis-y');
+      for (var m = 0; m < values.length; m++) {
+        var sy = h - pad.bottom - (m / ticks) * (h - pad.top - pad.bottom);
+        var t = document.createElementNS(NS, 'text');
+        t.setAttribute('x', String(pad.left - 4));
+        t.setAttribute('y', String(sy + 4));
+        t.setAttribute('text-anchor', 'end');
+        t.setAttribute('fill', opts.color || '#9CA3AF');
+        t.setAttribute('font-size', String(opts.fontSize || 11));
+        t.textContent = fmt(values[m]);
+        g.appendChild(t);
+      }
+      target.appendChild(g);
+    }
+    return { min: min, max: max, values: values };
+  }
+
+  // ============================================================
+  // tooltip — DOM-anchored popup
+  // ============================================================
+  var _tooltipEl = null;
+  function tooltip(anchor, contentHTML, opts) {
+    opts = opts || {};
+    if (!_tooltipEl) {
+      _tooltipEl = document.createElement('div');
+      _tooltipEl.className = 'ts-chart-tooltip';
+      _tooltipEl.setAttribute('role', 'tooltip');
+      _tooltipEl.style.cssText = 'position:fixed;pointer-events:none;background:rgba(20,26,42,0.96);border:1px solid rgba(201,169,97,0.35);border-radius:6px;padding:8px 10px;color:#F5F5F5;font:12px Inter,sans-serif;z-index:9990;max-width:240px;line-height:1.4;box-shadow:0 4px 12px rgba(0,0,0,0.4);';
+      document.body.appendChild(_tooltipEl);
+    }
+    if (contentHTML == null || contentHTML === '') {
+      _tooltipEl.style.display = 'none';
+      return _tooltipEl;
+    }
+    // Guard against HTML injection by default — contentHTML is used as text
+    if (opts.html === true) {
+      _tooltipEl.innerHTML = String(contentHTML);
+    } else {
+      _tooltipEl.textContent = String(contentHTML);
+    }
+    var rect = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: 0, top: 0, width: 0, height: 0 };
+    var x = (opts.x != null) ? opts.x : (rect.left + rect.width / 2);
+    var y = (opts.y != null) ? opts.y : (rect.top - 8);
+    _tooltipEl.style.display = 'block';
+    _tooltipEl.style.left = Math.round(x) + 'px';
+    _tooltipEl.style.top = Math.round(y) + 'px';
+    _tooltipEl.style.transform = 'translate(-50%, -100%)';
+    return _tooltipEl;
+  }
+
+  // ============================================================
+  // legend — palette → label list
+  // ============================================================
+  function legend(container, items) {
+    if (!container) return null;
+    var ul = document.createElement('ul');
+    ul.className = 'ts-chart-legend';
+    ul.setAttribute('role', 'list');
+    ul.style.cssText = 'list-style:none;padding:0;margin:6px 0 0 0;display:flex;flex-wrap:wrap;gap:10px 16px;font:12px Inter,sans-serif;color:#9CA3AF;';
+    (items || []).forEach(function(it) {
+      var li = document.createElement('li');
+      li.setAttribute('role', 'listitem');
+      li.style.cssText = 'display:inline-flex;align-items:center;gap:6px;';
+      var sw = document.createElement('span');
+      sw.style.cssText = 'display:inline-block;width:10px;height:10px;border-radius:2px;background:' + (it.color || palette.neutral) + ';';
+      sw.setAttribute('aria-hidden', 'true');
+      var lbl = document.createElement('span');
+      lbl.textContent = it.label || '';
+      li.appendChild(sw);
+      li.appendChild(lbl);
+      ul.appendChild(li);
+    });
+    container.appendChild(ul);
+    return ul;
+  }
+
+  // ============================================================
+  // formatValue — delegates to I18N when available
+  // ============================================================
+  function formatValue(v, type) {
+    if (v == null || (typeof v === 'number' && !isFinite(v))) return '\u2014';
+    var I = (typeof window !== 'undefined') ? window.I18N : null;
+    var t = type || 'number';
+    if (t === 'currency') {
+      if (I && I.formatCurrency) {
+        try { return I.formatCurrency(v); } catch(e) {}
+      }
+      return _fmtNumber(v) + ' \u043C\u043B\u043D \u20BD';
+    }
+    if (t === 'percent') {
+      var num = (typeof v === 'number') ? v : parseFloat(v);
+      if (I && I.formatNumber) {
+        try { return I.formatNumber(num, 1) + '%'; } catch(e) {}
+      }
+      return _fmtNumber(num, 1) + '%';
+    }
+    if (t === 'year') return String(parseInt(v, 10));
+    if (t === 'moic') return _fmtNumber(v, 1) + '\u00D7';
+    if (I && I.formatNumber) {
+      try { return I.formatNumber(v); } catch(e) {}
+    }
+    return _fmtNumber(v);
+  }
+
+  function _fmtNumber(v, decimals) {
+    if (typeof v !== 'number') return String(v);
+    var d = (decimals == null) ? 0 : decimals;
+    var opts = { minimumFractionDigits: d, maximumFractionDigits: d };
+    try {
+      return new Intl.NumberFormat('ru-RU', opts).format(v);
+    } catch(e) {
+      return v.toFixed(d);
+    }
+  }
+
+  // ============================================================
+  // Registry: register / render / destroy
+  // ============================================================
+  function register(chartId, renderFn) {
+    if (!chartId) throw new Error('register: chartId required');
+    if (typeof renderFn !== 'function') throw new Error('register: renderFn must be function');
+    registry[chartId] = renderFn;
+    return true;
+  }
+
+  function render(chartId, container, payload) {
+    var fn = registry[chartId];
+    if (!fn) {
+      console.warn('[TS.Charts] no renderer for "' + chartId + '"');
+      return null;
+    }
+    if (!container) {
+      console.warn('[TS.Charts.render] container is falsy for "' + chartId + '"');
+      return null;
+    }
+    var key = containerKey(chartId, container);
+    if (instances[key]) {
+      try { if (instances[key].destroy) instances[key].destroy(); } catch(e) {}
+      delete instances[key];
+    }
+    var t0 = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+    var controller = null;
+    try {
+      controller = fn(container, payload || {});
+    } catch (e) {
+      console.error('[TS.Charts] render error for ' + chartId, e);
+      return null;
+    }
+    if (!controller || typeof controller !== 'object') {
+      controller = { update: function(){}, destroy: function(){ container.innerHTML = ''; } };
+    }
+    if (typeof controller.update !== 'function') controller.update = function(){};
+    if (typeof controller.destroy !== 'function') controller.destroy = function(){ container.innerHTML = ''; };
+    instances[key] = controller;
+
+    var t1 = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+    if (TS && TS.emit) {
+      TS.emit('chart:rendered', {
+        chartId: chartId,
+        durationMs: Math.round((t1 - t0) * 100) / 100
+      });
+    }
+    return controller;
+  }
+
+  function destroy(chartId, container) {
+    if (!chartId) return;
+    if (container) {
+      var key = containerKey(chartId, container);
+      var c = instances[key];
+      if (c && c.destroy) { try { c.destroy(); } catch(e) {} }
+      delete instances[key];
+      return;
+    }
+    // destroy all instances of chartId
+    Object.keys(instances).forEach(function(k) {
+      if (k.indexOf(chartId + '::') === 0) {
+        try { if (instances[k].destroy) instances[k].destroy(); } catch(e) {}
+        delete instances[k];
+      }
+    });
+  }
+
+  // ============================================================
+  // internals
+  // ============================================================
+  function _isCanvas(target) {
+    return target && typeof target.fillText === 'function' && typeof target.beginPath === 'function';
+  }
+  function _surfaceWidth(target) {
+    if (_isCanvas(target)) return target.__tsW || (target.canvas && target.canvas.width) || 600;
+    if (target && target.getAttribute) return parseFloat(target.getAttribute('width')) || 600;
+    return 600;
+  }
+  function _surfaceHeight(target) {
+    if (_isCanvas(target)) return target.__tsH || (target.canvas && target.canvas.height) || 300;
+    if (target && target.getAttribute) return parseFloat(target.getAttribute('height')) || 300;
+    return 300;
+  }
+  function _tickLabels(domain, maxTicks, type) {
+    if (!domain || !domain.length) return [];
+    if (type === 'category' || typeof domain[0] === 'string') {
+      if (domain.length <= maxTicks) return domain.slice();
+      var step = Math.ceil(domain.length / maxTicks);
+      var out = [];
+      for (var i = 0; i < domain.length; i += step) out.push(domain[i]);
+      return out;
+    }
+    // linear: use domain endpoints + equally spaced
+    var min = domain[0], max = domain[domain.length - 1];
+    if (typeof min !== 'number') { min = Math.min.apply(null, domain); max = Math.max.apply(null, domain); }
+    var labels = [];
+    for (var k = 0; k <= maxTicks; k++) {
+      labels.push(min + (max - min) * (k / maxTicks));
+    }
+    return labels;
+  }
+
+  // ============================================================
+  // Public
+  // ============================================================
+  var TS = (typeof window !== 'undefined') ? (window.TS = window.TS || {}) : (globalThis.TS = globalThis.TS || {});
+  TS.Charts = {
+    createCanvas: createCanvas,
+    createSVG: createSVG,
+    axisX: axisX,
+    axisY: axisY,
+    tooltip: tooltip,
+    legend: legend,
+    formatValue: formatValue,
+    palette: palette,
+    register: register,
+    render: render,
+    destroy: destroy,
+    // introspection helpers (used by tests and S51 QA)
+    _registry: registry,
+    _instances: instances,
+    _keyCounter: 0,
+    hasChart: function(id) { return !!registry[id]; },
+    chartIds: function() { return Object.keys(registry); }
+  };
 })();
 
 

@@ -1,0 +1,30 @@
+{
+  "ru": {
+    "ui.chart.irr.title": "IRR Sensitivity — матрица 7×4",
+    "ui.chart.irr.axis.x": "Горизонт, лет",
+    "ui.chart.irr.axis.y": "Discount rate, %",
+    "ui.chart.irr.legend.low": "< 10%",
+    "ui.chart.irr.legend.mid": "10–18%",
+    "ui.chart.irr.legend.high": "> 18%",
+    "ui.chart.irr.active": "Активная ячейка",
+    "ui.drilldown.irr.title": "IRR Sensitivity — детализация",
+    "ui.drilldown.irr.explanation": "Тепловая карта показывает устойчивость IRR портфеля к двум ключевым параметрам: ставке дисконтирования (discount rate, 10–25%) и горизонту инвестирования (3–10 лет). Цвет ячейки кодирует зону риска: красный (IRR < 10%) — ниже WACC, жёлтый (10–18%) — умеренная премия, зелёный (> 18%) — целевой возврат, тёмно-зелёный (> 25%) — премиальный сценарий. Активная ячейка подсвечена золотой рамкой и соответствует текущему положению слайдеров.",
+    "ui.drilldown.irr.methodology": "Опорная точка: WACC = 19%, горизонт = 5 лет, детерминированный IRR = 20.09% (anchor в deck_data.sensitivity.irr_matrix). Формула чувствительности: IRR(r, h) = IRR_det × (1 − α·(r − r₀)/r₀ + β·(h − h₀)/h₀), где α ≈ 0.28 (эластичность к ставке), β ≈ 0.14 (к горизонту), r₀ = 19%, h₀ = 5 лет. Матрица монотонна: при росте ставки IRR снижается, при росте горизонта растёт. Значения 7×4 = 28 ячеек предвычислены и валидированы в S41 audit.",
+    "a11y.chart.irr.label": "Тепловая карта чувствительности IRR 7×4: 7 ставок дисконтирования по вертикали, 4 горизонта по горизонтали, цвет кодирует зону доходности, активная ячейка подсвечена",
+    "a11y.drilldown.irr.label": "Окно детализации IRR Sensitivity с методологией WACC-якоря, формулой чувствительности и границами зон риска"
+  },
+  "en": {
+    "ui.chart.irr.title": "IRR Sensitivity — 7×4 matrix",
+    "ui.chart.irr.axis.x": "Horizon, years",
+    "ui.chart.irr.axis.y": "Discount rate, %",
+    "ui.chart.irr.legend.low": "< 10%",
+    "ui.chart.irr.legend.mid": "10–18%",
+    "ui.chart.irr.legend.high": "> 18%",
+    "ui.chart.irr.active": "Active cell",
+    "ui.drilldown.irr.title": "IRR Sensitivity — detail view",
+    "ui.drilldown.irr.explanation": "The heatmap shows how the portfolio IRR responds to two key inputs: the discount rate (10–25%) and the investment horizon (3–10 years). Cell color encodes the risk zone: red (IRR < 10%) is below WACC, yellow (10–18%) is a moderate premium, green (> 18%) is the target return, dark-green (> 25%) is a premium scenario. The active cell is outlined in gold and tracks the current slider position.",
+    "ui.drilldown.irr.methodology": "Anchor: WACC = 19%, horizon = 5 years, deterministic IRR = 20.09% (anchor in deck_data.sensitivity.irr_matrix). Sensitivity formula: IRR(r, h) = IRR_det × (1 − α·(r − r₀)/r₀ + β·(h − h₀)/h₀), with α ≈ 0.28 (rate elasticity), β ≈ 0.14 (horizon elasticity), r₀ = 19%, h₀ = 5 years. The matrix is monotone: IRR falls as the rate rises and grows as the horizon extends. All 7×4 = 28 cells are pre-computed and validated in the S41 audit.",
+    "a11y.chart.irr.label": "IRR sensitivity heatmap 7×4: 7 discount rates on the vertical axis, 4 horizons on the horizontal axis, color encodes the return zone, active cell highlighted",
+    "a11y.drilldown.irr.label": "IRR Sensitivity detail dialog with WACC anchor methodology, sensitivity formula and risk-zone thresholds"
+  }
+}

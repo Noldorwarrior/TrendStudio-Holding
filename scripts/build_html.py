@@ -132,11 +132,14 @@ def build_html():
     # Main content area
     html_parts.append('  <main id="main-content" role="main">\n')
 
-    # Slide containers
+    # Slide containers — each src/slides/sNN.html already contains its own
+    # <section id="slide-N" class="slide" hidden ...>. We only inject the fragment
+    # as-is. Previously we wrapped it in an outer <section id="slide-N" ...>, which
+    # produced duplicate IDs: getElementById returned the empty outer wrapper, and
+    # NAV.go() would reveal it while the real inner <section> stayed hidden.
     for n, slide_html in slides_html:
-        html_parts.append(f'    <section id="slide-{n}" class="slide" role="group" aria-roledescription="slide" aria-label="Slide {n}" data-slide="{n}" {"" if n == 1 else "hidden"}>\n')
-        html_parts.append(f"      {slide_html}\n")
-        html_parts.append(f"    </section>\n")
+        html_parts.append(f"    <!-- slide {n} -->\n")
+        html_parts.append(f"    {slide_html}\n")
 
     html_parts.append("  </main>\n\n")
 

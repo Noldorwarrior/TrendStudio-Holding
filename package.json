@@ -10,6 +10,7 @@
     "extract": "python3 data_extract/extract_investor_model.py",
     "i18n": "python3 scripts/extract_i18n.py",
     "test": "npx playwright test qa/playwright_suite.js",
+    "e2e": "node scripts/e2e_runner.js",
     "axe": "node qa/axe_core.js"
   },
   "devDependencies": {

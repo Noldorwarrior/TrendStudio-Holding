@@ -4297,6 +4297,7 @@ html, body {
   var slides = {};
   var currentSlide = 1;
   var totalSlides = 25;
+  var initialEntered = false;  // fires enter() hook on first NAV.go(currentSlide)
 
   NAV.registerSlide = function(n, hooks) {
     if (!hooks.exit) {
@@ -4312,23 +4313,30 @@ html, body {
 
   NAV.go = function(n) {
     n = Math.max(1, Math.min(totalSlides, n));
-    if (n === currentSlide) return;
+    // Skip no-op navigation, EXCEPT on the very first call — currentSlide starts
+    // at 1 and orchestrator init() calls NAV.go(1) to fire slide-1's enter()
+    // hook. Without initialEntered, that first call would return early and the
+    // cover slide would stay empty.
+    if (n === currentSlide && initialEntered) return;
 
     var oldN = currentSlide;
     var oldSlide = slides[oldN];
     var newSlide = slides[n];
 
-    // Hide old
-    var oldEl = document.getElementById('slide-' + oldN);
-    if (oldEl) {
-      if (oldSlide && oldSlide.exit) {
-        try { oldSlide.exit(); } catch(e) { console.error('[NAV] exit error S' + oldN, e); }
+    // Hide old (only if actually changing slides)
+    if (oldN !== n) {
+      var oldEl = document.getElementById('slide-' + oldN);
+      if (oldEl) {
+        if (oldSlide && oldSlide.exit) {
+          try { oldSlide.exit(); } catch(e) { console.error('[NAV] exit error S' + oldN, e); }
+        }
+        oldEl.hidden = true;
       }
-      oldEl.hidden = true;
     }
 
     // Show new
     currentSlide = n;
+    initialEntered = true;
     var newEl = document.getElementById('slide-' + n);
     if (newEl) {
       newEl.hidden = false;

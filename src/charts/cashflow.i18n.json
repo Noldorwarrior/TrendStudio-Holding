@@ -1,0 +1,34 @@
+{
+  "ru": {
+    "ui.chart.cashflow.title": "Денежные потоки по годам",
+    "ui.chart.cashflow.axis.x": "Год",
+    "ui.chart.cashflow.axis.y": "CF, млн ₽",
+    "ui.chart.cashflow.axis.y2": "Cumulative NET, млн ₽",
+    "ui.chart.cashflow.legend.operating": "Операционный CF",
+    "ui.chart.cashflow.legend.investing": "Инвестиционный CF",
+    "ui.chart.cashflow.legend.financing": "Финансовый CF",
+    "ui.chart.cashflow.legend.net": "Net CF",
+    "ui.chart.cashflow.legend.cumulative": "Cumulative NET CF",
+    "ui.drilldown.cashflow.title": "Денежные потоки — детализация по году",
+    "ui.drilldown.cashflow.explanation": "Годовой денежный поток складывается из трёх компонентов: операционный (основная деятельность), инвестиционный (капитальные вложения в производство контента) и финансовый (привлечение капитала, погашение долга). Net CF = Op + Inv + Fin. Накопительная линия показывает совокупный Net CF на конец каждого года: портфель выходит в плюс после релизов 2030 года и завершает горизонт с cumulative ≈ 1 250 млн ₽.",
+    "ui.drilldown.cashflow.methodology": "Источник: cashflow.yearly (deck_data v1.2.0) — пять опорных лет: 2026 (инвестиции), 2029 (финансирование), 2030 (первые операционные поступления и остаток финансирования), 2031–2032 (чисто операционные поступления пост-релиз). Сценарии: bull масштабирует operating и financing на ×1.2, bear на ×0.6; investing зафиксирован (CAPEX принят). Cumulative считается как накопительная сумма Net CF по годам от 2026 к 2032.",
+    "a11y.chart.cashflow.label": "Стек-диаграмма денежных потоков по годам с линией накопительного Net CF на вторичной оси",
+    "a11y.drilldown.cashflow.label": "Окно детализации денежных потоков по выбранному году с методологией и числами"
+  },
+  "en": {
+    "ui.chart.cashflow.title": "Cash Flow by Year",
+    "ui.chart.cashflow.axis.x": "Year",
+    "ui.chart.cashflow.axis.y": "CF, RUB million",
+    "ui.chart.cashflow.axis.y2": "Cumulative NET, RUB million",
+    "ui.chart.cashflow.legend.operating": "Operating CF",
+    "ui.chart.cashflow.legend.investing": "Investing CF",
+    "ui.chart.cashflow.legend.financing": "Financing CF",
+    "ui.chart.cashflow.legend.net": "Net CF",
+    "ui.chart.cashflow.legend.cumulative": "Cumulative NET CF",
+    "ui.drilldown.cashflow.title": "Cash flow — per-year detail",
+    "ui.drilldown.cashflow.explanation": "Annual cash flow consists of three components: operating (ongoing business), investing (capex into content production) and financing (capital raised, debt service). Net CF = Op + Inv + Fin. The cumulative line plots running Net CF at year end: the portfolio turns positive after 2030 releases and finishes the horizon at cumulative approx 1,250 RUB million.",
+    "ui.drilldown.cashflow.methodology": "Source: cashflow.yearly (deck_data v1.2.0) with five anchor years: 2026 (investing), 2029 (financing), 2030 (first operating inflows plus remaining financing), 2031-2032 (pure operating inflows post-release). Scenarios: bull scales operating and financing by x1.2, bear by x0.6; investing is held flat (capex committed). Cumulative is the running sum of Net CF across years from 2026 to 2032.",
+    "a11y.chart.cashflow.label": "Stacked cash flow chart by year with a cumulative Net CF line on the secondary axis",
+    "a11y.drilldown.cashflow.label": "Cash flow detail dialog for the selected year with methodology and figures"
+  }
+}

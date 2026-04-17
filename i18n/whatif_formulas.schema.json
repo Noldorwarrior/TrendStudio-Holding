@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trendstudio.internal/schemas/whatif_formulas.schema.json",
+  "title": "Phase 2C What-If formulas declarative spec",
+  "description": "Schema for i18n/whatif_formulas.json. Validates structural invariants of 3 calculator blocks consumed by Wave 5 G16 (slide14 WACC, slide17 MC bin shift, slide12 portfolio-average unit economics).",
+  "$comment": "additionalProperties=false is applied only to objects with a fixed key set (root, formulaBlock, inputSpec, outputSpec). Map-like containers (inputs, outputs, binItemSchema) use typed additionalProperties ($ref or {type:'string'}) as a design intent — they validate the shape of arbitrary key dicts without enumerating keys. See Phase A spec PR_104_PhaseA_spec_FINAL.md §5 (JSON Schema invariants).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["slide14_wacc", "slide17_mc_shift", "slide12_unit_economics"],
+  "properties": {
+    "slide14_wacc":           { "$ref": "#/$defs/formulaBlock" },
+    "slide17_mc_shift":       { "$ref": "#/$defs/formulaBlock" },
+    "slide12_unit_economics": { "$ref": "#/$defs/formulaBlock" }
+  },
+  "$defs": {
+    "i18nKey": {
+      "type": "string",
+      "pattern": "^(ui\\.chart\\.|ui\\.cinematic\\.whatif\\.|a11y\\.cinematic\\.whatif\\.)"
+    },
+    "outputFormat": {
+      "type": "string",
+      "enum": [
+        "percent",
+        "percent_signed",
+        "percent_array",
+        "currency_bn",
+        "currency_mn",
+        "multiple",
+        "bin_array"
+      ]
+    },
+    "outputType": {
+      "type": "string",
+      "enum": ["number", "array", "string"]
+    },
+    "formulaBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "inputs", "outputs", "caveat_i18n_key"],
+      "properties": {
+        "description":      { "type": "string" },
+        "model":            { "type": "string", "minLength": 1 },
+        "baseline_mode":    { "type": "string", "enum": ["portfolio_average", "direct"] },
+        "baseline_paths":   { "type": "object" },
+        "baseline_values":  { "type": "object" },
+        "inputs": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/$defs/inputSpec" }
+        },
+        "outputs": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/$defs/outputSpec" }
+        },
+        "caveat_i18n_key":  { "$ref": "#/$defs/i18nKey" },
+        "notes":            { "type": "string" }
+      }
+    },
+    "inputSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseline", "valid_range", "format"],
+      "properties": {
+        "baseline": {
+          "oneOf": [
+            { "type": "number" },
+            { "type": "null" }
+          ]
+        },
+        "valid_range": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "step":                { "type": "number", "exclusiveMinimum": 0 },
+        "format":              { "$ref": "#/$defs/outputFormat" },
+        "ui_label_i18n_key":   { "$ref": "#/$defs/i18nKey" },
+        "aria_label_i18n_key": { "$ref": "#/$defs/i18nKey" }
+      }
+    },
+    "outputSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "format", "formula"],
+      "properties": {
+        "type":   { "$ref": "#/$defs/outputType" },
+        "format": { "$ref": "#/$defs/outputFormat" },
+        "formula": { "type": "string", "minLength": 1 },
+        "length":  { "type": "integer", "minimum": 1 },
+        "schema":  { "$ref": "#/$defs/binItemSchema" },
+        "ui_label_i18n_key": { "$ref": "#/$defs/i18nKey" },
+        "notes":   { "type": "string" }
+      }
+    },
+    "binItemSchema": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "required": ["bin_low", "bin_high", "prob"],
+      "properties": {
+        "bin_low":  { "type": "string", "const": "number" },
+        "bin_high": { "type": "string", "const": "number" },
+        "prob":     { "type": "string", "const": "number" }
+      }
+    }
+  }
+}

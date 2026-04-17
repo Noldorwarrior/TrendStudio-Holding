@@ -102,28 +102,57 @@ TS.emit('chart:rendered', { chartId, durationMs });
 
 Каждый новый ключ — **одновременно в ru.json и en.json**. Нарушение симметрии ломает build (см. S51).
 
-## 3. WORKFLOW (git, sandbox, FUSE)
+## 3. WORKFLOW (hybrid Cowork ↔ CC)
 
-### Git bundle через /tmp (обход FUSE)
+### 3.1 Режим работы
+
+Phase 2C работа идёт в **hybrid mode**:
+
+- **Cowork (supervisor)** — планирование, контекст, memory, оценка вариантов, блоки для CC
+- **CC (executor)** — локальный запуск команд в `/Users/noldorwarrior/Documents/Claude/Projects/TrendStudio-Holding/` через bash
+- **Per-command gate discipline** — каждая CC bash команда требует approval dialog; варианты "don't ask again" отклоняются; single-use "1. Yes"
+
+### 3.2 Git (прямой доступ, без FUSE-обхода)
+
+CC работает с репо напрямую из локальной папки:
 
 ```bash
-# Локальный git в sandbox не работает напрямую — FUSE issue.
-# Рабочий воркфлоу: сборка bundle в /tmp, push через GIT_SSH_COMMAND.
-
-cd /tmp && rm -rf tsh && mkdir tsh && cd tsh
-git clone /sessions/bold-magical-gauss/mnt/TrendStudio-Holding .
-git checkout claude/deck-v1.2.0-phase2b
-
+cd /Users/noldorwarrior/Documents/Claude/Projects/TrendStudio-Holding
+git checkout claude/deck-v1.2.0-phase2c
+git pull --ff-only origin claude/deck-v1.2.0-phase2c
 # ... работаем ...
-
-git add . && git commit -m "S42: ..."
-GIT_SSH_COMMAND="ssh -i ~/.git-ssh/id_ed25519 -o IdentitiesOnly=yes" \
-  git push origin claude/deck-v1.2.0-phase2b
+git add . && git commit -m "..."
+git push origin claude/deck-v1.2.0-phase2c
 ```
 
-### Pytest.skip паттерн (для gitignored JSON)
+SSH key уже настроен глобально (см. Cowork memory `reference_sandbox_ssh_github`). GIT_SSH_COMMAND не требуется.
 
-Если тест читает данные из deck_data_v1.2.0.json, которого нет в проверочной среде:
+### 3.3 CI gate (активен с PR #7)
+
+Все PRs на `claude/deck-v1.2.0-phase2c` требуют **3 green checks** (§9):
+- `Jest unit tests`
+- `Legacy tests (Phase 2A/2B invariants)`
+- `E2E gates (smoke + fps + memory + axe)`
+
+Force-push запрещён. Merge возможен только при `strict: true` (up-to-date with base).
+
+### 3.4 PR workflow
+
+```bash
+git checkout -b claude/deck-v1.2.0-phase2c-<feature>
+# ... commits ...
+git push -u origin claude/deck-v1.2.0-phase2c-<feature>
+gh pr create --draft --base claude/deck-v1.2.0-phase2c --title "..." --body "..."
+# watch first run:
+gh run list --branch claude/deck-v1.2.0-phase2c-<feature> --limit 3
+# once all 3 checks green:
+gh pr ready <num>
+gh pr merge <num> --squash --delete-branch
+```
+
+### 3.5 Pytest.skip паттерн (для gitignored JSON)
+
+Если тест читает `deck_data_v1.2.0.json`, которого нет в CI окружении или проверочной среде:
 
 ```python
 import pytest
@@ -132,6 +161,10 @@ DATA = Path(__file__).parent.parent / "data_extract" / "deck_data_v1.2.0.json"
 if not DATA.exists():
     pytest.skip("deck_data missing", allow_module_level=True)
 ```
+
+### 3.6 Историческая справка
+
+До Phase 2C работа велась из Cowork sandbox через `/tmp/tsh` bundle-workflow (обход FUSE ограничений). С переходом на hybrid mode (Phase 2C) этот workflow deprecated — CC имеет прямой доступ к локальной копии репо.
 
 ## 4. БЮДЖЕТ ПО МОДУЛЯМ (бюджет 650 KB)
 

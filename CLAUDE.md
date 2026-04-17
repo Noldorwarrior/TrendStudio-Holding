@@ -177,3 +177,9 @@ S51 обновляет «Факт» после финальной сборки.
 - [ ] Нет eval / new Function / localStorage (regex-check)
 - [ ] P5 32/32 отчёт: ≥ 30 зелёных, 0 красных
 - [ ] Git tag v1.2.0-phase2b
+
+## 8. Wave 1 merges log (Phase 2C)
+
+- 2026-04-17 11:06  PR #102 Build + Budget + Mixed Runner  → 9a1314d (squash)
+- 2026-04-17 12:38  PR #101 Skeleton src/cinematic/        → 91e3177 (squash)
+- 2026-04-17 13:44  PR #103 i18n ~80 keys                  → 4513d71 (squash)

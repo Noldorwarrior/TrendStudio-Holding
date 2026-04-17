@@ -63,6 +63,51 @@ def collect_charts():
     return core, impls
 
 
+def collect_cinematic():
+    """Phase 2C: src/cinematic/*.js (10 modules G8-G17), skip __tests__/."""
+    cinematic_dir = SRC / "cinematic"
+    impls = []
+    # Canonical load order per INFRA_PROMPT §8.1:
+    # G13 (keyboard) first (no deps), then G17, then G8/G9/G12, G14/G15, G11/G16, G10 last.
+    order = [
+        "keyboard", "scroll_trigger",
+        "ambient", "sound", "parallax",
+        "context_menu", "drag",
+        "easter", "whatif",
+        "cinema_mode",
+    ]
+    if cinematic_dir.exists():
+        for name in order:
+            f = cinematic_dir / f"{name}.js"
+            if f.exists():
+                impls.append((name, read_file(f)))
+    return impls
+
+
+def collect_phase2c_slides():
+    """Phase 2C: src/slides/slide*.js (skip Phase 2A legacy src/slides/sNN.js)."""
+    slides_dir = SRC / "slides"
+    impls = []
+    if slides_dir.exists():
+        for f in sorted(slides_dir.glob("slide*.js")):
+            if f.name.endswith(".test.js"):
+                continue
+            impls.append((f.stem, read_file(f)))
+    return impls
+
+
+def collect_phase2c_css():
+    """Phase 2C: src/css/cinematic.css + src/css/slides_phase2c.css."""
+    css_dir = SRC / "css"
+    parts = []
+    if css_dir.exists():
+        for name in ["cinematic.css", "slides_phase2c.css"]:
+            f = css_dir / name
+            if f.exists():
+                parts.append((name, read_file(f)))
+    return parts
+
+
 def build_html():
     # Read all fragments
     theme_css = read_file(SRC / "theme.css") if (SRC / "theme.css").exists() else ""
@@ -74,6 +119,10 @@ def build_html():
     charts_core_js, charts_impls = collect_charts()
     controls_js = read_file(SRC / "controls.js") if (SRC / "controls.js").exists() else ""
     drilldown_js = read_file(SRC / "drilldown.js") if (SRC / "drilldown.js").exists() else ""
+    # Phase 2C additions (G8-G17 cinematic modules + slides + css)
+    cinematic_impls = collect_cinematic()
+    phase2c_slides = collect_phase2c_slides()
+    phase2c_css = collect_phase2c_css()
 
     # i18n data
     i18n_ru = read_file(I18N_DIR / "ru.json") if (I18N_DIR / "ru.json").exists() else "{}"
@@ -108,9 +157,15 @@ def build_html():
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 """)
 
-    # Theme CSS
+    # Theme CSS (Phase 2A) + Phase 2C CSS
     html_parts.append("  <style>\n")
     html_parts.append(theme_css)
+    if phase2c_css:
+        html_parts.append("\n\n  /* === Phase 2C CSS === */\n")
+        for name, css in phase2c_css:
+            html_parts.append(f"  /* --- {name} --- */\n")
+            html_parts.append(css)
+            html_parts.append("\n")
     html_parts.append("\n  </style>\n")
 
     html_parts.append("</head>\n<body>\n")
@@ -178,7 +233,21 @@ def build_html():
     if drilldown_js:
         html_parts.append("\n\n  // === DRILL-DOWN (S50) ===\n")
         html_parts.append(drilldown_js)
-    html_parts.append("\n\n  // === SLIDES ===\n")
+    # Phase 2C cinematic modules (G8-G17) — ordered per INFRA §8.1
+    if cinematic_impls:
+        html_parts.append("\n\n  // === PHASE 2C CINEMATIC (G8-G17) ===\n")
+        for name, js in cinematic_impls:
+            html_parts.append(f"  // --- cinematic: {name} ---\n")
+            html_parts.append(js)
+            html_parts.append("\n")
+    # Phase 2C slide modules (slide01_*.js .. slide25_*.js)
+    if phase2c_slides:
+        html_parts.append("\n\n  // === PHASE 2C SLIDES ===\n")
+        for name, js in phase2c_slides:
+            html_parts.append(f"  // --- {name} ---\n")
+            html_parts.append(js)
+            html_parts.append("\n")
+    html_parts.append("\n\n  // === SLIDES (Phase 2A legacy) ===\n")
     for n, js in slides_js:
         html_parts.append(f"  // --- Slide {n:02d} ---\n")
         html_parts.append(js)

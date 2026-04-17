@@ -43,6 +43,6 @@ structure.json
 # SSH key for sandbox → GitHub (account-wide, account: Noldorwarrior)
 .git-ssh/
 
-# Node dependencies (Phase 2B: jsdom for unit tests, playwright for e2e)
+# Node dependencies
 node_modules/
-package-lock.json
+# package-lock.json is committed (needed for reproducible CI — Cowork note 2026-04-17)

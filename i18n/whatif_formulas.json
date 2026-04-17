@@ -1,0 +1,186 @@
+{
+  "slide14_wacc": {
+    "description": "Valuation sensitivity to WACC and perpetuity growth rate (Gordon inverse-scale model).",
+    "model": "gordon_perpetuity_inverse_scale",
+    "baseline_paths": {
+      "wacc": "key_metrics.wacc",
+      "ev": "chart_data.s14_valuation.bridge.ev"
+    },
+    "baseline_values": {
+      "wacc": 19.05,
+      "ev": 6.38,
+      "g": 3.0
+    },
+    "inputs": {
+      "wacc": {
+        "baseline": 19.05,
+        "valid_range": [12, 25],
+        "step": 0.05,
+        "format": "percent",
+        "ui_label_i18n_key": "ui.chart.s14.whatif.wacc.label",
+        "aria_label_i18n_key": "a11y.cinematic.whatif.field"
+      },
+      "g": {
+        "baseline": 3.0,
+        "valid_range": [1, 5],
+        "step": 0.1,
+        "format": "percent",
+        "ui_label_i18n_key": "ui.chart.s14.whatif.g.label",
+        "aria_label_i18n_key": "a11y.cinematic.whatif.field"
+      }
+    },
+    "outputs": {
+      "new_ev": {
+        "type": "number",
+        "format": "currency_bn",
+        "formula": "baseline.ev * (baseline.wacc - inputs.g) / (inputs.wacc - inputs.g)",
+        "ui_label_i18n_key": "ui.chart.s14.whatif.new_ev.label"
+      },
+      "ev_change_pct": {
+        "type": "number",
+        "format": "percent_signed",
+        "formula": "(new_ev - baseline.ev) / baseline.ev * 100",
+        "ui_label_i18n_key": "ui.chart.s14.whatif.ev_change.label"
+      }
+    },
+    "caveat_i18n_key": "ui.chart.s14.caveat.simplified_perpetuity",
+    "notes": "Inverse-scales the published blended EV by the ratio of perpetuity divisors. Accurate for small WACC deltas (±2 pp); larger shifts incur the standard Gordon-perpetuity linearization error."
+  },
+  "slide17_mc_shift": {
+    "description": "Monte Carlo distribution linear bin shift (all 30 bins translated by delta, shape preserved).",
+    "model": "linear_bin_shift_30",
+    "baseline_paths": {
+      "bins": "mc.irr_distribution",
+      "bin_count_expected": 30,
+      "bin_schema": {
+        "bin_low": "number",
+        "bin_high": "number",
+        "prob": "number"
+      },
+      "percentiles": "chart_data.s17_mc_distribution.percentiles",
+      "det_line": "chart_data.s17_mc_distribution.det_line",
+      "n": "chart_data.s17_mc_distribution.n",
+      "seed": "chart_data.s17_mc_distribution.seed"
+    },
+    "baseline_values": {
+      "det_line": 20.09,
+      "n": 50000,
+      "seed": 42,
+      "percentile_labels": ["P5", "P25", "P50 (Median)", "Mean", "P75", "P95"]
+    },
+    "inputs": {
+      "shift_delta": {
+        "baseline": 0,
+        "valid_range": [-10, 10],
+        "step": 0.1,
+        "format": "percent_signed",
+        "ui_label_i18n_key": "ui.chart.s17.whatif.shift.label",
+        "aria_label_i18n_key": "a11y.cinematic.whatif.field"
+      }
+    },
+    "outputs": {
+      "new_bins": {
+        "type": "array",
+        "length": 30,
+        "format": "bin_array",
+        "schema": {
+          "bin_low": "number",
+          "bin_high": "number",
+          "prob": "number"
+        },
+        "formula": "bins.map(b => ({ bin_low: b.bin_low + inputs.shift_delta, bin_high: b.bin_high + inputs.shift_delta, prob: b.prob }))",
+        "ui_label_i18n_key": "ui.chart.s17.whatif.new_bins.label"
+      },
+      "new_det_line": {
+        "type": "number",
+        "format": "percent",
+        "formula": "baseline.det_line + inputs.shift_delta",
+        "ui_label_i18n_key": "ui.chart.s17.whatif.new_det_line.label"
+      },
+      "new_percentiles": {
+        "type": "array",
+        "length": 6,
+        "format": "percent_array",
+        "formula": "baseline.percentiles.map(p => ({ p: p.p, irr: p.irr + inputs.shift_delta }))",
+        "ui_label_i18n_key": "ui.chart.s17.whatif.new_percentiles.label"
+      },
+      "mean_new": {
+        "type": "number",
+        "format": "percent",
+        "formula": "sum(new_bins.map(b => ((b.bin_low + b.bin_high) / 2) * b.prob))",
+        "ui_label_i18n_key": "ui.chart.s17.whatif.mean_new.label"
+      }
+    },
+    "caveat_i18n_key": "ui.chart.s17.caveat.linear_shift",
+    "notes": "Linear shift preserves distribution shape (stddev, skew, kurtosis). Not equivalent to re-running the 50 000-path simulation with seed=42 and updated assumptions — that would produce different shape. Use for quick what-if communication only."
+  },
+  "slide12_unit_economics": {
+    "description": "Per-film unit economics using the portfolio-average baseline of 12 films (Phase 2B chart_data.s12_unit_economics.films).",
+    "model": "portfolio_avg_linear_scale",
+    "baseline_mode": "portfolio_average",
+    "baseline_paths": {
+      "films": "chart_data.s12_unit_economics.films",
+      "films_count_expected": 12
+    },
+    "baseline_values": {
+      "films_count": 12,
+      "budget": 153.64,
+      "pa": 23.05,
+      "total_cost": 176.68,
+      "revenue": 464.35,
+      "gross_profit": 287.66,
+      "margin_pct": 56.79,
+      "multiple": 2.79,
+      "roi_pct": 151,
+      "payback_q": 3.29,
+      "opex_pct": 18.0
+    },
+    "inputs": {
+      "budget": {
+        "baseline": 153.64,
+        "valid_range": [50, 800],
+        "step": 5,
+        "format": "currency_mn",
+        "ui_label_i18n_key": "ui.chart.s12.whatif.budget.label",
+        "aria_label_i18n_key": "a11y.cinematic.whatif.field"
+      },
+      "opex_pct": {
+        "baseline": 18.0,
+        "valid_range": [10, 35],
+        "step": 0.5,
+        "format": "percent",
+        "ui_label_i18n_key": "ui.chart.s12.whatif.opex_pct.label",
+        "aria_label_i18n_key": "a11y.cinematic.whatif.field"
+      }
+    },
+    "outputs": {
+      "new_revenue": {
+        "type": "number",
+        "format": "currency_mn",
+        "formula": "baseline.revenue * (inputs.budget / baseline.budget)",
+        "ui_label_i18n_key": "ui.chart.s12.whatif.new_revenue.label"
+      },
+      "new_gross_profit": {
+        "type": "number",
+        "format": "currency_mn",
+        "formula": "new_revenue - inputs.budget - (inputs.budget * inputs.opex_pct / 100)",
+        "ui_label_i18n_key": "ui.chart.s12.whatif.new_gross_profit.label"
+      },
+      "new_margin_pct": {
+        "type": "number",
+        "format": "percent",
+        "formula": "new_gross_profit / new_revenue * 100",
+        "ui_label_i18n_key": "ui.chart.s12.whatif.new_margin_pct.label"
+      },
+      "breakeven_threshold": {
+        "type": "number",
+        "format": "multiple",
+        "formula": "(inputs.budget + inputs.budget * inputs.opex_pct / 100) / (baseline.revenue / baseline.budget)",
+        "notes": "Minimum scaled revenue multiple at which gross_profit = 0 given budget and opex_pct. Expressed as absolute budget value at which scaled revenue equals total cost.",
+        "ui_label_i18n_key": "ui.chart.s12.whatif.breakeven.label"
+      }
+    },
+    "caveat_i18n_key": "ui.chart.s12.caveat.avg_film_linear_scale",
+    "notes": "Baseline values are the arithmetic mean over 12 films in chart_data.s12_unit_economics.films. Revenue scales linearly with budget (constant portfolio-average revenue multiple 3.02×). opex_pct absent from source data — falls back to 18% industry average (captured in caveat). Real per-project economics vary materially."
+  }
+}

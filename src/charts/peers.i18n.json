@@ -1,0 +1,64 @@
+{
+  "ru": {
+    "ui.chart.peers.title": "Peer-набор: EV/EBITDA × IRR (synthetic)",
+    "ui.chart.peers.axis.x": "EV / EBITDA, ×",
+    "ui.chart.peers.axis.y": "IRR historic, %",
+    "ui.chart.peers.legend.ru": "RU-компании",
+    "ui.chart.peers.legend.us": "US-компании",
+    "ui.chart.peers.legend.fr": "FR-компании",
+    "ui.chart.peers.legend.ours": "TrendStudio (проект)",
+    "ui.chart.peers.synthetic_badge": "⚠ Synthetic: данные иллюстративные",
+
+    "ui.peers.central_partnership.name": "Централ Партнершип",
+    "ui.peers.central_partnership.country": "RU",
+    "ui.peers.kion.name": "KION (МТС Медиа)",
+    "ui.peers.kion.country": "RU",
+    "ui.peers.yandex_kinopoisk.name": "Яндекс Кинопоиск",
+    "ui.peers.yandex_kinopoisk.country": "RU",
+    "ui.peers.globalny_kapital.name": "Global Capital Pics.",
+    "ui.peers.globalny_kapital.country": "US",
+    "ui.peers.uniglobal_media.name": "Uniglobal Media",
+    "ui.peers.uniglobal_media.country": "US",
+    "ui.peers.europacorp.name": "EuropaCorp",
+    "ui.peers.europacorp.country": "FR",
+    "ui.peers.ours.label": "TrendStudio (проект)",
+
+    "ui.drilldown.peers.title": "Peer-сравнение: детали",
+    "ui.drilldown.peers.explanation": "Все значения — synthetic-mock, real peer-set в Phase 2C после NDA. Сравнение только для иллюстрации позиционирования.",
+    "ui.drilldown.peers.methodology": "Ось X: EV/EBITDA (×) — отношение enterprise value к EBITDA за последний отчётный период. Ось Y: IRR historic (%) — историческая доходность капитала по проектам студии за 3-5 лет. Размер точки пропорционален EV/Revenue. Цвет обозначает страну (RU/US/FR). Золотая звезда — проект TrendStudio с IRR-projected по базовому сценарию. Валидация мультипликаторов и NDA-доступ к trading comps — Phase 2C (v1.2.1).",
+
+    "a11y.chart.peers.label": "Диаграмма рассеяния по peer-компаниям: EV/EBITDA против IRR historic. 6 синтетических точек-peer и одна золотая звезда — проект TrendStudio. Используйте Tab для перехода по точкам, Enter для детализации.",
+    "a11y.drilldown.peers.label": "Детали peer-сравнения: название, страна, мультипликаторы, флаг синтетических данных."
+  },
+  "en": {
+    "ui.chart.peers.title": "Peer set: EV/EBITDA × IRR (synthetic)",
+    "ui.chart.peers.axis.x": "EV / EBITDA, ×",
+    "ui.chart.peers.axis.y": "IRR historic, %",
+    "ui.chart.peers.legend.ru": "RU peers",
+    "ui.chart.peers.legend.us": "US peers",
+    "ui.chart.peers.legend.fr": "FR peers",
+    "ui.chart.peers.legend.ours": "TrendStudio (project)",
+    "ui.chart.peers.synthetic_badge": "⚠ Synthetic: illustrative data",
+
+    "ui.peers.central_partnership.name": "Central Partnership",
+    "ui.peers.central_partnership.country": "RU",
+    "ui.peers.kion.name": "KION (MTS Media)",
+    "ui.peers.kion.country": "RU",
+    "ui.peers.yandex_kinopoisk.name": "Yandex Kinopoisk",
+    "ui.peers.yandex_kinopoisk.country": "RU",
+    "ui.peers.globalny_kapital.name": "Global Capital Pictures",
+    "ui.peers.globalny_kapital.country": "US",
+    "ui.peers.uniglobal_media.name": "Uniglobal Media",
+    "ui.peers.uniglobal_media.country": "US",
+    "ui.peers.europacorp.name": "EuropaCorp",
+    "ui.peers.europacorp.country": "FR",
+    "ui.peers.ours.label": "TrendStudio (project)",
+
+    "ui.drilldown.peers.title": "Peer comparison: details",
+    "ui.drilldown.peers.explanation": "All values are synthetic-mock; a real peer set will arrive in Phase 2C after NDA access. Comparison is illustrative of positioning only.",
+    "ui.drilldown.peers.methodology": "X-axis: EV/EBITDA (×) — enterprise value to EBITDA for the latest reporting period. Y-axis: IRR historic (%) — historical return on capital on the studio's 3–5 year project portfolio. Bubble size is proportional to EV/Revenue. Color encodes country (RU/US/FR). The gold star is the TrendStudio project with IRR-projected under the base scenario. Multiple validation and NDA access to trading comps — Phase 2C (v1.2.1).",
+
+    "a11y.chart.peers.label": "Peer scatter chart: EV/EBITDA vs IRR historic. Six synthetic peer points and one gold star for the TrendStudio project. Use Tab to move between points, Enter to drill down.",
+    "a11y.drilldown.peers.label": "Peer comparison details: name, country, multiples, and synthetic-data flag."
+  }
+}

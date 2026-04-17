@@ -1,0 +1,32 @@
+{
+  "ru": {
+    "ui.chart.mc.title": "Monte Carlo — распределение IRR",
+    "ui.chart.mc.axis.x": "IRR, %",
+    "ui.chart.mc.axis.y": "Вероятность",
+    "ui.chart.mc.legend.distribution": "Распределение",
+    "ui.chart.mc.legend.det": "Det IRR",
+    "ui.chart.mc.legend.p5": "P5",
+    "ui.chart.mc.legend.p50": "P50",
+    "ui.chart.mc.legend.p95": "P95",
+    "ui.drilldown.mc.title": "Monte Carlo — детализация бина",
+    "ui.drilldown.mc.explanation": "Гистограмма показывает распределение IRR по результатам 50 000 симуляций Monte Carlo. Золотая пунктирная линия на 20,09% — детерминированный целевой IRR (главный таргет). Цветные маркеры — перцентили P5 (−0,4%), P50 (12,0%) и P95 (21,1%). Ползунок стресса смещает среднее и расширяет дисперсию согласно таблице stress_levels.",
+    "ui.drilldown.mc.methodology": "Источник: mc.irr_distribution (30 бинов шириной 1,5 п.п.), mc.percentiles, mc.stress_levels. N = 50 000 итераций, seed = 42, 5 стохастических переменных: тайминг релизов (Poisson λ=0,5), hit-rate (Triangular 0,40/0,70/1,00), отклонение бюджета, дисконт-фактор, валютный риск. При stress > 0 бины пересчитываются аналитически как N(μ + mean_shift, σ · sigma_mult) с линейной интерполяцией между опорными уровнями 0/25/50/75/100.",
+    "a11y.chart.mc.label": "Гистограмма распределения IRR Monte Carlo: 30 столбцов в диапазоне от −10% до 35% с маркерами P5, P50, P95 и линией детерминированного IRR 20,09%",
+    "a11y.drilldown.mc.label": "Окно детализации бина Monte Carlo IRR с методологией симуляции и параметрами стресс-сценария"
+  },
+  "en": {
+    "ui.chart.mc.title": "Monte Carlo — IRR Distribution",
+    "ui.chart.mc.axis.x": "IRR, %",
+    "ui.chart.mc.axis.y": "Probability",
+    "ui.chart.mc.legend.distribution": "Distribution",
+    "ui.chart.mc.legend.det": "Det IRR",
+    "ui.chart.mc.legend.p5": "P5",
+    "ui.chart.mc.legend.p50": "P50",
+    "ui.chart.mc.legend.p95": "P95",
+    "ui.drilldown.mc.title": "Monte Carlo — bin detail",
+    "ui.drilldown.mc.explanation": "The histogram shows the IRR distribution across 50,000 Monte Carlo simulations. The gold dashed line at 20.09% marks the deterministic target IRR (primary headline metric). Coloured markers indicate percentiles P5 (-0.4%), P50 (12.0%) and P95 (21.1%). The stress slider shifts the mean and widens the dispersion according to the stress_levels table.",
+    "ui.drilldown.mc.methodology": "Source: mc.irr_distribution (30 bins, 1.5 pp wide), mc.percentiles, mc.stress_levels. N = 50,000 iterations, seed = 42, 5 stochastic variables: release timing (Poisson lambda=0.5), hit rate (Triangular 0.40/0.70/1.00), budget variance, discount factor, FX risk. For stress > 0 the bins are re-sampled analytically as N(mu + mean_shift, sigma * sigma_mult) with linear interpolation between the 0/25/50/75/100 anchor levels.",
+    "a11y.chart.mc.label": "Monte Carlo IRR distribution histogram: 30 bars spanning -10% to 35% with P5, P50, P95 markers and the deterministic IRR line at 20.09%",
+    "a11y.drilldown.mc.label": "Monte Carlo IRR bin detail dialog with simulation methodology and stress-scenario parameters"
+  }
+}

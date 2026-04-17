@@ -1,0 +1,40 @@
+{
+  "ru": {
+    "ui.control.scenario.label": "Сценарий",
+    "ui.control.scenario.base": "Базовый",
+    "ui.control.scenario.bull": "Оптимистичный",
+    "ui.control.scenario.bear": "Пессимистичный",
+    "ui.control.rate.label": "Ставка дисконтирования, %",
+    "ui.control.rate.format": "%",
+    "ui.control.horizon.label": "Горизонт, лет",
+    "ui.control.horizon.format": "лет",
+    "ui.control.stress.label": "Стресс-тест, %",
+    "ui.control.stress.format": "%",
+    "a11y.control.scenario.group": "Переключатель сценария: Базовый, Оптимистичный, Пессимистичный",
+    "a11y.control.scenario.base": "Базовый сценарий",
+    "a11y.control.scenario.bull": "Оптимистичный сценарий (bull)",
+    "a11y.control.scenario.bear": "Пессимистичный сценарий (bear)",
+    "a11y.control.rate.label": "Слайдер: ставка дисконтирования в процентах от 10 до 25",
+    "a11y.control.horizon.label": "Слайдер: горизонт инвестирования в годах от 3 до 10",
+    "a11y.control.stress.label": "Слайдер: стресс-тест в процентах от 0 до 100"
+  },
+  "en": {
+    "ui.control.scenario.label": "Scenario",
+    "ui.control.scenario.base": "Base",
+    "ui.control.scenario.bull": "Bull",
+    "ui.control.scenario.bear": "Bear",
+    "ui.control.rate.label": "Discount rate, %",
+    "ui.control.rate.format": "%",
+    "ui.control.horizon.label": "Horizon, years",
+    "ui.control.horizon.format": "yrs",
+    "ui.control.stress.label": "Stress test, %",
+    "ui.control.stress.format": "%",
+    "a11y.control.scenario.group": "Scenario switcher: Base, Bull, Bear",
+    "a11y.control.scenario.base": "Base scenario",
+    "a11y.control.scenario.bull": "Bull (optimistic) scenario",
+    "a11y.control.scenario.bear": "Bear (pessimistic) scenario",
+    "a11y.control.rate.label": "Slider: discount rate in percent from 10 to 25",
+    "a11y.control.horizon.label": "Slider: investment horizon in years from 3 to 10",
+    "a11y.control.stress.label": "Slider: stress test in percent from 0 to 100"
+  }
+}

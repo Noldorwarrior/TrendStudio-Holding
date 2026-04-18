@@ -34,9 +34,8 @@ test.describe('G8 Ambient — matrix (DOM/API)', () => {
       container.id = 'e2e-ambient-host-1';
       container.style.cssText = 'position:relative;width:800px;height:400px;';
       document.body.appendChild(container);
-      window.TS.Ambient.start({
-        slideId: 'e2e-1',
-        container: '#e2e-ambient-host-1',
+      window.TS.Ambient.start('e2e-1', {
+        container: container,
         preset: 'dust',
         density: 1
       });
@@ -68,9 +67,8 @@ test.describe('G8 Ambient — matrix (DOM/API)', () => {
       document.body.appendChild(container);
       // 10 start/stop cycles
       for (let i = 0; i < 10; i++) {
-        window.TS.Ambient.start({
-          slideId: 'cycle-' + i,
-          container: '#e2e-ambient-host-2',
+        window.TS.Ambient.start('cycle-' + i, {
+          container: container,
           preset: 'sparkle',
           density: 1
         });
@@ -94,9 +92,8 @@ test.describe('G8 Ambient — matrix (DOM/API)', () => {
         container.style.cssText = 'position:relative;width:200px;height:100px;';
         document.body.appendChild(container);
         try {
-          window.TS.Ambient.start({
-            slideId: 'preset-' + preset,
-            container: '#e2e-preset-' + i,
+          window.TS.Ambient.start('preset-' + preset, {
+            container: container,
             preset: preset,
             density: 1
           });
@@ -131,9 +128,8 @@ test.describe('G8 Ambient — matrix (DOM/API)', () => {
       container.id = 'e2e-reduce-host';
       container.style.cssText = 'position:relative;width:400px;height:200px;';
       document.body.appendChild(container);
-      window.TS.Ambient.start({
-        slideId: 'reduce-1',
-        container: '#e2e-reduce-host',
+      window.TS.Ambient.start('reduce-1', {
+        container: container,
         preset: 'dust',
         density: 1
       });

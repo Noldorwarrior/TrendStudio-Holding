@@ -22,13 +22,23 @@ describe('Cinematic modules integration (skeleton)', () => {
   });
 
   it('all 10 modules register under TS namespace', () => {
-    const expected = [
-      'Keyboard', 'ScrollTrigger', 'Ambient', 'Sound',
+    // Skeleton modules (still Wave 1 stubs)
+    const skeletons = [
+      'Keyboard', 'ScrollTrigger', 'Sound',
       'Parallax', 'ContextMenu', 'Drag', 'Easter', 'WhatIf', 'Cinema'
     ];
-    expected.forEach((name) => {
+    // Implemented modules (graduated from skeleton)
+    //   Wave 3 Sprint 1 G8 — Ambient particle engine (MODULE_PROMPT v1.0)
+    const implemented = ['Ambient'];
+
+    skeletons.forEach((name) => {
       expect(window.TS[name]).toBeDefined();
       expect(window.TS[name]._skeleton).toBe(true);
+    });
+    implemented.forEach((name) => {
+      expect(window.TS[name]).toBeDefined();
+      // No _skeleton flag — real implementation exposes public API
+      expect(typeof window.TS[name].start).toBe('function');
     });
   });
 

@@ -223,28 +223,33 @@ S51 обновляет «Факт» после финальной сборки.
 - 2026-04-17 22:04  PR #105 E2E runner + axe + FPS/memory   → b983e4c (squash)
 - 2026-04-17 22:46  PR #106 Deck hotfix (s17 + a11y AA)     → ea795e1 (squash)
 
+### Wave 3 merges log (Phase 2C)
+
+- 2026-04-18 15:21  PR #8   G8 Ambient particle engine + E2E matrix (3 browsers) → f90423c (squash)
+
 ## 9. CI (GitHub Actions)
 
 Workflow: `.github/workflows/e2e.yml` (merged via PR #7, 2026-04-17)
 
-**3 jobs parallel (ubuntu-latest, Node 20):**
+**4 jobs parallel (ubuntu-latest, Node 20):**
 
 | Job | Command | Gate |
 |---|---|---|
-| `Jest unit tests` | `npx jest --ci` | unit (49 passed / 37 skipped) |
+| `Jest unit tests` | `npx jest --ci` | unit (77 passed / 33 skipped — post-G8) |
 | `Legacy tests (Phase 2A/2B invariants)` | `node scripts/run-legacy-tests.js` | 350 passed |
 | `E2E gates (smoke + fps + memory + axe)` | `npm run e2e` | smoke + fps + memory + axe on committed HTML |
+| `E2E matrix (Chromium/Firefox/WebKit)` | `npm run e2e:matrix` | Playwright DOM/API на 3 браузерах (added Wave 3 Sprint 1 / PR #8 @ f90423c, 2026-04-18) |
 
 **Triggers:** `pull_request` + `push` на `main` и `claude/deck-v1.2.0-phase2c`.
 
 **Artifacts:** `qa_reports/` uploaded (retention 14d, `if: always()`).
 
-**Baseline first run:** ~78s wall (e2e slowest), 3/3 success @ acf073c.
+**Baseline first run:** ~78s wall (e2e slowest), 3/3 success @ acf073c (PR #7, pre-G8). Post-G8 gate — 4/4 success @ 24607681970.
 
 **Scope decisions (MVP):**
 - Без rebuild HTML на CI — runs against committed `Deck_v1.2.0/*.Interactive.html`. Enhancement → Phase 2D.
 - Branch protection required checks настраиваются отдельно через `gh api` (см. §9.1).
-- Matrix / lint / concurrency — enhancements опциональны.
+- Matrix добавлена G8 Ambient (Wave 3 Sprint 1) — hybrid A+C scope (3 браузера DOM/API, БЕЗ visual regression). Lint / concurrency — остаются опциональными.
 
 ### 9.1 Branch protection (required status checks)
 gh api -X PUT repos/Noldorwarrior/TrendStudio-Holding/branches/claude%2Fdeck-v1.2.0-phase2c/protection \
@@ -252,7 +257,7 @@ gh api -X PUT repos/Noldorwarrior/TrendStudio-Holding/branches/claude%2Fdeck-v1.
 {
 "required_status_checks": {
 "strict": true,
-"contexts": ["Jest unit tests", "Legacy tests (Phase 2A/2B invariants)", "E2E gates (smoke + fps + memory + axe)"]
+"contexts": ["Jest unit tests", "Legacy tests (Phase 2A/2B invariants)", "E2E gates (smoke + fps + memory + axe)", "E2E matrix (Chromium/Firefox/WebKit)"]
 },
 "enforce_admins": false,
 "required_pull_request_reviews": null,

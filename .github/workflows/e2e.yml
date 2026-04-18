@@ -56,3 +56,25 @@ jobs:
           name: e2e-report
           path: qa_reports/
           retention-days: 14
+
+  e2e-matrix:
+    name: E2E matrix (Chromium/Firefox/WebKit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Install Playwright browsers (3 engines)
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Run E2E matrix (e2e/*.spec.js — DOM/API, no visual regression)
+        run: npx playwright test
+      - name: Upload playwright matrix report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-matrix-report
+          path: qa_reports/
+          retention-days: 14

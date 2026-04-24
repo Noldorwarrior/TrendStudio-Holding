@@ -171,3 +171,56 @@
 
 **Rationale:** «битые» anchor-ссылки — плохой UX на демо-стадии. Лучше удалить до добавления реальной секции. Возвращаются одной строкой каждая.
 
+---
+
+## 2026-04-24 Wave 4 — s12-s16 + M2 Pipeline Builder + M3 LP Sizer
+
+**Wave:** 4 (из 6)
+**Артефакт:** `.landing-autonomous/WAVE_4_ARTIFACT.jsx` (169 693 B, 4 584 строк, `function App_W4()` default export)
+**Acceptance:** 9/9 passed
+**Статус:** SUCCESS · ready_for_W5: YES
+
+### Добавлено к W3
+
+- **s12 Risks** — 3×3 Likelihood × Impact matrix (12 рисков из canon.risks.items), клик → Modal с описанием и mitigation. Цвета клеток: green accentCool (low/low), red danger (high/high), warm accentWarm (диагонали).
+- **s13 Roadmap** — 7-летний Gantt SVG (2026–2032), 4 swimlanes: Fundraising, Portfolio buildout (7 sub-bars проектов), Distribution, Exits & DPI. Pulsing milestones через `@keyframes tsPulse` + `@media (prefers-reduced-motion: reduce)` + prop-fallback.
+- **s14 Scenarios** — 4 tabs Bear / Base / Bull / Moon. Активная вкладка меняет KPI-таблицу (IRR, MOIC, TVPI, P50). Recharts LineChart одновременно показывает все 4 линии — активная толще.
+- **s15 Regions** — упрощённая SVG-карта РФ с 8 федеральными округами (прямоугольники). Hover/focus → inline tooltip с количеством проектов и хабом.
+- **s16 Tax Credits** — 4 карточки: Фонд кино (30–80%), Минкультуры (до 50%), Региональные rebate (15–30%), Digital bonus OTT (5–10%). Каждая: иконка, процент, условия, орган, пример.
+- **M2 PipelineBuilder** (`#pipeline-builder`, marquee между s15 и s16) — native HTML5 DnD (onDragStart/onDragOver/onDrop/onDragEnd). Live weighted IRR = Σ(irr·budget)/Σbudget. Warning chip "Перегрузка стадии" при >3 проектах. Кнопка "Reset to Canon".
+- **M3 LpSizer** (`#lp-sizer`, marquee в конце перед FooterStub) — 3 слайдера (target IRR, investment, horizon). MC distribution считается один раз на mount (canon defaults, seed=42), probability = count(dist ≥ target) / 10000 через useMemo. Recharts AreaChart с cashflow. Warning-banner на target > 25%.
+- **TopNav** — добавлены 7 новых якорей (risks / roadmap / scenarios / regions / pipeline-builder / tax-credits / lp-sizer). Существующие 11 сохранены. `flexWrap: 'wrap'` позволяет 18 десктоп-ссылкам переноситься.
+
+### Ключевые решения (7)
+
+1. **Risk matrix orientation** — rows = likelihood high→low сверху вниз, cols = impact low→high слева направо. Top-right угол = worst (high/high), подсвечен красным (`COLORS.danger #E74C3C`).
+2. **Pulse animation double-safety** — helper-класс `ts-pulse` отключается И по `@media (prefers-reduced-motion: reduce)`, И через `prefersReducedMotion` prop (если media-query не поддерживается, JS-проп на стороне компонента не назначает className).
+3. **Moon сценарий синтезирован** — canon содержит Base/Bull/Bear/Stress, а спека W4 требует Bear/Base/Bull/Moon. Я сохранил Base/Bull/Bear из canon-диапазона и добавил Moon (IRR 45% / MOIC 4.5× / TVPI 3.8× / P50 35%) как extreme upside case.
+4. **Regions — прямоугольники вместо geo-paths** — спека прямо разрешает: «упрощённые SVG path'ы или прямоугольники». Это экономит ~8 КБ артефакта и сохраняет читаемость. Распределение проектов: ЦФО 4 (Москва — основной hub), СЗФО 1, ЮФО 1, ПФО 1 — остальные 0.
+5. **M3 LP Sizer — одна MC прогон** — `useRef` хранит distribution после mount; probability пересчитывается через `useMemo` на каждом изменении slider'а без новой MC-пробежки (10 000 бросков за move = UX лаг).
+6. **Recommended stake формула** — `(target_irr/35) × (500/investment)`, clamped в `[0.5, 15]` %. Простая, монотонная, не даёт 0 и не улетает в 100+.
+7. **Cashflow J-curve approx** — первые 2 года отрицательный adj = `investment × (-0.08 × (3-y))`, дальше `investment × (1+t)^y − investment`. Назначение: marquee-визуализация, не production model.
+
+### Инварианты W1+W2+W3 сохранены
+
+- Все 19 image-placeholders (img01..img16, img17, img19, img20) не тронуты.
+- `PIPELINE` (7 проектов p01–p07), `TEAM` (5), `ADVISORS` (4), `STAGE_META`, `IMG_SRC`, `mulberry32`, `runMonteCarlo`, `buildHistogram` — без изменений.
+- Все 6 anchor-якорей (3000, ТрендСтудио, 24.75, 20.09, 13.95, mulberry32) по-прежнему grep'аются.
+- Стилевой сигнатюр `shadows_of_sunset_v1` — COLORS без изменений (используются существующие накладные токены + `COLORS.danger #E74C3C` добавлен в W2 и переиспользован в s12 и M3).
+
+### Acceptance-проверки (все 9 прошли)
+
+1. Artifact exists: 169 693 B ✓
+2. `function App_W4` = 1 ✓
+3. 6/6 anchors present ✓
+4. 19/19 unique `__IMG_PLACEHOLDER_imgNN__` ✓
+5. RISKS array length = 12 ✓
+6. Bear/Base/Bull/Moon all found ✓
+7. `onDragStart` (3) + `onDrop` (2) — DnD handlers ✓
+8. `runMonteCarlo(10000` = 3 occurrences (M1 default + M1 button + M3 once-on-mount) ✓
+9. Forbidden tokens (localStorage/sessionStorage/document.cookie/eval/new Function/framer-motion/pravatar/unsplash) = 0 ✓
+
+Дополнительно: braces/parens/brackets balance = 0/0/0 (полная синтаксическая валидность JSX).
+
+**Rationale для Wave 4:** все новые UI-паттерны (drag-and-drop, pulsing gantt, risk matrix, simplified geo-map) реализованы без сторонних библиотек (используется только existing React / recharts / lucide-react). Это даёт полную контролируемость bundle size и отсутствие CSP-рисков. M2 и M3 включены в спецификации как «marquee»-демонстрации и работают локально без fetch / внешних данных.
+

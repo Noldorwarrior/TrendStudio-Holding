@@ -106,20 +106,29 @@ last_n = 0
 lucide_names: set[str] = set()
 recharts_names: set[str] = set()
 
-for n in range(1, args.up_to + 1):
+# Only use the LATEST wave's artifact — each WAVE_N_ARTIFACT.jsx is self-contained
+# (copy of previous wave's code + new sections), per WAVE_PROMPTS convention.
+# Concatenating all waves would duplicate helper components (ScrollProgress etc.).
+latest_art = None
+for n in range(args.up_to, 0, -1):
     art = ART_DIR / f'WAVE_{n}_ARTIFACT.jsx'
     if art.exists():
-        code = art.read_text(encoding='utf-8')
-        # Strip React/hooks imports — template provides them.
-        code = _RE_REACT_IMPORT.sub('', code)
-        code = _RE_HOOKS_IMPORT.sub('', code)
-        # Collect + strip lucide-react / recharts named imports (dedup across waves).
-        code = _collect_lucide(code, lucide_names)
-        code = _collect_recharts(code, recharts_names)
-        # `export default function App_WN` → `function App_WN`.
-        code = code.replace('export default function App_W', 'function App_W')
-        parts.append(f'// ==== Wave {n} ====\n' + code)
-        last_n = n
+        latest_art = (n, art)
+        break
+
+if latest_art is not None:
+    n, art = latest_art
+    code = art.read_text(encoding='utf-8')
+    # Strip React/hooks imports — template provides them.
+    code = _RE_REACT_IMPORT.sub('', code)
+    code = _RE_HOOKS_IMPORT.sub('', code)
+    # Collect + strip lucide-react / recharts named imports (dedup logic kept for safety).
+    code = _collect_lucide(code, lucide_names)
+    code = _collect_recharts(code, recharts_names)
+    # `export default function App_WN` → `function App_WN`.
+    code = code.replace('export default function App_W', 'function App_W')
+    parts.append(f'// ==== Wave {n} (latest, self-contained) ====\n' + code)
+    last_n = n
 
 if last_n == 0:
     print('❌ No WAVE_*_ARTIFACT.jsx files found'); sys.exit(1)

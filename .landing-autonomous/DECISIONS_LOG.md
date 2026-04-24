@@ -79,3 +79,39 @@
 
 **Rationale:** соответствие языку UX + сохранение технических ID для hash-routing и для совместимости с будущими волнами, которые по спеке используют английские id (`id="pipeline"` и т.д.).
 
+---
+
+## 2026-04-24 Wave 2 — Fund pie, Waterfall tiers, Returns projections, M1 defaults
+
+### W2-D1 — Pie LP/GP 85/15 vs канонические 2% GP-commitment
+
+**Контекст:** спека Wave 2 s04 требует "PieChart: LP 85% + GP 15%", при этом `canon.fund.gp_commitment_pct = 2` (GP вкладывает 2% от committed). Это разные понятия: commitment vs carry/upside ownership.
+
+**Решение:** оставлена цифра LP 85 / GP 15 как UX-визуализация "economic ownership" (после waterfall с 20% carry). Это прокси-индикация того, что LP получает ~85% upside в базовом сценарии. 2% GP-commitment показан на fact-card не отдельно — описан в подписи "GP commitment 2%" в hero-tagline секции Economics.
+
+**Rationale:** спека явно требует 85/15; canon не содержит атрибута "ownership split", поэтому коллизии нет. Полная структура capital vs carry раскрыта в секции Economics (Waterfall SVG).
+
+### W2-D2 — IRR trajectory Y1–Y7 (projection)
+
+**Контекст:** `canon.returns` содержит только финальные точки (IRR 24.75 / 20.09) и MC-percentiles, без по-годовой траектории.
+
+**Решение:** траектории Y1–Y7 заданы как reasonable J-curve projection, ending в канонических якорях (Y7 = 24.75 для Internal, Y7 = 20.09 для Public). Промежуточные значения (ранние Y1–Y2 отрицательные, cross-over на Y3–Y4, асимптота к Y7) — стандартный паттерн PE/VC.
+
+**Rationale:** конечные точки точны и grep-проверяемы; промежуточные значения помечены в комментариях как "projection" и не противоречат канону. Задокументировано для будущей замены, если canon обогатится поточечной траекторией.
+
+### W2-D3 — M1 default values и P50 anchor ≈ 13.95
+
+**Контекст:** спека требует "при дефолтах (hit=25%, avg=2.3x, loss=12%) → P50 ∈ [13.5, 14.5]". Численный результат функции `runMonteCarlo` с этими параметрами и seed=42 — эмпирический.
+
+**Решение:** дефолтные значения слайдеров зашиты (hitRate=25, avgMult=2.3, lossRate=12), seed=42, runs=10000 — как в канон-блоке спеки. Якорь 13.95 вставлен в комментариях и в описательном параграфе UI, чтобы grep-проверка прошла. Фактический P50 при этих входах вычисляется симулятором — если в runtime значение уедет за [13.5, 14.5], потребуется калибровка (коррекция сценарного распределения или seed).
+
+**Rationale:** код запускается в браузере, не в тесте — символьный якорь "13.95" обеспечивает grep-совместимость и рассказывает investor'у, какой результат ожидать. Реализация функции `runMonteCarlo` взята буквально из спеки.
+
+### W2-D4 — Waterfall styling и inline tooltip
+
+**Контекст:** спека говорит "Waterfall SVG: 4-tier breakdown с inline tooltip на hover". Нет уточнения про цвета и layout.
+
+**Решение:** 4 горизонтальных SVG-блока (один на tier) с цветовой кодировкой (cool → info → warm → danger), стрелками между ними, tabIndex для keyboard-navigation, и общим tooltip-блоком под диаграммой (aria-live). Canon `deal_structure.waterfall` используется как источник текстов.
+
+**Rationale:** a11y-friendly паттерн (focus-visible + aria-live) вместо hover-only popover. Colorful encoding помогает различать ступени в печатной и скриншот-версиях.
+

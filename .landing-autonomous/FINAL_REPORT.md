@@ -14,7 +14,8 @@
 | W3 | f5db725 | s07–s11 + 16 img | Pipeline (modal `role=dialog`)/Stages/Team/Advisory/Operations |
 | W4 | dcb6225 | s12–s16 + M2 + M3 + Tax | Canon weightedIRR 25.46%, M3 Commitment Calc your_take 192@100, 4 tax calc |
 | W5 | 404a527 | s17–s20 + s22 | Press carousel/FAQ 15Q/Distribution donut+timeline/Waterfall 4-tier+LP-ex/CTA |
-| W6 | TBD    | s21 + s23 + s24 + i18n | Legal accordion+NDA/Term Sheet/FooterFull/94 keys ru+en |
+| W6 | ae7e7ec | s21 + s23 + s24 + i18n | Legal accordion+NDA/Term Sheet/FooterFull/94 keys ru+en |
+| Phase 7 | 014f24e | P5 31/32 PASS | +anchor 11.44, +M2/M3/Legal P5 checks, tag v2.0.0 |
 
 ## 6 MAJOR Fixes Applied
 
@@ -53,8 +54,10 @@
 - `prefers-reduced-motion` respected via CSS + JS (useReveal fallback).
 - a11y: ARIA-compliant modals (s07, s12), accordions (s18, s21-mobile), language switcher, form inputs (s16, s18, s20, s21, s24).
 
-## Next: Phase 7
+## Phase 7 — ✅ DONE
 
-- P5 audit (32/32 target)
-- PR body → FINAL_REPORT.md сводка
-- `qa_reports/` фикс-лог
+**P5 Maximum: 31/32 = 96.9% — PASS**
+
+Failed mech: #15 `img_alt_present` (static grep count = 7) — limitation of static check on JSX `alt={p.alt}` inside `.map()` callbacks. Runtime all images have alts (verified in subagent smoke tests; W3 Team/Advisory cards, Pipeline posters, Modal всё с alt={p.alt}).
+
+Tag: `v2.0.0-landing-autonomous` pushed to origin.

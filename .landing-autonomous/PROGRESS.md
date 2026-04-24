@@ -1,14 +1,19 @@
-# Landing v1.0 Autonomous — Progress
+# Landing v2.1 Autonomous Build — Progress Log
 
-**Started:** 2026-04-24_07:36:33
+**Branch:** `claude/landing-v2.1-autonomous`
+**Started:** 2026-04-24
+**Orchestrator:** Claude Opus 4.7 (1M context)
+**Strategy:** полный rerun от main с контекст-shift (холдинг → фонд) + 4 системных принципа + premium polish
 
-## Waves
+## Phase timeline
 
-- [07:36:33] W1: success (bytes=1848671)
-- [09:13:19] W2: success (bytes=1882571)
-- [09:41:18] W3: success (bytes=5859059)
-- [10:00:00] W4: success (bytes=169693) — s12-s16 + M2 Pipeline Builder + M3 LP Sizer, 9/9 acceptance
-- [10:00:14] W4: success (bytes=5931562)
-- [W5] W5: success (bytes=230847) — s17 Press + s18 FAQ + s19 Distribution + s20 Waterfall Interactive + s21 Legal + s22 CTA (img18) + 6 standard sims (S1..S6), 9/9 acceptance
-- [10:16:06] W5: success (bytes=6514336)
-- [10:36:56] W6: success (bytes=6542018)
+| Phase | Status | Commit | Notes |
+|-------|--------|--------|-------|
+| 0 (bootstrap + dry-run) | ✅ DONE | — | v2.1 package loaded, scripts retargeted to landing_v2.1.html |
+| 1 (W1 Hero/Thesis/Market) | ⏳ PENDING | — | mask-gradient, asymmetric, mini-charts |
+| 2 (W2 Fund/Eco/MC)     | ⏳ PENDING | — | 2-way sync, flip-cards, cascade waterfall, histogram fix |
+| 3 (W3 Pipeline/Team/Ops) | ⏳ PENDING | — | tilt, DELETE Kanban s08, 2-state, operations drill-down |
+| 4 (W4 Risk/Road/Scen/Tax) | ⏳ PENDING | — | gravity matrix, Roadmap redesign, Tax 85% cap |
+| 5 (W5 Press/Distr/Water/CTA/M2/M3) | ⏳ PENDING | — | scroll-pin, rail drop, M3 rename |
+| 6 (W6 FAQ/Legal/Term/Footer/i18n) | ⏳ PENDING | — | FAQ move, flip-cards, interactive rows |
+| 7 (P5 + PR #12)         | ⏳ PENDING | — | tag v2.1.0, FINAL_REPORT |

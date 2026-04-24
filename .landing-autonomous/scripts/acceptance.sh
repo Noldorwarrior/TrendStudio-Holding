@@ -70,8 +70,8 @@ if [[ -f "$HTML" ]]; then
 
   # v2.1: FAQ в конце (W5/W6)
   if [[ "$MODE" -ge "5" ]]; then
-    LEGAL_POS=$(grep -n "function LegalSection\|id=\"s21\"" "$HTML" | head -1 | cut -d: -f1)
-    FAQ_POS=$(grep -n "function FAQSection\|id=\"s18\"" "$HTML" | head -1 | cut -d: -f1)
+    LEGAL_POS=$(grep -n "function LegalSection\|id=\"s21\"" "$HTML" | head -1 | cut -d: -f1 || true)
+    FAQ_POS=$(grep -n "function FAQSection\|id=\"s18\"" "$HTML" | head -1 | cut -d: -f1 || true)
     if [[ -n "$LEGAL_POS" && -n "$FAQ_POS" && "$FAQ_POS" -lt "$LEGAL_POS" ]]; then
       : # FAQ раньше Legal — старая структура v2.0
       echo "⚠️ FAQ должен быть ПОСЛЕ Press, перед Legal (v2.1 §5.18)"

@@ -58,7 +58,12 @@ if [[ "$IMAGE_CHECK" == "--image-check" ]]; then
     fi
   done
   if [[ "$MODE" == "6" ]]; then
-    grep -q "__IMG_PLACEHOLDER_" "$HTML" && { echo "❌ Unreplaced placeholders"; exit 1; }
+    # Match only genuine placeholders (img01..img20), not literal docstrings containing "imgNN".
+    if grep -qE "__IMG_PLACEHOLDER_img[0-9]+__" "$HTML"; then
+      echo "❌ Unreplaced placeholders:"
+      grep -oE "__IMG_PLACEHOLDER_img[0-9]+__" "$HTML" | sort -u
+      exit 1
+    fi
     COUNT=$(grep -o 'data:image/jpeg;base64,' "$HTML" | wc -l | tr -d ' ')
     [[ "$COUNT" -lt 20 ]] && echo "⚠️  Only $COUNT/20 images injected" || echo "✅ 20/20 images injected"
   fi

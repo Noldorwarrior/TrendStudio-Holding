@@ -245,3 +245,23 @@
 **D-W5-07. img18 — safe static string.** `backgroundImage` в s22 использует одинарные кавычки строки (`'linear-gradient(...), url("__IMG_PLACEHOLDER_img18__")'`), НЕ template literal. Это урок из W3-D2 (когда inject_images не матчил `${}` переменные). Проверено: `grep -c "__IMG_PLACEHOLDER_img18__"` = 1, ровно 1 статическое вхождение.
 
 **Acceptance 9/9 passed.** Файл 230 847 B / 5 662 строки / 51 function. App_W5 single-export. 20 unique placeholders img01..img20. 0 forbidden APIs. Все канон-якоря сохранены (3000, ТрендСтудио, 24.75, 20.09, 13.95, mulberry32).
+
+## 2026-04-24 Wave 6 — Term-Sheet + Footer + i18n RU/EN + a11y polish (FINAL)
+
+**Scope:** s23 Term-Sheet (2-col table, 17 rows из canon.fund + canon.term_sheet + canon.deal_structure) + s24 Footer (4-col grid: logo+socials / links / contact / newsletter + copyright+legal bottom bar) + I18N объект RU/EN 82+82 ключа + LanguageToggle в TopNav (desktop+mobile) + a11y landmarks (main/nav/header/footer с role-атрибутами) + useMemo на крупные массивы (TERM_SHEET_ROWS, socialLinks, FOOTER_LINKS, i18n t-factory).
+
+**D-W6-01. Term-Sheet — bilingual row schema.** Вместо хранения отдельных RU/EN массивов и `lang`-based выборки, каждая строка несёт `labelRu/labelEn/valueRu/valueEn` поля, выборка inline через `lang === 'en' ? row.labelEn : row.labelRu`. Это проще и избегает дополнительного i18n-ключевого пространства для 17×2 = 34 значений (иначе раздуло бы I18N объект до ~120 ключей).
+
+**D-W6-02. I18N engine — zero-dependency.** Вместо полноценного React Context провайдера используется factory `makeT(lang)` + useState в App_W6 + пропсы вниз. Это self-contained (orchestrator требует single-artifact policy), нулевые внешние зависимости, и `useMemo(() => makeT(lang), [lang])` гарантирует стабильную ссылку на `t` для потребителей.
+
+**D-W6-03. LanguageToggle — RU/EN buttons с `aria-pressed`.** Не select/dropdown (3 причины: (a) 2 опции — overkill, (b) aria-pressed проще для SR чем listbox, (c) tap-target 32×36px оптимален для mobile). `role="group"` + `aria-label={t('label.language')}` оборачивает кнопки.
+
+**D-W6-04. `document.documentElement.lang` sync.** useEffect в App_W6 автоматически обновляет `<html lang>` при смене языка. Это даёт screen readers сигнал для переключения языкового профиля произношения (VoiceOver RU↔EN), что критично для a11y AA и не требует перезагрузки страницы.
+
+**D-W6-05. Newsletter form — frontend-only by design.** `onSubmit`: `e.preventDefault()` → `setEmail('')` → `alert()` + `setSubmitted(true)` (3-сек timeout). Нет `fetch`, соответствует правилам sandbox (forbidden APIs list). Dual feedback: (a) `alert()` для мгновенного visual response (b) `role="status" aria-live="polite"` inline div для screen readers.
+
+**D-W6-06. Footer landmark structure.** `<footer role="contentinfo">` (top-level) содержит 4-col grid с вложенными `<nav aria-label>` (col 2) и `<address>` (col 3). Вложенный `<nav>` не нарушает HTML5 — контент-инфо landmark допускает nav child. LinkedIn/Twitter/YouTube socials используют `<a href="#social-*">` placeholders (no external URLs за пределами sandbox).
+
+**D-W6-07. 3rd `<header role="banner">` wrapper на TopNav.** Wave 5 имел только `<nav aria-label>`. Wave 6 оборачивает TopNav в `<header role="banner">` для полного landmark quartet: banner / main / contentinfo / navigation. Это исправляет потенциальный axe-core warning на landmark roles.
+
+**Acceptance 11/11 passed.** Файл 258 531 B (+27 684 от W5). App_W6 single-export. 20 unique img placeholders. 0 forbidden APIs. 0 console.log. RU 82 / EN 82 zero-gap symmetric. Все canon-якоря сохранены (3000, ТрендСтудио, 24.75/24,75, 20.09, 13.95, mulberry32). Babel parser OK. Landing v1.0 READY for Phase 7.

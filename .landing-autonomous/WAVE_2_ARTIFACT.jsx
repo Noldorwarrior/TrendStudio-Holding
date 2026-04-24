@@ -860,6 +860,7 @@ function MonteCarloSection() {
             }}
           >
             Подвигайте параметры — пересчитает 10 000 сценариев portfolio IRR.
+            Canon-reference: P50 Internal 13.95% / Public 11.44%.
           </p>
         </Reveal>
 

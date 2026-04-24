@@ -17,10 +17,14 @@ base = json.loads((canon_dir / 'landing_canon_base_v1.0.json').read_text(encodin
 
 mechs = []
 
-# 1-10: Числовые якоря
+# 1-10: Числовые якоря и v2.0 major-fix сигнатуры
 anchors = {'3000': 1, '7': 2, '24.75': 3, '20.09': 4, '13.95': 5, '11.44': 6, '348': 7}
 for a, id_ in anchors.items():
     mechs.append({'id': id_, 'name': f'anchor_{a}', 'pass': a in html})
+# 8-10: v2.0 MAJOR FIX сигнатуры (из §4.1/§4.2/§4.6)
+mechs.append({'id': 8,  'name': 'm2_builder',          'pass': 'PIPELINE_SEED' in html or 'M2Builder' in html or 'Конструктор портфеля' in html})
+mechs.append({'id': 9,  'name': 'm3_commitment',       'pass': 'Commitment' in html and ('your_take' in html or 'ваша доля' in html)})
+mechs.append({'id': 10, 'name': 'legal_nda_gate',      'pass': 'NDAGate' in html or ('checkbox' in html and 'NDA' in html)})
 
 # 11: Формат HTML
 mechs.append({'id': 11, 'name': 'html_valid', 'pass': html.startswith('<!DOCTYPE html>')})
@@ -33,7 +37,7 @@ mechs.append({'id': 13, 'name': 'images_count', 'pass': html.count('data:image/j
 mechs.append({'id': 14, 'name': 'no_placeholders', 'pass': '__IMG_PLACEHOLDER_' not in html})
 mechs.append({'id': 15, 'name': 'img_alt_present', 'pass': html.count('alt=') >= 20})
 
-# 16-20: Palette
+# 16-20: Palette (было через 16 сразу после 15 — ok)
 for i, c in enumerate(['#0B0D10', '#F4A261', '#2A9D8F', '#EAEAEA', '#8E8E93'], start=16):
     mechs.append({'id': i, 'name': f'color_{c}', 'pass': c in html})
 

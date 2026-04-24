@@ -11,7 +11,7 @@ if not REPO_ROOT:
 REPO_ROOT = Path(REPO_ROOT).resolve()
 META = REPO_ROOT / '.landing-autonomous/canon/landing_img_meta_v1.0.json'
 IMG_DIR = REPO_ROOT / 'data_extract'
-HTML = REPO_ROOT / 'landing_v1.0.html'
+HTML = REPO_ROOT / 'landing_v2.2.html'
 
 def sha256_file(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 

@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "version": "1.0",
+  "project": "trendstudio-landing",
+  "generated_from": "landing_canon_extended_v1.0.json:images",
+  "generated_at": "2026-04-20",
+  "paired_with": {
+    "canon_base": "landing_canon_base_v1.0.json",
+    "canon_extended": "landing_canon_extended_v1.0.json"
+  },
+  "description": "Standalone mirror of canon_extended.images for INV-03/INV-04 checks and asset pipeline. Bit-identical к canon_extended.images (count=20, все sha256/dims/alt/role).",
+  "count": 20,
+  "items": [
+    {
+      "id": "img01",
+      "file": "images_processed/team_01_ceo.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 66355,
+      "sha256": "0bc0ee6fab3b4691f258fd060d4cecddcf3f30d7854a665c11b2e0477caad0f7",
+      "alt": {
+        "ru": "Портрет CEO ТрендСтудио Холдинг — кинематографический портрет в тёмных тонах",
+        "en": "Portrait of TrendStudio Holding CEO — cinematic dark-tone composition"
+      },
+      "role": "portrait",
+      "placement_section": "s03",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img02",
+      "file": "images_processed/team_02_producer_lead.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 101708,
+      "sha256": "4d641b6b4993290def53a4da5bc59e277ebb4d174bd0de11b1dd56f876a96972",
+      "alt": {
+        "ru": "Портрет главного продюсера холдинга",
+        "en": "Portrait of lead producer"
+      },
+      "role": "portrait",
+      "placement_section": "s03",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img03",
+      "file": "images_processed/team_03_cfo.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 89127,
+      "sha256": "8085a0316feed39f7873baaeec2f58a6d54be7348ad665fc4a6a47b0394188b1",
+      "alt": {
+        "ru": "Портрет финансового директора (CFO)",
+        "en": "Portrait of Chief Financial Officer"
+      },
+      "role": "portrait",
+      "placement_section": "s03",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img04",
+      "file": "images_processed/team_04_head_distribution.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 77919,
+      "sha256": "a5f0ea0b59de27051847c5c33f8d964f18017e0b62a379991e6bcd64e0794fc3",
+      "alt": {
+        "ru": "Портрет главы дистрибуции",
+        "en": "Portrait of Head of Distribution"
+      },
+      "role": "portrait",
+      "placement_section": "s03",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img05",
+      "file": "images_processed/team_05_creative_director.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 77836,
+      "sha256": "cc62cdfc9b3af757118931a5714a7a877d6927f7827ddfd8032a416270559cac",
+      "alt": {
+        "ru": "Портрет креативного директора",
+        "en": "Portrait of Creative Director"
+      },
+      "role": "portrait",
+      "placement_section": "s03",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img06",
+      "file": "images_processed/advisory_01_industry_veteran.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 92861,
+      "sha256": "95f0e043a0105ccc4614f3fa0abb1d5cfaa06acb3f84806963a9f3679826bde7",
+      "alt": {
+        "ru": "Портрет члена экспертного совета — ветерана киноиндустрии",
+        "en": "Advisory board member — film industry veteran"
+      },
+      "role": "portrait",
+      "placement_section": "s04",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img07",
+      "file": "images_processed/advisory_02_finance_advisor.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 80379,
+      "sha256": "84e1a8dd2b16afb2bbe2a76693a588d5bb894a563bf435fd59f5c4710a1e7b79",
+      "alt": {
+        "ru": "Портрет финансового советника экспертного совета",
+        "en": "Advisory board member — finance advisor"
+      },
+      "role": "portrait",
+      "placement_section": "s04",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img08",
+      "file": "images_processed/advisory_03_distribution_advisor.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 92178,
+      "sha256": "cd560eced53aac3b512dc52f724f47ee1c23efb8cdf122f1f1b9020679f98a87",
+      "alt": {
+        "ru": "Портрет советника по дистрибуции",
+        "en": "Advisory board member — distribution advisor"
+      },
+      "role": "portrait",
+      "placement_section": "s04",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img09",
+      "file": "images_processed/advisory_04_international_advisor.jpg",
+      "width_px": 800,
+      "height_px": 1000,
+      "size_bytes": 74978,
+      "sha256": "a9ff126741a77f70b33c168a07cb58da70ba1f518a50632ca9fa5aa4e139ae8d",
+      "alt": {
+        "ru": "Портрет международного советника",
+        "en": "Advisory board member — international markets"
+      },
+      "role": "portrait",
+      "placement_section": "s04",
+      "loading": "lazy",
+      "srcset_hint": "800w,600w,400w"
+    },
+    {
+      "id": "img10",
+      "file": "images_processed/project_01_poster.jpg",
+      "width_px": 1200,
+      "height_px": 1800,
+      "size_bytes": 411044,
+      "sha256": "c0f730394ab322d1bad857688f73121b7d708e7f4513c577b39b3775b8ca246e",
+      "alt": {
+        "ru": "Постер проекта 1 — кинематографическая композиция в тёплой тёмной палитре",
+        "en": "Project 1 poster — cinematic composition in warm dark palette"
+      },
+      "role": "project_still",
+      "placement_section": "s07",
+      "loading": "lazy",
+      "srcset_hint": "1080w,720w,480w"
+    },
+    {
+      "id": "img11",
+      "file": "images_processed/project_02_poster.jpg",
+      "width_px": 1200,
+      "height_px": 1800,
+      "size_bytes": 302517,
+      "sha256": "a6361bed847a6a7f2f3c651750b5cb17bbf829f3a74039cdecebf217094567c3",
+      "alt": {
+        "ru": "Постер проекта 2 — кинематографическая композиция в тёплой тёмной палитре",
+        "en": "Project 2 poster — cinematic composition in warm dark palette"
+      },
+      "role": "project_still",
+      "placement_section": "s07",
+      "loading": "lazy",
+      "srcset_hint": "1080w,720w,480w"
+    },
+    {
+      "id": "img12",
+      "file": "images_processed/project_03_poster.jpg",
+      "width_px": 1200,
+      "height_px": 1800,
+      "size_bytes": 164062,
+      "sha256": "f018b282b96fe85b088d844358f5974a874dabd292b7facca92fd446044db80a",
+      "alt": {
+        "ru": "Постер проекта 3 — кинематографическая композиция в тёплой тёмной палитре",
+        "en": "Project 3 poster — cinematic composition in warm dark palette"
+      },
+      "role": "project_still",
+      "placement_section": "s07",
+      "loading": "lazy",
+      "srcset_hint": "1080w,720w,480w"
+    },
+    {
+      "id": "img13",
+      "file": "images_processed/project_04_poster.jpg",
+      "width_px": 1200,
+      "height_px": 1800,
+      "size_bytes": 407365,
+      "sha256": "1e6572e278a5a9a05ebecf936732cf7d7c8641e87b3a01efa75aee97581f4f41",
+      "alt": {
+        "ru": "Постер проекта 4 — кинематографическая композиция в тёплой тёмной палитре",
+        "en": "Project 4 poster — cinematic composition in warm dark palette"
+      },
+      "role": "project_still",
+      "placement_section": "s07",
+      "loading": "lazy",
+      "srcset_hint": "1080w,720w,480w"
+    },
+    {
+      "id": "img14",
+      "file": "images_processed/project_05_poster.jpg",
+      "width_px": 1200,
+      "height_px": 1800,
+      "size_bytes": 224706,
+      "sha256": "bfa128ccb9861c2d7e0572af8c43f4ae97000ecda96ed504a0c10f81f6c3800a",
+      "alt": {
+        "ru": "Постер проекта 5 — кинематографическая композиция в тёплой тёмной палитре",
+        "en": "Project 5 poster — cinematic composition in warm dark palette"
+      },
+      "role": "project_still",
+      "placement_section": "s07",
+      "loading": "lazy",
+      "srcset_hint": "1080w,720w,480w"
+    },
+    {
+      "id": "img15",
+      "file": "images_processed/project_06_poster.jpg",
+      "width_px": 1200,
+      "height_px": 1800,
+      "size_bytes": 341740,
+      "sha256": "c3002d1f8d80e8992c59a1fb75e55216e759903aee1b9bf956362f141d672a80",
+      "alt": {
+        "ru": "Постер проекта 6 — кинематографическая композиция в тёплой тёмной палитре",
+        "en": "Project 6 poster — cinematic composition in warm dark palette"
+      },
+      "role": "project_still",
+      "placement_section": "s07",
+      "loading": "lazy",
+      "srcset_hint": "1080w,720w,480w"
+    },
+    {
+      "id": "img16",
+      "file": "images_processed/project_07_poster.jpg",
+      "width_px": 1200,
+      "height_px": 1800,
+      "size_bytes": 348128,
+      "sha256": "ebf080de820d71567e5b12d55c3998c681d3a63769f50ffbdf8ada46ee637a69",
+      "alt": {
+        "ru": "Постер проекта 7 — кинематографическая композиция в тёплой тёмной палитре",
+        "en": "Project 7 poster — cinematic composition in warm dark palette"
+      },
+      "role": "project_still",
+      "placement_section": "s07",
+      "loading": "lazy",
+      "srcset_hint": "1080w,720w,480w"
+    },
+    {
+      "id": "img17",
+      "file": "images_processed/banner_market_context.jpg",
+      "width_px": 2400,
+      "height_px": 900,
+      "size_bytes": 318279,
+      "sha256": "2b2ce0f5db6e2d837af0bf8b7db847960a9375957ea309b1d4f6c2c458e298d0",
+      "alt": {
+        "ru": "Широкий баннер раздела «Контекст рынка» — панорамная кинематографическая сцена",
+        "en": "Wide banner for Market Context section — cinematic panoramic scene"
+      },
+      "role": "section_bg",
+      "placement_section": "s05",
+      "loading": "lazy",
+      "srcset_hint": "1920w,1280w,960w"
+    },
+    {
+      "id": "img18",
+      "file": "images_processed/banner_press.jpg",
+      "width_px": 2400,
+      "height_px": 900,
+      "size_bytes": 391221,
+      "sha256": "8a758a86e1589b8f6206910567e2e7393b252de23deeb27d2b11e80d3012cc35",
+      "alt": {
+        "ru": "Баннер раздела «Пресса и отзывы» — редакционная композиция",
+        "en": "Banner for Press & Media section — editorial composition"
+      },
+      "role": "section_bg",
+      "placement_section": "s22",
+      "loading": "lazy",
+      "srcset_hint": "1920w,1280w,960w"
+    },
+    {
+      "id": "img19",
+      "file": "images_processed/hero_bg.jpg",
+      "width_px": 2560,
+      "height_px": 1440,
+      "size_bytes": 608624,
+      "sha256": "c106036858c7c98f145c0e12bdb9355596fb7662555532a305db58c714d90ac7",
+      "alt": {
+        "ru": "Hero-фон ТрендСтудио Холдинг — кинематографический ландшафт заката в палитре shadows_of_sunset_v1",
+        "en": "TrendStudio Holding hero background — cinematic sunset landscape in shadows_of_sunset_v1 palette"
+      },
+      "role": "hero_bg",
+      "placement_section": "s01",
+      "loading": "eager",
+      "srcset_hint": "1920w,1440w,1280w,960w"
+    },
+    {
+      "id": "img20",
+      "file": "images_processed/hero_film_reel.jpg",
+      "width_px": 2400,
+      "height_px": 1350,
+      "size_bytes": 440382,
+      "sha256": "5c75631be90ce4d8681d71b4e580b5848c7c2be1692d5b779b784b76aa07db61",
+      "alt": {
+        "ru": "Hero-деталь: катушка киноплёнки в тёплом контровом свете",
+        "en": "Hero detail: film reel in warm rim lighting"
+      },
+      "role": "still_sequence",
+      "placement_section": "s01",
+      "loading": "eager",
+      "srcset_hint": "1920w,1280w"
+    }
+  ]
+}

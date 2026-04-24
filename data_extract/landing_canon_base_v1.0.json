@@ -1,0 +1,699 @@
+{
+  "_meta": {
+    "version": "v1.0",
+    "schema_version": "v1.0",
+    "created_at": "2026-04-19T16:30:00Z",
+    "style_signature": "shadows_of_sunset_v1",
+    "sources": [
+      { "id": "lp_memo",       "title": "TrendStudio LP Memo",         "version": "v1.1.0",  "role": "primary",   "path": "LP_Package/Memo_v1.1.0.md" },
+      { "id": "deck",          "title": "TrendStudio LP Deck",         "version": "v1.1.2",  "role": "primary",   "path": "Deck_v1.1.2/Interactive.html" },
+      { "id": "investor_model","title": "Investor Model",               "version": "v3.0",    "role": "primary",   "path": "investor_model_v3.0.xlsx" },
+      { "id": "finmodel",      "title": "ТрендСтудио Финмодель",        "version": "v1.4.4",  "role": "primary",   "path": "finmodel_v1.4.4.xlsx" },
+      { "id": "deck_v120",     "title": "TrendStudio LP Deck Interactive","version": "v1.2.0","role": "reference", "path": "Deck_v1.2.0/TrendStudio_LP_Deck_v1.2.0_Interactive.html" },
+      { "id": "prompt",        "title": "Промт HTML лендинг Холдинг",   "version": "v1.2",    "role": "primary",   "path": "Промт_HTML_лендинг_Холдинг_v1.2.md" }
+    ],
+    "audiences": ["investor", "partner", "talent"],
+    "languages": ["ru", "en"]
+  },
+
+  "fund": {
+    "lp_size_mln_rub": 3000,
+    "currency": "RUB",
+    "structure": "LP/GP",
+    "gp_commitment_pct": 2,
+    "management_fee_pct": 2,
+    "carried_interest_pct": 20,
+    "hurdle_rate_pct": 8,
+    "catchup_pct": 100,
+    "investment_period_years": 4,
+    "fund_life_years": 7
+  },
+
+  "returns": {
+    "irr_internal_w5vd": 24.75,
+    "irr_public_w3": 20.09,
+    "mc_p50_internal": 13.95,
+    "mc_p50_public": 11.44,
+    "mc_p25_internal": 9.8,
+    "mc_p75_internal": 18.6,
+    "mc_p25_public": 7.9,
+    "mc_p75_public": 15.1,
+    "target_moic": 2.2,
+    "tvpi": 2.2,
+    "dpi_year_5": 0.45,
+    "dpi_year_7": 1.85
+  },
+
+  "horizon": {
+    "years": 7,
+    "start_year": 2026,
+    "end_year": 2033,
+    "milestones": [
+      { "year": 2026, "label": "Формирование фонда, первые 2 проекта в pre-production" },
+      { "year": 2027, "label": "Запуск production по 3 проектам, первый релиз" },
+      { "year": 2028, "label": "Пиковая production-фаза, 2 релиза в год" },
+      { "year": 2029, "label": "Первые DPI-выплаты LP, выход на международный рынок" },
+      { "year": 2030, "label": "Пиковая post-production, формирование библиотеки прав" },
+      { "year": 2031, "label": "Монетизация библиотеки, подготовка к частичному exit" },
+      { "year": 2032, "label": "Финальные выплаты, winding-down" },
+      { "year": 2033, "label": "Закрытие фонда" }
+    ]
+  },
+
+  "finmodel": {
+    "tests_passed": 348,
+    "version": "v1.4.4",
+    "engines": [
+      { "id": "mc_revenue",   "name": "Monte-Carlo Revenue",       "description": "Стохастическое моделирование BO/OTT-доходов с 4-факторной декомпозицией" },
+      { "id": "mc_cost",      "name": "Monte-Carlo Cost",          "description": "Моделирование overruns production+post с историческими распределениями" },
+      { "id": "mc_schedule",  "name": "Monte-Carlo Schedule",      "description": "Probabilistic scheduling с delay-propagation между проектами" },
+      { "id": "mc_portfolio", "name": "Monte-Carlo Portfolio IRR", "description": "Агрегированный portfolio-level IRR/TVPI с корреляциями" }
+    ],
+    "p5_verification": "32/32",
+    "m4_verification": "7/7"
+  },
+
+  "narrative": {
+    "sections": [
+      {
+        "id": "s01", "slug": "hero", "order": 1,
+        "title": "ТрендСтудио Холдинг",
+        "kicker": "Кинопроизводство нового поколения с IRR 24,75%",
+        "role": "hero",
+        "audiences": ["investor", "partner", "talent"],
+        "body": {
+          "investor": "Закрытый фонд 3 000 млн ₽ — инвестиции в 7 фильмов и сериалов горизонтом 7 лет. Таргет IRR 24,75% (Internal W₅ V-D), MC p50 13,95%, MOIC ≥ 2,2×.",
+          "partner":  "Платформа для дистрибуции, со-производства и лицензирования российского контента на OTT, theatrical и международные рынки.",
+          "talent":   "Холдинг для режиссёров, продюсеров и креативных команд — production environment полного цикла с финансированием 7 проектов."
+        },
+        "anchors": [
+          { "key": "fund_size", "value": 3000, "unit": "млн ₽" },
+          { "key": "horizon",   "value": 7,    "unit": "лет" },
+          { "key": "irr_target","value": 24.75,"unit": "%" }
+        ]
+      },
+      {
+        "id": "s02", "slug": "market-context", "order": 2,
+        "title": "Рынок кино 2026+",
+        "kicker": "Окно возможностей после структурных сдвигов 2022–2025",
+        "role": "thesis",
+        "audiences": ["investor", "partner"],
+        "body": {
+          "investor": "Российский кинорынок в фазе реструктуризации: уход западных мейджоров освободил ~60% theatrical-доли. OTT-платформы (Кинопоиск, Okko, Wink, START) наращивают оригинальный контент 30%+ YoY. Дефицит качественного production создаёт арбитражное окно.",
+          "partner":  "Консолидация distribution-каналов и рост OTT-бюджетов формируют благоприятную среду для вертикально-интегрированного producer-холдинга."
+        }
+      },
+      {
+        "id": "s03", "slug": "thesis", "order": 3,
+        "title": "Инвестиционный тезис",
+        "kicker": "Портфельный подход + дисциплинированная экономика + data-driven решения",
+        "role": "thesis",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "7 проектов = диверсификация риска единичного срыва. Жёсткий budget-control (±15% tolerance), 4-стадийный gate-review, Monte-Carlo моделирование revenue и cost на всех этапах. Taргет IRR 24,75% при p50 MC 13,95%."
+        },
+        "anchors": [
+          { "key": "projects", "value": 7, "unit": "шт" },
+          { "key": "mc_p50",   "value": 13.95, "unit": "%" }
+        ]
+      },
+      {
+        "id": "s04", "slug": "team", "order": 4,
+        "title": "Команда и операционный движок",
+        "kicker": "CEO + Producer Lead + CFO + Head of Distribution + Creative Director",
+        "role": "team",
+        "audiences": ["investor", "partner", "talent"],
+        "body": {
+          "investor": "Команда из 5 ключевых ролей с совокупным опытом 60+ лет в российской и международной киноиндустрии. Track record: 40+ релизных проектов, 3 международных фестиваля, 12 OTT-оригиналов.",
+          "partner":  "Экспертиза покрывает полный цикл: development → production → post → distribution → licensing.",
+          "talent":   "Команда, которая обеспечивает creative freedom в рамках дисциплины бюджета и сроков."
+        }
+      },
+      {
+        "id": "s05", "slug": "pipeline-overview", "order": 5,
+        "title": "Pipeline 7 проектов",
+        "kicker": "5 фильмов + 2 сериала × 4 стадии × 7 лет",
+        "role": "product",
+        "audiences": ["investor", "partner"],
+        "body": {
+          "investor": "Диверсифицированный портфель: 5 фильмов (драма, триллер, исторический, семейный, авторский) + 2 сериала (premium-драма 8 эп., жанровый 10 эп.). Stage-project matrix: 28 датапойнтов отслеживают прогресс.",
+          "partner":  "Pipeline сбалансирован по жанрам, бюджетам (диапазон 150–600 млн ₽) и таргет-аудиториям."
+        },
+        "anchors": [
+          { "key": "projects", "value": 7, "unit": "шт" },
+          { "key": "stages",   "value": 4, "unit": "шт" }
+        ]
+      },
+      {
+        "id": "s06", "slug": "track-record", "order": 6,
+        "title": "Track record и benchmark",
+        "kicker": "Сравнение с 5 аналогами — отечественными и международными",
+        "role": "thesis",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "ТрендСтудио позиционируется в верхнем квартиле по IRR vs. benchmark-группе (Bazelevs, A24-подобные модели, Indian Paintbrush, Plan B, российские vertical producers)."
+        }
+      },
+      {
+        "id": "s07", "slug": "economics", "order": 7,
+        "title": "Экономика фонда",
+        "kicker": "LP 3 000 млн ₽ + GP commit 2% + стандартный 2/20 с hurdle 8%",
+        "role": "economics",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "Структура LP/GP. Management fee 2% на committed в investment period (4 года), далее на invested. Carry 20% с hurdle 8% + 100% catch-up. Fund life 7 лет с опцией +2 года."
+        },
+        "anchors": [
+          { "key": "lp_size",     "value": 3000, "unit": "млн ₽" },
+          { "key": "mgmt_fee",    "value": 2,    "unit": "%" },
+          { "key": "carry",       "value": 20,   "unit": "%" },
+          { "key": "hurdle",      "value": 8,    "unit": "%" }
+        ]
+      },
+      {
+        "id": "s08", "slug": "returns", "order": 8,
+        "title": "Прогноз доходности",
+        "kicker": "IRR 24,75% Internal · 20,09% Public · MC p50 13,95% / 11,44%",
+        "role": "economics",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "Internal (W₅ V-D): IRR 24,75%. Public (W₃ консервативная): IRR 20,09%. Monte-Carlo p50: 13,95% (Internal) / 11,44% (Public). Диапазон p25–p75: 9,8–18,6% Internal. Target MOIC 2,2×."
+        },
+        "anchors": [
+          { "key": "irr_internal", "value": 24.75, "unit": "%" },
+          { "key": "irr_public",   "value": 20.09, "unit": "%" },
+          { "key": "mc_p50_int",   "value": 13.95, "unit": "%" },
+          { "key": "mc_p50_pub",   "value": 11.44, "unit": "%" },
+          { "key": "moic",         "value": 2.2,   "unit": "×" }
+        ]
+      },
+      {
+        "id": "s09", "slug": "risks", "order": 9,
+        "title": "Риски и митигация",
+        "kicker": "12 ключевых рисков × severity × probability × план действий",
+        "role": "risk",
+        "audiences": ["investor", "partner"],
+        "body": {
+          "investor": "Систематический risk-register: рыночные, производственные, финансовые, регуляторные, distribution, operational, talent, tech. По каждому риску — severity, probability и конкретная mitigation-мера."
+        }
+      },
+      {
+        "id": "s10", "slug": "distribution", "order": 10,
+        "title": "Стратегия дистрибуции",
+        "kicker": "Theatrical + OTT + TV + International + Merch",
+        "role": "product",
+        "audiences": ["investor", "partner"],
+        "body": {
+          "investor": "5 каналов монетизации с последовательными окнами: theatrical (3 мес) → OTT (12 мес) → TV (24 мес) → international (параллельно) → merch/IP.",
+          "partner":  "Открыты для co-distribution соглашений и территориальных pre-sales."
+        }
+      },
+      {
+        "id": "s11", "slug": "partnerships", "order": 11,
+        "title": "Партнёры и экосистема",
+        "kicker": "OTT-платформы · дистрибьюторы · продакшены · фестивали",
+        "role": "support",
+        "audiences": ["partner"],
+        "body": {
+          "partner": "Работаем с ведущими российскими OTT, theatrical-дистрибьюторами, иностранными sales agents и региональными production-хабами."
+        }
+      },
+      {
+        "id": "s12", "slug": "pipeline-builder", "order": 12,
+        "title": "Pipeline Builder",
+        "kicker": "Интерактивный симулятор портфеля (M2)",
+        "role": "product",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "Настройте гипотетический pipeline: выберите 7 проектов из 12 кандидатов, посмотрите как изменится IRR, MOIC и risk profile. Симулятор привязан к финмодели v1.4.4."
+        }
+      },
+      {
+        "id": "s13", "slug": "scenarios", "order": 13,
+        "title": "Сценарный анализ",
+        "kicker": "Base · Bull · Bear · Stress — 4 сценария с вероятностями",
+        "role": "economics",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "4 сценария развития: Base (IRR 13,95%, 50%), Bull (IRR 22%, 25%), Bear (IRR 5%, 20%), Stress (IRR -3%, 5%). Каждый с драйверами и мультипликаторами revenue/cost."
+        }
+      },
+      {
+        "id": "s14", "slug": "regions", "order": 14,
+        "title": "Региональная стратегия",
+        "kicker": "9 регионов РФ — production hubs + distribution + talent",
+        "role": "product",
+        "audiences": ["partner"],
+        "body": {
+          "partner": "Москва, СПб, Калининград, Казань, Екатеринбург, Новосибирск, Сочи, Владивосток, Мурманск — production и post-production hubs с региональными рибейтами и talent pool."
+        }
+      },
+      {
+        "id": "s15", "slug": "tax-credits", "order": 15,
+        "title": "Налоговые режимы и рибейты",
+        "kicker": "Региональные программы + федеральный кэшбэк",
+        "role": "economics",
+        "audiences": ["investor", "partner"],
+        "body": {
+          "investor": "Задействуем региональные рибейты (до 20% production spend) и федеральные программы поддержки. Эффективная ставка налогообложения фонда оптимизирована под LP/GP структуру."
+        }
+      },
+      {
+        "id": "s16", "slug": "deal-terms", "order": 16,
+        "title": "Условия сделки",
+        "kicker": "Waterfall · LP rights · GP rights · reporting",
+        "role": "economics",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "3-ступенчатый waterfall: (1) return of capital → (2) 8% preferred return → (3) 100% catch-up → (4) 80/20 LP/GP. LP rights: LPAC, информационные права, key-person, no-fault removal."
+        }
+      },
+      {
+        "id": "s17", "slug": "advisory-board", "order": 17,
+        "title": "Advisory Board",
+        "kicker": "4 консультанта — индустрия, финансы, дистрибуция, международный рынок",
+        "role": "team",
+        "audiences": ["investor", "partner"],
+        "body": {
+          "investor": "Advisory Board формирует strategic oversight без operational involvement. 4 независимых консультанта с профилями: Industry Veteran, Finance, Distribution, International."
+        }
+      },
+      {
+        "id": "s18", "slug": "press", "order": 18,
+        "title": "Пресса и признание",
+        "kicker": "Цитаты ключевых отраслевых изданий",
+        "role": "support",
+        "audiences": ["investor", "partner", "talent"],
+        "body": {
+          "investor": "Карусель из 8 цитат — ведущие отраслевые и деловые издания о предыдущих проектах команды и о новом холдинге."
+        }
+      },
+      {
+        "id": "s19", "slug": "roadmap", "order": 19,
+        "title": "Дорожная карта 2026–2033",
+        "kicker": "7 лет × milestones по кварталам",
+        "role": "roadmap",
+        "audiences": ["investor", "partner"],
+        "body": {
+          "investor": "Гранулярный roadmap: production start dates, первые релизы, DPI-выплаты, exit windows. Каждый год с Q1–Q4 milestones."
+        }
+      },
+      {
+        "id": "s20", "slug": "lp-sizer", "order": 20,
+        "title": "LP Sizer",
+        "kicker": "Калькулятор персонального IRR для LP (M3)",
+        "role": "cta",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "Введите размер вашего коммитмента — увидите ожидаемые DPI/TVPI/IRR с учётом waterfall. Привязано к investor_model v3.0."
+        }
+      },
+      {
+        "id": "s21", "slug": "faq", "order": 21,
+        "title": "Частые вопросы",
+        "kicker": "15 ответов × 3 аудитории (investor/partner/talent)",
+        "role": "support",
+        "audiences": ["investor", "partner", "talent"],
+        "body": {
+          "investor": "Структурированный FAQ по ключевым темам: механика фонда, работа с проектами, reporting, exits, юрисдикция."
+        }
+      },
+      {
+        "id": "s22", "slug": "social-proof", "order": 22,
+        "title": "Социальное подтверждение",
+        "kicker": "Testimonials партнёров и talent, предыдущие кейсы",
+        "role": "support",
+        "audiences": ["investor", "partner", "talent"],
+        "body": {
+          "partner": "Мнения тех, кто уже работал с командой холдинга — продюсеры, режиссёры, OTT-редакторы."
+        }
+      },
+      {
+        "id": "s23", "slug": "term-sheet", "order": 23,
+        "title": "Term Sheet Preview",
+        "kicker": "Минимальный тикет, closes schedule, ключевые условия",
+        "role": "economics",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "Min ticket 50 млн ₽. Closes: first close 2026-09-30 (1 500 млн ₽ target), final close 2027-03-31 (3 000 млн ₽ target)."
+        }
+      },
+      {
+        "id": "s24", "slug": "onboarding", "order": 24,
+        "title": "LP Onboarding",
+        "kicker": "CTA — intro call, due diligence data room, signing",
+        "role": "cta",
+        "audiences": ["investor"],
+        "body": {
+          "investor": "3 шага к участию: (1) intro call с GP, (2) доступ к data room, (3) due diligence + signing. Typical timeline — 4–6 недель."
+        }
+      },
+      {
+        "id": "s25", "slug": "closing", "order": 25,
+        "title": "Контакты",
+        "kicker": "Свяжитесь с командой холдинга",
+        "role": "cta",
+        "audiences": ["investor", "partner", "talent"],
+        "body": {
+          "investor": "Direct contact с CEO/CFO для investor relations. Email, Telegram, встреча в офисе или online."
+        }
+      }
+    ]
+  },
+
+  "thesis": {
+    "items": [
+      { "id": "t01", "title": "Окно после структурных сдвигов",
+        "body": { "investor": "Уход западных мейджоров освободил ~60% theatrical-доли. Исторически уникальное окно для локальных игроков." } },
+      { "id": "t02", "title": "OTT-инфляция бюджетов",
+        "body": { "investor": "Оригинальный контент OTT-платформ растёт 30%+ YoY. Дефицит production capacity." } },
+      { "id": "t03", "title": "Портфельная диверсификация",
+        "body": { "investor": "7 проектов × 4 стадии × смешанный жанровый микс снижает risk единичного срыва." } },
+      { "id": "t04", "title": "Дисциплинированная экономика",
+        "body": { "investor": "Budget tolerance ±15%, gate-review, stop-loss механика. Не допускаем overspend на post." } },
+      { "id": "t05", "title": "Data-driven decisions",
+        "body": { "investor": "Финмодель v1.4.4, 348 тестов, 4 MC-движка. Каждое greenlight-решение — с IRR-симуляцией." } },
+      { "id": "t06", "title": "Вертикальная интеграция",
+        "body": { "investor": "Development + production + post + distribution + IP-менеджмент в одном холдинге." } },
+      { "id": "t07", "title": "Talent ecosystem",
+        "body": { "talent": "Долгосрочные контракты с режиссёрами и продюсерами на multi-project deals." } },
+      { "id": "t08", "title": "International upside",
+        "body": { "investor": "Pre-sales и международный licensing дают 20–30% revenue upside к базовому сценарию." } },
+      { "id": "t09", "title": "Library value",
+        "body": { "investor": "7 проектов за 7 лет = IP-библиотека с долгосрочной остаточной стоимостью (catalog monetization)." } },
+      { "id": "t10", "title": "Governance LP-friendly",
+        "body": { "investor": "Стандартный 2/20 с hurdle 8%, 100% catch-up, LPAC, key-person, no-fault removal. Без экзотики." } }
+    ]
+  },
+
+  "pipeline": {
+    "projects": [
+      { "id": "p01", "slug": "project-alpha",   "title": "Проект Alpha",   "type": "film",   "genre": "драма",          "budget_mln_rub": 350, "target_rev_mln_rub": 850,  "target_irr_pct": 28, "status": "production",       "poster_ref": "project_01_poster.jpg", "release_year": 2027 },
+      { "id": "p02", "slug": "project-bravo",   "title": "Проект Bravo",   "type": "film",   "genre": "триллер",        "budget_mln_rub": 280, "target_rev_mln_rub": 720,  "target_irr_pct": 32, "status": "pre-production",   "poster_ref": "project_02_poster.jpg", "release_year": 2027 },
+      { "id": "p03", "slug": "project-charlie", "title": "Проект Charlie", "type": "film",   "genre": "исторический",   "budget_mln_rub": 600, "target_rev_mln_rub": 1400, "target_irr_pct": 26, "status": "pre-production",   "poster_ref": "project_03_poster.jpg", "release_year": 2028 },
+      { "id": "p04", "slug": "project-delta",   "title": "Проект Delta",   "type": "series", "genre": "premium-драма",  "budget_mln_rub": 520, "target_rev_mln_rub": 1250, "target_irr_pct": 24, "status": "production",       "poster_ref": "project_04_poster.jpg", "release_year": 2028 },
+      { "id": "p05", "slug": "project-echo",    "title": "Проект Echo",    "type": "film",   "genre": "семейный",       "budget_mln_rub": 180, "target_rev_mln_rub": 520,  "target_irr_pct": 30, "status": "post-production",  "poster_ref": "project_05_poster.jpg", "release_year": 2027 },
+      { "id": "p06", "slug": "project-foxtrot", "title": "Проект Foxtrot", "type": "series", "genre": "жанровый",       "budget_mln_rub": 420, "target_rev_mln_rub": 980,  "target_irr_pct": 22, "status": "pre-production",   "poster_ref": "project_06_poster.jpg", "release_year": 2029 },
+      { "id": "p07", "slug": "project-gamma",   "title": "Проект Gamma",   "type": "film",   "genre": "авторский",      "budget_mln_rub": 220, "target_rev_mln_rub": 480,  "target_irr_pct": 18, "status": "pre-production",   "poster_ref": "project_07_poster.jpg", "release_year": 2029 }
+    ],
+    "stages": [
+      { "id": "pre",     "label": "Pre-production",  "order": 1, "color": "#9E9E9E" },
+      { "id": "prod",    "label": "Production",      "order": 2, "color": "#1976D2" },
+      { "id": "post",    "label": "Post-production", "order": 3, "color": "#7B1FA2" },
+      { "id": "release", "label": "Release",         "order": 4, "color": "#388E3C" }
+    ],
+    "stage_project_matrix": [
+      { "project_id": "p01", "stage_id": "pre",     "progress_pct": 100 },
+      { "project_id": "p01", "stage_id": "prod",    "progress_pct": 60  },
+      { "project_id": "p01", "stage_id": "post",    "progress_pct": 0   },
+      { "project_id": "p01", "stage_id": "release", "progress_pct": 0   },
+      { "project_id": "p02", "stage_id": "pre",     "progress_pct": 75  },
+      { "project_id": "p02", "stage_id": "prod",    "progress_pct": 0   },
+      { "project_id": "p02", "stage_id": "post",    "progress_pct": 0   },
+      { "project_id": "p02", "stage_id": "release", "progress_pct": 0   },
+      { "project_id": "p03", "stage_id": "pre",     "progress_pct": 45  },
+      { "project_id": "p03", "stage_id": "prod",    "progress_pct": 0   },
+      { "project_id": "p03", "stage_id": "post",    "progress_pct": 0   },
+      { "project_id": "p03", "stage_id": "release", "progress_pct": 0   },
+      { "project_id": "p04", "stage_id": "pre",     "progress_pct": 100 },
+      { "project_id": "p04", "stage_id": "prod",    "progress_pct": 40  },
+      { "project_id": "p04", "stage_id": "post",    "progress_pct": 0   },
+      { "project_id": "p04", "stage_id": "release", "progress_pct": 0   },
+      { "project_id": "p05", "stage_id": "pre",     "progress_pct": 100 },
+      { "project_id": "p05", "stage_id": "prod",    "progress_pct": 100 },
+      { "project_id": "p05", "stage_id": "post",    "progress_pct": 70  },
+      { "project_id": "p05", "stage_id": "release", "progress_pct": 0   },
+      { "project_id": "p06", "stage_id": "pre",     "progress_pct": 30  },
+      { "project_id": "p06", "stage_id": "prod",    "progress_pct": 0   },
+      { "project_id": "p06", "stage_id": "post",    "progress_pct": 0   },
+      { "project_id": "p06", "stage_id": "release", "progress_pct": 0   },
+      { "project_id": "p07", "stage_id": "pre",     "progress_pct": 20  },
+      { "project_id": "p07", "stage_id": "prod",    "progress_pct": 0   },
+      { "project_id": "p07", "stage_id": "post",    "progress_pct": 0   },
+      { "project_id": "p07", "stage_id": "release", "progress_pct": 0   }
+    ]
+  },
+
+  "benchmark": {
+    "studios": [
+      { "id": "b01", "name": "A24-like model",          "region": "US",            "metrics": { "avg_irr_pct": 22,   "avg_moic": 2.1, "films_per_year": 10, "avg_budget_mln_rub": 450 } },
+      { "id": "b02", "name": "Plan B Entertainment",    "region": "US",            "metrics": { "avg_irr_pct": 19,   "avg_moic": 1.9, "films_per_year": 4,  "avg_budget_mln_rub": 1800 } },
+      { "id": "b03", "name": "Bazelevs-like model",     "region": "RU",            "metrics": { "avg_irr_pct": 15,   "avg_moic": 1.6, "films_per_year": 3,  "avg_budget_mln_rub": 420 } },
+      { "id": "b04", "name": "Indian Paintbrush",       "region": "US",            "metrics": { "avg_irr_pct": 17,   "avg_moic": 1.8, "films_per_year": 2,  "avg_budget_mln_rub": 1200 } },
+      { "id": "b05", "name": "Vertical producers RU",   "region": "RU",            "metrics": { "avg_irr_pct": 12,   "avg_moic": 1.4, "films_per_year": 5,  "avg_budget_mln_rub": 250 } }
+    ]
+  },
+
+  "team": {
+    "members": [
+      { "id": "team_01", "role_key": "ceo",                "name_masked": "CEO",                   "title": "Chief Executive Officer",    "photo_ref": "team_01_ceo.jpg",                 "bio": "20+ лет в продюсировании и управлении производственными компаниями.",     "track_record": ["12 релизных фильмов", "3 международных фестиваля", "2 OTT-оригинала"] },
+      { "id": "team_02", "role_key": "producer_lead",      "name_masked": "Producer Lead",         "title": "Head of Production",          "photo_ref": "team_02_producer_lead.jpg",       "bio": "Продюсер полного цикла: от development до theatrical release.",          "track_record": ["18 проектов разной стадии", "Opening Night Cannes Directors Fortnight", "Кинотавр Главный приз"] },
+      { "id": "team_03", "role_key": "cfo",                "name_masked": "CFO",                   "title": "Chief Financial Officer",     "photo_ref": "team_03_cfo.jpg",                 "bio": "15+ лет в finance — M&A, fund structuring, production accounting.",      "track_record": ["5 закрытых фондов", "IPO опыт", "Big-4 background"] },
+      { "id": "team_04", "role_key": "head_distribution",  "name_masked": "Head of Distribution",  "title": "Head of Distribution & IP",   "photo_ref": "team_04_head_distribution.jpg",   "bio": "Выстраивал OTT-pipeline для крупнейших российских платформ.",            "track_record": ["Lead на 40+ OTT-сделках", "Международный sales — 25 стран"] },
+      { "id": "team_05", "role_key": "creative_director",  "name_masked": "Creative Director",     "title": "Creative Director",           "photo_ref": "team_05_creative_director.jpg",   "bio": "Авторский голос холдинга. Режиссёр и scriptwriter.",                     "track_record": ["3 фестивальных фильма", "Сценарист для 8 проектов"] }
+    ]
+  },
+
+  "advisory_board": {
+    "members": [
+      { "id": "advisory_01", "role_key": "industry_veteran",       "name_masked": "Industry Veteran",       "title": "Senior Industry Advisor",       "photo_ref": "advisory_01_industry_veteran.jpg",       "bio": "40+ лет в индустрии, экс-CEO крупного советского/российского киноконцерна.", "focus_areas": ["industry_relations", "strategy"] },
+      { "id": "advisory_02", "role_key": "finance_advisor",        "name_masked": "Finance Advisor",        "title": "Finance Advisor",               "photo_ref": "advisory_02_finance_advisor.jpg",        "bio": "Экс-партнёр private equity, структурирование фондов.",                        "focus_areas": ["fund_structuring", "lp_relations", "governance"] },
+      { "id": "advisory_03", "role_key": "distribution_advisor",   "name_masked": "Distribution Advisor",   "title": "Distribution Advisor",          "photo_ref": "advisory_03_distribution_advisor.jpg",   "bio": "Экс-руководитель OTT-платформы, отвечал за оригинальный контент.",           "focus_areas": ["ott_strategy", "content_curation"] },
+      { "id": "advisory_04", "role_key": "international_advisor",  "name_masked": "International Advisor",  "title": "International Advisor",         "photo_ref": "advisory_04_international_advisor.jpg",  "bio": "Международный sales agent, работа с фестивалями и pre-sales.",               "focus_areas": ["international_sales", "festivals", "co-productions"] }
+    ]
+  },
+
+  "risks": {
+    "items": [
+      { "id": "r01", "category": "market",       "title": "Падение theatrical-спроса",         "description": "Структурный сдвиг в сторону OTT снижает box office.", "severity": "medium",   "probability": "medium", "mitigation": "Гибкая распределение revenue между окнами, более агрессивный OTT-licensing." },
+      { "id": "r02", "category": "production",   "title": "Срыв сроков production",            "description": "Погодные, логистические, cast-availability риски.",   "severity": "medium",   "probability": "high",   "mitigation": "Contingency 15% в бюджете, insurance, параллельные slots production." },
+      { "id": "r03", "category": "production",   "title": "Overspend > 15%",                    "description": "Перерасход production budget.",                        "severity": "high",     "probability": "medium", "mitigation": "Gate-review на каждой стадии, stop-loss по превышению порога." },
+      { "id": "r04", "category": "financial",    "title": "Delayed LP capital calls",           "description": "Задержки call-ов со стороны LP.",                     "severity": "medium",   "probability": "low",    "mitigation": "Bridge-facility с банком-партнёром, диверсификация LP-базы." },
+      { "id": "r05", "category": "regulatory",   "title": "Изменения в гос.регулировании",      "description": "Корректировка правил контент-регулирования.",         "severity": "high",     "probability": "medium", "mitigation": "Legal advisor in-house, сценарии с early-warning." },
+      { "id": "r06", "category": "distribution", "title": "Потеря OTT-канала",                  "description": "Изменение стратегии ключевого OTT-партнёра.",         "severity": "medium",   "probability": "medium", "mitigation": "Диверсификация OTT (минимум 3 платформы)." },
+      { "id": "r07", "category": "operational",  "title": "Key-person risk",                    "description": "Уход ключевого члена команды.",                       "severity": "high",     "probability": "low",    "mitigation": "Key-person clause в LP agreement, bench depth." },
+      { "id": "r08", "category": "talent",       "title": "Дефицит режиссёров/актёров",         "description": "Конкуренция за top talent с другими студиями.",       "severity": "medium",   "probability": "medium", "mitigation": "Long-term multi-project deals, retainer-контракты." },
+      { "id": "r09", "category": "tech",         "title": "Технологическая disruption (AI)",    "description": "AI-контент меняет экономику production.",              "severity": "medium",   "probability": "medium", "mitigation": "Внедрение AI-инструментов в pre-viz, VFX, dubbing." },
+      { "id": "r10", "category": "market",       "title": "Валютные риски",                     "description": "Импортное оборудование, международные расчёты.",     "severity": "medium",   "probability": "medium", "mitigation": "Forward-контракты на валюту, локализация supply chain." },
+      { "id": "r11", "category": "financial",    "title": "Недостижение hurdle rate",           "description": "IRR ниже 8% → нулевой carry для GP.",                  "severity": "medium",   "probability": "low",    "mitigation": "Дисциплина гейтов, гибкое перераспределение budget между проектами." },
+      { "id": "r12", "category": "distribution", "title": "Пиратство и копирайт",                "description": "Неконтролируемое распространение контента.",          "severity": "low",      "probability": "high",   "mitigation": "Anti-piracy сервисы, DMCA-процедуры, watermarking." }
+    ]
+  },
+
+  "roadmap": {
+    "years": [
+      { "year": 2026, "label": "Year 1 — формирование",
+        "milestones": [
+          { "id": "m2026q1", "title": "First close 1 500 млн ₽", "quarter": "Q3", "category": "fund" },
+          { "id": "m2026q2", "title": "Запуск pre-production p01 и p04", "quarter": "Q1", "category": "production" },
+          { "id": "m2026q3", "title": "Advisory Board assembled", "quarter": "Q2", "category": "team" }
+        ]
+      },
+      { "year": 2027, "label": "Year 2 — запуск",
+        "milestones": [
+          { "id": "m2027q1", "title": "Final close 3 000 млн ₽", "quarter": "Q1", "category": "fund" },
+          { "id": "m2027q2", "title": "Первый релиз (p05 или p01)", "quarter": "Q4", "category": "release" },
+          { "id": "m2027q3", "title": "Production start p02 и p03", "quarter": "Q2", "category": "production" }
+        ]
+      },
+      { "year": 2028, "label": "Year 3 — пик production",
+        "milestones": [
+          { "id": "m2028q1", "title": "2 релиза (p03, p04)", "quarter": "Q3", "category": "release" },
+          { "id": "m2028q2", "title": "Старт international sales", "quarter": "Q1", "category": "distribution" }
+        ]
+      },
+      { "year": 2029, "label": "Year 4 — первые DPI",
+        "milestones": [
+          { "id": "m2029q1", "title": "Первые DPI-выплаты LP", "quarter": "Q2", "category": "returns" },
+          { "id": "m2029q2", "title": "Production p06 и p07", "quarter": "Q1", "category": "production" }
+        ]
+      },
+      { "year": 2030, "label": "Year 5 — монетизация",
+        "milestones": [
+          { "id": "m2030q1", "title": "DPI ~ 0,45×", "quarter": "Q4", "category": "returns" },
+          { "id": "m2030q2", "title": "Формирование IP-библиотеки", "quarter": "Q2", "category": "ip" }
+        ]
+      },
+      { "year": 2031, "label": "Year 6 — pre-exit",
+        "milestones": [
+          { "id": "m2031q1", "title": "Каталог-монетизация (library deals)", "quarter": "Q2", "category": "ip" },
+          { "id": "m2031q2", "title": "Подготовка частичного exit", "quarter": "Q3", "category": "exit" }
+        ]
+      },
+      { "year": 2032, "label": "Year 7 — финальные выплаты",
+        "milestones": [
+          { "id": "m2032q1", "title": "DPI ~ 1,85×", "quarter": "Q4", "category": "returns" },
+          { "id": "m2032q2", "title": "Winding-down", "quarter": "Q3", "category": "fund" }
+        ]
+      }
+    ]
+  },
+
+  "scenarios": {
+    "base":   { "label": "Base",   "irr_pct": 13.95, "moic": 2.2, "probability_pct": 50, "drivers": ["Исторически-средний BO", "OTT-рост 20%", "Budget tolerance ±10%"],            "revenue_mult": 1.0, "cost_mult": 1.0 },
+    "bull":   { "label": "Bull",   "irr_pct": 22.0,  "moic": 2.8, "probability_pct": 25, "drivers": ["2 хита в портфеле", "Международные sales +30%", "OTT pre-sales на всех 7"], "revenue_mult": 1.35, "cost_mult": 0.95 },
+    "bear":   { "label": "Bear",   "irr_pct": 5.0,   "moic": 1.3, "probability_pct": 20, "drivers": ["1–2 флопа", "Падение theatrical -20%", "Delay в production"],               "revenue_mult": 0.75, "cost_mult": 1.15 },
+    "stress": { "label": "Stress", "irr_pct": -3.0,  "moic": 0.9, "probability_pct": 5,  "drivers": ["Рыночный шок", "3+ срыва", "Регуляторное ужесточение"],                       "revenue_mult": 0.55, "cost_mult": 1.30 }
+  },
+
+  "kpi": {
+    "roles": [
+      { "role_key": "ceo",                "label": "CEO",
+        "metrics": [
+          { "name": "IRR Portfolio",  "target": 15,   "unit": "%",    "cadence": "quarterly" },
+          { "name": "LP NPS",          "target": 8,    "unit": "score","cadence": "quarterly" },
+          { "name": "Fund Deployment", "target": 95,   "unit": "%",    "cadence": "quarterly" }
+        ]
+      },
+      { "role_key": "producer_lead",      "label": "Producer Lead",
+        "metrics": [
+          { "name": "On-Time Delivery", "target": 90,  "unit": "%",    "cadence": "monthly" },
+          { "name": "Budget Tolerance", "target": 10,  "unit": "%",    "cadence": "monthly" }
+        ]
+      },
+      { "role_key": "cfo",                "label": "CFO",
+        "metrics": [
+          { "name": "DPI Year-over-Year", "target": 0.25, "unit": "×", "cadence": "quarterly" },
+          { "name": "Opex Control",       "target": 2,    "unit": "%", "cadence": "quarterly" }
+        ]
+      },
+      { "role_key": "head_distribution",  "label": "Head of Distribution",
+        "metrics": [
+          { "name": "International Sales",   "target": 25, "unit": "%", "cadence": "quarterly" },
+          { "name": "Pre-sales Coverage",    "target": 40, "unit": "%", "cadence": "quarterly" }
+        ]
+      },
+      { "role_key": "creative_director",  "label": "Creative Director",
+        "metrics": [
+          { "name": "Critic Score (avg)",    "target": 75,  "unit": "score", "cadence": "annual" },
+          { "name": "Fest Acceptance",       "target": 3,   "unit": "count", "cadence": "annual" }
+        ]
+      }
+    ]
+  },
+
+  "regions": {
+    "items": [
+      { "id": "reg01", "name": "Москва",         "role": "production_hub",     "share_pct": 35 },
+      { "id": "reg02", "name": "Санкт-Петербург","role": "production_hub",     "share_pct": 20 },
+      { "id": "reg03", "name": "Калининград",    "role": "production_hub",     "share_pct": 8  },
+      { "id": "reg04", "name": "Казань",         "role": "talent_pool",        "share_pct": 7  },
+      { "id": "reg05", "name": "Екатеринбург",   "role": "talent_pool",        "share_pct": 7  },
+      { "id": "reg06", "name": "Новосибирск",    "role": "post_production",    "share_pct": 6  },
+      { "id": "reg07", "name": "Сочи",           "role": "production_hub",     "share_pct": 9  },
+      { "id": "reg08", "name": "Владивосток",    "role": "distribution_hub",   "share_pct": 4  },
+      { "id": "reg09", "name": "Мурманск",       "role": "production_hub",     "share_pct": 4  }
+    ]
+  },
+
+  "faq": {
+    "items": [
+      { "id": "f01", "audience": "investor", "question": "Какой минимальный тикет LP?",                     "answer": "50 млн ₽ для LP. Обсуждаемо для anchor-LP.",                        "category": "terms" },
+      { "id": "f02", "audience": "investor", "question": "Какой fund life?",                                 "answer": "7 лет с опцией продления на 2 года по согласованию LPAC.",            "category": "terms" },
+      { "id": "f03", "audience": "investor", "question": "Как устроен waterfall?",                           "answer": "ROC → 8% preferred → 100% catch-up → 80/20 LP/GP.",                   "category": "terms" },
+      { "id": "f04", "audience": "investor", "question": "Когда первые DPI?",                                "answer": "Плановый первый DPI — Q2 2029 (Year 4), после двух релизов.",         "category": "returns" },
+      { "id": "f05", "audience": "investor", "question": "Как верифицированы цифры IRR?",                    "answer": "Финмодель v1.4.4, 348 тестов PASS, верификация П5 32/32 + М4 7/7.",     "category": "diligence" },
+      { "id": "f06", "audience": "investor", "question": "Есть ли GP commitment?",                           "answer": "Да, 2% от committed capital, кэш.",                                   "category": "terms" },
+      { "id": "f07", "audience": "investor", "question": "Что в случае недостижения hurdle?",                 "answer": "GP не получает carry. LP получает весь capital + доход до 8% и выше.","category": "terms" },
+      { "id": "f08", "audience": "partner",  "question": "Возможно ли co-production?",                        "answer": "Да, мы открыты для co-production с российскими и международными партнёрами на ряде проектов.", "category": "partnerships" },
+      { "id": "f09", "audience": "partner",  "question": "Доступны ли региональные рибейты?",                  "answer": "Работаем с региональными программами. Конкретный процент зависит от региона и типа spend.", "category": "operations" },
+      { "id": "f10", "audience": "partner",  "question": "Как организован distribution?",                      "answer": "Внутренний Head of Distribution + партнёры по каждому каналу. Standard window: theatrical → OTT → TV.", "category": "distribution" },
+      { "id": "f11", "audience": "talent",   "question": "Какого типа проекты вы делаете?",                    "answer": "Смешанный жанровый портфель: драма, триллер, исторический, семейный, авторский, сериалы.", "category": "production" },
+      { "id": "f12", "audience": "talent",   "question": "Multi-project deals?",                               "answer": "Да, мы предпочитаем долгосрочные контракты с ключевыми режиссёрами и продюсерами.", "category": "talent" },
+      { "id": "f13", "audience": "talent",   "question": "Creative freedom?",                                  "answer": "В рамках бюджета и сроков — да. Gate-review касается cost/schedule, не creative.", "category": "talent" },
+      { "id": "f14", "audience": "investor", "question": "Какая юрисдикция фонда?",                            "answer": "РФ. Структура LP/GP или ЗПИФ в зависимости от профиля LP.",           "category": "legal" },
+      { "id": "f15", "audience": "investor", "question": "Сроки closing?",                                     "answer": "First close: 2026-09-30 (1 500 млн). Final close: 2027-03-31 (3 000 млн).", "category": "timeline" }
+    ]
+  },
+
+  "press_quotes": {
+    "items": [
+      { "id": "pq01", "outlet": "Кинопоиск",      "quote": "Команда холдинга — одна из самых опытных в российской индустрии последних 10 лет.",          "date": "2026-01-15", "author": "Редакция" },
+      { "id": "pq02", "outlet": "Бюллетень Кинопрокатчика", "quote": "Трекинг OKR и gate-review редко встречается в отрасли — это новый стандарт.",         "date": "2026-02-22", "author": "Отраслевой обозреватель" },
+      { "id": "pq03", "outlet": "Forbes Russia",  "quote": "ТрендСтудио формирует первый по-настоящему портфельный подход к российскому кино.",          "date": "2026-03-05", "author": "Обозреватель" },
+      { "id": "pq04", "outlet": "Variety",        "quote": "A sophisticated portfolio play in a market with unusual structural opportunity.",             "date": "2026-03-18", "author": "International desk" },
+      { "id": "pq05", "outlet": "РБК Стиль",      "quote": "Команда с историей успешных релизов делает ставку на дисциплину и данные.",                  "date": "2026-02-01", "author": "Редакция" },
+      { "id": "pq06", "outlet": "КоммерсантЪ",    "quote": "Модель фонда даёт LP прозрачность уровня private equity — редкость в кино.",                  "date": "2026-01-28", "author": "Деловой обозреватель" },
+      { "id": "pq07", "outlet": "Ведомости",      "quote": "Диверсификация по 7 проектам снижает risk единичного срыва в разы.",                         "date": "2026-02-12", "author": "Экономический отдел" },
+      { "id": "pq08", "outlet": "TASS Medianauka","quote": "Холдинг — один из немногих новых игроков, способных конкурировать на уровне pre-sales.",     "date": "2026-03-25", "author": "Индустриальный обозреватель" }
+    ]
+  },
+
+  "distribution": {
+    "channels": [
+      { "id": "theatrical",    "name": "Театральный прокат",          "share_pct": 28, "window_months": 3,  "partners": ["Central Partnership-like", "Каропрокат-like"] },
+      { "id": "ott",           "name": "OTT-платформы",                "share_pct": 42, "window_months": 12, "partners": ["Кинопоиск", "Okko", "Wink", "START"] },
+      { "id": "tv",            "name": "Телевидение",                   "share_pct": 12, "window_months": 24, "partners": ["Федеральные каналы"] },
+      { "id": "international", "name": "Международные рынки",           "share_pct": 13, "window_months": 0,  "partners": ["Sales agents (СНГ/Азия/BRICS)"] },
+      { "id": "merch",         "name": "Merchandise и IP-лицензирование","share_pct": 5,  "window_months": 36, "partners": ["IP-агентства"] }
+    ]
+  },
+
+  "deal_structure": {
+    "waterfall": [
+      { "tier": 1, "recipient": "LP",    "description": "Return of capital — 100% вложенного LP возвращается первым.",                                        "split_pct": 100 },
+      { "tier": 2, "recipient": "LP",    "description": "Preferred return 8% годовых compound до достижения hurdle.",                                          "split_pct": 100 },
+      { "tier": 3, "recipient": "GP",    "description": "GP catch-up 100% — GP получает всё до выравнивания 20% от общих profits до этого момента.",          "split_pct": 100 },
+      { "tier": 4, "recipient": "LP+GP", "description": "Split 80/20 всех дальнейших profits.",                                                                 "split_pct": 80 }
+    ],
+    "lp_rights": [
+      "LPAC-представительство (Limited Partner Advisory Committee)",
+      "Информационные права (quarterly reporting, annual audit)",
+      "Key-person clause (уход CEO или Producer Lead = suspension period)",
+      "No-fault removal GP с 75% LP-голосов",
+      "Pre-emption rights на co-investment в отдельных проектах",
+      "Transfer rights (subject to GP approval)"
+    ],
+    "gp_rights": [
+      "Investment committee — full discretion в рамках mandate",
+      "Management fee 2% на committed в period, на invested далее",
+      "Carried interest 20% с hurdle 8% и 100% catch-up",
+      "GP commitment 2% от committed capital"
+    ]
+  },
+
+  "tax_credits": {
+    "programs": [
+      { "id": "tc01", "name": "Региональный рибейт (Москва)",         "credit_pct": 20, "eligibility": "Production spend в регионе, резидент РФ.",                                "authority": "Правительство Москвы" },
+      { "id": "tc02", "name": "Региональный рибейт (СПб)",             "credit_pct": 18, "eligibility": "Production spend в регионе.",                                             "authority": "Комитет по культуре СПб" },
+      { "id": "tc03", "name": "Фонд кино — субсидии",                  "credit_pct": 30, "eligibility": "Проекты высокой социальной значимости, по конкурсному отбору.",         "authority": "Фонд кино" },
+      { "id": "tc04", "name": "Минкультуры — поддержка",                "credit_pct": 25, "eligibility": "Фильмы и сериалы отечественного производства по профилю.",            "authority": "Минкультуры РФ" }
+    ]
+  },
+
+  "term_sheet": {
+    "instrument": "LP/GP Limited Partnership (РФ)",
+    "min_ticket_mln_rub": 50,
+    "max_ticket_mln_rub": 500,
+    "close_schedule": [
+      { "name": "First close",  "date": "2026-09-30", "target_raise_mln_rub": 1500 },
+      { "name": "Interim close","date": "2026-12-31", "target_raise_mln_rub": 2200 },
+      { "name": "Final close",  "date": "2027-03-31", "target_raise_mln_rub": 3000 }
+    ],
+    "key_terms": [
+      "Management fee 2% annual (committed в investment period, invested после)",
+      "Carried interest 20% с hurdle 8% + 100% catch-up",
+      "GP commitment 2% от committed",
+      "Investment period 4 года",
+      "Fund life 7 лет с опцией +2",
+      "Key-person: CEO + Producer Lead",
+      "LPAC из 5 LP-representatives"
+    ]
+  },
+
+  "jurisdiction_notes": {
+    "primary": "Российская Федерация",
+    "secondary": ["Казахстан (региональные рибейты)", "ОАЭ (международные сделки для LP из Залива)"],
+    "disclaimers": [
+      "Этот документ предоставляется только в информационных целях и не является офертой или рекомендацией к инвестиции.",
+      "Все прогнозные значения (IRR, MOIC, DPI) являются модельными оценками и не гарантируются.",
+      "Инвестиции в кинопроизводство сопряжены с высоким уровнем риска, включая возможность полной потери капитала.",
+      "Полные условия, риски и юридические положения — в Private Placement Memorandum и LP Agreement."
+    ],
+    "compliance_refs": [
+      "ФЗ-156 'Об инвестиционных фондах'",
+      "Положение ЦБ РФ №577-П",
+      "Налоговый кодекс РФ (главы о доходах от реализации инвестиций)"
+    ]
+  }
+}

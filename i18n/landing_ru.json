@@ -1,0 +1,646 @@
+{
+  "ui": {
+    "nav": {
+      "home": "[TODO:W2 RU — nav home]",
+      "pipeline": "[TODO:W2 RU — nav pipeline]",
+      "returns": "[TODO:W2 RU — nav returns]",
+      "risks": "[TODO:W2 RU — nav risks]",
+      "team": "[TODO:W2 RU — nav team]",
+      "contact": "[TODO:W2 RU — nav contact]",
+      "skip_to_content": "[TODO:W2 RU — skip to content]",
+      "toggle_menu": "[TODO:W2 RU — toggle menu]"
+    },
+    "hero": {
+      "title": "[TODO:W2 RU — hero title]",
+      "subtitle": "[TODO:W2 RU — hero subtitle]",
+      "tagline": "[TODO:W2 RU — hero tagline]",
+      "cta_primary": "[TODO:W2 RU — hero cta primary]",
+      "cta_secondary": "[TODO:W2 RU — hero cta secondary]",
+      "scroll_hint": "[TODO:W2 RU — scroll hint]",
+      "badge_lp": "[TODO:W2 RU — badge LP-only]",
+      "version_stamp": "[TODO:W2 RU — version stamp]"
+    },
+    "about": {
+      "section_title": "[TODO:W2 RU — about section title]",
+      "paragraph_intro": "[TODO:W2 RU — about intro paragraph]",
+      "paragraph_mission": "[TODO:W2 RU — about mission paragraph]",
+      "paragraph_vision": "[TODO:W2 RU — about vision paragraph]",
+      "stat_projects": "[TODO:W2 RU — about stat projects]",
+      "stat_fund_size": "[TODO:W2 RU — about stat fund size]",
+      "stat_horizon": "[TODO:W2 RU — about stat horizon]",
+      "stat_team_exp": "[TODO:W2 RU — about stat team experience]",
+      "stat_partners": "[TODO:W2 RU — about stat partners]",
+      "cta_learn_more": "[TODO:W2 RU — about cta learn more]"
+    },
+    "pipeline": {
+      "section_title": "[TODO:W2 RU — pipeline section title]",
+      "subtitle": "[TODO:W2 RU — pipeline subtitle]",
+      "filter_all": "[TODO:W2 RU — filter all]",
+      "filter_films": "[TODO:W2 RU — filter films]",
+      "filter_series": "[TODO:W2 RU — filter series]",
+      "filter_stage_dev": "[TODO:W2 RU — filter development]",
+      "filter_stage_prod": "[TODO:W2 RU — filter production]",
+      "filter_stage_post": "[TODO:W2 RU — filter post-production]",
+      "filter_stage_release": "[TODO:W2 RU — filter release]",
+      "card_budget_label": "[TODO:W2 RU — card budget label]",
+      "card_stage_label": "[TODO:W2 RU — card stage label]",
+      "card_revenue_label": "[TODO:W2 RU — card revenue label]",
+      "card_roi_label": "[TODO:W2 RU — card roi label]",
+      "card_view_details": "[TODO:W2 RU — card view details]",
+      "gantt_title": "[TODO:W2 RU — gantt title]",
+      "waterfall_title": "[TODO:W2 RU — waterfall title]",
+      "totals_footer": "[TODO:W2 RU — pipeline totals footer]"
+    },
+    "returns": {
+      "section_title": "[TODO:W2 RU — returns section title]",
+      "subtitle": "[TODO:W2 RU — returns subtitle]",
+      "irr_label": "[TODO:W2 RU — irr label]",
+      "moic_label": "[TODO:W2 RU — moic label]",
+      "dpi_label": "[TODO:W2 RU — dpi label]",
+      "tvpi_label": "[TODO:W2 RU — tvpi label]",
+      "hurdle_label": "[TODO:W2 RU — hurdle label]",
+      "carry_label": "[TODO:W2 RU — carry label]",
+      "mc_p50_label": "[TODO:W2 RU — mc p50 label]",
+      "mc_p25_label": "[TODO:W2 RU — mc p25 label]",
+      "mc_p75_label": "[TODO:W2 RU — mc p75 label]",
+      "benchmark_label": "[TODO:W2 RU — benchmark label]",
+      "waterfall_cta": "[TODO:W2 RU — waterfall cta]"
+    },
+    "risks": {
+      "section_title": "[TODO:W2 RU — risks section title]",
+      "subtitle": "[TODO:W2 RU — risks subtitle]",
+      "risk_market": "[TODO:W2 RU — risk market]",
+      "risk_production": "[TODO:W2 RU — risk production]",
+      "risk_regulatory": "[TODO:W2 RU — risk regulatory]",
+      "risk_talent": "[TODO:W2 RU — risk talent]",
+      "risk_distribution": "[TODO:W2 RU — risk distribution]",
+      "risk_fx": "[TODO:W2 RU — risk fx]",
+      "mitigation_header": "[TODO:W2 RU — mitigation header]",
+      "severity_label": "[TODO:W2 RU — severity label]"
+    },
+    "team": {
+      "section_title": "[TODO:W2 RU — team section title]",
+      "subtitle": "[TODO:W2 RU — team subtitle]",
+      "role_cio": "[TODO:W2 RU — role cio]",
+      "role_coo": "[TODO:W2 RU — role coo]",
+      "role_production": "[TODO:W2 RU — role production]",
+      "role_finance": "[TODO:W2 RU — role finance]",
+      "advisors_header": "[TODO:W2 RU — advisors header]",
+      "more_profiles_cta": "[TODO:W2 RU — more profiles cta]"
+    },
+    "footer": {
+      "copyright": "[TODO:W2 RU — footer copyright]",
+      "legal_link": "[TODO:W2 RU — footer legal]",
+      "privacy_link": "[TODO:W2 RU — footer privacy]",
+      "cookie_link": "[TODO:W2 RU — footer cookie]",
+      "contact_email": "[TODO:W2 RU — footer contact email]",
+      "address_line": "[TODO:W2 RU — footer address]",
+      "social_telegram": "[TODO:W2 RU — footer telegram]",
+      "language_toggle": "[TODO:W2 RU — language toggle]"
+    }
+  },
+  "a11y": {
+    "nav": {
+      "landmark_main": "[TODO:W2 RU — a11y nav landmark main]",
+      "landmark_footer": "[TODO:W2 RU — a11y nav landmark footer]",
+      "landmark_nav": "[TODO:W2 RU — a11y nav landmark nav]",
+      "landmark_complementary": "[TODO:W2 RU — a11y nav landmark complementary]"
+    },
+    "viz": {
+      "viz01": {
+        "region_label": "[TODO:W2 RU — a11y viz01 region]",
+        "description": "[TODO:W2 RU — a11y viz01 description]"
+      },
+      "viz02": {
+        "region_label": "[TODO:W2 RU — a11y viz02 region]",
+        "description": "[TODO:W2 RU — a11y viz02 description]"
+      },
+      "viz03": {
+        "region_label": "[TODO:W2 RU — a11y viz03 region]",
+        "description": "[TODO:W2 RU — a11y viz03 description]"
+      },
+      "viz04": {
+        "region_label": "[TODO:W2 RU — a11y viz04 region]",
+        "description": "[TODO:W2 RU — a11y viz04 description]"
+      },
+      "viz05": {
+        "region_label": "[TODO:W2 RU — a11y viz05 region]",
+        "description": "[TODO:W2 RU — a11y viz05 description]"
+      },
+      "viz06": {
+        "region_label": "[TODO:W2 RU — a11y viz06 region]",
+        "description": "[TODO:W2 RU — a11y viz06 description]"
+      },
+      "viz07": {
+        "region_label": "[TODO:W2 RU — a11y viz07 region]",
+        "description": "[TODO:W2 RU — a11y viz07 description]"
+      },
+      "viz08": {
+        "region_label": "[TODO:W2 RU — a11y viz08 region]",
+        "description": "[TODO:W2 RU — a11y viz08 description]"
+      },
+      "viz09": {
+        "region_label": "[TODO:W2 RU — a11y viz09 region]",
+        "description": "[TODO:W2 RU — a11y viz09 description]"
+      },
+      "viz10": {
+        "region_label": "[TODO:W2 RU — a11y viz10 region]",
+        "description": "[TODO:W2 RU — a11y viz10 description]"
+      },
+      "viz11": {
+        "region_label": "[TODO:W2 RU — a11y viz11 region]",
+        "description": "[TODO:W2 RU — a11y viz11 description]"
+      },
+      "viz12": {
+        "region_label": "[TODO:W2 RU — a11y viz12 region]",
+        "description": "[TODO:W2 RU — a11y viz12 description]"
+      },
+      "viz13": {
+        "region_label": "[TODO:W2 RU — a11y viz13 region]",
+        "description": "[TODO:W2 RU — a11y viz13 description]"
+      },
+      "viz14": {
+        "region_label": "[TODO:W2 RU — a11y viz14 region]",
+        "description": "[TODO:W2 RU — a11y viz14 description]"
+      },
+      "viz15": {
+        "region_label": "[TODO:W2 RU — a11y viz15 region]",
+        "description": "[TODO:W2 RU — a11y viz15 description]"
+      },
+      "viz16": {
+        "region_label": "[TODO:W2 RU — a11y viz16 region]",
+        "description": "[TODO:W2 RU — a11y viz16 description]"
+      },
+      "viz17": {
+        "region_label": "[TODO:W2 RU — a11y viz17 region]",
+        "description": "[TODO:W2 RU — a11y viz17 description]"
+      },
+      "viz18": {
+        "region_label": "[TODO:W2 RU — a11y viz18 region]",
+        "description": "[TODO:W2 RU — a11y viz18 description]"
+      },
+      "viz19": {
+        "region_label": "[TODO:W2 RU — a11y viz19 region]",
+        "description": "[TODO:W2 RU — a11y viz19 description]"
+      },
+      "viz20": {
+        "region_label": "[TODO:W2 RU — a11y viz20 region]",
+        "description": "[TODO:W2 RU — a11y viz20 description]"
+      },
+      "viz21": {
+        "region_label": "[TODO:W2 RU — a11y viz21 region]",
+        "description": "[TODO:W2 RU — a11y viz21 description]"
+      },
+      "viz22": {
+        "region_label": "[TODO:W2 RU — a11y viz22 region]",
+        "description": "[TODO:W2 RU — a11y viz22 description]"
+      }
+    },
+    "control": {
+      "scenario_select_label": "[TODO:W2 RU — a11y scenario select]",
+      "slider_rate_label": "[TODO:W2 RU — a11y slider rate]",
+      "slider_horizon_label": "[TODO:W2 RU — a11y slider horizon]",
+      "slider_stress_label": "[TODO:W2 RU — a11y slider stress]",
+      "toggle_motion_label": "[TODO:W2 RU — a11y toggle motion]",
+      "toggle_lang_label": "[TODO:W2 RU — a11y toggle lang]",
+      "reset_label": "[TODO:W2 RU — a11y reset]",
+      "share_label": "[TODO:W2 RU — a11y share]",
+      "export_label": "[TODO:W2 RU — a11y export]",
+      "help_label": "[TODO:W2 RU — a11y help]"
+    },
+    "modal": {
+      "dialog_label": "[TODO:W2 RU — a11y dialog label]",
+      "close_label": "[TODO:W2 RU — a11y close]",
+      "back_label": "[TODO:W2 RU — a11y back]",
+      "loading_label": "[TODO:W2 RU — a11y loading]",
+      "error_label": "[TODO:W2 RU — a11y error]",
+      "tab_list_label": "[TODO:W2 RU — a11y tab list]",
+      "tab_selected": "[TODO:W2 RU — a11y tab selected]",
+      "focus_trap_hint": "[TODO:W2 RU — a11y focus trap]",
+      "announcement_chart": "[TODO:W2 RU — a11y announcement chart]",
+      "announcement_scenario": "[TODO:W2 RU — a11y announcement scenario]",
+      "announcement_sim": "[TODO:W2 RU — a11y announcement sim]",
+      "table_fallback_caption": "[TODO:W2 RU — a11y table fallback caption]"
+    }
+  },
+  "narrative": {
+    "intro": {
+      "p1": "[TODO:W2 RU — narrative intro p1]",
+      "p2": "[TODO:W2 RU — narrative intro p2]",
+      "p3": "[TODO:W2 RU — narrative intro p3]",
+      "p4": "[TODO:W2 RU — narrative intro p4]",
+      "p5": "[TODO:W2 RU — narrative intro p5]",
+      "quote_1": "[TODO:W2 RU — narrative intro quote 1]",
+      "quote_2": "[TODO:W2 RU — narrative intro quote 2]",
+      "bullet_1": "[TODO:W2 RU — narrative intro bullet 1]",
+      "bullet_2": "[TODO:W2 RU — narrative intro bullet 2]",
+      "bullet_3": "[TODO:W2 RU — narrative intro bullet 3]"
+    },
+    "thesis": {
+      "p1": "[TODO:W2 RU — narrative thesis p1]",
+      "p2": "[TODO:W2 RU — narrative thesis p2]",
+      "p3": "[TODO:W2 RU — narrative thesis p3]",
+      "p4": "[TODO:W2 RU — narrative thesis p4]",
+      "point_1": "[TODO:W2 RU — narrative thesis point 1]",
+      "point_2": "[TODO:W2 RU — narrative thesis point 2]",
+      "point_3": "[TODO:W2 RU — narrative thesis point 3]",
+      "point_4": "[TODO:W2 RU — narrative thesis point 4]",
+      "conclusion": "[TODO:W2 RU — narrative thesis conclusion]",
+      "stat_anchor_1": "[TODO:W2 RU — narrative thesis stat anchor 1]",
+      "stat_anchor_2": "[TODO:W2 RU — narrative thesis stat anchor 2]",
+      "stat_anchor_3": "[TODO:W2 RU — narrative thesis stat anchor 3]"
+    },
+    "pipeline": {
+      "p1": "[TODO:W2 RU — narrative pipeline p1]",
+      "p2": "[TODO:W2 RU — narrative pipeline p2]",
+      "p3": "[TODO:W2 RU — narrative pipeline p3]",
+      "slate_logic": "[TODO:W2 RU — narrative pipeline slate logic]",
+      "stage_gates": "[TODO:W2 RU — narrative pipeline stage gates]",
+      "budget_allocation": "[TODO:W2 RU — narrative pipeline budget allocation]",
+      "greenlight_criteria": "[TODO:W2 RU — narrative pipeline greenlight]",
+      "diversification": "[TODO:W2 RU — narrative pipeline diversification]",
+      "genre_mix": "[TODO:W2 RU — narrative pipeline genre mix]",
+      "release_cadence": "[TODO:W2 RU — narrative pipeline release cadence]",
+      "ip_strategy": "[TODO:W2 RU — narrative pipeline ip strategy]",
+      "co_production": "[TODO:W2 RU — narrative pipeline co-production]"
+    },
+    "risks": {
+      "p1": "[TODO:W2 RU — narrative risks p1]",
+      "p2": "[TODO:W2 RU — narrative risks p2]",
+      "p3": "[TODO:W2 RU — narrative risks p3]",
+      "framework": "[TODO:W2 RU — narrative risks framework]",
+      "market_detail": "[TODO:W2 RU — narrative risks market detail]",
+      "production_detail": "[TODO:W2 RU — narrative risks production detail]",
+      "regulatory_detail": "[TODO:W2 RU — narrative risks regulatory detail]",
+      "talent_detail": "[TODO:W2 RU — narrative risks talent detail]",
+      "distribution_detail": "[TODO:W2 RU — narrative risks distribution detail]",
+      "fx_detail": "[TODO:W2 RU — narrative risks fx detail]",
+      "liquidity_detail": "[TODO:W2 RU — narrative risks liquidity detail]",
+      "concentration_detail": "[TODO:W2 RU — narrative risks concentration detail]",
+      "mitigation_strategy": "[TODO:W2 RU — narrative risks mitigation strategy]",
+      "stress_scenario": "[TODO:W2 RU — narrative risks stress scenario]",
+      "risk_return": "[TODO:W2 RU — narrative risks risk-return]"
+    },
+    "team": {
+      "p1": "[TODO:W2 RU — narrative team p1]",
+      "p2": "[TODO:W2 RU — narrative team p2]",
+      "p3": "[TODO:W2 RU — narrative team p3]",
+      "track_record": "[TODO:W2 RU — narrative team track record]",
+      "experience_years": "[TODO:W2 RU — narrative team experience years]",
+      "prior_projects": "[TODO:W2 RU — narrative team prior projects]",
+      "governance": "[TODO:W2 RU — narrative team governance]",
+      "advisory_board": "[TODO:W2 RU — narrative team advisory board]",
+      "values": "[TODO:W2 RU — narrative team values]",
+      "culture": "[TODO:W2 RU — narrative team culture]",
+      "alignment": "[TODO:W2 RU — narrative team alignment]",
+      "commitment": "[TODO:W2 RU — narrative team commitment]"
+    }
+  },
+  "legal": {
+    "disclaimer": {
+      "title": "[TODO:W2 RU — legal disclaimer title]",
+      "body_p1": "[TODO:W2 RU — legal disclaimer p1]",
+      "body_p2": "[TODO:W2 RU — legal disclaimer p2]",
+      "forward_looking": "[TODO:W2 RU — legal forward-looking]",
+      "no_solicitation": "[TODO:W2 RU — legal no solicitation]"
+    },
+    "risk": {
+      "title": "[TODO:W2 RU — legal risk title]",
+      "high_risk_notice": "[TODO:W2 RU — legal high risk notice]",
+      "capital_loss": "[TODO:W2 RU — legal capital loss]",
+      "illiquidity": "[TODO:W2 RU — legal illiquidity]",
+      "past_performance": "[TODO:W2 RU — legal past performance]"
+    },
+    "copyright": {
+      "notice": "[TODO:W2 RU — legal copyright notice]",
+      "trademarks": "[TODO:W2 RU — legal trademarks]",
+      "license": "[TODO:W2 RU — legal license]"
+    },
+    "terms": {
+      "title": "[TODO:W2 RU — legal terms title]",
+      "acceptance": "[TODO:W2 RU — legal terms acceptance]",
+      "usage": "[TODO:W2 RU — legal terms usage]",
+      "modification": "[TODO:W2 RU — legal terms modification]",
+      "governing_law": "[TODO:W2 RU — legal terms governing law]"
+    },
+    "privacy": {
+      "title": "[TODO:W2 RU — legal privacy title]",
+      "data_collection": "[TODO:W2 RU — legal privacy data collection]",
+      "data_usage": "[TODO:W2 RU — legal privacy data usage]",
+      "data_retention": "[TODO:W2 RU — legal privacy data retention]",
+      "data_rights": "[TODO:W2 RU — legal privacy data rights]",
+      "contact_dpo": "[TODO:W2 RU — legal privacy contact dpo]"
+    },
+    "cookie": {
+      "title": "[TODO:W2 RU — legal cookie title]",
+      "essential": "[TODO:W2 RU — legal cookie essential]",
+      "analytics": "[TODO:W2 RU — legal cookie analytics]",
+      "preferences": "[TODO:W2 RU — legal cookie preferences]",
+      "accept_all": "[TODO:W2 RU — legal cookie accept all]",
+      "settings": "[TODO:W2 RU — legal cookie settings]"
+    }
+  },
+  "chart": {
+    "viz01": {
+      "title": "[TODO:W2 RU — chart viz01 title]",
+      "x_axis": "[TODO:W2 RU — chart viz01 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz01 y-axis]",
+      "legend_primary": "[TODO:W2 RU — chart viz01 legend primary]"
+    },
+    "viz02": {
+      "title": "[TODO:W2 RU — chart viz02 title]",
+      "x_axis": "[TODO:W2 RU — chart viz02 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz02 y-axis]"
+    },
+    "viz03": {
+      "title": "[TODO:W2 RU — chart viz03 title]",
+      "x_axis": "[TODO:W2 RU — chart viz03 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz03 y-axis]"
+    },
+    "viz04": {
+      "title": "[TODO:W2 RU — chart viz04 title]",
+      "x_axis": "[TODO:W2 RU — chart viz04 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz04 y-axis]",
+      "legend_primary": "[TODO:W2 RU — chart viz04 legend primary]"
+    },
+    "viz05": {
+      "title": "[TODO:W2 RU — chart viz05 title]",
+      "x_axis": "[TODO:W2 RU — chart viz05 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz05 y-axis]",
+      "legend_primary": "[TODO:W2 RU — chart viz05 legend primary]"
+    },
+    "viz06": {
+      "title": "[TODO:W2 RU — chart viz06 title]",
+      "x_axis": "[TODO:W2 RU — chart viz06 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz06 y-axis]"
+    },
+    "viz07": {
+      "title": "[TODO:W2 RU — chart viz07 title]",
+      "x_axis": "[TODO:W2 RU — chart viz07 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz07 y-axis]",
+      "legend_primary": "[TODO:W2 RU — chart viz07 legend primary]"
+    },
+    "viz08": {
+      "title": "[TODO:W2 RU — chart viz08 title]",
+      "x_axis": "[TODO:W2 RU — chart viz08 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz08 y-axis]"
+    },
+    "viz09": {
+      "title": "[TODO:W2 RU — chart viz09 title]",
+      "x_axis": "[TODO:W2 RU — chart viz09 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz09 y-axis]"
+    },
+    "viz10": {
+      "title": "[TODO:W2 RU — chart viz10 title]",
+      "x_axis": "[TODO:W2 RU — chart viz10 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz10 y-axis]"
+    },
+    "viz11": {
+      "title": "[TODO:W2 RU — chart viz11 title]",
+      "x_axis": "[TODO:W2 RU — chart viz11 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz11 y-axis]"
+    },
+    "viz12": {
+      "title": "[TODO:W2 RU — chart viz12 title]",
+      "x_axis": "[TODO:W2 RU — chart viz12 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz12 y-axis]"
+    },
+    "viz13": {
+      "title": "[TODO:W2 RU — chart viz13 title]",
+      "x_axis": "[TODO:W2 RU — chart viz13 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz13 y-axis]"
+    },
+    "viz14": {
+      "title": "[TODO:W2 RU — chart viz14 title]",
+      "x_axis": "[TODO:W2 RU — chart viz14 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz14 y-axis]"
+    },
+    "viz15": {
+      "title": "[TODO:W2 RU — chart viz15 title]",
+      "x_axis": "[TODO:W2 RU — chart viz15 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz15 y-axis]"
+    },
+    "viz16": {
+      "title": "[TODO:W2 RU — chart viz16 title]",
+      "x_axis": "[TODO:W2 RU — chart viz16 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz16 y-axis]"
+    },
+    "viz17": {
+      "title": "[TODO:W2 RU — chart viz17 title]",
+      "x_axis": "[TODO:W2 RU — chart viz17 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz17 y-axis]"
+    },
+    "viz18": {
+      "title": "[TODO:W2 RU — chart viz18 title]",
+      "x_axis": "[TODO:W2 RU — chart viz18 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz18 y-axis]"
+    },
+    "viz19": {
+      "title": "[TODO:W2 RU — chart viz19 title]",
+      "x_axis": "[TODO:W2 RU — chart viz19 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz19 y-axis]"
+    },
+    "viz20": {
+      "title": "[TODO:W2 RU — chart viz20 title]",
+      "x_axis": "[TODO:W2 RU — chart viz20 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz20 y-axis]"
+    },
+    "viz21": {
+      "title": "[TODO:W2 RU — chart viz21 title]",
+      "x_axis": "[TODO:W2 RU — chart viz21 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz21 y-axis]"
+    },
+    "viz22": {
+      "title": "[TODO:W2 RU — chart viz22 title]",
+      "x_axis": "[TODO:W2 RU — chart viz22 x-axis]",
+      "y_axis": "[TODO:W2 RU — chart viz22 y-axis]"
+    }
+  },
+  "control": {
+    "scenario": {
+      "switcher_label": "[TODO:W2 RU — control scenario switcher label]",
+      "option_base": "[TODO:W2 RU — control scenario base]",
+      "option_bull": "[TODO:W2 RU — control scenario bull]",
+      "option_bear": "[TODO:W2 RU — control scenario bear]",
+      "description": "[TODO:W2 RU — control scenario description]"
+    },
+    "sliders": {
+      "rate_label": "[TODO:W2 RU — control slider rate label]",
+      "rate_unit": "[TODO:W2 RU — control slider rate unit]",
+      "rate_hint": "[TODO:W2 RU — control slider rate hint]",
+      "horizon_label": "[TODO:W2 RU — control slider horizon label]",
+      "horizon_unit": "[TODO:W2 RU — control slider horizon unit]",
+      "horizon_hint": "[TODO:W2 RU — control slider horizon hint]",
+      "stress_label": "[TODO:W2 RU — control slider stress label]",
+      "stress_unit": "[TODO:W2 RU — control slider stress unit]",
+      "stress_hint": "[TODO:W2 RU — control slider stress hint]",
+      "dilution_label": "[TODO:W2 RU — control slider dilution label]",
+      "dilution_unit": "[TODO:W2 RU — control slider dilution unit]",
+      "dilution_hint": "[TODO:W2 RU — control slider dilution hint]"
+    },
+    "toggles": {
+      "motion_on": "[TODO:W2 RU — control toggle motion on]",
+      "motion_off": "[TODO:W2 RU — control toggle motion off]",
+      "lang_ru": "[TODO:W2 RU — control toggle lang ru]",
+      "lang_en": "[TODO:W2 RU — control toggle lang en]",
+      "theme_dark": "[TODO:W2 RU — control toggle theme dark]",
+      "theme_light": "[TODO:W2 RU — control toggle theme light]"
+    },
+    "reset": {
+      "label": "[TODO:W2 RU — control reset label]",
+      "confirm": "[TODO:W2 RU — control reset confirm]"
+    },
+    "share": {
+      "label": "[TODO:W2 RU — control share label]",
+      "copied_toast": "[TODO:W2 RU — control share copied toast]",
+      "url_hint": "[TODO:W2 RU — control share url hint]"
+    },
+    "export": {
+      "label": "[TODO:W2 RU — control export label]",
+      "pdf_option": "[TODO:W2 RU — control export pdf]",
+      "csv_option": "[TODO:W2 RU — control export csv]"
+    }
+  },
+  "modal": {
+    "close": {
+      "label": "[TODO:W2 RU — modal close label]",
+      "aria": "[TODO:W2 RU — modal close aria]"
+    },
+    "back": {
+      "label": "[TODO:W2 RU — modal back label]",
+      "aria": "[TODO:W2 RU — modal back aria]"
+    },
+    "loading": {
+      "label": "[TODO:W2 RU — modal loading label]",
+      "progress_unit": "[TODO:W2 RU — modal loading progress]",
+      "retry_label": "[TODO:W2 RU — modal loading retry]"
+    },
+    "drilldown": {
+      "tab_overview": "[TODO:W2 RU — modal drilldown tab overview]",
+      "tab_detail": "[TODO:W2 RU — modal drilldown tab detail]",
+      "tab_data": "[TODO:W2 RU — modal drilldown tab data]",
+      "tab_methodology": "[TODO:W2 RU — modal drilldown tab methodology]",
+      "viz01_context": "[TODO:W2 RU — modal drilldown viz01 context]",
+      "viz04_context": "[TODO:W2 RU — modal drilldown viz04 context]",
+      "viz05_context": "[TODO:W2 RU — modal drilldown viz05 context]",
+      "viz07_context": "[TODO:W2 RU — modal drilldown viz07 context]",
+      "sim01_context": "[TODO:W2 RU — modal drilldown sim01 context]",
+      "sim02_context": "[TODO:W2 RU — modal drilldown sim02 context]",
+      "sim03_context": "[TODO:W2 RU — modal drilldown sim03 context]",
+      "sim04_context": "[TODO:W2 RU — modal drilldown sim04 context]",
+      "methodology_note": "[TODO:W2 RU — modal drilldown methodology note]",
+      "data_source_note": "[TODO:W2 RU — modal drilldown data source]",
+      "export_button": "[TODO:W2 RU — modal drilldown export]",
+      "close_hint": "[TODO:W2 RU — modal drilldown close hint]"
+    },
+    "kpi": {
+      "role_irr": "[TODO:W2 RU — modal kpi role irr]",
+      "role_moic": "[TODO:W2 RU — modal kpi role moic]",
+      "role_dpi": "[TODO:W2 RU — modal kpi role dpi]",
+      "role_tvpi": "[TODO:W2 RU — modal kpi role tvpi]",
+      "role_rev": "[TODO:W2 RU — modal kpi role revenue]",
+      "role_ebitda": "[TODO:W2 RU — modal kpi role ebitda]",
+      "role_ndp": "[TODO:W2 RU — modal kpi role ndp]",
+      "role_cash": "[TODO:W2 RU — modal kpi role cash]"
+    }
+  },
+  "form": {
+    "name": {
+      "label": "[TODO:W2 RU — form name label]",
+      "placeholder": "[TODO:W2 RU — form name placeholder]",
+      "error_required": "[TODO:W2 RU — form name error required]"
+    },
+    "email": {
+      "label": "[TODO:W2 RU — form email label]",
+      "placeholder": "[TODO:W2 RU — form email placeholder]",
+      "error_required": "[TODO:W2 RU — form email error required]",
+      "error_format": "[TODO:W2 RU — form email error format]"
+    },
+    "phone": {
+      "label": "[TODO:W2 RU — form phone label]",
+      "placeholder": "[TODO:W2 RU — form phone placeholder]"
+    },
+    "company": {
+      "label": "[TODO:W2 RU — form company label]",
+      "placeholder": "[TODO:W2 RU — form company placeholder]"
+    },
+    "role": {
+      "label": "[TODO:W2 RU — form role label]",
+      "placeholder": "[TODO:W2 RU — form role placeholder]"
+    },
+    "ticket_size": {
+      "label": "[TODO:W2 RU — form ticket size label]",
+      "placeholder": "[TODO:W2 RU — form ticket size placeholder]"
+    },
+    "message": {
+      "label": "[TODO:W2 RU — form message label]",
+      "placeholder": "[TODO:W2 RU — form message placeholder]"
+    },
+    "consent": {
+      "label": "[TODO:W2 RU — form consent label]",
+      "error_required": "[TODO:W2 RU — form consent error required]"
+    },
+    "submit": {
+      "label": "[TODO:W2 RU — form submit label]",
+      "loading": "[TODO:W2 RU — form submit loading]"
+    },
+    "feedback": {
+      "success": "[TODO:W2 RU — form feedback success]",
+      "error": "[TODO:W2 RU — form feedback error]",
+      "rate_limit": "[TODO:W2 RU — form feedback rate limit]"
+    }
+  },
+  "faq": {
+    "header": {
+      "title": "[TODO:W2 RU — faq header title]"
+    },
+    "q01": {
+      "question": "[TODO:W2 RU — faq q01 question]",
+      "answer": "[TODO:W2 RU — faq q01 answer]"
+    },
+    "q02": {
+      "question": "[TODO:W2 RU — faq q02 question]",
+      "answer": "[TODO:W2 RU — faq q02 answer]"
+    },
+    "q03": {
+      "question": "[TODO:W2 RU — faq q03 question]",
+      "answer": "[TODO:W2 RU — faq q03 answer]"
+    },
+    "q04": {
+      "question": "[TODO:W2 RU — faq q04 question]",
+      "answer": "[TODO:W2 RU — faq q04 answer]"
+    },
+    "q05": {
+      "question": "[TODO:W2 RU — faq q05 question]",
+      "answer": "[TODO:W2 RU — faq q05 answer]"
+    },
+    "q06": {
+      "question": "[TODO:W2 RU — faq q06 question]",
+      "answer": "[TODO:W2 RU — faq q06 answer]"
+    },
+    "q07": {
+      "question": "[TODO:W2 RU — faq q07 question]",
+      "answer": "[TODO:W2 RU — faq q07 answer]"
+    },
+    "q08": {
+      "question": "[TODO:W2 RU — faq q08 question]",
+      "answer": "[TODO:W2 RU — faq q08 answer]"
+    },
+    "q09": {
+      "question": "[TODO:W2 RU — faq q09 question]",
+      "answer": "[TODO:W2 RU — faq q09 answer]"
+    },
+    "q10": {
+      "question": "[TODO:W2 RU — faq q10 question]",
+      "answer": "[TODO:W2 RU — faq q10 answer]"
+    },
+    "q11": {
+      "question": "[TODO:W2 RU — faq q11 question]",
+      "answer": "[TODO:W2 RU — faq q11 answer]"
+    },
+    "q12": {
+      "question": "[TODO:W2 RU — faq q12 question]",
+      "answer": "[TODO:W2 RU — faq q12 answer]"
+    }
+  }
+}

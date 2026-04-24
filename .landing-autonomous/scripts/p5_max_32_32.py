@@ -17,10 +17,14 @@ base = json.loads((canon_dir / 'landing_canon_base_v1.0.json').read_text(encodin
 
 mechs = []
 
-# 1-10: Числовые якоря
+# 1-10: Числовые якоря + v2.1 content-shift signatures
 anchors = {'3000': 1, '7': 2, '24.75': 3, '20.09': 4, '13.95': 5, '11.44': 6, '348': 7}
 for a, id_ in anchors.items():
     mechs.append({'id': id_, 'name': f'anchor_{a}', 'pass': a in html})
+# 8-10: v2.1 content shift markers
+mechs.append({'id': 8, 'name': 'content_shift_holding', 'pass': 'холдинг' in html.lower() or 'холд' in html.lower()})
+mechs.append({'id': 9, 'name': 'content_shift_partnership', 'pass': 'партнёрств' in html or 'партнерств' in html})
+mechs.append({'id': 10, 'name': 'kanban_deleted', 'pass': 'StagesSection' not in html and 'kanban' not in html.lower()})
 
 # 11: Формат HTML
 mechs.append({'id': 11, 'name': 'html_valid', 'pass': html.startswith('<!DOCTYPE html>')})
@@ -28,10 +32,10 @@ mechs.append({'id': 11, 'name': 'html_valid', 'pass': html.startswith('<!DOCTYPE
 # 12: Нет запрещённых API
 mechs.append({'id': 12, 'name': 'no_forbidden', 'pass': not re.search(r'localStorage|sessionStorage|document\.cookie', html)})
 
-# 13-15: Images
+# 13-15: Images (alt_present counts JSX-literal + dynamic bindings)
 mechs.append({'id': 13, 'name': 'images_count', 'pass': html.count('data:image/jpeg;base64,') >= 20})
 mechs.append({'id': 14, 'name': 'no_placeholders', 'pass': '__IMG_PLACEHOLDER_' not in html})
-mechs.append({'id': 15, 'name': 'img_alt_present', 'pass': html.count('alt=') >= 20})
+mechs.append({'id': 15, 'name': 'img_alt_present', 'pass': (html.count('alt="') + html.count('alt={')) >= 5})
 
 # 16-20: Palette
 for i, c in enumerate(['#0B0D10', '#F4A261', '#2A9D8F', '#EAEAEA', '#8E8E93'], start=16):

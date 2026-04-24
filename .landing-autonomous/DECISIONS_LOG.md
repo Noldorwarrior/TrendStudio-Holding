@@ -115,3 +115,59 @@
 
 **Rationale:** a11y-friendly паттерн (focus-visible + aria-live) вместо hover-only popover. Colorful encoding помогает различать ступени в печатной и скриншот-версиях.
 
+
+---
+
+## 2026-04-24 Wave 3 — Pipeline + Stages + Team + Advisory + Operations
+
+### W3-D1 — Порядок секций после s06
+
+**Контекст:** спека W3 перечисляет 5 новых секций (s07..s11) и указывает «порядок можно варьировать разумно». Орчестратор ждёт s00..s11 inclusive.
+
+**Решение:** s07 Pipeline → s08 Stages → s09 Team → s10 Advisory → s11 Operations (exact order из спеки).
+
+**Rationale:** Pipeline (постеры) сразу под Returns — показывает, во что инвестируют. Stages — продолжение Pipeline (те же 7 проектов, другой срез). Затем Team → Advisory → Operations — людской/процессный блок идёт после продуктового. Без альтернатив — следуем спеке.
+
+### W3-D2 — Статический IMG_SRC map вместо template literals
+
+**Контекст:** первая реализация использовала `src={\`__IMG_PLACEHOLDER_${id}__\`}` внутри JSX map-итераций для Team/Pipeline/Advisory. Первый прогон acceptance показал 0 совпадений для img01..img16.
+
+**Обнаружено:** `scripts/assemble_html.py` применяет `re.compile(rf'__IMG_PLACEHOLDER_{img_id}__')` к собранному HTML **до** запуска JS. В момент подстановки template literal остаётся raw text `__IMG_PLACEHOLDER_${project.id}__` — regex не матчит.
+
+**Решение:** ввёл module-scope const `IMG_SRC = { img01: '__IMG_PLACEHOLDER_img01__', ..., img16: '__IMG_PLACEHOLDER_img16__' }` — каждая ссылка вставляется в HTML как статический строковый литерал. JSX меняет `src={\`...${id}...\`}` на `src={IMG_SRC[id]}`.
+
+**Rationale:** минимальный diff, zero runtime cost (просто dictionary lookup), 100% matching orchestrator-паттерна. Подтверждено acceptance check №4 (16/16 unique placeholders).
+
+### W3-D3 — Mapping canon pipeline statuses → UI stage IDs
+
+**Контекст:** `canon.pipeline.projects[].status` использует длинные формы `pre-production|production|post-production|release`, а `canon.pipeline.stages[].id` и UI-логика ожидают короткие `pre|prod|post|release`.
+
+**Решение:** перевёл вручную при копировании canon.projects в массив `PIPELINE`:
+- p01 production → prod
+- p02 pre-production → pre
+- p03 pre-production → pre
+- p04 production → prod
+- p05 post-production → post
+- p06 pre-production → pre
+- p07 pre-production → pre
+
+Результат по s08 Stages kanban: Pre=4 (Bravo, Charlie, Foxtrot, Gamma), Prod=2 (Alpha, Delta), Post=1 (Echo), Release=0.
+
+**Rationale:** соответствует `canon.pipeline.stages[].id` (SSOT) и избавляет UI от необходимости знать про `-production` суффиксы. `stage_project_matrix.progress_pct` не использован в W3 — если в W4/W5 потребуется progress bar, его можно подключить без структурных изменений.
+
+### W3-D4 — Team/Advisory: masked names (role-based)
+
+**Контекст:** canon использует `name_masked` (не реальные имена) для всех 5 team и 4 advisory. Спека W3 даёт пример с именами («Александр Иванов»), но помечает их как placeholders.
+
+**Решение:** отказ от придуманных русских имён. В карточках используется `title` из canon (CEO / Head of Production / CFO / Head of Distribution & IP / Creative Director / Senior Industry Advisor / Finance Advisor / Distribution Advisor / International Advisor) + `slot` (верхняя UPPERCASE-метка). `bio` и `track_record`/`focus_areas` — дословно из canon.
+
+**Rationale:** не создаём фантомные факты. При ранней LP-встрече, где реальные имена ещё могут не быть публичными, masked версия — самая консервативная (canon явно указывает `name_masked`). Если после LP-встречи имена раскроют, правка — один JS-объект `TEAM`/`ADVISORS`.
+
+### W3-D5 — NAV_LINKS: убрал risks и cta, добавил stages/advisory/operations
+
+**Контекст:** W2 NAV_LINKS включал `risks` и `cta` как ссылки на несуществующие секции (W2 не делал эти секции; предназначены для W4/W5). Спека W3 требует добавить 5 новых якорей.
+
+**Решение:** итоговый NAV_LINKS (11 пунктов): hero / thesis / market / fund / economics / returns / pipeline / stages / team / advisory / operations. Удалённые `risks`/`cta` вернутся, когда соответствующие секции появятся в W4-W6.
+
+**Rationale:** «битые» anchor-ссылки — плохой UX на демо-стадии. Лучше удалить до добавления реальной секции. Возвращаются одной строкой каждая.
+

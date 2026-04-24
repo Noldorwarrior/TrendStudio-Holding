@@ -1,0 +1,735 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://trendstudio.holding/schema/landing_canon_v1.0.json",
+  "title": "TrendStudio-Holding Landing Canon Base v1.0",
+  "description": "Strict JSON Schema v7 for Canon Base v1.0 — SSOT for HTML landing generation. Anchors: fund.lp_size_mln_rub=3000, pipeline.projects.length=7, pipeline.stages.length=4, returns.irr_internal_w5vd=24.75, returns.irr_public_w3=20.09, returns.mc_p50_internal≈13.95, returns.mc_p50_public≈11.44, finmodel.tests_passed=348, horizon.years=7, returns.target_moic>=2.0.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_meta", "fund", "returns", "horizon", "finmodel",
+    "narrative", "thesis", "pipeline", "benchmark", "team", "advisory_board",
+    "risks", "roadmap", "scenarios", "kpi", "regions", "faq", "press_quotes",
+    "distribution", "deal_structure", "tax_credits", "term_sheet", "jurisdiction_notes"
+  ],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "schema_version", "created_at", "style_signature", "sources", "audiences", "languages"],
+      "properties": {
+        "version": { "type": "string", "pattern": "^v\\d+\\.\\d+(\\.\\d+)?$" },
+        "schema_version": { "type": "string", "const": "v1.0" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "style_signature": { "type": "string", "const": "shadows_of_sunset_v1" },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "title", "version", "role"],
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" },
+              "version": { "type": "string" },
+              "role": { "type": "string", "enum": ["primary", "secondary", "reference"] },
+              "path": { "type": "string" }
+            }
+          }
+        },
+        "audiences": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["investor", "partner", "talent"] }
+        },
+        "languages": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["ru", "en"] }
+        }
+      }
+    },
+
+    "fund": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lp_size_mln_rub", "currency", "structure", "gp_commitment_pct", "management_fee_pct", "carried_interest_pct", "hurdle_rate_pct"],
+      "properties": {
+        "lp_size_mln_rub": { "type": "number", "const": 3000 },
+        "currency": { "type": "string", "const": "RUB" },
+        "structure": { "type": "string", "enum": ["LP/GP", "ZPIF", "Hybrid"] },
+        "gp_commitment_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "management_fee_pct": { "type": "number", "minimum": 0, "maximum": 5 },
+        "carried_interest_pct": { "type": "number", "minimum": 0, "maximum": 30 },
+        "hurdle_rate_pct": { "type": "number", "minimum": 0, "maximum": 25 },
+        "catchup_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "investment_period_years": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "fund_life_years": { "type": "integer", "minimum": 3, "maximum": 15 }
+      }
+    },
+
+    "returns": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["irr_internal_w5vd", "irr_public_w3", "mc_p50_internal", "mc_p50_public", "target_moic", "tvpi"],
+      "properties": {
+        "irr_internal_w5vd": { "type": "number", "const": 24.75 },
+        "irr_public_w3": { "type": "number", "const": 20.09 },
+        "mc_p50_internal": { "type": "number", "minimum": 13.5, "maximum": 14.5 },
+        "mc_p50_public": { "type": "number", "minimum": 11.0, "maximum": 12.0 },
+        "mc_p25_internal": { "type": "number" },
+        "mc_p75_internal": { "type": "number" },
+        "mc_p25_public": { "type": "number" },
+        "mc_p75_public": { "type": "number" },
+        "target_moic": { "type": "number", "minimum": 2.0 },
+        "tvpi": { "type": "number", "minimum": 1.0 },
+        "dpi_year_5": { "type": "number", "minimum": 0 },
+        "dpi_year_7": { "type": "number", "minimum": 0 }
+      }
+    },
+
+    "horizon": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["years", "start_year", "end_year"],
+      "properties": {
+        "years": { "type": "integer", "const": 7 },
+        "start_year": { "type": "integer", "minimum": 2026, "maximum": 2027 },
+        "end_year": { "type": "integer", "minimum": 2032, "maximum": 2034 },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["year", "label"],
+            "properties": {
+              "year": { "type": "integer" },
+              "label": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "finmodel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tests_passed", "version", "engines"],
+      "properties": {
+        "tests_passed": { "type": "integer", "const": 348 },
+        "version": { "type": "string", "const": "v1.4.4" },
+        "engines": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "description"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "p5_verification": { "type": "string", "enum": ["32/32", "31/32", "30/32"] },
+        "m4_verification": { "type": "string", "enum": ["7/7", "6/7"] }
+      }
+    },
+
+    "narrative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sections"],
+      "properties": {
+        "sections": {
+          "type": "array",
+          "minItems": 25,
+          "maxItems": 25,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "slug", "order", "title", "kicker", "role", "audiences"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^s\\d{2}$" },
+              "slug": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+              "order": { "type": "integer", "minimum": 1, "maximum": 25 },
+              "title": { "type": "string", "minLength": 3 },
+              "kicker": { "type": "string" },
+              "role": { "type": "string", "enum": ["hero", "thesis", "product", "economics", "team", "risk", "roadmap", "cta", "support"] },
+              "audiences": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 3,
+                "uniqueItems": true,
+                "items": { "enum": ["investor", "partner", "talent"] }
+              },
+              "body": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "investor": { "type": "string" },
+                  "partner":  { "type": "string" },
+                  "talent":   { "type": "string" }
+                }
+              },
+              "anchors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["key", "value"],
+                  "properties": {
+                    "key": { "type": "string" },
+                    "value": { "type": ["string", "number"] },
+                    "unit": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "thesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "title", "body"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^t\\d{2}$" },
+              "title": { "type": "string" },
+              "body": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "investor": { "type": "string" },
+                  "partner":  { "type": "string" },
+                  "talent":   { "type": "string" }
+                }
+              },
+              "evidence_refs": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "pipeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["projects", "stages", "stage_project_matrix"],
+      "properties": {
+        "projects": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "slug", "title", "type", "genre", "budget_mln_rub", "target_rev_mln_rub", "target_irr_pct", "status"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^p\\d{2}$" },
+              "slug": { "type": "string" },
+              "title": { "type": "string" },
+              "type": { "type": "string", "enum": ["film", "series"] },
+              "genre": { "type": "string" },
+              "logline": { "type": "string" },
+              "budget_mln_rub": { "type": "number", "minimum": 0 },
+              "target_rev_mln_rub": { "type": "number", "minimum": 0 },
+              "target_irr_pct": { "type": "number" },
+              "status": { "type": "string", "enum": ["pre-production", "production", "post-production", "release"] },
+              "poster_ref": { "type": "string", "pattern": "^project_\\d{2}_poster\\.jpg$" },
+              "release_year": { "type": "integer", "minimum": 2026, "maximum": 2034 }
+            }
+          }
+        },
+        "stages": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "label", "order"],
+            "properties": {
+              "id": { "type": "string", "enum": ["pre", "prod", "post", "release"] },
+              "label": { "type": "string" },
+              "order": { "type": "integer", "minimum": 1, "maximum": 4 },
+              "color": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+            }
+          }
+        },
+        "stage_project_matrix": {
+          "type": "array",
+          "minItems": 28,
+          "maxItems": 28,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["project_id", "stage_id", "progress_pct"],
+            "properties": {
+              "project_id": { "type": "string" },
+              "stage_id": { "type": "string", "enum": ["pre", "prod", "post", "release"] },
+              "progress_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+              "start_date": { "type": "string" },
+              "end_date": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["studios"],
+      "properties": {
+        "studios": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "region", "metrics"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "region": { "type": "string" },
+              "metrics": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "avg_irr_pct": { "type": "number" },
+                  "avg_moic": { "type": "number" },
+                  "films_per_year": { "type": "number" },
+                  "avg_budget_mln_rub": { "type": "number" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "team": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["members"],
+      "properties": {
+        "members": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "role_key", "name_masked", "title", "photo_ref", "bio"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^team_0[1-5]$" },
+              "role_key": { "type": "string", "enum": ["ceo", "producer_lead", "cfo", "head_distribution", "creative_director"] },
+              "name_masked": { "type": "string" },
+              "title": { "type": "string" },
+              "photo_ref": { "type": "string", "pattern": "^team_0[1-5]_[a-z_]+\\.jpg$" },
+              "bio": { "type": "string" },
+              "track_record": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "advisory_board": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["members"],
+      "properties": {
+        "members": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "role_key", "name_masked", "title", "photo_ref", "bio"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^advisory_0[1-4]$" },
+              "role_key": { "type": "string", "enum": ["industry_veteran", "finance_advisor", "distribution_advisor", "international_advisor"] },
+              "name_masked": { "type": "string" },
+              "title": { "type": "string" },
+              "photo_ref": { "type": "string", "pattern": "^advisory_0[1-4]_[a-z_]+\\.jpg$" },
+              "bio": { "type": "string" },
+              "focus_areas": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "risks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "category", "title", "severity", "probability", "mitigation"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^r\\d{2}$" },
+              "category": { "type": "string", "enum": ["market", "production", "financial", "regulatory", "distribution", "operational", "talent", "tech"] },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+              "probability": { "type": "string", "enum": ["low", "medium", "high"] },
+              "mitigation": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["years"],
+      "properties": {
+        "years": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["year", "label", "milestones"],
+            "properties": {
+              "year": { "type": "integer", "minimum": 2026, "maximum": 2034 },
+              "label": { "type": "string" },
+              "milestones": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["id", "title"],
+                  "properties": {
+                    "id": { "type": "string" },
+                    "title": { "type": "string" },
+                    "quarter": { "type": "string", "enum": ["Q1", "Q2", "Q3", "Q4"] },
+                    "category": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "scenarios": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base", "bull", "bear", "stress"],
+      "properties": {
+        "base":   { "$ref": "#/definitions/scenarioBlock" },
+        "bull":   { "$ref": "#/definitions/scenarioBlock" },
+        "bear":   { "$ref": "#/definitions/scenarioBlock" },
+        "stress": { "$ref": "#/definitions/scenarioBlock" }
+      }
+    },
+
+    "kpi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roles"],
+      "properties": {
+        "roles": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["role_key", "label", "metrics"],
+            "properties": {
+              "role_key": { "type": "string", "enum": ["ceo", "producer_lead", "cfo", "head_distribution", "creative_director"] },
+              "label": { "type": "string" },
+              "metrics": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["name", "target", "unit"],
+                  "properties": {
+                    "name": { "type": "string" },
+                    "target": { "type": ["string", "number"] },
+                    "unit": { "type": "string" },
+                    "cadence": { "type": "string", "enum": ["monthly", "quarterly", "annual"] }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "regions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "role", "share_pct"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "role": { "type": "string", "enum": ["production_hub", "distribution_hub", "talent_pool", "financing", "post_production"] },
+              "share_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+            }
+          }
+        }
+      }
+    },
+
+    "faq": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 15,
+          "maxItems": 15,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "audience", "question", "answer"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^f\\d{2}$" },
+              "audience": { "type": "string", "enum": ["investor", "partner", "talent"] },
+              "question": { "type": "string" },
+              "answer": { "type": "string" },
+              "category": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "press_quotes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "outlet", "quote", "date"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^pq\\d{2}$" },
+              "outlet": { "type": "string" },
+              "quote": { "type": "string" },
+              "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+              "url": { "type": "string" },
+              "author": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "distribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channels"],
+      "properties": {
+        "channels": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "share_pct", "window_months"],
+            "properties": {
+              "id": { "type": "string", "enum": ["theatrical", "ott", "tv", "international", "merch"] },
+              "name": { "type": "string" },
+              "share_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+              "window_months": { "type": "number", "minimum": 0 },
+              "partners": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "deal_structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["waterfall", "lp_rights", "gp_rights"],
+      "properties": {
+        "waterfall": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["tier", "recipient", "description"],
+            "properties": {
+              "tier": { "type": "integer", "minimum": 1 },
+              "recipient": { "type": "string", "enum": ["LP", "GP", "LP+GP"] },
+              "description": { "type": "string" },
+              "split_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+            }
+          }
+        },
+        "lp_rights": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "gp_rights": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "tax_credits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programs"],
+      "properties": {
+        "programs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "credit_pct", "eligibility"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "credit_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+              "eligibility": { "type": "string" },
+              "authority": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "term_sheet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instrument", "min_ticket_mln_rub", "close_schedule"],
+      "properties": {
+        "instrument": { "type": "string" },
+        "min_ticket_mln_rub": { "type": "number", "minimum": 0 },
+        "max_ticket_mln_rub": { "type": "number", "minimum": 0 },
+        "close_schedule": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "date"],
+            "properties": {
+              "name": { "type": "string" },
+              "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+              "target_raise_mln_rub": { "type": "number" }
+            }
+          }
+        },
+        "key_terms": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "jurisdiction_notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary", "disclaimers"],
+      "properties": {
+        "primary": { "type": "string" },
+        "secondary": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "disclaimers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "compliance_refs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "scenarioBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "irr_pct", "moic", "probability_pct", "drivers"],
+      "properties": {
+        "label": { "type": "string" },
+        "irr_pct": { "type": "number" },
+        "moic": { "type": "number" },
+        "probability_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "drivers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "revenue_mult": { "type": "number" },
+        "cost_mult": { "type": "number" }
+      }
+    }
+  }
+}

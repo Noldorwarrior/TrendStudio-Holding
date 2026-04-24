@@ -42,3 +42,13 @@ structure.json
 
 # SSH key for sandbox → GitHub (account-wide, account: Noldorwarrior)
 .git-ssh/
+
+# Landing v1.0 smoke screenshots (out of git)
+smoke_*.png
+
+# Landing v1.0 autonomous — raw/processed images (≥4 MB, stored locally, sha256 in canon)
+data_extract/images_raw/
+data_extract/images_processed/
+
+# Node dependencies (from bootstrap npm install)
+node_modules/

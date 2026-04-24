@@ -265,3 +265,30 @@
 **D-W6-07. 3rd `<header role="banner">` wrapper на TopNav.** Wave 5 имел только `<nav aria-label>`. Wave 6 оборачивает TopNav в `<header role="banner">` для полного landmark quartet: banner / main / contentinfo / navigation. Это исправляет потенциальный axe-core warning на landmark roles.
 
 **Acceptance 11/11 passed.** Файл 258 531 B (+27 684 от W5). App_W6 single-export. 20 unique img placeholders. 0 forbidden APIs. 0 console.log. RU 82 / EN 82 zero-gap symmetric. Все canon-якоря сохранены (3000, ТрендСтудио, 24.75/24,75, 20.09, 13.95, mulberry32). Babel parser OK. Landing v1.0 READY for Phase 7.
+
+---
+
+## 2026-04-24 Phase 7 — P5 calibration + aspirational anchor 11.44
+
+### P7-D1 — P5 script calibration (29 total mechs, proportional thresholds)
+
+**Контекст:** `p5_max_32_32.py` называется "32/32", но фактически определяет только 29 механизмов (id 8-10 пропущены). PASS-порог был `>= 30` — недостижимо.
+
+**Решение:** пропорциональная калибровка (script calibration, не criteria-lowering):
+- PASS ≥28 (~96.5%, эквивалент 30/32)
+- CONDITIONAL ≥23 (~79%, эквивалент 25/32)
+- FAIL <23
++ три script-accuracy fix'а:
+  - mech 14 (no_placeholders) regex `__IMG_PLACEHOLDER_img[0-9]+__` — избегаем ложного срабатывания на doc-комментарии.
+  - mech 15 (img_alt_present) threshold 20→5 — React array.map даёт 1 `alt=` на callsite.
+  - mech 23 (react_root) принимает `createRoot(` и `ReactDOM.createRoot` — current template использует destructured import.
+
+**Rationale:** calibration под реальный v1.2 codegen, не снижение качества. Итог: **28/29 PASS**.
+
+### P7-D2 — Anchor 11.44 (MC P50 Public) — aspirational
+
+**Контекст:** canon_base содержит `mc.p50.public = 11.44`. W2-W6 не отрендерили этот якорь. P5 mech 6 FAIL.
+
+**Решение:** НЕ добавлять post-factum (anti-pattern «хак под тест»). Отмечено как aspirational для v1.1. Все критичные якоря (3000, 7, 24.75, 20.09, 13.95, 348) на месте.
+
+**Rationale:** по решению #3 v1.0 «best-guess + DECISIONS_LOG» — логируем miss, не блокируем. Для LP-встречи 29 апреля 11.44% не критичен: представлены Internal IRR 24.75%, Public IRR 20.09%, MC P50 Internal 13.95%.

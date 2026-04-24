@@ -1,0 +1,154 @@
+{
+  "version": "1.2",
+  "score": 28,
+  "total": 29,
+  "passed_pct": 96.6,
+  "verdict": "PASS",
+  "mechanisms": [
+    {
+      "id": 1,
+      "name": "anchor_3000",
+      "pass": true
+    },
+    {
+      "id": 2,
+      "name": "anchor_7",
+      "pass": true
+    },
+    {
+      "id": 3,
+      "name": "anchor_24.75",
+      "pass": true
+    },
+    {
+      "id": 4,
+      "name": "anchor_20.09",
+      "pass": true
+    },
+    {
+      "id": 5,
+      "name": "anchor_13.95",
+      "pass": true
+    },
+    {
+      "id": 6,
+      "name": "anchor_11.44",
+      "pass": false
+    },
+    {
+      "id": 7,
+      "name": "anchor_348",
+      "pass": true
+    },
+    {
+      "id": 11,
+      "name": "html_valid",
+      "pass": true
+    },
+    {
+      "id": 12,
+      "name": "no_forbidden",
+      "pass": true
+    },
+    {
+      "id": 13,
+      "name": "images_count",
+      "pass": true
+    },
+    {
+      "id": 14,
+      "name": "no_placeholders",
+      "pass": true
+    },
+    {
+      "id": 15,
+      "name": "img_alt_present",
+      "pass": true
+    },
+    {
+      "id": 16,
+      "name": "color_#0B0D10",
+      "pass": true
+    },
+    {
+      "id": 17,
+      "name": "color_#F4A261",
+      "pass": true
+    },
+    {
+      "id": 18,
+      "name": "color_#2A9D8F",
+      "pass": true
+    },
+    {
+      "id": 19,
+      "name": "color_#EAEAEA",
+      "pass": true
+    },
+    {
+      "id": 20,
+      "name": "color_#8E8E93",
+      "pass": true
+    },
+    {
+      "id": 21,
+      "name": "has_main",
+      "pass": true
+    },
+    {
+      "id": 22,
+      "name": "has_footer",
+      "pass": true
+    },
+    {
+      "id": 23,
+      "name": "react_root",
+      "pass": true
+    },
+    {
+      "id": 24,
+      "name": "babel_present",
+      "pass": true
+    },
+    {
+      "id": 25,
+      "name": "tailwind_cdn",
+      "pass": true
+    },
+    {
+      "id": 26,
+      "name": "i18n_ru",
+      "pass": true
+    },
+    {
+      "id": 27,
+      "name": "i18n_en",
+      "pass": true
+    },
+    {
+      "id": 28,
+      "name": "focus_visible",
+      "pass": true
+    },
+    {
+      "id": 29,
+      "name": "reduce_motion",
+      "pass": true
+    },
+    {
+      "id": 30,
+      "name": "aria_labels",
+      "pass": true
+    },
+    {
+      "id": 31,
+      "name": "lang_attr",
+      "pass": true
+    },
+    {
+      "id": 32,
+      "name": "viewport_meta",
+      "pass": true
+    }
+  ]
+}

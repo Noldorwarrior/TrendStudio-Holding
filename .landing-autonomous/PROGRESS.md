@@ -9,3 +9,5 @@
 - [09:41:18] W3: success (bytes=5859059)
 - [10:00:00] W4: success (bytes=169693) — s12-s16 + M2 Pipeline Builder + M3 LP Sizer, 9/9 acceptance
 - [10:00:14] W4: success (bytes=5931562)
+- [W5] W5: success (bytes=230847) — s17 Press + s18 FAQ + s19 Distribution + s20 Waterfall Interactive + s21 Legal + s22 CTA (img18) + 6 standard sims (S1..S6), 9/9 acceptance
+- [10:16:06] W5: success (bytes=6514336)

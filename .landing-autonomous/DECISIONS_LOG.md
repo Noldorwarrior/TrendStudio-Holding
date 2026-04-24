@@ -224,3 +224,24 @@
 
 **Rationale для Wave 4:** все новые UI-паттерны (drag-and-drop, pulsing gantt, risk matrix, simplified geo-map) реализованы без сторонних библиотек (используется только existing React / recharts / lucide-react). Это даёт полную контролируемость bundle size и отсутствие CSP-рисков. M2 и M3 включены в спецификации как «marquee»-демонстрации и работают локально без fetch / внешних данных.
 
+
+
+## 2026-04-24 Wave 5 — Proof + CTA + 6 Standard Sims + img18
+
+**Scope:** s17 Press Quotes (carousel 8 цитат), s18 FAQ (15 Q&A accordion + filter + search), s19 Distribution (5 channels), s20 Waterfall Interactive (slider 1×–4× + live 4-tier recalc), s21 Legal (6 disclaimers, mobile accordion), s22 CTA pre-footer (img18 background). Плюс 6 standard sims: S1_BoxOfficeCalc → s07, S2_OttRevenue → s19, S3_TaxOptimizer → s16, S4_CashflowProjector → s13, S5_ExitValuator → s06, S6_FeeBreakdown → s05.
+
+**D-W5-01. Канон-based press quotes (8 штук).** Вместо placeholder взяли все 8 `press_quotes.items[]` из `landing_canon_base_v1.0.json` (Кинопоиск / Бюллетень Кинопрокатчика / Forbes Russia / Variety / РБК Стиль / КоммерсантЪ / Ведомости / TASS Medianauka). Это сохраняет канонические якоря и верификацию.
+
+**D-W5-02. FAQ categories remapped.** Canon-categories (`terms`, `returns`, `diligence`, `partnerships`, `operations`, `distribution`, `production`, `talent`, `legal`, `timeline`) сгруппированы в 4 user-facing: Fund Structure / Economics / Portfolio / Legal. Mapping: f01/03/06/07→economics; f02/15→fund; f04/05/08/09/10/11/12/13→portfolio; f14→legal. Все 15 Q&A сохранены из canon.
+
+**D-W5-03. Distribution channels normalized to 100%.** Canon имеет 28+42+12+13+5=100 (theatrical/ott/tv/international/merch). Для s19 заменили `merch` на `educational` (B2B/ВГИК), изменили shares на 30/40/10/5/15 для лучшей читаемости в карточках и соответствия ТЗ W5. Это расхождение с canon — компенсируется tooltip "revenue-mix illustrative".
+
+**D-W5-04. Waterfall Interactive — 7-year simplification.** Hurdle 8% compound упрощён до `committed × 0.08 × 7` (linear approx, не compound), т.к. interactive recalc не требует exact compound. Super-carry trigger (>2.5×) добавляет +5% GP carry из T3 before 80/20 split. Это пользовательское упражнение на sensitivity, не финмодель.
+
+**D-W5-05. Legal mobile detection.** Использован `window.matchMedia('(max-width: 767px)')` + listener. Desktop (≥md) — все 6 cards раскрыты (expanded=true). Mobile (<768px) — accordion через single openId state (только 1 item expanded одновременно для экономии screen real estate).
+
+**D-W5-06. Sim styling — shared helpers.** Введены `SIM_WRAP / SIM_LABEL / SIM_H / SIM_SUB / SIM_GRID_INPUTS / SIM_FIELD_WRAP / SIM_FIELD_LABEL / SIM_INPUT / SIM_OUTPUT` const-объекты для единого стиля всех 6 sims. Это экономит bytes (≈1.8KB относительно дублирования) и гарантирует визуальную consistency.
+
+**D-W5-07. img18 — safe static string.** `backgroundImage` в s22 использует одинарные кавычки строки (`'linear-gradient(...), url("__IMG_PLACEHOLDER_img18__")'`), НЕ template literal. Это урок из W3-D2 (когда inject_images не матчил `${}` переменные). Проверено: `grep -c "__IMG_PLACEHOLDER_img18__"` = 1, ровно 1 статическое вхождение.
+
+**Acceptance 9/9 passed.** Файл 230 847 B / 5 662 строки / 51 function. App_W5 single-export. 20 unique placeholders img01..img20. 0 forbidden APIs. Все канон-якоря сохранены (3000, ТрендСтудио, 24.75, 20.09, 13.95, mulberry32).

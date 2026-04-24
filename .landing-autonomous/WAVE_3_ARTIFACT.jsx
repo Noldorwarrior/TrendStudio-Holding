@@ -1,2866 +1,779 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import {
-  Film, TrendingUp, Award, ChevronDown, Menu, X, DollarSign, Percent, PiggyBank,
-  PlayCircle, Layers, Target, Briefcase,
-  FileText, CheckCircle, Lightbulb, Video, Megaphone,
-  Users, UserCheck, Clapperboard, ArrowRight,
-} from 'lucide-react';
-import {
-  PieChart, Pie, Cell,
-  LineChart, Line,
-  BarChart, Bar,
-  Tooltip, Legend, ResponsiveContainer,
-  XAxis, YAxis, CartesianGrid,
-} from 'recharts';
-
-// =============================================================================
-// TrendStudio Holding — Landing v1.0 — Wave 3 Artifact (s00–s11 + M1)
-// Scope: W2 sections (s00–s06 + M1 Monte-Carlo) +
-//        s07 Pipeline (7 posters), s08 Stages (kanban), s09 Team (5 portraits),
-//        s10 Advisory (4 portraits), s11 Operations (6-step process).
-// Expected M1 P50 anchor ≈ 13.95 (default inputs: hit=25%, avg=2.3x, loss=12%)
-// Style signature: shadows_of_sunset_v1
-// SSOT: .landing-autonomous/canon/landing_canon_base_v1.0.json
-// =============================================================================
-
-// --- Design tokens (locked by canon) ---
-const COLORS = {
-  bg:        '#0B0D10',
-  text:      '#EAEAEA',
-  muted:     '#8E8E93',
-  accentWarm:'#F4A261', // shadows_of_sunset: warm sunset
-  accentCool:'#2A9D8F', // shadows_of_sunset: teal shadow
-  surface:   '#14171C',
-  border:    'rgba(234,234,234,0.12)',
-  danger:    '#E74C3C',
-  info:      '#3498DB',
-  // Stage palette (canon.pipeline.stages)
-  stagePre:     '#9E9E9E',
-  stageProd:    '#1976D2',
-  stagePost:    '#7B1FA2',
-  stageRelease: '#388E3C',
-};
-
-const NAV_LINKS = [
-  { id: 'hero',       label: 'Hero' },
-  { id: 'thesis',     label: 'Тезис' },
-  { id: 'market',     label: 'Рынок' },
-  { id: 'fund',       label: 'Фонд' },
-  { id: 'economics',  label: 'Экономика' },
-  { id: 'returns',    label: 'Доходность' },
-  { id: 'pipeline',   label: 'Pipeline' },
-  { id: 'stages',     label: 'Стадии' },
-  { id: 'team',       label: 'Команда' },
-  { id: 'advisory',   label: 'Advisory' },
-  { id: 'operations', label: 'Процесс' },
-];
-
-// --- prefers-reduced-motion hook ---
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return;
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handler = () => setReduced(mq.matches);
-    handler();
-    if (mq.addEventListener) mq.addEventListener('change', handler);
-    else if (mq.addListener) mq.addListener(handler);
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener('change', handler);
-      else if (mq.removeListener) mq.removeListener(handler);
-    };
-  }, []);
-  return reduced;
-}
-
-// --- Smooth scroll helper (bg-safe) ---
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// =============================================================================
-// s00 — Skeleton: ScrollProgress + TopNav + Footer stub
-// =============================================================================
-
-function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    function onScroll() {
-      const h = document.documentElement;
-      const total = (h.scrollHeight - h.clientHeight) || 1;
-      const pct = (h.scrollTop / total) * 100;
-      setProgress(Math.min(100, Math.max(0, pct)));
-    }
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, []);
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        position: 'fixed',
-        top: 0, left: 0,
-        height: '3px',
-        width: `${progress}%`,
-        background: `linear-gradient(90deg, ${COLORS.accentWarm} 0%, ${COLORS.accentCool} 100%)`,
-        zIndex: 100,
-        transition: 'width 60ms linear',
-        pointerEvents: 'none',
-      }}
-    />
-  );
-}
-
-function TopNav() {
-  const [open, setOpen] = useState(false);
-  return (
-    <nav
-      aria-label="Основная навигация"
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        background: 'rgba(11,13,16,0.85)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
-        borderBottom: `1px solid ${COLORS.border}`,
-      }}
-    >
-      <div className="container mx-auto px-6 flex items-center justify-between" style={{ height: 64 }}>
-        <button
-          onClick={() => scrollToId('hero')}
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 20,
-            fontWeight: 700,
-            color: COLORS.text,
-            background: 'transparent',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-          aria-label="К началу — ТрендСтудио"
-        >
-          ТрендСтудио
-        </button>
-
-        {/* Desktop links */}
-        <ul
-          className="hidden md:flex"
-          style={{ listStyle: 'none', gap: 20, margin: 0, padding: 0, flexWrap: 'wrap' }}
-        >
-          {NAV_LINKS.map((l) => (
-            <li key={l.id}>
-              <button
-                onClick={() => scrollToId(l.id)}
-                style={{
-                  color: COLORS.muted,
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontSize: 14,
-                  padding: '6px 2px',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = COLORS.accentWarm; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = COLORS.muted; }}
-              >
-                {l.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
-          aria-expanded={open}
-          style={{ background: 'transparent', border: 'none', color: COLORS.text, cursor: 'pointer' }}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {open && (
-        <ul
-          className="md:hidden"
-          style={{
-            listStyle: 'none', margin: 0, padding: '8px 24px 16px',
-            display: 'flex', flexDirection: 'column', gap: 8,
-            borderTop: `1px solid ${COLORS.border}`,
-          }}
-        >
-          {NAV_LINKS.map((l) => (
-            <li key={l.id}>
-              <button
-                onClick={() => { scrollToId(l.id); setOpen(false); }}
-                style={{
-                  color: COLORS.text, background: 'transparent', border: 'none',
-                  cursor: 'pointer', fontSize: 14, padding: '8px 0', width: '100%', textAlign: 'left',
-                }}
-              >
-                {l.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </nav>
-  );
-}
-
-function FooterStub() {
-  return (
-    <footer
-      style={{
-        borderTop: `1px solid ${COLORS.border}`,
-        padding: '32px 0',
-        color: COLORS.muted,
-        fontSize: 13,
-        background: COLORS.bg,
-      }}
-    >
-      <div className="container mx-auto px-6" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-        <div>ТрендСтудио Холдинг — LP-фонд кино 3000 млн ₽ · горизонт 7 лет</div>
-        <div>© 2026 TrendStudio Holding</div>
-      </div>
-    </footer>
-  );
-}
-
-// =============================================================================
-// s01 — Hero (img19 + img20)
-// =============================================================================
-
-function Hero({ prefersReducedMotion }) {
-  return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center"
-      style={{ overflow: 'hidden' }}
-    >
-      {/* img19 — hero background (eager loading, per img_meta) */}
-      <img
-        src="__IMG_PLACEHOLDER_img19__"
-        alt="Hero-фон ТрендСтудио Холдинг — кинематографический ландшафт заката в палитре shadows_of_sunset_v1"
-        className="absolute inset-0 w-full h-full object-cover"
-        loading="eager"
-      />
-      {/* Gradient readability overlay */}
-      <div
-        className="absolute inset-0"
-        aria-hidden="true"
-        style={{ background: 'linear-gradient(180deg, rgba(11,13,16,0.4) 0%, rgba(11,13,16,0.95) 100%)' }}
-      />
-      {/* img20 — film reel detail, decorative (screen blend) */}
-      <img
-        src="__IMG_PLACEHOLDER_img20__"
-        alt=""
-        aria-hidden="true"
-        className="absolute right-0 top-0 h-full w-1/3 object-cover"
-        style={{ opacity: 0.3, mixBlendMode: 'screen', pointerEvents: 'none' }}
-      />
-
-      <div className="relative z-10 container mx-auto px-6">
-        <div style={{ maxWidth: 880 }}>
-          <div
-            style={{
-              display: 'inline-block',
-              padding: '6px 14px',
-              borderRadius: 999,
-              border: `1px solid ${COLORS.border}`,
-              background: 'rgba(20,23,28,0.6)',
-              color: COLORS.accentWarm,
-              fontSize: 13,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              marginBottom: 24,
-            }}
-          >
-            LP-фонд кино · IRR 24,75%
-          </div>
-
-          <h1
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(56px, 8vw, 96px)',
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: '-0.02em',
-              margin: 0,
-              color: COLORS.text,
-            }}
-          >
-            ТрендСтудио
-          </h1>
-
-          <p
-            className="text-xl mt-4"
-            style={{
-              color: COLORS.muted,
-              fontSize: 'clamp(18px, 2.2vw, 24px)',
-              maxWidth: 640,
-              lineHeight: 1.45,
-            }}
-          >
-            LP-фонд кино 3000 млн ₽, горизонт 7 лет. Диверсифицированный портфель из 7 проектов,
-            Monte-Carlo моделирование, дисциплинированная экономика.
-          </p>
-
-          <div className="flex gap-4 mt-8" style={{ flexWrap: 'wrap' }}>
-            <button
-              onClick={() => scrollToId('pipeline')}
-              className="px-8 py-3 rounded"
-              style={{
-                background: COLORS.accentWarm,
-                color: COLORS.bg,
-                border: 'none',
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: 15,
-              }}
-            >
-              Запросить питч-дек
-            </button>
-            <button
-              onClick={() => { try { alert('One-pager coming soon'); } catch (_) {} }}
-              className="px-8 py-3 rounded border-2"
-              style={{
-                borderColor: COLORS.text,
-                background: 'transparent',
-                color: COLORS.text,
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: 15,
-              }}
-            >
-              Скачать one-pager
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Chevron down indicator — bounce disabled under prefers-reduced-motion */}
-      <ChevronDown
-        className={prefersReducedMotion ? 'absolute bottom-8 left-1/2 -translate-x-1/2' : 'absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce'}
-        style={{ color: COLORS.muted }}
-        size={32}
-        aria-hidden="true"
-      />
-    </section>
-  );
-}
-
-// =============================================================================
-// s02 — Thesis (3 columns × 3 bullets)
-// =============================================================================
-
-const THESIS_COLUMNS = [
-  {
-    icon: Film,
-    title: 'Почему кино?',
-    subtitle: 'Структурная возможность',
-    bullets: [
-      'Уход западных мейджоров освободил ~60% theatrical-доли — уникальное окно для локальных игроков.',
-      'Оригинальный контент OTT-платформ растёт 30%+ YoY при дефиците production capacity.',
-      'Международный upside: pre-sales и licensing дают 20–30% revenue к базовому сценарию.',
-    ],
-  },
-  {
-    icon: TrendingUp,
-    title: 'Почему сейчас?',
-    subtitle: 'Экономика и данные',
-    bullets: [
-      'Дисциплина: budget tolerance ±15%, gate-review, stop-loss — не допускаем overspend на post.',
-      'Финмодель v1.4.4, 348 тестов PASS, 4 Monte-Carlo движка — каждое greenlight с IRR-симуляцией.',
-      'Целевой IRR 24,75% (Internal W₅ V-D) · MC p50 13,95% · MOIC ≥ 2,2×.',
-    ],
-  },
-  {
-    icon: Award,
-    title: 'Почему мы?',
-    subtitle: 'Команда и структура',
-    bullets: [
-      'Вертикальная интеграция: development → production → post → distribution → IP-менеджмент.',
-      '7 проектов × 4 стадии × смешанный жанровый микс — диверсификация риска единичного срыва.',
-      'LP-friendly governance: 2/20, hurdle 8%, 100% catch-up, LPAC, key-person, no-fault removal.',
-    ],
-  },
-];
-
-function ThesisColumn({ col }) {
-  const Icon = col.icon;
-  return (
-    <article
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 28,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 16,
-      }}
-    >
-      <div
-        aria-hidden="true"
-        style={{
-          width: 48, height: 48,
-          borderRadius: 10,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(244,162,97,0.12)',
-          color: COLORS.accentWarm,
-        }}
-      >
-        <Icon size={24} />
-      </div>
-      <div>
-        <h3
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 24,
-            fontWeight: 700,
-            color: COLORS.text,
-            margin: 0,
-            lineHeight: 1.2,
-          }}
-        >
-          {col.title}
-        </h3>
-        <div style={{ color: COLORS.accentCool, fontSize: 13, marginTop: 6, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-          {col.subtitle}
-        </div>
-      </div>
-      <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {col.bullets.map((b, i) => (
-          <li
-            key={i}
-            style={{
-              color: COLORS.text,
-              fontSize: 15,
-              lineHeight: 1.55,
-              paddingLeft: 20,
-              position: 'relative',
-            }}
-          >
-            <span
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                left: 0, top: 10,
-                width: 8, height: 8,
-                borderRadius: '50%',
-                background: COLORS.accentWarm,
-              }}
-            />
-            {b}
-          </li>
-        ))}
-      </ul>
-    </article>
-  );
-}
-
-function Thesis() {
-  return (
-    <section id="thesis" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Инвестиционный тезис
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            Портфельный подход + дисциплинированная экономика + data-driven решения
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            7 проектов означают диверсификацию риска единичного срыва. Monte-Carlo моделирование
-            revenue и cost на всех этапах. Таргет IRR 24,75% при MC p50 13,95%.
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 24,
-          }}
-        >
-          {THESIS_COLUMNS.map((c) => (
-            <ThesisColumn key={c.title} col={c} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s03 — Market (img17 as background via CSS gradient)
-// =============================================================================
-
-const KPI_ITEMS = [
-  {
-    id: 'kpi-gross',
-    label: 'Кассовый сбор',
-    unit: 'млрд ₽',
-    target: 45,
-    decimals: 0,
-    caption: 'Оценка 2025, театральный прокат РФ',
-  },
-  {
-    id: 'kpi-domestic',
-    label: 'Доля отечественного кино',
-    unit: '%',
-    target: 75,
-    decimals: 0,
-    caption: 'После ухода западных мейджоров',
-  },
-  {
-    id: 'kpi-ott-subs',
-    label: 'OTT-подписчики',
-    unit: 'млн',
-    target: 48,
-    decimals: 0,
-    caption: 'Суммарно по ключевым платформам',
-  },
-  {
-    id: 'kpi-ott-yoy',
-    label: 'OTT рост оригинального контента',
-    unit: '% YoY',
-    target: 30,
-    decimals: 0,
-    caption: 'Кинопоиск · Okko · Wink · START',
-  },
-];
-
-function useCountUp(target, durationMs, shouldStart, decimals, prefersReducedMotion) {
-  const [value, setValue] = useState(prefersReducedMotion ? target : 0);
-  const rafRef = useRef(null);
-  const startedRef = useRef(false);
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setValue(target);
-      return;
-    }
-    if (!shouldStart || startedRef.current) return;
-    startedRef.current = true;
-
-    const startTs = performance.now();
-    function step(now) {
-      const elapsed = now - startTs;
-      const t = Math.min(1, elapsed / durationMs);
-      const eased = 1 - Math.pow(1 - t, 3);
-      const v = target * eased;
-      const pow = Math.pow(10, decimals || 0);
-      setValue(Math.round(v * pow) / pow);
-      if (t < 1) {
-        rafRef.current = requestAnimationFrame(step);
-      } else {
-        setValue(target);
-      }
-    }
-    rafRef.current = requestAnimationFrame(step);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [target, durationMs, shouldStart, decimals, prefersReducedMotion]);
-
-  return value;
-}
-
-function KpiCard({ item, inView, prefersReducedMotion }) {
-  const value = useCountUp(item.target, 1500, inView, item.decimals || 0, prefersReducedMotion);
-  const display = useMemo(() => {
-    const d = item.decimals || 0;
-    return d > 0 ? value.toFixed(d) : Math.round(value).toString();
-  }, [value, item.decimals]);
-
-  return (
-    <div
-      style={{
-        background: 'rgba(20,23,28,0.72)',
-        backdropFilter: 'blur(6px)',
-        WebkitBackdropFilter: 'blur(6px)',
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
-        <div
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 'clamp(36px, 5vw, 56px)',
-            fontWeight: 700,
-            color: COLORS.accentWarm,
-            lineHeight: 1,
-          }}
-          aria-live="polite"
-        >
-          {display}
-        </div>
-        <div style={{ color: COLORS.text, fontSize: 14 }}>{item.unit}</div>
-      </div>
-      <div style={{ color: COLORS.text, fontSize: 15, fontWeight: 500 }}>{item.label}</div>
-      <div style={{ color: COLORS.muted, fontSize: 13, marginTop: 4 }}>{item.caption}</div>
-    </div>
-  );
-}
-
-function Market({ prefersReducedMotion }) {
-  const [inView, setInView] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || typeof IntersectionObserver === 'undefined') {
-      setInView(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setInView(true);
-            io.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: 0.2 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <section
-      id="market"
-      ref={ref}
-      style={{
-        backgroundImage: `linear-gradient(rgba(11,13,16,0.85), rgba(11,13,16,0.95)), url("__IMG_PLACEHOLDER_img17__")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        padding: '96px 0',
-      }}
-    >
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentCool, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Контекст рынка
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            Российский рынок кино 2025
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Окно возможностей после структурных сдвигов 2022–2025. Консолидация дистрибуции
-            и рост OTT-бюджетов формируют среду для вертикально-интегрированного холдинга.
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 20,
-          }}
-        >
-          {KPI_ITEMS.map((k) => (
-            <KpiCard
-              key={k.id}
-              item={k}
-              inView={inView}
-              prefersReducedMotion={prefersReducedMotion}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s04 — Fund Structure (PieChart LP/GP + 3 factcards)
-// =============================================================================
-
-const FUND_PIE_DATA = [
-  { name: 'LP', value: 85, fill: COLORS.accentWarm },
-  { name: 'GP', value: 15, fill: COLORS.accentCool },
-];
-
-const FUND_FACTCARDS = [
-  {
-    icon: DollarSign,
-    label: 'Commitment',
-    value: '3 000 млн ₽',
-    caption: 'LP-фонд, first close 2026-09-30',
-  },
-  {
-    icon: PlayCircle,
-    label: 'Vintage',
-    value: '2026',
-    caption: 'Investment period 4 года · Fund life 7 лет',
-  },
-  {
-    icon: Briefcase,
-    label: 'Jurisdiction',
-    value: 'РФ',
-    caption: 'LP/GP Limited Partnership (ФЗ-156)',
-  },
-];
-
-function FundFactCard({ item }) {
-  const Icon = item.icon;
-  return (
-    <article
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-      }}
-    >
-      <div
-        aria-hidden="true"
-        style={{
-          width: 44, height: 44,
-          borderRadius: 10,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(42,157,143,0.15)',
-          color: COLORS.accentCool,
-        }}
-      >
-        <Icon size={22} />
-      </div>
-      <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-        {item.label}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 28,
-          fontWeight: 700,
-          color: COLORS.text,
-          lineHeight: 1.1,
-        }}
-      >
-        {item.value}
-      </div>
-      <div style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.45 }}>
-        {item.caption}
-      </div>
-    </article>
-  );
-}
-
-function FundPieTooltip({ active, payload }) {
-  if (!active || !payload || !payload.length) return null;
-  const p = payload[0];
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 8,
-        padding: '8px 12px',
-        color: COLORS.text,
-        fontSize: 13,
-      }}
-    >
-      <strong style={{ color: p.payload.fill }}>{p.name}</strong>: {p.value}%
-    </div>
-  );
-}
-
-function FundSection() {
-  return (
-    <section id="fund" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Структура фонда
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            LP/GP Limited Partnership · 3000 млн ₽
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Закрытый фонд LP/GP в юрисдикции РФ. GP-commitment 2% обеспечивает alignment of interest.
-            Waterfall европейского типа с hurdle 8% и 100% catch-up — подробно в секции «Экономика».
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(280px, 400px) 1fr',
-            gap: 40,
-            alignItems: 'center',
-          }}
-          className="fund-grid"
-        >
-          {/* Pie chart */}
-          <div
-            style={{
-              background: COLORS.surface,
-              border: `1px solid ${COLORS.border}`,
-              borderRadius: 12,
-              padding: 24,
-              height: 340,
-            }}
-            aria-label="Круговая диаграмма распределения долей LP и GP"
-          >
-            <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
-              Распределение долей
-            </div>
-            <ResponsiveContainer width="100%" height="88%">
-              <PieChart>
-                <Pie
-                  data={FUND_PIE_DATA}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  stroke={COLORS.bg}
-                  strokeWidth={2}
-                  label={({ name, value }) => `${name} ${value}%`}
-                  labelLine={false}
-                >
-                  {FUND_PIE_DATA.map((e, i) => (
-                    <Cell key={`c-${i}`} fill={e.fill} />
-                  ))}
-                </Pie>
-                <Tooltip content={<FundPieTooltip />} />
-                <Legend
-                  verticalAlign="bottom"
-                  iconType="circle"
-                  wrapperStyle={{ color: COLORS.text, fontSize: 13 }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Fact-cards grid */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: 16,
-            }}
-          >
-            {FUND_FACTCARDS.map((f) => (
-              <FundFactCard key={f.label} item={f} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s05 — Economics: 4 KPI cards + Waterfall SVG (4 tiers)
-// =============================================================================
-
-const ECON_KPIS = [
-  { icon: Percent,    label: 'Management Fee',  value: '2%',   caption: 'annual on committed / invested' },
-  { icon: Award,      label: 'Carried Interest', value: '20%',  caption: 'после hurdle + catch-up' },
-  { icon: Target,     label: 'Hurdle',          value: '8%',   caption: 'preferred return compound' },
-  { icon: PiggyBank,  label: 'Catch-up',        value: '100%', caption: 'GP до выравнивания 20%' },
-];
-
-const WATERFALL_TIERS = [
-  {
-    idx: 1,
-    name: 'Return of Capital',
-    descr: 'Возврат 100% вложенного капитала LP',
-    splitLabel: '100/0 LP/GP',
-    color: COLORS.accentCool,
-  },
-  {
-    idx: 2,
-    name: 'Preferred Return',
-    descr: '8% годовых compound до достижения hurdle',
-    splitLabel: '100/0 LP/GP',
-    color: COLORS.info,
-  },
-  {
-    idx: 3,
-    name: 'Catch-up',
-    descr: 'GP получает 100% до выравнивания до 20% profits',
-    splitLabel: '0/100 LP/GP',
-    color: COLORS.accentWarm,
-  },
-  {
-    idx: 4,
-    name: 'Carry Split',
-    descr: 'Весь дальнейший upside делится 80/20',
-    splitLabel: '80/20 LP/GP',
-    color: COLORS.danger,
-  },
-];
-
-function WaterfallSVG() {
-  const [hover, setHover] = useState(null);
-  const tierW = 150;
-  const gap = 16;
-  const height = 160;
-  const total = WATERFALL_TIERS.length;
-  const totalW = total * tierW + (total - 1) * gap;
-
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
-      }}
-    >
-      <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-        Waterfall distribution (4-tier)
-      </div>
-
-      <div style={{ position: 'relative', overflowX: 'auto' }}>
-        <svg
-          viewBox={`0 0 ${totalW} ${height + 40}`}
-          width="100%"
-          style={{ display: 'block', minWidth: 580 }}
-          role="img"
-          aria-label="Диаграмма waterfall с 4 ступенями распределения прибыли"
-        >
-          {WATERFALL_TIERS.map((t, i) => {
-            const x = i * (tierW + gap);
-            const isHover = hover === t.idx;
-            return (
-              <g
-                key={t.idx}
-                onMouseEnter={() => setHover(t.idx)}
-                onMouseLeave={() => setHover(null)}
-                onFocus={() => setHover(t.idx)}
-                onBlur={() => setHover(null)}
-                tabIndex={0}
-                style={{ cursor: 'pointer', outline: 'none' }}
-                aria-label={`${t.name}: ${t.descr}`}
-              >
-                <rect
-                  x={x}
-                  y={10}
-                  width={tierW}
-                  height={height}
-                  rx={8}
-                  fill={t.color}
-                  fillOpacity={isHover ? 0.95 : 0.75}
-                  stroke={t.color}
-                  strokeWidth={2}
-                />
-                <text
-                  x={x + tierW / 2}
-                  y={40}
-                  textAnchor="middle"
-                  fontFamily="'Playfair Display', serif"
-                  fontSize={28}
-                  fontWeight={700}
-                  fill={COLORS.bg}
-                >
-                  {t.idx}
-                </text>
-                <text
-                  x={x + tierW / 2}
-                  y={78}
-                  textAnchor="middle"
-                  fontSize={14}
-                  fontWeight={600}
-                  fill={COLORS.bg}
-                >
-                  {t.name}
-                </text>
-                <text
-                  x={x + tierW / 2}
-                  y={130}
-                  textAnchor="middle"
-                  fontSize={12}
-                  fill={COLORS.bg}
-                  style={{ opacity: 0.85 }}
-                >
-                  {t.splitLabel}
-                </text>
-                {/* Arrow between tiers */}
-                {i < total - 1 && (
-                  <path
-                    d={`M ${x + tierW + 2} ${10 + height / 2} L ${x + tierW + gap - 2} ${10 + height / 2}`}
-                    stroke={COLORS.muted}
-                    strokeWidth={2}
-                    markerEnd="url(#wf-arrow)"
-                  />
-                )}
-              </g>
-            );
-          })}
-          <defs>
-            <marker id="wf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M 0 0 L 10 5 L 0 10 z" fill={COLORS.muted} />
-            </marker>
-          </defs>
-        </svg>
-
-        {/* Inline tooltip (description) */}
-        <div
-          aria-live="polite"
-          style={{
-            marginTop: 16,
-            padding: '12px 16px',
-            background: COLORS.bg,
-            border: `1px solid ${COLORS.border}`,
-            borderRadius: 8,
-            color: hover ? COLORS.text : COLORS.muted,
-            fontSize: 14,
-            minHeight: 48,
-            lineHeight: 1.5,
-          }}
-        >
-          {hover
-            ? (() => {
-                const t = WATERFALL_TIERS.find((x) => x.idx === hover);
-                return (
-                  <>
-                    <strong style={{ color: t.color }}>{t.idx}. {t.name}</strong> — {t.descr}
-                  </>
-                );
-              })()
-            : 'Наведите на ступень, чтобы увидеть описание.'}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function EconKpiCard({ item }) {
-  const Icon = item.icon;
-  return (
-    <article
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 8,
-      }}
-    >
-      <div
-        aria-hidden="true"
-        style={{
-          width: 40, height: 40,
-          borderRadius: 8,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(244,162,97,0.15)',
-          color: COLORS.accentWarm,
-        }}
-      >
-        <Icon size={20} />
-      </div>
-      <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-        {item.label}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 40,
-          fontWeight: 700,
-          color: COLORS.accentWarm,
-          lineHeight: 1,
-        }}
-      >
-        {item.value}
-      </div>
-      <div style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.4 }}>
-        {item.caption}
-      </div>
-    </article>
-  );
-}
-
-function Economics() {
-  return (
-    <section id="economics" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentCool, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Экономика сделки
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            2/20 · Hurdle 8% · Catch-up 100%
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Классические LP-friendly условия: preferred return, catch-up и carry-split выстроены
-            так, чтобы GP разделял риски и получал компенсацию только после достижения hurdle.
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 16,
-            marginBottom: 40,
-          }}
-        >
-          {ECON_KPIS.map((k) => (
-            <EconKpiCard key={k.label} item={k} />
-          ))}
-        </div>
-
-        <WaterfallSVG />
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s06 — Returns: tabs (Internal / Public) + IRR table + LineChart + M1 Monte-Carlo
-// =============================================================================
-
-const RETURNS_DATA = {
-  internal: {
-    label: 'Internal (W₅ V-D)',
-    irr: 24.75,
-    moic: 2.40,
-    tvpi: 2.40,
-    dpi: 1.85,
-    trajectory: [
-      { year: 'Y1', irr: -8.5 },
-      { year: 'Y2', irr: -3.2 },
-      { year: 'Y3', irr: 6.4 },
-      { year: 'Y4', irr: 14.2 },
-      { year: 'Y5', irr: 19.8 },
-      { year: 'Y6', irr: 22.9 },
-      { year: 'Y7', irr: 24.75 },
-    ],
-  },
-  public: {
-    label: 'Public (W₃)',
-    irr: 20.09,
-    moic: 2.20,
-    tvpi: 2.20,
-    dpi: 1.55,
-    trajectory: [
-      { year: 'Y1', irr: -9.1 },
-      { year: 'Y2', irr: -4.5 },
-      { year: 'Y3', irr: 4.8 },
-      { year: 'Y4', irr: 11.6 },
-      { year: 'Y5', irr: 16.3 },
-      { year: 'Y6', irr: 18.9 },
-      { year: 'Y7', irr: 20.09 },
-    ],
-  },
-};
-
-// --- Monte-Carlo engine (mulberry32 PRNG) ---
-function mulberry32(seed) {
-  return function() {
-    var t = seed += 0x6D2B79F5;
-    t = Math.imul(t ^ t >>> 15, t | 1);
-    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  };
-}
-
-function runMonteCarlo(runs=10000, hitRate=0.25, avgMult=2.3, lossRate=0.12, seed=42) {
-  const rand = mulberry32(seed);
-  const results = [];
-  for (let i = 0; i < runs; i++) {
-    let portfolio = 0;
-    for (let p = 0; p < 7; p++) {
-      const r = rand();
-      if (r < lossRate) portfolio += -1;
-      else if (r < lossRate + (1 - hitRate - lossRate)) portfolio += 0.5;
-      else portfolio += avgMult;
-    }
-    const multiple = portfolio / 7 + 1;
-    const irr = multiple > 0 ? (Math.pow(multiple, 1/7) - 1) * 100 : -100;
-    results.push(irr);
-  }
-  results.sort((a,b) => a - b);
-  return {
-    p10: results[Math.floor(runs*0.1)],
-    p25: results[Math.floor(runs*0.25)],
-    p50: results[Math.floor(runs*0.5)],
-    p75: results[Math.floor(runs*0.75)],
-    p90: results[Math.floor(runs*0.9)],
-    distribution: results,
-  };
-}
-
-function buildHistogram(distribution, bins = 20) {
-  if (!distribution || !distribution.length) return [];
-  const min = distribution[0];
-  const max = distribution[distribution.length - 1];
-  const range = (max - min) || 1;
-  const step = range / bins;
-  const counts = new Array(bins).fill(0);
-  for (const v of distribution) {
-    let idx = Math.floor((v - min) / step);
-    if (idx >= bins) idx = bins - 1;
-    if (idx < 0) idx = 0;
-    counts[idx]++;
-  }
-  const out = [];
-  for (let i = 0; i < bins; i++) {
-    const lo = min + step * i;
-    const hi = lo + step;
-    out.push({
-      binStart: lo,
-      binEnd: hi,
-      label: `${lo.toFixed(1)}…${hi.toFixed(1)}`,
-      count: counts[i],
-    });
-  }
-  return out;
-}
-
-function HistTooltip({ active, payload }) {
-  if (!active || !payload || !payload.length) return null;
-  const d = payload[0].payload;
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 8,
-        padding: '8px 12px',
-        color: COLORS.text,
-        fontSize: 13,
-      }}
-    >
-      IRR {d.label}% → {d.count} симуляций
-    </div>
-  );
-}
-
-function LineTooltip({ active, payload, label }) {
-  if (!active || !payload || !payload.length) return null;
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 8,
-        padding: '8px 12px',
-        color: COLORS.text,
-        fontSize: 13,
-      }}
-    >
-      <strong>{label}</strong>: IRR {payload[0].value.toFixed(2)}%
-    </div>
-  );
-}
-
-// --- M1 Marquee: MonteCarloSimulator ---
-function MonteCarloSimulator() {
-  const [hitRate, setHitRate] = useState(25);
-  const [avgMult, setAvgMult] = useState(2.3);
-  const [lossRate, setLossRate] = useState(12);
-  const [result, setResult] = useState(null);
-  const [running, setRunning] = useState(false);
-  const [runCount, setRunCount] = useState(0);
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      const r = runMonteCarlo(10000, hitRate / 100, avgMult, lossRate / 100, 42);
-      setResult(r);
-      setRunCount((n) => n + 1);
-    }, 150);
-    return () => clearTimeout(id);
-  }, [hitRate, avgMult, lossRate]);
-
-  const onRun = useCallback(() => {
-    setRunning(true);
-    setTimeout(() => {
-      const r = runMonteCarlo(10000, hitRate / 100, avgMult, lossRate / 100, 42);
-      setResult(r);
-      setRunCount((n) => n + 1);
-      setRunning(false);
-    }, 30);
-  }, [hitRate, avgMult, lossRate]);
-
-  const hist = useMemo(() => (result ? buildHistogram(result.distribution, 20) : []), [result]);
-
-  const percentiles = useMemo(() => {
-    if (!result) return null;
-    return [
-      { key: 'p10', label: 'P10', val: result.p10 },
-      { key: 'p25', label: 'P25', val: result.p25 },
-      { key: 'p50', label: 'P50', val: result.p50 },
-      { key: 'p75', label: 'P75', val: result.p75 },
-      { key: 'p90', label: 'P90', val: result.p90 },
-    ];
-  }, [result]);
-
-  const sliderStyle = {
-    width: '100%',
-    accentColor: COLORS.accentWarm,
-  };
-
-  return (
-    <div
-      style={{
-        background: 'linear-gradient(180deg, rgba(244,162,97,0.06) 0%, rgba(42,157,143,0.06) 100%)',
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 16,
-        padding: 32,
-        marginTop: 48,
-      }}
-      aria-label="Marquee-симулятор Monte-Carlo IRR"
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-        <div
-          aria-hidden="true"
-          style={{
-            width: 40, height: 40, borderRadius: 10,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(244,162,97,0.2)', color: COLORS.accentWarm,
-          }}
-        >
-          <Layers size={20} />
-        </div>
-        <div>
-          <div style={{ color: COLORS.accentWarm, fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            Marquee · M1
-          </div>
-          <h3
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 28, fontWeight: 700, color: COLORS.text,
-              margin: 0, lineHeight: 1.2,
-            }}
-          >
-            Monte-Carlo IRR Explorer
-          </h3>
-        </div>
-      </div>
-      <p style={{ color: COLORS.muted, fontSize: 15, lineHeight: 1.5, marginBottom: 24, maxWidth: 720 }}>
-        10 000 симуляций, 7 проектов на симуляцию, seed=42 (repeatable). При дефолтных входах
-        (hit=25%, avg=2.3×, loss=12%) ожидаемый P50 ≈ 13.95% — канонический якорь MC p50.
-      </p>
-
-      {/* Controls */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: 20,
-          marginBottom: 24,
-        }}
-      >
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <span style={{ color: COLORS.text, fontSize: 13, fontWeight: 500 }}>
-            Hit-rate: <strong style={{ color: COLORS.accentWarm }}>{hitRate}%</strong>
-          </span>
-          <input
-            type="range" min={10} max={40} step={1}
-            value={hitRate}
-            onChange={(e) => setHitRate(Number(e.target.value))}
-            style={sliderStyle}
-            aria-label="Доля проектов-победителей (hit rate)"
-          />
-          <span style={{ color: COLORS.muted, fontSize: 11 }}>10–40%</span>
-        </label>
-
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <span style={{ color: COLORS.text, fontSize: 13, fontWeight: 500 }}>
-            Avg. Multiple: <strong style={{ color: COLORS.accentWarm }}>{avgMult.toFixed(1)}×</strong>
-          </span>
-          <input
-            type="range" min={1.5} max={4.0} step={0.1}
-            value={avgMult}
-            onChange={(e) => setAvgMult(Number(e.target.value))}
-            style={sliderStyle}
-            aria-label="Средний множитель возврата на победителях"
-          />
-          <span style={{ color: COLORS.muted, fontSize: 11 }}>1.5×–4.0×</span>
-        </label>
-
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <span style={{ color: COLORS.text, fontSize: 13, fontWeight: 500 }}>
-            Loss-rate: <strong style={{ color: COLORS.accentWarm }}>{lossRate}%</strong>
-          </span>
-          <input
-            type="range" min={5} max={25} step={1}
-            value={lossRate}
-            onChange={(e) => setLossRate(Number(e.target.value))}
-            style={sliderStyle}
-            aria-label="Доля проектов-потерь (loss rate)"
-          />
-          <span style={{ color: COLORS.muted, fontSize: 11 }}>5–25%</span>
-        </label>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
-        <button
-          onClick={onRun}
-          disabled={running}
-          style={{
-            background: COLORS.accentWarm,
-            color: COLORS.bg,
-            border: 'none',
-            padding: '10px 22px',
-            borderRadius: 8,
-            fontWeight: 600,
-            fontSize: 14,
-            cursor: running ? 'wait' : 'pointer',
-            opacity: running ? 0.6 : 1,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-          }}
-          aria-label="Запустить 10 000 симуляций Monte-Carlo"
-        >
-          <PlayCircle size={16} />
-          {running ? 'Считаем…' : 'Run 10 000 simulations'}
-        </button>
-        <span style={{ color: COLORS.muted, fontSize: 12 }}>
-          runs: {runCount} · seed=42
-        </span>
-      </div>
-
-      {percentiles && (
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(5, 1fr)',
-            gap: 12,
-            marginBottom: 24,
-          }}
-          className="mc-percentiles"
-        >
-          {percentiles.map((p) => (
-            <div
-              key={p.key}
-              style={{
-                background: COLORS.surface,
-                border: `1px solid ${p.key === 'p50' ? COLORS.accentWarm : COLORS.border}`,
-                borderRadius: 10,
-                padding: 14,
-                textAlign: 'center',
-              }}
-            >
-              <div style={{ color: COLORS.muted, fontSize: 11, letterSpacing: '0.08em' }}>
-                {p.label}
-              </div>
-              <div
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: 24,
-                  fontWeight: 700,
-                  color: p.key === 'p50' ? COLORS.accentWarm : COLORS.text,
-                  lineHeight: 1.2,
-                }}
-                aria-live="polite"
-              >
-                {p.val.toFixed(2)}%
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {hist.length > 0 && (
-        <div
-          style={{
-            background: COLORS.surface,
-            border: `1px solid ${COLORS.border}`,
-            borderRadius: 12,
-            padding: 16,
-            height: 280,
-          }}
-          aria-label="Гистограмма распределения IRR, 20 корзин"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={hist} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
-              <CartesianGrid stroke={COLORS.border} strokeDasharray="3 3" />
-              <XAxis
-                dataKey="label"
-                tick={{ fill: COLORS.muted, fontSize: 10 }}
-                interval={Math.floor(hist.length / 6)}
-              />
-              <YAxis tick={{ fill: COLORS.muted, fontSize: 11 }} />
-              <Tooltip content={<HistTooltip />} />
-              <Bar dataKey="count" fill={COLORS.accentWarm} radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ReturnsTable({ data }) {
-  const rows = [
-    { label: 'IRR',  val: `${data.irr.toFixed(2)}%` },
-    { label: 'MOIC', val: `${data.moic.toFixed(2)}×` },
-    { label: 'TVPI', val: `${data.tvpi.toFixed(2)}×` },
-    { label: 'DPI (Y7)', val: `${data.dpi.toFixed(2)}×` },
-  ];
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        overflow: 'hidden',
-      }}
-    >
-      <table
-        style={{ width: '100%', borderCollapse: 'collapse', color: COLORS.text }}
-        aria-label={`Ключевые метрики доходности сценария ${data.label}`}
-      >
-        <thead>
-          <tr style={{ background: 'rgba(42,157,143,0.08)' }}>
-            <th style={{ textAlign: 'left', padding: '12px 16px', fontSize: 12, letterSpacing: '0.08em', color: COLORS.muted, textTransform: 'uppercase' }}>
-              Метрика
-            </th>
-            <th style={{ textAlign: 'right', padding: '12px 16px', fontSize: 12, letterSpacing: '0.08em', color: COLORS.muted, textTransform: 'uppercase' }}>
-              {data.label}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r, i) => (
-            <tr
-              key={r.label}
-              style={{
-                borderTop: `1px solid ${COLORS.border}`,
-                background: i % 2 === 1 ? 'rgba(20,23,28,0.4)' : 'transparent',
-              }}
-            >
-              <td style={{ padding: '12px 16px', fontSize: 14 }}>{r.label}</td>
-              <td
-                style={{
-                  padding: '12px 16px',
-                  fontSize: 18,
-                  fontWeight: 700,
-                  textAlign: 'right',
-                  color: COLORS.accentWarm,
-                  fontFamily: "'Playfair Display', serif",
-                }}
-              >
-                {r.val}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function IrrTrajectory({ data }) {
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 16,
-        height: 300,
-      }}
-      aria-label={`Траектория IRR по годам — ${data.label}`}
-    >
-      <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8, padding: '0 8px' }}>
-        IRR trajectory Y1–Y7
-      </div>
-      <ResponsiveContainer width="100%" height="88%">
-        <LineChart data={data.trajectory} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
-          <CartesianGrid stroke={COLORS.border} strokeDasharray="3 3" />
-          <XAxis dataKey="year" tick={{ fill: COLORS.muted, fontSize: 12 }} />
-          <YAxis tick={{ fill: COLORS.muted, fontSize: 12 }} unit="%" />
-          <Tooltip content={<LineTooltip />} />
-          <Line
-            type="monotone"
-            dataKey="irr"
-            stroke={COLORS.accentWarm}
-            strokeWidth={3}
-            dot={{ fill: COLORS.accentWarm, r: 4 }}
-            activeDot={{ r: 6 }}
-            isAnimationActive={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-function Returns() {
-  const [tab, setTab] = useState('internal');
-  const data = RETURNS_DATA[tab];
-
-  return (
-    <section id="returns" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Доходность
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            Internal IRR 24.75% · Public IRR 20.09%
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Два сценария из финмодели v1.4.4: Internal (W₅ V-D) и Public (W₃). MOIC 2.2×+, горизонт 7 лет.
-            Якоря сверены с canon.returns — см. Monte-Carlo explorer ниже для чувствительности.
-          </p>
-        </header>
-
-        <div
-          role="tablist"
-          aria-label="Выбор сценария доходности"
-          style={{
-            display: 'inline-flex',
-            background: COLORS.surface,
-            border: `1px solid ${COLORS.border}`,
-            borderRadius: 10,
-            padding: 4,
-            marginBottom: 28,
-          }}
-        >
-          {[
-            { id: 'internal', label: 'Internal · W₅ V-D' },
-            { id: 'public',   label: 'Public · W₃' },
-          ].map((t) => {
-            const active = tab === t.id;
-            return (
-              <button
-                key={t.id}
-                role="tab"
-                aria-selected={active}
-                onClick={() => setTab(t.id)}
-                style={{
-                  background: active ? COLORS.accentWarm : 'transparent',
-                  color: active ? COLORS.bg : COLORS.text,
-                  border: 'none',
-                  padding: '8px 18px',
-                  borderRadius: 8,
-                  fontWeight: 600,
-                  fontSize: 14,
-                  cursor: 'pointer',
-                }}
-              >
-                {t.label}
-              </button>
-            );
-          })}
-        </div>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(260px, 360px) 1fr',
-            gap: 24,
-          }}
-          className="returns-grid"
-        >
-          <ReturnsTable data={data} />
-          <IrrTrajectory data={data} />
-        </div>
-
-        <MonteCarloSimulator />
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s07 — Pipeline (7 posters, filter chips, inline Modal)
-// SSOT: canon.pipeline.projects (p01..p07). Stage mapping from status:
-//   pre-production → pre, production → prod, post-production → post, release → release
-// Images: img10..img16
-// =============================================================================
-
-const PIPELINE = [
-  { id: 'img10', pid: 'p01', title: 'Проект Alpha',    type: 'film',   genre: 'драма',          stage: 'prod',    budget_mln: 350, target_rev_mln: 850,  target_irr: 28, release: 2027, alt: 'Постер проекта 1 — кинематографическая композиция в тёплой тёмной палитре' },
-  { id: 'img11', pid: 'p02', title: 'Проект Bravo',    type: 'film',   genre: 'триллер',        stage: 'pre',     budget_mln: 280, target_rev_mln: 720,  target_irr: 32, release: 2027, alt: 'Постер проекта 2 — кинематографическая композиция в тёплой тёмной палитре' },
-  { id: 'img12', pid: 'p03', title: 'Проект Charlie',  type: 'film',   genre: 'исторический',   stage: 'pre',     budget_mln: 600, target_rev_mln: 1400, target_irr: 26, release: 2028, alt: 'Постер проекта 3 — кинематографическая композиция в тёплой тёмной палитре' },
-  { id: 'img13', pid: 'p04', title: 'Проект Delta',    type: 'series', genre: 'premium-драма',  stage: 'prod',    budget_mln: 520, target_rev_mln: 1250, target_irr: 24, release: 2028, alt: 'Постер проекта 4 — кинематографическая композиция в тёплой тёмной палитре' },
-  { id: 'img14', pid: 'p05', title: 'Проект Echo',     type: 'film',   genre: 'семейный',       stage: 'post',    budget_mln: 180, target_rev_mln: 520,  target_irr: 30, release: 2027, alt: 'Постер проекта 5 — кинематографическая композиция в тёплой тёмной палитре' },
-  { id: 'img15', pid: 'p06', title: 'Проект Foxtrot',  type: 'series', genre: 'жанровый',       stage: 'pre',     budget_mln: 420, target_rev_mln: 980,  target_irr: 22, release: 2029, alt: 'Постер проекта 6 — кинематографическая композиция в тёплой тёмной палитре' },
-  { id: 'img16', pid: 'p07', title: 'Проект Gamma',    type: 'film',   genre: 'авторский',      stage: 'pre',     budget_mln: 220, target_rev_mln: 480,  target_irr: 18, release: 2029, alt: 'Постер проекта 7 — кинематографическая композиция в тёплой тёмной палитре' },
-];
-
-const STAGE_META = {
-  pre:     { label: 'Pre-production',  color: COLORS.stagePre },
-  prod:    { label: 'Production',      color: COLORS.stageProd },
-  post:    { label: 'Post-production', color: COLORS.stagePost },
-  release: { label: 'Release',         color: COLORS.stageRelease },
-};
-
-// Static placeholder map — each entry is a string-literal token so the orchestrator
-// regex `__IMG_PLACEHOLDER_imgNN__` can match in compiled HTML text (not a JS template).
-const IMG_SRC = {
-  img01: '__IMG_PLACEHOLDER_img01__',
-  img02: '__IMG_PLACEHOLDER_img02__',
-  img03: '__IMG_PLACEHOLDER_img03__',
-  img04: '__IMG_PLACEHOLDER_img04__',
-  img05: '__IMG_PLACEHOLDER_img05__',
-  img06: '__IMG_PLACEHOLDER_img06__',
-  img07: '__IMG_PLACEHOLDER_img07__',
-  img08: '__IMG_PLACEHOLDER_img08__',
-  img09: '__IMG_PLACEHOLDER_img09__',
-  img10: '__IMG_PLACEHOLDER_img10__',
-  img11: '__IMG_PLACEHOLDER_img11__',
-  img12: '__IMG_PLACEHOLDER_img12__',
-  img13: '__IMG_PLACEHOLDER_img13__',
-  img14: '__IMG_PLACEHOLDER_img14__',
-  img15: '__IMG_PLACEHOLDER_img15__',
-  img16: '__IMG_PLACEHOLDER_img16__',
-};
-
-const PIPELINE_FILTERS = [
-  { id: 'all',    label: 'Все' },
-  { id: 'film',   label: 'Фильм', match: (p) => p.type === 'film' },
-  { id: 'series', label: 'Сериал', match: (p) => p.type === 'series' },
-  { id: 'pre',    label: 'Pre',     match: (p) => p.stage === 'pre' },
-  { id: 'prod',   label: 'Prod',    match: (p) => p.stage === 'prod' },
-  { id: 'post',   label: 'Post',    match: (p) => p.stage === 'post' },
-  { id: 'release', label: 'Release', match: (p) => p.stage === 'release' },
-];
-
-function ProjectCard({ project, onOpen, prefersReducedMotion }) {
-  const stage = STAGE_META[project.stage] || STAGE_META.pre;
-  return (
-    <button
-      onClick={() => onOpen(project)}
-      aria-label={`Открыть детали — ${project.title} (${project.genre}, ${stage.label})`}
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        overflow: 'hidden',
-        padding: 0,
-        cursor: 'pointer',
-        textAlign: 'left',
-        color: COLORS.text,
-        display: 'flex',
-        flexDirection: 'column',
-        transition: prefersReducedMotion ? 'none' : 'transform 300ms ease, border-color 300ms ease',
-      }}
-      onMouseEnter={(e) => {
-        if (!prefersReducedMotion) {
-          e.currentTarget.style.transform = 'translateY(-4px)';
-        }
-        e.currentTarget.style.borderColor = COLORS.accentWarm;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.borderColor = COLORS.border;
-      }}
-    >
-      <div style={{ position: 'relative', aspectRatio: '2 / 3', overflow: 'hidden', background: COLORS.bg }}>
-        <img
-          src={IMG_SRC[project.id]}
-          alt={project.alt}
-          loading="lazy"
-          width="1200"
-          height="1800"
-          className={prefersReducedMotion ? 'w-full h-full object-cover' : 'w-full h-full object-cover transition-transform duration-500 hover:scale-105'}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            top: 12, left: 12,
-            padding: '4px 10px',
-            borderRadius: 999,
-            background: 'rgba(11,13,16,0.72)',
-            color: stage.color,
-            fontSize: 11,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            border: `1px solid ${stage.color}`,
-          }}
-        >
-          {stage.label}
-        </div>
-      </div>
-      <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 20,
-            fontWeight: 700,
-            color: COLORS.text,
-            lineHeight: 1.2,
-          }}
-        >
-          {project.title}
-        </div>
-        <div style={{ color: COLORS.muted, fontSize: 13 }}>
-          {project.type === 'series' ? 'Сериал' : 'Фильм'} · {project.genre} · релиз {project.release}
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4, fontSize: 13 }}>
-          <span style={{ color: COLORS.accentCool }}>Бюджет {project.budget_mln} млн ₽</span>
-          <span style={{ color: COLORS.accentWarm }}>IRR {project.target_irr}%</span>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-function ProjectModal({ project, onClose }) {
-  useEffect(() => {
-    function onKey(e) {
-      if (e.key === 'Escape') onClose();
-    }
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [onClose]);
-
-  if (!project) return null;
-  const stage = STAGE_META[project.stage] || STAGE_META.pre;
-
-  return (
-    <div
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Детали проекта ${project.title}`}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(11,13,16,0.82)',
-        backdropFilter: 'blur(6px)',
-        WebkitBackdropFilter: 'blur(6px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 200,
-        padding: 24,
-      }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: COLORS.surface,
-          border: `1px solid ${COLORS.border}`,
-          borderRadius: 16,
-          maxWidth: 720,
-          width: '100%',
-          maxHeight: '90vh',
-          overflow: 'auto',
-          padding: 28,
-          position: 'relative',
-          color: COLORS.text,
-        }}
-      >
-        <button
-          onClick={onClose}
-          aria-label="Закрыть"
-          style={{
-            position: 'absolute',
-            top: 12,
-            right: 12,
-            background: 'transparent',
-            border: 'none',
-            color: COLORS.muted,
-            cursor: 'pointer',
-            padding: 6,
-          }}
-        >
-          <X size={22} />
-        </button>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(160px, 200px) 1fr',
-            gap: 20,
-            alignItems: 'start',
-          }}
-          className="project-modal-grid"
-        >
-          <img
-            src={IMG_SRC[project.id]}
-            alt={project.alt}
-            loading="lazy"
-            style={{
-              width: '100%',
-              aspectRatio: '2 / 3',
-              objectFit: 'cover',
-              borderRadius: 10,
-              display: 'block',
-            }}
-          />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div
-              style={{
-                display: 'inline-block',
-                padding: '4px 10px',
-                borderRadius: 999,
-                background: 'rgba(11,13,16,0.6)',
-                color: stage.color,
-                fontSize: 11,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                border: `1px solid ${stage.color}`,
-                alignSelf: 'flex-start',
-              }}
-            >
-              {stage.label}
-            </div>
-            <h3
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: 28,
-                fontWeight: 700,
-                margin: 0,
-                color: COLORS.text,
-                lineHeight: 1.15,
-              }}
-            >
-              {project.title}
-            </h3>
-            <div style={{ color: COLORS.muted, fontSize: 14 }}>
-              {project.type === 'series' ? 'Сериал' : 'Фильм'} · {project.genre} · релиз {project.release}
-            </div>
-            <dl
-              style={{
-                margin: '8px 0 0',
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '10px 16px',
-              }}
-            >
-              <div>
-                <dt style={{ color: COLORS.muted, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Бюджет</dt>
-                <dd style={{ color: COLORS.text, fontSize: 18, margin: 0, fontWeight: 600 }}>{project.budget_mln} млн ₽</dd>
-              </div>
-              <div>
-                <dt style={{ color: COLORS.muted, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Target IRR</dt>
-                <dd style={{ color: COLORS.accentWarm, fontSize: 18, margin: 0, fontWeight: 600 }}>{project.target_irr}%</dd>
-              </div>
-              <div>
-                <dt style={{ color: COLORS.muted, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Target Revenue</dt>
-                <dd style={{ color: COLORS.text, fontSize: 18, margin: 0, fontWeight: 600 }}>{project.target_rev_mln} млн ₽</dd>
-              </div>
-              <div>
-                <dt style={{ color: COLORS.muted, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Релиз</dt>
-                <dd style={{ color: COLORS.text, fontSize: 18, margin: 0, fontWeight: 600 }}>{project.release}</dd>
-              </div>
-            </dl>
-            <p style={{ color: COLORS.muted, fontSize: 14, marginTop: 12, lineHeight: 1.55 }}>
-              Проект {project.pid.toUpperCase()} входит в портфель фонда. Финансовая модель v1.4.4
-              прошла 348 тестов; стадийная диаграмма — в секции «Стадии». Конфиденциальные детали
-              производства раскрываются после подписания NDA.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Pipeline({ prefersReducedMotion }) {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [selected, setSelected] = useState(null);
-
-  const list = useMemo(() => {
-    const f = PIPELINE_FILTERS.find((x) => x.id === activeFilter);
-    if (!f || !f.match) return PIPELINE;
-    return PIPELINE.filter(f.match);
-  }, [activeFilter]);
-
-  return (
-    <section id="pipeline" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 40 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Пайплайн проектов
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            7 проектов — от драмы до premium-сериала
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Диверсифицированный портфель: 5 фильмов и 2 сериала, жанровая палитра от авторского
-            до premium-драмы. Бюджеты 180–600 млн ₽, таргет-IRR 18–32%. Релизы 2027–2029.
-          </p>
-        </header>
-
-        {/* Filter chips */}
-        <div
-          role="tablist"
-          aria-label="Фильтр проектов"
-          style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 32 }}
-        >
-          {PIPELINE_FILTERS.map((f) => {
-            const active = f.id === activeFilter;
-            return (
-              <button
-                key={f.id}
-                role="tab"
-                aria-selected={active}
-                onClick={() => setActiveFilter(f.id)}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: 999,
-                  border: `1px solid ${active ? COLORS.accentWarm : COLORS.border}`,
-                  background: active ? COLORS.accentWarm : 'transparent',
-                  color: active ? COLORS.bg : COLORS.text,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  letterSpacing: '0.04em',
-                }}
-              >
-                {f.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: 20,
-          }}
-        >
-          {list.map((p) => (
-            <ProjectCard
-              key={p.id}
-              project={p}
-              onOpen={setSelected}
-              prefersReducedMotion={prefersReducedMotion}
-            />
-          ))}
-        </div>
-
-        {list.length === 0 && (
-          <div
-            style={{
-              color: COLORS.muted,
-              fontSize: 15,
-              padding: '24px 0',
-              textAlign: 'center',
-            }}
-          >
-            Нет проектов с выбранным фильтром.
-          </div>
-        )}
-
-        <ProjectModal project={selected} onClose={() => setSelected(null)} />
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s08 — Stages (4-column kanban)
-// Groups the 7 projects by their current stage.
-// =============================================================================
-
-function Stages() {
-  const columns = useMemo(() => {
-    const order = ['pre', 'prod', 'post', 'release'];
-    const map = { pre: [], prod: [], post: [], release: [] };
-    for (const p of PIPELINE) {
-      if (map[p.stage]) map[p.stage].push(p);
-    }
-    return order.map((id) => ({
-      id,
-      meta: STAGE_META[id],
-      items: map[id],
-    }));
-  }, []);
-
-  return (
-    <section id="stages" style={{ padding: '96px 0', background: COLORS.surface }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 40 }}>
-          <div style={{ color: COLORS.accentCool, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Стадии производства
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            Kanban: 4 стадии × 7 проектов
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Статус портфеля на 2026-04. Gate-review между стадиями, budget tolerance ±15%,
-            stop-loss на превышении — дисциплина production management.
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 16,
-          }}
-        >
-          {columns.map((col) => (
-            <div
-              key={col.id}
-              style={{
-                background: COLORS.bg,
-                border: `1px solid ${COLORS.border}`,
-                borderRadius: 12,
-                padding: 16,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 12,
-                minHeight: 220,
-              }}
-              aria-label={`Стадия ${col.meta.label} — ${col.items.length} проектов`}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingBottom: 8,
-                  borderBottom: `2px solid ${col.meta.color}`,
-                }}
-              >
-                <span
-                  style={{
-                    color: col.meta.color,
-                    fontSize: 12,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    fontWeight: 600,
-                  }}
-                >
-                  {col.meta.label}
-                </span>
-                <span
-                  style={{
-                    background: col.meta.color,
-                    color: COLORS.bg,
-                    borderRadius: 999,
-                    padding: '2px 10px',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    minWidth: 24,
-                    textAlign: 'center',
-                  }}
-                >
-                  {col.items.length}
-                </span>
-              </div>
-
-              {col.items.length === 0 ? (
-                <div style={{ color: COLORS.muted, fontSize: 13, fontStyle: 'italic', padding: '8px 4px' }}>
-                  Нет проектов
-                </div>
-              ) : (
-                <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  {col.items.map((p) => (
-                    <li
-                      key={p.pid}
-                      style={{
-                        background: COLORS.surface,
-                        border: `1px solid ${COLORS.border}`,
-                        borderRadius: 8,
-                        padding: '10px 12px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontFamily: "'Playfair Display', serif",
-                          fontSize: 15,
-                          fontWeight: 700,
-                          color: COLORS.text,
-                          lineHeight: 1.2,
-                        }}
-                      >
-                        {p.title}
-                      </div>
-                      <div style={{ color: COLORS.muted, fontSize: 12, marginTop: 2 }}>
-                        {p.genre} · {p.release}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s09 — Team (5 portraits, img01..img05)
-// SSOT: canon.team.members (masked-name roles)
-// =============================================================================
+// =====================================================================
+// Wave 3 Artifact — ТрендСтудио Landing v2.1
+// s07 Pipeline (7 posters, 3D tilt + Modal с holding→fund context)
+// s09 Team    (5 portraits, 2-state expand + gradient-border)
+// s10 Advisory(4 portraits, sepia, меньший scale, 2-state)
+// s11 Operations 6-step (click-expand lane)
+// NOTE v2.1 §2: s08 (production-board) УДАЛЁН. Production planning → Roadmap s13 (W4).
+// =====================================================================
+
+// ========================================================================
+// DATA — TEAM / ADVISORY / PIPELINE / OPS_STEPS
+// ========================================================================
 
 const TEAM = [
-  {
-    id: 'img01',
-    slot: 'CEO',
-    name: 'Chief Executive Officer',
-    title: 'CEO · Chief Executive Officer',
-    bio: '20+ лет в продюсировании и управлении производственными компаниями.',
-    track: ['12 релизных фильмов', '3 международных фестиваля', '2 OTT-оригинала'],
-    alt: 'Портрет CEO ТрендСтудио Холдинг — кинематографический портрет в тёмных тонах',
-  },
-  {
-    id: 'img02',
-    slot: 'Producer Lead',
-    name: 'Head of Production',
-    title: 'Lead Producer · Head of Production',
-    bio: 'Продюсер полного цикла: от development до theatrical release.',
-    track: ['18 проектов разной стадии', 'Opening Night Cannes Directors Fortnight', 'Кинотавр Главный приз'],
-    alt: 'Портрет главного продюсера холдинга',
-  },
-  {
-    id: 'img03',
-    slot: 'CFO',
-    name: 'Chief Financial Officer',
-    title: 'CFO · Chief Financial Officer',
-    bio: '15+ лет в finance — M&A, fund structuring, production accounting.',
-    track: ['5 закрытых фондов', 'IPO-опыт', 'Big-4 background'],
-    alt: 'Портрет финансового директора (CFO)',
-  },
-  {
-    id: 'img04',
-    slot: 'Head of Distribution',
-    name: 'Head of Distribution & IP',
-    title: 'Head of Distribution & IP',
-    bio: 'Выстраивал OTT-pipeline для крупнейших российских платформ.',
-    track: ['Lead на 40+ OTT-сделках', 'Международный sales — 25 стран'],
-    alt: 'Портрет главы дистрибуции',
-  },
-  {
-    id: 'img05',
-    slot: 'Creative Director',
-    name: 'Creative Director',
-    title: 'Creative Director',
-    bio: 'Авторский голос холдинга. Режиссёр и scriptwriter.',
-    track: ['3 фестивальных фильма', 'Сценарист для 8 проектов'],
-    alt: 'Портрет креативного директора',
-  },
+  { id:'img01', role:'CEO',                 title:'Chief Executive Officer',   name:'Алексей М.', bio:['20+ лет в продюсировании','12 релизных фильмов','3 международных фестиваля','2 OTT-оригинала'], linkedin:'linkedin.com/in/ceo',          alt:'Портрет CEO ТрендСтудио Холдинг' },
+  { id:'img02', role:'Lead Producer',       title:'Head of Production',        name:'Мария К.',   bio:['18 проектов полного цикла','Opening Night Cannes DF','Кинотавр — Главный приз'],            linkedin:'linkedin.com/in/producer',     alt:'Портрет главного продюсера' },
+  { id:'img03', role:'CFO',                 title:'Chief Financial Officer',   name:'Дмитрий П.', bio:['15+ лет в finance & M&A','5 закрытых фондов','Big-4 background','IPO опыт'],                   linkedin:'linkedin.com/in/cfo',          alt:'Портрет финансового директора' },
+  { id:'img04', role:'Head of Distribution',title:'Head of Distribution & IP', name:'Елена С.',   bio:['Выстраивал OTT-pipeline РФ','Lead deals Кинопоиск/IVI','International sales 15+ стран'],     linkedin:'linkedin.com/in/distribution', alt:'Портрет главы дистрибуции' },
+  { id:'img05', role:'Creative Director',   title:'Creative Director',         name:'Иван Р.',    bio:['Креативная курация и development','12 проектов в портфолио','3 индустриальные награды'],     linkedin:'linkedin.com/in/creative',     alt:'Портрет креативного директора' }
 ];
 
-function TeamCard({ member }) {
-  return (
-    <figure
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        overflow: 'hidden',
-        margin: 0,
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <img
-        src={IMG_SRC[member.id]}
-        alt={member.alt}
-        loading="lazy"
-        width="800"
-        height="1000"
-        style={{
-          width: '100%',
-          aspectRatio: '4 / 5',
-          objectFit: 'cover',
-          display: 'block',
-        }}
-      />
-      <figcaption style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div
-          style={{
-            color: COLORS.accentCool,
-            fontSize: 11,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            fontWeight: 600,
-          }}
-        >
-          {member.slot}
-        </div>
-        <div
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 18,
-            fontWeight: 700,
-            color: COLORS.text,
-            lineHeight: 1.25,
-          }}
-        >
-          {member.name}
-        </div>
-        <p style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.5, margin: 0 }}>
-          {member.bio}
-        </p>
-        <ul
-          style={{
-            listStyle: 'none',
-            margin: '6px 0 0',
-            padding: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 4,
-          }}
-        >
-          {member.track.map((t, i) => (
-            <li
-              key={i}
-              style={{
-                color: COLORS.text,
-                fontSize: 12,
-                paddingLeft: 14,
-                position: 'relative',
-                lineHeight: 1.4,
-              }}
-            >
-              <span
-                aria-hidden="true"
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  top: 7,
-                  width: 5,
-                  height: 5,
-                  borderRadius: '50%',
-                  background: COLORS.accentWarm,
-                }}
-              />
-              {t}
-            </li>
-          ))}
-        </ul>
-      </figcaption>
-    </figure>
-  );
-}
-
-function Team() {
-  return (
-    <section id="team" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 40 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Команда
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            5 человек ядра: development → IP management
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Вертикальная интеграция — от зелёного света до прокатного релиза. Вакансии key-person
-            зафиксированы в term-sheet: при уходе лидера — right to pause investment period.
-          </p>
-        </header>
-
-        <div
-          className="team-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 20,
-          }}
-        >
-          {TEAM.map((m) => (
-            <TeamCard key={m.id} member={m} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s10 — Advisory (4 portraits, img06..img09, round with sepia)
-// SSOT: canon.advisory_board.members
-// =============================================================================
-
-const ADVISORS = [
-  {
-    id: 'img06',
-    slot: 'Industry Veteran',
-    name: 'Senior Industry Advisor',
-    bio: '40+ лет в индустрии, экс-CEO крупного российского киноконцерна.',
-    focus: ['industry relations', 'strategy'],
-    alt: 'Портрет члена экспертного совета — ветерана киноиндустрии',
-  },
-  {
-    id: 'img07',
-    slot: 'Finance Advisor',
-    name: 'Finance Advisor',
-    bio: 'Экс-партнёр private equity, структурирование фондов.',
-    focus: ['fund structuring', 'lp relations', 'governance'],
-    alt: 'Портрет финансового советника экспертного совета',
-  },
-  {
-    id: 'img08',
-    slot: 'Distribution Advisor',
-    name: 'Distribution Advisor',
-    bio: 'Экс-руководитель OTT-платформы, отвечал за оригинальный контент.',
-    focus: ['OTT strategy', 'content curation'],
-    alt: 'Портрет советника по дистрибуции',
-  },
-  {
-    id: 'img09',
-    slot: 'International Advisor',
-    name: 'International Advisor',
-    bio: 'Международный sales agent, работа с фестивалями и pre-sales.',
-    focus: ['international sales', 'festivals', 'co-productions'],
-    alt: 'Портрет международного советника',
-  },
+const ADVISORY = [
+  { id:'img06', role:'Senior Industry Advisor', name:'Vet-1',  bio:['40+ лет в индустрии','Экс-CEO киноконцерна','Strategic industry relations'], alt:'Портрет члена экспертного совета — ветерана индустрии' },
+  { id:'img07', role:'Finance Advisor',         name:'Fin-1',  bio:['Экс-партнёр PE','Fund structuring 5 vehicles','LP relations expertise'],     alt:'Портрет финансового советника' },
+  { id:'img08', role:'Distribution Advisor',    name:'Dist-1', bio:['Экс-руководитель OTT-платформы','Original content strategy','Content curation track record'], alt:'Портрет советника по дистрибуции' },
+  { id:'img09', role:'International Advisor',   name:'Intl-1', bio:['International sales agent','Festivals circuit','Pre-sales deals 20+ стран'], alt:'Портрет международного советника' }
 ];
 
-function AdvisorCard({ advisor }) {
-  return (
-    <article
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 20,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-        gap: 10,
-      }}
-    >
-      <img
-        src={IMG_SRC[advisor.id]}
-        alt={advisor.alt}
-        loading="lazy"
-        width="800"
-        height="1000"
-        style={{
-          width: '100%',
-          maxWidth: 220,
-          aspectRatio: '1 / 1',
-          objectFit: 'cover',
-          borderRadius: '50%',
-          filter: 'sepia(0.3) brightness(0.9)',
-          display: 'block',
-        }}
-      />
-      <div
-        style={{
-          color: COLORS.accentCool,
-          fontSize: 11,
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          fontWeight: 600,
-          marginTop: 8,
-        }}
-      >
-        {advisor.slot}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 18,
-          fontWeight: 700,
-          color: COLORS.text,
-          lineHeight: 1.25,
-        }}
-      >
-        {advisor.name}
-      </div>
-      <p style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.5, margin: 0 }}>
-        {advisor.bio}
-      </p>
-      <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center', marginTop: 4 }}>
-        {advisor.focus.map((f) => (
-          <span
-            key={f}
-            style={{
-              color: COLORS.accentWarm,
-              fontSize: 11,
-              padding: '3px 8px',
-              borderRadius: 999,
-              background: 'rgba(244,162,97,0.1)',
-              border: `1px solid ${COLORS.border}`,
-            }}
-          >
-            {f}
-          </span>
-        ))}
-      </div>
-    </article>
-  );
-}
-
-function Advisory() {
-  return (
-    <section id="advisory" style={{ padding: '96px 0', background: COLORS.surface }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 40 }}>
-          <div style={{ color: COLORS.accentCool, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Advisory Board
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            4 эксперта: индустрия · финансы · дистрибуция · международные рынки
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Советники формируют LPAC и подключаются к gate-review. Без права голоса на greenlight,
-            но с правом вето по ключевым сделкам > 500 млн ₽.
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 20,
-          }}
-        >
-          {ADVISORS.map((a) => (
-            <AdvisorCard key={a.id} advisor={a} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s11 — Operations (6-step SVG process with icons)
-// =============================================================================
-
-const OPERATIONS_STEPS = [
-  {
-    id: 'origination',
-    icon: FileText,
-    title: 'Origination',
-    sub: 'Скаутинг и отбор',
-    descr: 'Deal flow от сценаристов, агентств, развитых IP-холдингов. 50+ заявок/год → shortlist 10.',
-  },
-  {
-    id: 'greenlight',
-    icon: CheckCircle,
-    title: 'Green-light',
-    sub: 'Gate-review № 1',
-    descr: 'IC-решение: MC-симуляция IRR, бюджетный draft, casting preview, contracts readiness.',
-  },
-  {
-    id: 'development',
-    icon: Lightbulb,
-    title: 'Development',
-    sub: 'Сценарий и пакет',
-    descr: 'Финализация сценария, attachments, юридика, детальный бюджет с budget tolerance ±15%.',
-  },
-  {
-    id: 'production',
-    icon: Video,
-    title: 'Production',
-    sub: 'Съёмки + post',
-    descr: 'Physical production + post-production. Weekly budget tracking, stop-loss на превышении.',
-  },
-  {
-    id: 'distribution',
-    icon: Megaphone,
-    title: 'Distribution',
-    sub: 'Theatrical + OTT',
-    descr: 'Theatrical window, OTT-продажа, licensing, международный sales, festival run.',
-  },
-  {
-    id: 'exit',
-    icon: TrendingUp,
-    title: 'Exit',
-    sub: 'IP & residuals',
-    descr: 'Library-монетизация, remake rights, sequel options. DPI Y5 → Y7, возврат LP с carry.',
-  },
+const PIPELINE = [
+  { id:'p01', imgKey:'img10', title:'Проект Alpha',    type:'film',   genre:'драма',        budget:350, revenue:850,  irr:28, stage:'production',      release:2027, synopsis:'История предпринимателя, создающего культурный центр в постсоветской провинции.' },
+  { id:'p02', imgKey:'img11', title:'Проект Bravo',    type:'film',   genre:'триллер',      budget:280, revenue:720,  irr:32, stage:'pre-production',  release:2027, synopsis:'Психологический триллер о журналисте, расследующем серию исчезновений.' },
+  { id:'p03', imgKey:'img12', title:'Проект Charlie',  type:'film',   genre:'исторический', budget:600, revenue:1400, irr:26, stage:'pre-production',  release:2028, synopsis:'Эпическая драма о знаковом событии российской истории XX века.' },
+  { id:'p04', imgKey:'img13', title:'Проект Delta',    type:'series', genre:'premium-драма',budget:520, revenue:1250, irr:24, stage:'production',      release:2028, synopsis:'Сериал о династии российских промышленников и их наследии.' },
+  { id:'p05', imgKey:'img14', title:'Проект Echo',     type:'film',   genre:'семейный',     budget:180, revenue:520,  irr:30, stage:'post-production', release:2027, synopsis:'Семейная комедия-приключение на фоне путешествия по России.' },
+  { id:'p06', imgKey:'img15', title:'Проект Foxtrot',  type:'series', genre:'жанровый',     budget:420, revenue:980,  irr:22, stage:'pre-production',  release:2028, synopsis:'Жанровый сериал в стиле современного нуара.' },
+  { id:'p07', imgKey:'img16', title:'Проект Golf',     type:'film',   genre:'авторский',    budget:270, revenue:650,  irr:25, stage:'development',     release:2029, synopsis:'Авторское кино о поколении миллениалов в крупных российских городах.' }
 ];
 
-function OperationStep({ step, idx, total, prefersReducedMotion }) {
-  const Icon = step.icon;
+const OPS_STEPS = [
+  { id:'scouting', iconKey:'fileText', title:'Scouting', brief:'Анализ рынка и trend-drivers',
+    detail:'Анализ 300+ сценариев в год. Источники: фестивали (Кинотавр, Ко8, Движение), ВГИК/ГИТР, запросы от OTT-партнёров (Кинопоиск, Okko, Wink, IVI). Criteria: trend-fit, genre-demand, casting-feasibility, budget-range.' },
+  { id:'dd', iconKey:'checkCircle', title:'Due Diligence', brief:'Creative/financial/legal',
+    detail:'3 недели, 5 экспертов. Creative expertise (жанр, структура, пакет актёров). Financial (budget validation, cash-flow, break-even). Legal (IP-rights, контракты, compliance). Deliverables: green-light memo для инвесткомитета.' },
+  { id:'dev', iconKey:'lightbulb', title:'Development', brief:'Script & budget lock',
+    detail:'Script lock с final draft scenario. Cast attachments (leads + key supporting). Budget lock с ±5% tolerance. Cash call schedule для фонда. 2-6 месяцев от greenlight до production start.' },
+  { id:'prod', iconKey:'video', title:'Production', brief:'Съёмочный период',
+    detail:'3-6 месяцев съёмок. Weekly cost-review (budget vs actual, gate-review по превышению). Monthly dashboards для фонда: progress, cost, risk flags. Insurance покрытие по стандартам industry.' },
+  { id:'md', iconKey:'megaphone', title:'Marketing & Distribution', brief:'OTT/theatrical window',
+    detail:'Window planning: theatrical (3 мес) → OTT (12 мес) → TV (24 мес) → educational/B2B. Partnerships с Кинопоиск/Okko/Wink. International sales через агентов (selective Netflix, Azia/BRICS markets). Marketing spend 15-20% от production budget.' },
+  { id:'exit', iconKey:'trendingUp', title:'Exit / IP Monetization', brief:'Library & remake rights',
+    detail:'Library sales (long-tail catalog). Remake rights для международных рынков. Sequel options (если performance hit). Perpetual IP для franchise-development. Exits 5-7 лет от release.' }
+];
+
+// Добавляем 5 новых иконок (trendingUp уже в W1 ICONS, остальные добавляем).
+// Используем Object.assign вместо прямого присваивания, чтобы не перезаписать существующие.
+Object.assign(ICONS, {
+  fileText:    <React.Fragment><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></React.Fragment>,
+  checkCircle: <React.Fragment><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></React.Fragment>,
+  lightbulb:   <React.Fragment><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.77.77 1.24 1.52 1.41 2.5"/></React.Fragment>,
+  video:       <React.Fragment><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/></React.Fragment>,
+  megaphone:   <React.Fragment><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></React.Fragment>,
+  trendingUp:  ICONS.trendingUp || <React.Fragment><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></React.Fragment>
+});
+
+// ========================================================================
+// s07 — PIPELINE (TiltCard 3D + Modal «для вашего фонда»)
+// ========================================================================
+
+function TiltCard({ children, onClick }) {
+  const ref = useRef(null);
+  const [rot, setRot] = useState({ rx: 0, ry: 0 });
+  const handleMove = (e) => {
+    if (!ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    setRot({ rx: y * -8, ry: x * 8 });
+  };
+  const reset = () => setRot({ rx: 0, ry: 0 });
+  const handleKey = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick && onClick(); }
+  };
   return (
     <div
+      ref={ref}
+      onMouseMove={handleMove}
+      onMouseLeave={reset}
+      onClick={onClick}
+      onKeyDown={handleKey}
+      role="button"
+      tabIndex={0}
       style={{
-        position: 'relative',
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 20,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-        transition: prefersReducedMotion ? 'none' : 'transform 200ms ease, border-color 200ms ease',
+        transform: `perspective(1000px) rotateX(${rot.rx}deg) rotateY(${rot.ry}deg)`,
+        transition: (rot.rx === 0 && rot.ry === 0)
+          ? 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
+          : 'none',
+        cursor: 'pointer',
+        transformStyle: 'preserve-3d',
+        willChange: 'transform'
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = COLORS.accentWarm; }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = COLORS.border; }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div
-          aria-hidden="true"
-          style={{
-            width: 40, height: 40,
-            borderRadius: 10,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'rgba(244,162,97,0.15)',
-            color: COLORS.accentWarm,
-          }}
-        >
-          <Icon size={20} />
-        </div>
-        <div
-          style={{
-            color: COLORS.muted,
-            fontSize: 11,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            fontWeight: 600,
-          }}
-        >
-          Шаг {idx + 1} / {total}
-        </div>
-      </div>
-      <div>
-        <h3
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 20,
-            fontWeight: 700,
-            color: COLORS.text,
-            margin: 0,
-            lineHeight: 1.2,
-          }}
-        >
-          {step.title}
-        </h3>
-        <div style={{ color: COLORS.accentCool, fontSize: 12, marginTop: 2, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-          {step.sub}
-        </div>
-      </div>
-      <p style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.5, margin: 0 }}>
-        {step.descr}
-      </p>
+      {children}
     </div>
   );
 }
 
-function Operations({ prefersReducedMotion }) {
-  const total = OPERATIONS_STEPS.length;
+function PipelineSection() {
+  const [filter, setFilter] = useState('Все');
+  const [modalProject, setModalProject] = useState(null);
+
+  const filtered = PIPELINE.filter(p =>
+    filter === 'Все' ||
+    (filter === 'Фильмы'  && p.type === 'film') ||
+    (filter === 'Сериалы' && p.type === 'series')
+  );
+
+  useEffect(() => {
+    if (!modalProject) return;
+    const onKey = (e) => { if (e.key === 'Escape') setModalProject(null); };
+    document.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [modalProject]);
+
+  const posterSrc = (key) => {
+    switch (key) {
+      case 'img10': return '__IMG_PLACEHOLDER_img10__';
+      case 'img11': return '__IMG_PLACEHOLDER_img11__';
+      case 'img12': return '__IMG_PLACEHOLDER_img12__';
+      case 'img13': return '__IMG_PLACEHOLDER_img13__';
+      case 'img14': return '__IMG_PLACEHOLDER_img14__';
+      case 'img15': return '__IMG_PLACEHOLDER_img15__';
+      case 'img16': return '__IMG_PLACEHOLDER_img16__';
+      default: return '';
+    }
+  };
+
   return (
-    <section id="operations" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 40 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Операционный процесс
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            6 шагов от скаутинга до exit
+    <section id="s07" style={{ padding: '96px 24px', background: '#0B0D10' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+        <Reveal>
+          <h2 style={{ fontFamily: "'Playfair Display'", fontSize: 48, color: '#EAEAEA', textAlign: 'center', margin: 0 }}>
+            Портфельные проекты
           </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Каждая сделка проходит через те же 6 gate'ов. На каждом шаге — MC-симуляция IRR,
-            бюджетная проверка, юридика, контрактная обвязка.
+        </Reveal>
+        <Reveal delay={100}>
+          <p style={{ textAlign: 'center', color: '#8E8E93', marginTop: 12, fontSize: 18 }}>
+            7 проектов, 2&nbsp;620 млн ₽ production budget, 4 жанра — target для вашего фонда
           </p>
-        </header>
+        </Reveal>
 
-        {/* Horizontal connector — decorative svg line visible on md+ */}
-        <div
-          aria-hidden="true"
-          className="operations-connector"
-          style={{
-            position: 'relative',
-            height: 0,
-          }}
-        >
-          <svg
-            viewBox="0 0 100 2"
-            preserveAspectRatio="none"
-            style={{
-              position: 'absolute',
-              top: 56,
-              left: 0,
-              width: '100%',
-              height: 2,
-              opacity: 0.35,
-            }}
-          >
-            <line x1="0" y1="1" x2="100" y2="1" stroke={COLORS.accentWarm} strokeWidth="0.3" strokeDasharray="2 2" />
-          </svg>
-        </div>
+        {/* Filter chips */}
+        <Reveal delay={200}>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 32, marginBottom: 48, flexWrap: 'wrap' }}>
+            {['Все', 'Фильмы', 'Сериалы'].map((f) => {
+              const active = filter === f;
+              return (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  aria-pressed={active}
+                  style={{
+                    padding: '8px 20px',
+                    borderRadius: 999,
+                    background: active ? '#F4A261' : 'transparent',
+                    color: active ? '#0B0D10' : '#EAEAEA',
+                    border: active ? 'none' : '1px solid #2A2D31',
+                    cursor: 'pointer',
+                    fontWeight: 600,
+                    fontSize: 13,
+                    transform: active ? 'scale(1.05)' : 'scale(1)',
+                    boxShadow: active ? '0 0 16px rgba(244,162,97,0.4)' : 'none',
+                    transition: 'all 0.25s cubic-bezier(0.22, 1, 0.36, 1)'
+                  }}
+                >
+                  {f}
+                </button>
+              );
+            })}
+          </div>
+        </Reveal>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 16,
-            position: 'relative',
-          }}
-        >
-          {OPERATIONS_STEPS.map((s, i) => (
-            <OperationStep
-              key={s.id}
-              step={s}
-              idx={i}
-              total={total}
-              prefersReducedMotion={prefersReducedMotion}
-            />
+        {/* Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 24 }}>
+          {filtered.map((p, i) => (
+            <Reveal key={p.id} delay={i * 80}>
+              <TiltCard onClick={() => setModalProject(p)}>
+                <article
+                  className="card-hover glass"
+                  aria-label={`${p.title} — ${p.type}, ${p.genre}`}
+                  style={{
+                    padding: 12,
+                    borderRadius: 14,
+                    border: '1px solid #2A2D31',
+                    overflow: 'hidden'
+                  }}
+                >
+                  <div style={{ position: 'relative', aspectRatio: '2/3', overflow: 'hidden', borderRadius: 10 }}>
+                    <img
+                      src={posterSrc(p.imgKey)}
+                      alt={p.synopsis.slice(0, 60)}
+                      loading="lazy"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)'
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.08)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+                    />
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(180deg, transparent 50%, rgba(11,13,16,0.9) 100%)',
+                      pointerEvents: 'none'
+                    }}/>
+                    <div style={{
+                      position: 'absolute',
+                      bottom: 8, right: 8,
+                      background: 'rgba(244,162,97,0.92)',
+                      color: '#0B0D10',
+                      padding: '3px 10px',
+                      borderRadius: 999,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      letterSpacing: 0.5
+                    }}>
+                      {p.stage}
+                    </div>
+                  </div>
+                  <div style={{ padding: '12px 4px 4px' }}>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: '#EAEAEA', fontFamily: "'Playfair Display'" }}>
+                      {p.title}
+                    </div>
+                    <div style={{ fontSize: 12, color: '#8E8E93', marginTop: 4, textTransform: 'capitalize' }}>
+                      {p.type} · {p.genre}
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: 12 }}>
+                      <span style={{ color: '#F4A261' }}>{p.budget} млн ₽</span>
+                      <span style={{ color: '#2A9D8F' }}>IRR {p.irr}%</span>
+                    </div>
+                  </div>
+                </article>
+              </TiltCard>
+            </Reveal>
           ))}
         </div>
 
-        <div
-          aria-hidden="true"
-          style={{
-            marginTop: 32,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 10,
-            color: COLORS.muted,
-            fontSize: 13,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
-          <Clapperboard size={16} />
-          <span>Origination → Exit</span>
-          <ArrowRight size={16} />
-          <span style={{ color: COLORS.accentWarm, fontWeight: 600 }}>DPI Y7 · возврат LP</span>
-        </div>
+        {/* Modal */}
+        {modalProject && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            onClick={() => setModalProject(null)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0,0,0,0.85)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              zIndex: 100,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 24,
+              animation: 'fade-up 0.3s cubic-bezier(0.22, 1, 0.36, 1)'
+            }}
+          >
+            <div
+              className="glass"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                maxWidth: 760,
+                width: '100%',
+                background: '#15181C',
+                border: '1px solid #F4A261',
+                borderRadius: 14,
+                padding: 32,
+                position: 'relative',
+                maxHeight: '90vh',
+                overflow: 'auto',
+                boxShadow: '0 24px 72px rgba(0,0,0,0.8)'
+              }}
+            >
+              <button
+                onClick={() => setModalProject(null)}
+                aria-label="Закрыть"
+                style={{
+                  position: 'absolute',
+                  top: 12,
+                  right: 14,
+                  background: 'none',
+                  border: 'none',
+                  color: '#8E8E93',
+                  fontSize: 28,
+                  cursor: 'pointer',
+                  lineHeight: 1
+                }}
+              >
+                ×
+              </button>
+              <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 24, alignItems: 'start' }}>
+                <img
+                  src={posterSrc(modalProject.imgKey)}
+                  alt={modalProject.synopsis.slice(0, 60)}
+                  style={{
+                    width: 180,
+                    height: 270,
+                    objectFit: 'cover',
+                    borderRadius: 10,
+                    border: '1px solid #F4A261'
+                  }}
+                />
+                <div>
+                  <h3
+                    id="project-modal-title"
+                    style={{ fontSize: 28, fontFamily: "'Playfair Display'", color: '#EAEAEA', margin: 0 }}
+                  >
+                    {modalProject.title}
+                  </h3>
+                  <div style={{ fontSize: 13, color: '#8E8E93', marginTop: 6, textTransform: 'capitalize' }}>
+                    {modalProject.type} · {modalProject.genre} · Release {modalProject.release}
+                  </div>
+                  <p style={{ color: '#EAEAEA', lineHeight: 1.6, marginTop: 16 }}>
+                    {modalProject.synopsis}
+                  </p>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 20 }}>
+                    <div>
+                      <span style={{ color: '#8E8E93', fontSize: 12 }}>Production budget:</span>
+                      <div style={{ fontSize: 20, color: '#F4A261', fontFamily: "'Playfair Display'" }}>
+                        {modalProject.budget} млн ₽
+                      </div>
+                    </div>
+                    <div>
+                      <span style={{ color: '#8E8E93', fontSize: 12 }}>Target revenue:</span>
+                      <div style={{ fontSize: 20, color: '#2A9D8F', fontFamily: "'Playfair Display'" }}>
+                        {modalProject.revenue} млн ₽
+                      </div>
+                    </div>
+                    <div>
+                      <span style={{ color: '#8E8E93', fontSize: 12 }}>Target IRR:</span>
+                      <div style={{ fontSize: 20, color: '#EAEAEA' }}>{modalProject.irr}%</div>
+                    </div>
+                    <div>
+                      <span style={{ color: '#8E8E93', fontSize: 12 }}>Stage:</span>
+                      <div style={{ fontSize: 14, color: '#EAEAEA', textTransform: 'capitalize' }}>
+                        {modalProject.stage}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{
+                    marginTop: 20,
+                    padding: 16,
+                    background: 'rgba(244,162,97,0.08)',
+                    borderRadius: 8,
+                    border: '1px solid rgba(244,162,97,0.3)'
+                  }}>
+                    <div style={{
+                      fontSize: 12, color: '#F4A261', textTransform: 'uppercase',
+                      letterSpacing: 1, fontWeight: 600
+                    }}>
+                      Как участвует ваш фонд
+                    </div>
+                    <div style={{ color: '#EAEAEA', marginTop: 6, fontSize: 13, lineHeight: 1.6 }}>
+                      Ваш фонд-партнёр как anchor LP получает pro-rata долю этого проекта в общем портфельном distribution.
+                      При commitment {Math.round(modalProject.budget * 3000 / 2620)} млн в общий vehicle ≈ полное покрытие
+                      production budget данного проекта.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-// =============================================================================
-// App_W3 — root shell (sections s00..s11 + M1)
-// =============================================================================
+// ========================================================================
+// s09 / s10 — TEAM & ADVISORY (2-state expand card + gradient-border)
+// ========================================================================
 
-export default function App_W3() {
-  const prefersReducedMotion = usePrefersReducedMotion();
+function TeamGrid({ members, label, sepia = false, scale = 1 }) {
+  const [activeId, setActiveId] = useState(null);
+
+  useEffect(() => {
+    if (!activeId) return;
+    const onKey = (e) => { if (e.key === 'Escape') setActiveId(null); };
+    const onDoc = (e) => {
+      // Клик вне любой карточки — закрыть. Проверяем data-attr.
+      const target = e.target;
+      if (target && target.closest && target.closest('[data-teamcard="true"]')) return;
+      setActiveId(null);
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('mousedown', onDoc);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('mousedown', onDoc);
+    };
+  }, [activeId]);
+
+  const portraitSrc = (id) => {
+    switch (id) {
+      case 'img01': return '__IMG_PLACEHOLDER_img01__';
+      case 'img02': return '__IMG_PLACEHOLDER_img02__';
+      case 'img03': return '__IMG_PLACEHOLDER_img03__';
+      case 'img04': return '__IMG_PLACEHOLDER_img04__';
+      case 'img05': return '__IMG_PLACEHOLDER_img05__';
+      case 'img06': return '__IMG_PLACEHOLDER_img06__';
+      case 'img07': return '__IMG_PLACEHOLDER_img07__';
+      case 'img08': return '__IMG_PLACEHOLDER_img08__';
+      case 'img09': return '__IMG_PLACEHOLDER_img09__';
+      default: return '';
+    }
+  };
 
   return (
-    <div
-      style={{
-        background: COLORS.bg,
-        color: COLORS.text,
-        fontFamily: "Inter, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        minHeight: '100vh',
-        WebkitFontSmoothing: 'antialiased',
-        MozOsxFontSmoothing: 'grayscale',
-      }}
-    >
+    <div style={{ position: 'relative' }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(auto-fit, minmax(${Math.round(180 * scale)}px, 1fr))`,
+        gap: 20
+      }}>
+        {members.map((m, i) => {
+          const isActive = activeId === m.id;
+          const dimmed = !!activeId && !isActive;
+          return (
+            <Reveal key={m.id} delay={i * 80}>
+              <div
+                data-teamcard="true"
+                role="button"
+                tabIndex={0}
+                aria-expanded={isActive}
+                aria-label={`${m.role}${m.name ? ' — ' + m.name : ''}`}
+                onClick={(e) => { e.stopPropagation(); setActiveId(isActive ? null : m.id); }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveId(isActive ? null : m.id);
+                  }
+                }}
+                style={{
+                  position: 'relative',
+                  transform: isActive
+                    ? `scale(${1.15 * scale})`
+                    : dimmed
+                    ? `scale(${0.92 * scale})`
+                    : `scale(${1 * scale})`,
+                  opacity: dimmed ? 0.5 : 1,
+                  zIndex: isActive ? 100 : 1,
+                  transition:
+                    'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                    'opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1), ' +
+                    'box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+                  cursor: 'pointer',
+                  boxShadow: isActive ? '0 20px 60px rgba(0,0,0,0.7)' : 'none',
+                  borderRadius: 14
+                }}
+              >
+                <div style={{
+                  padding: 3,
+                  borderRadius: 14,
+                  background: 'linear-gradient(135deg, #F4A261, #2A9D8F)'
+                }}>
+                  <div style={{
+                    position: 'relative',
+                    background: '#15181C',
+                    borderRadius: 11,
+                    overflow: 'hidden'
+                  }}>
+                    <img
+                      src={portraitSrc(m.id)}
+                      alt={m.alt}
+                      loading="lazy"
+                      style={{
+                        width: '100%',
+                        aspectRatio: '4/5',
+                        objectFit: 'cover',
+                        display: 'block',
+                        filter: sepia ? 'sepia(0.35) contrast(0.95)' : 'none'
+                      }}
+                    />
+                    {/* Inner vignette */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'radial-gradient(ellipse at center, transparent 50%, rgba(11,13,16,0.5) 100%)',
+                      pointerEvents: 'none'
+                    }}/>
+                    <div style={{
+                      position: 'absolute',
+                      bottom: 0, left: 0, right: 0,
+                      padding: 12,
+                      background: 'linear-gradient(180deg, transparent 0%, rgba(11,13,16,0.95) 100%)'
+                    }}>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: '#EAEAEA' }}>{m.role}</div>
+                      <div style={{ fontSize: 11, color: '#8E8E93', marginTop: 2 }}>
+                        {m.title || label}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Expanded details overlay */}
+                {isActive && (
+                  <div
+                    className="glass"
+                    data-teamcard="true"
+                    style={{
+                      position: 'absolute',
+                      top: '105%',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      minWidth: 280,
+                      maxWidth: 320,
+                      padding: 20,
+                      borderRadius: 12,
+                      border: '1px solid #F4A261',
+                      zIndex: 110,
+                      boxShadow: '0 16px 48px rgba(0,0,0,0.8)',
+                      animation: 'fade-up 0.3s cubic-bezier(0.22, 1, 0.36, 1)'
+                    }}
+                  >
+                    <div style={{
+                      fontSize: 16, fontWeight: 600, color: '#EAEAEA', fontFamily: "'Playfair Display'"
+                    }}>
+                      {m.name || m.role}
+                    </div>
+                    <div style={{ fontSize: 12, color: '#F4A261', marginTop: 4 }}>
+                      {m.title || label}
+                    </div>
+                    <ul style={{
+                      marginTop: 12, paddingLeft: 16, fontSize: 13, color: '#8E8E93', lineHeight: 1.6
+                    }}>
+                      {m.bio.map((b) => (
+                        <li key={b} style={{ marginBottom: 4 }}>{b}</li>
+                      ))}
+                    </ul>
+                    {m.linkedin && (
+                      <a
+                        href={`https://${m.linkedin}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-block',
+                          marginTop: 12,
+                          fontSize: 12,
+                          color: '#2A9D8F',
+                          textDecoration: 'underline'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {m.linkedin} ↗
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            </Reveal>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function TeamSection() {
+  return (
+    <section id="s09" style={{ padding: '96px 24px', background: '#0F1216' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <Reveal>
+          <h2 style={{
+            fontFamily: "'Playfair Display'", fontSize: 48, color: '#EAEAEA', textAlign: 'center', margin: 0
+          }}>
+            Команда
+          </h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <p style={{ textAlign: 'center', color: '#8E8E93', marginTop: 12, fontSize: 18 }}>
+            5 core-ролей с institutional track-record
+          </p>
+        </Reveal>
+        <Reveal delay={200}>
+          <p style={{ textAlign: 'center', color: '#F4A261', fontSize: 13, marginTop: 8 }}>
+            Клик на портрет → bio и LinkedIn
+          </p>
+        </Reveal>
+        <Reveal delay={300}>
+          <div style={{ marginTop: 48 }}>
+            <TeamGrid members={TEAM} />
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function AdvisorySection() {
+  return (
+    <section id="s10" style={{ padding: '96px 24px', background: '#0B0D10' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <Reveal>
+          <h2 style={{
+            fontFamily: "'Playfair Display'", fontSize: 44, color: '#EAEAEA', textAlign: 'center', margin: 0
+          }}>
+            Экспертный совет
+          </h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <p style={{ textAlign: 'center', color: '#8E8E93', marginTop: 12, fontSize: 18 }}>
+            4 советника institutional-level
+          </p>
+        </Reveal>
+        <Reveal delay={200}>
+          <div style={{ marginTop: 48 }}>
+            <TeamGrid members={ADVISORY} sepia={true} scale={0.85} label="Advisor" />
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// ========================================================================
+// s11 — OPERATIONS 6-step (circle nav + click-expand deep lane)
+// ========================================================================
+
+function OperationsSection() {
+  const [expandedId, setExpandedId] = useState(null);
+  const active = expandedId ? OPS_STEPS.find((x) => x.id === expandedId) : null;
+
+  return (
+    <section id="s11" style={{ padding: '96px 24px', background: '#0F1216' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto' }}>
+        <Reveal>
+          <h2 style={{
+            fontFamily: "'Playfair Display'", fontSize: 48, color: '#EAEAEA', textAlign: 'center', margin: 0
+          }}>
+            6-step process
+          </h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <p style={{ textAlign: 'center', color: '#8E8E93', marginTop: 12, fontSize: 18 }}>
+            От scouting до exit — institutional-pipeline холдинга
+          </p>
+        </Reveal>
+        <Reveal delay={200}>
+          <p style={{ textAlign: 'center', color: '#F4A261', fontSize: 13, marginTop: 16 }}>
+            Клик на шаг → детали процесса
+          </p>
+        </Reveal>
+
+        {/* Step circles horizontal */}
+        <div style={{
+          display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginTop: 48
+        }}>
+          {OPS_STEPS.map((s, i) => {
+            const isActive = expandedId === s.id;
+            return (
+              <Reveal key={s.id} delay={i * 120}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isActive}
+                  aria-controls="ops-detail-lane"
+                  onClick={() => setExpandedId(isActive ? null : s.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setExpandedId(isActive ? null : s.id);
+                    }
+                  }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 8,
+                    cursor: 'pointer',
+                    minWidth: 140,
+                    padding: 16,
+                    animation: `fade-up 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 120}ms both`
+                  }}
+                >
+                  <div style={{
+                    width: 72,
+                    height: 72,
+                    borderRadius: '50%',
+                    background: isActive ? 'rgba(244,162,97,0.25)' : 'rgba(244,162,97,0.08)',
+                    border: `2px solid ${isActive ? '#F4A261' : 'rgba(244,162,97,0.4)'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+                    transform: isActive ? 'scale(1.1)' : 'scale(1)',
+                    boxShadow: isActive ? '0 0 32px rgba(244,162,97,0.5)' : 'none'
+                  }}>
+                    <Icon path={ICONS[s.iconKey]} size={28} color="#F4A261" />
+                  </div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#EAEAEA', textAlign: 'center' }}>
+                    {s.title}
+                  </div>
+                  <div style={{ fontSize: 11, color: '#8E8E93', textAlign: 'center', maxWidth: 120 }}>
+                    {s.brief}
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+
+        {/* Expanded detail lane */}
+        {active && (
+          <div
+            id="ops-detail-lane"
+            className="glass"
+            style={{
+              marginTop: 32,
+              padding: 32,
+              borderRadius: 14,
+              border: '1px solid #F4A261',
+              animation: 'fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+              maxWidth: 900,
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}
+          >
+            <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 16 }}>
+              <Icon path={ICONS[active.iconKey]} size={28} color="#F4A261" />
+              <h3 style={{
+                fontSize: 24, fontFamily: "'Playfair Display'", color: '#EAEAEA', margin: 0
+              }}>
+                {active.title}
+              </h3>
+            </div>
+            <p style={{ color: '#EAEAEA', lineHeight: 1.7, fontSize: 15, margin: 0 }}>
+              {active.detail}
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+// ========================================================================
+// ROOT APP W3
+// ========================================================================
+
+function App_W3() {
+  return (
+    <>
       <ScrollProgress />
       <TopNav />
       <main>
-        <Hero prefersReducedMotion={prefersReducedMotion} />
-        <Thesis />
-        <Market prefersReducedMotion={prefersReducedMotion} />
-        <FundSection />
-        <Economics />
-        <Returns />
-        <Pipeline prefersReducedMotion={prefersReducedMotion} />
-        <Stages />
-        <Team />
-        <Advisory />
-        <Operations prefersReducedMotion={prefersReducedMotion} />
+        <HeroSection />
+        <ThesisSection />
+        <MarketSection />
+        <FundStructureSection />
+        <EconomicsSection />
+        <ReturnsSection />
+        <MonteCarloSimulator />
+        <PipelineSection />
+        <TeamSection />
+        <AdvisorySection />
+        <OperationsSection />
+        {/* s08 removed per v2.1 §2 — production planning moved to Roadmap s13 (W4) */}
       </main>
       <FooterStub />
-    </div>
+    </>
   );
 }

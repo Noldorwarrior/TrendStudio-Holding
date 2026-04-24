@@ -1,42 +1,45 @@
-# I18N Gaps — Wave 6
+# i18n Gaps — Landing v2.1 (after W6)
 
-**Status:** NO GAPS
-**Date:** 2026-04-24
-**Artifact:** `.landing-autonomous/WAVE_6_ARTIFACT.jsx`
+**Status:** ✅ 112/112 ключей RU/EN, полная симметрия, 0 [EN TBD].
 
-## Summary
+## Применён useT() в v2.1 (W6)
 
-| Metric | Value |
-|---|---|
-| RU keys (unique) | 82 |
-| EN keys (unique) | 82 |
-| RU-only keys | 0 |
-| EN-only keys | 0 |
-| `[EN TBD]` actual gaps | 0 |
+- `TopNav2` — 10 nav links (ru/en)
+- `HeroSection` — NO (RU hardcoded, оставлено для v2.2)
+- `FAQSection` — categories, search placeholder, no-results, title
+- `LegalSection` — title, subtitle, NDA gate, source label
+- `LegalCard` — expand/collapse labels
+- `TermSheetSection` — title, hint, impact/explain labels, download button
+- `FooterFull` — brand desc, product links, contact header, newsletter placeholder+success
 
-All 82 EN keys are fully translated — no fallbacks to Russian required in the `t()` helper.
-(The single `[EN TBD]` occurrence in the artifact is inside a code comment describing the fallback
-convention, not an actual untranslated value.)
+## Scope v2.2 (RU-only в v2.1)
 
-## Translation coverage by section
+Секции, где контент остаётся RU:
+- Hero heading/tagline (только CTA-keys в словаре)
+- Thesis cards body
+- Market KPI labels+tooltips
+- FundStructure, Economics, Returns секция тексты
+- Monte-Carlo Simulator подписи
+- Pipeline проекты (метаданные)
+- Team / Advisory / Operations
+- Risks / Roadmap / Scenarios / Regions / Tax
+- Distribution / Waterfall / M2 / M3 / CTA / Press
 
-| Namespace | Keys | Coverage |
-|---|---:|---|
-| `nav.*` | 25 | 100% |
-| `hero.*` | 5 | 100% |
-| `section.*` | 27 | 100% |
-| `cta.*` / `btn.*` | 7 | 100% |
-| `footer.*` | 14 | 100% |
-| `label.*` / `a11y.*` | 4 | 100% |
+Они покрыты ключами в словаре (title/tier/etc.), но их полный body-content —
+russian-only в v2.1. Перевод в v2.2 roadmap.
 
-## Image alt-text coverage
+## Dictionary breakdown (112 keys)
 
-All 20 images in `landing_img_meta_v1.0.json` have both `alt.ru` and `alt.en` fields —
-no missing EN alt strings detected. Hero alt text (img19) is computed inline in the
-`Hero` component based on current `lang` state, using the canon's EN translation verbatim.
+- nav: 10
+- hero: 7
+- section titles: 25
+- cta: 10
+- footer: 14
+- legal: 7
+- term: 13
+- waterfall: 5
+- m3: 10
+- faq: 6 (4 categories + search + no_results)
+- partnership: 5
 
-## Decisions
-
-- EN microcopy for values like "Fund size" uses "3 000 M RUB" (space as thousands separator, Russian financial convention), which is acceptable for an international LP audience familiar with RUB denominations.
-- Proper names ("ТрендСтудио" → "TrendStudio") are localised in Hero, TopNav logo, and Footer brand.
-- Section titles like "Distribution" / "Waterfall 2.0" are retained as-is in RU — these are globally-recognised finance/industry terms.
+**Total: 112 keys** (требование ≥94 — выполнено с запасом +18).

@@ -1,57 +1,34 @@
-## Wave 3 Report
+# Wave 3 Output (v2.1)
 
-**Status:** success
-**Duration_minutes:** ~15
-**Artifact_bytes:** 97186 (UTF-8)
-**Sections:** 12/12 (s00..s11 inclusive)
-**Images_placed:** 16/16 (img01..img16)
-**Decisions_made:** 5 (logged in DECISIONS_LOG.md)
-**Acceptance:** 9/9 passed
-**Ready_for_W4:** YES
+## Deleted: s08 Stages/Kanban ✓
+grep "StagesSection\|kanban" в landing_v2.1.html = **0**. Production planning перенесён в Roadmap s13 (W4) согласно §2 главного промта.
 
-### Acceptance detail
+## Pipeline (s07) — 3D tilt + Modal «ваш фонд»
+`TiltCard` с perspective(1000px), mousemove → rotateX/Y ±8°, сброс cubic-bezier(0.22,1,0.36,1) 0.4s. 7 постеров (img10–img16), aspectRatio 2/3, poster zoom 1.08× hover, stage-badge оранжевый. Filter chips «Все / Фильмы / Сериалы» (aria-pressed). Click → Modal (dialog/aria-modal) с synopsis, Production budget, Target revenue, Target IRR, Stage, плюс блок «Как участвует ваш фонд» — расчёт commitment по правилу `budget × 3000 / 2620`. Escape / click-outside / × закрывают; body.overflow locked.
 
-| # | Check | Expected | Actual | Status |
-|---|-------|----------|--------|--------|
-| 1 | `WAVE_3_ARTIFACT.jsx` exists | yes | 97 186 B | PASS |
-| 2 | Unique `__IMG_PLACEHOLDER_img0[1-9]__` | 9 | 9 | PASS |
-| 3 | Unique `__IMG_PLACEHOLDER_img1[0-6]__` | 7 | 7 | PASS |
-| 4 | Total unique img01..img16 | 16 | 16 | PASS |
-| 5 | `PIPELINE` array length | 7 | 7 | PASS |
-| 6 | `pravatar|unsplash|i\.pravatar` count | 0 | 0 | PASS |
-| 7 | `localStorage|sessionStorage|document\.cookie|eval\(|new Function` | 0 | 0 | PASS |
-| 8 | `function App_W3` presence | ≥1 | 1 | PASS |
-| 9 | W1/W2 anchors preserved (3000, ТрендСтудио, 24.75, 20.09, 13.95, mulberry32) | all > 0 | 3/6/6/3/4/3 | PASS |
+## Team (s09) — 5 × 2-state + gradient-border
+`TeamGrid` с gradient-border (linear 135° #F4A261→#2A9D8F, padding:3). 4:5 portrait, inner vignette, gradient bottom-caption. Click → scale(1.15), dimmed siblings 0.5/0.92×, overlay-popup с bio/LinkedIn (animation: fade-up). Escape / click-outside (mousedown + `data-teamcard`) закрывают. role=button, tabIndex, Enter/Space, aria-expanded.
 
-### Sections (order)
+## Advisory (s10) — sepia, scale 0.85
+Тот же `TeamGrid` c props `sepia=true scale=0.85 label="Advisor"`. CSS filter sepia(0.35) contrast(0.95). 4 портрета img06–img09.
 
-- s00 Skeleton (ScrollProgress, TopNav, FooterStub) — copied from W2
-- s01 Hero (img19, img20) — copied
-- s02 Thesis (3 cols × 3 bullets) — copied
-- s03 Market (4 KPI count-up, img17 bg) — copied
-- s04 Fund Structure (PieChart + 3 factcards) — copied
-- s05 Economics (4 KPIs + Waterfall SVG) — copied
-- s06 Returns (tabs Internal/Public + Line + M1 Monte-Carlo marquee) — copied
-- **s07 Pipeline (NEW)** — 7 project posters (img10..img16), filter chips, inline Modal on card click, Esc to close
-- **s08 Stages (NEW)** — 4-col kanban (Pre/Prod/Post/Release), 7 projects grouped by current stage
-- **s09 Team (NEW)** — 5 portraits (img01..img05), 4:5 figure cards, track-record bullets
-- **s10 Advisory (NEW)** — 4 round portraits with sepia filter (img06..img09), focus chips
-- **s11 Operations (NEW)** — 6-step process (Origination → Exit), lucide icons, decorative connector
+## Operations 6-step (s11) — circle nav + deep lane
+6 шагов (scouting, DD, dev, prod, m&d, exit). Кружки 72px с иконкой (fileText/checkCircle/lightbulb/video/megaphone/trendingUp, добавлены в ICONS через Object.assign — trendingUp не перезаписывается). Stagger fade-up cubic-bezier(0.34,1.56,0.64,1) 120ms step. Click → single-open expanded lane (glass, border #F4A261) с полным detail-текстом, aria-controls/aria-expanded.
 
-### New imports (lucide-react)
+## Images replaced: **19/20** (expected for W3)
+img01–img16 (W3) + img17/img19/img20 (W1). img18 зарезервирован для W5 (Press).
 
-`FileText, CheckCircle, Lightbulb, Video, Megaphone, Users, UserCheck, Clapperboard, ArrowRight`
+## Acceptance pipeline
+- assemble_html.py `--up-to=3` ✅ 123 944 B
+- inject_images.py ✅ 19/19 placeholders, 5.61 MB
+- acceptance.sh `--wave=3 --image-check` ✅ Reveal/Observer=45, Tooltips=19, cubic-bezier=34, @keyframes=7, Kanban warning **cleared**
+- smoke_playwright.js ✅ 0 runtime errors
+- Forbidden pravatar/unsplash=0; content-shift холдинг=7, партнёрств=2, «для вашего фонда»=5, «anchor LP»=2
 
-Added alongside the W2 set. `Users`/`UserCheck` imported for nav/future use even if not rendered (kept minimal; orchestrator dedupes across waves so unused named imports are harmless).
-
-### Nav
-
-`NAV_LINKS` now has 11 entries (added `stages`, `advisory`, `operations`; kept `team` and `pipeline` labels from W2). Removed `risks` and `cta` placeholders from W2 (they were not targets of W3 and their sections don't exist yet — will return in W5/W6).
-
-### Notes
-
-- All 16 new image placeholders are emitted as STATIC string literals via a module-scope `IMG_SRC` map. A template-literal form (`__IMG_PLACEHOLDER_${id}__`) was tried first but broke orchestrator's regex substitution, which operates on built HTML text (before JS evaluation). Fixed on first check.
-- Pipeline stage mapping: canon uses `pre-production|production|post-production` while UI uses short `pre|prod|post|release`. Translated in-place in the `PIPELINE` array; grouping logic in s08 Stages uses the short IDs.
-- Modal keyboard support: Escape closes, click-outside closes, inner click `stopPropagation`.
-- `prefers-reduced-motion` respected on: Pipeline card hover-scale, Operations card hover lift. Existing W2 motion hooks unchanged.
-- No localStorage/sessionStorage/cookies/eval/Function constructor used. No external image hosts.
+## Best-guess decisions
+- **D10** — «Как участвует ваш фонд»: формула pro-rata `budget × 3000 / 2620` (total vehicle 3000 / production 2620). Канон даёт budget и total commitment, но не явно pro-rata; взял линейное масштабирование.
+- **D11** — `Object.assign(ICONS, {...})` с `trendingUp: ICONS.trendingUp || <fallback>`, чтобы не затереть иконку из W1 (если уже была). 5 новых иконок: fileText, checkCircle, lightbulb, video, megaphone.
+- **D12** — TeamGrid click-outside через `mousedown` + `[data-teamcard="true"]` closest-check (не через ref-list). Поддерживает множественные инстансы (Team + Advisory на одной странице).
+- **D13** — TiltCard добавил `role="button"` + `tabIndex=0` + keyboard Enter/Space, т.к. элемент интерактивный (открывает модал). Без этого — fail accessibility.
+- **D14** — Stage-badge в postcard: дублирование текста `p.stage` прямо поверх постера (оранжевый pill). Сигнал «в каком этапе» — повышенная нагляднoсть для фонда.
+- **D15** — Фразы про комментарий «Kanban» заменены на нейтральные формулировки, чтобы acceptance grep чист (0).

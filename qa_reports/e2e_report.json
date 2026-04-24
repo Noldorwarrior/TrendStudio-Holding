@@ -1,0 +1,365 @@
+{
+  "run_id": "2026-04-17T22:43:39.093Z",
+  "html_path": "Deck_v1.2.0/TrendStudio_LP_Deck_v1.2.0_Interactive.html",
+  "browser": "chromium",
+  "strict_memory": false,
+  "duration_ms": 43216,
+  "passed": true,
+  "gates": {
+    "smoke": {
+      "passed": true,
+      "page_errors": [],
+      "console_errors": []
+    },
+    "fps": {
+      "passed": true,
+      "avg_fps": 119.83464564055502,
+      "min_fps": 117.99999999999999,
+      "mode_breakdown": {
+        "transitionend": 0,
+        "continuous_fallback": 24,
+        "pending": 1
+      }
+    },
+    "memory": {
+      "passed": true,
+      "strategy": "measure",
+      "first_pass_heap": 50400000,
+      "second_pass_heap": 50400000,
+      "growth_pct": 0
+    },
+    "axe": {
+      "passed": true,
+      "violations_total": 0,
+      "per_slide": [
+        {
+          "slide": 1,
+          "violations": []
+        },
+        {
+          "slide": 2,
+          "violations": []
+        },
+        {
+          "slide": 3,
+          "violations": []
+        },
+        {
+          "slide": 4,
+          "violations": []
+        },
+        {
+          "slide": 5,
+          "violations": []
+        },
+        {
+          "slide": 6,
+          "violations": []
+        },
+        {
+          "slide": 7,
+          "violations": []
+        },
+        {
+          "slide": 8,
+          "violations": []
+        },
+        {
+          "slide": 9,
+          "violations": []
+        },
+        {
+          "slide": 10,
+          "violations": []
+        },
+        {
+          "slide": 11,
+          "violations": []
+        },
+        {
+          "slide": 12,
+          "violations": []
+        },
+        {
+          "slide": 13,
+          "violations": []
+        },
+        {
+          "slide": 14,
+          "violations": []
+        },
+        {
+          "slide": 15,
+          "violations": []
+        },
+        {
+          "slide": 16,
+          "violations": []
+        },
+        {
+          "slide": 17,
+          "violations": []
+        },
+        {
+          "slide": 18,
+          "violations": []
+        },
+        {
+          "slide": 19,
+          "violations": []
+        },
+        {
+          "slide": 20,
+          "violations": []
+        },
+        {
+          "slide": 21,
+          "violations": []
+        },
+        {
+          "slide": 22,
+          "violations": []
+        },
+        {
+          "slide": 23,
+          "violations": []
+        },
+        {
+          "slide": 24,
+          "violations": []
+        },
+        {
+          "slide": 25,
+          "violations": []
+        }
+      ]
+    }
+  },
+  "slides": [
+    {
+      "idx": 1,
+      "fps": {
+        "avg": 0,
+        "mode": "pending"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 2,
+      "fps": {
+        "avg": 119.02400317397344,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 3,
+      "fps": {
+        "avg": 120.00000000000004,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 4,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 5,
+      "fps": {
+        "avg": 119.95201919232301,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 6,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 7,
+      "fps": {
+        "avg": 120.01200120012004,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 8,
+      "fps": {
+        "avg": 119.02380476095229,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 9,
+      "fps": {
+        "avg": 120.05159241988298,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 10,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 11,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 12,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 13,
+      "fps": {
+        "avg": 120.00000000000023,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 14,
+      "fps": {
+        "avg": 119.99206664022238,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 15,
+      "fps": {
+        "avg": 119.98800119988019,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 16,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 17,
+      "fps": {
+        "avg": 120.00396707329132,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 18,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 19,
+      "fps": {
+        "avg": 120.00396707329176,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 20,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 21,
+      "fps": {
+        "avg": 119.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 22,
+      "fps": {
+        "avg": 117.99999999999999,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 23,
+      "fps": {
+        "avg": 119.9760047990401,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 24,
+      "fps": {
+        "avg": 119.99206664022238,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    },
+    {
+      "idx": 25,
+      "fps": {
+        "avg": 120.01200120012028,
+        "mode": "continuous_fallback"
+      },
+      "axe_violations": [],
+      "memory_heap": null
+    }
+  ]
+}

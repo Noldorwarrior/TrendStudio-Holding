@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0A0F">
+  <meta name="description" content="ТрендСтудио Холдинг — инвестиционная платформа в кинопроизводство России. Интерактивный лендинг для LP.">
+  <title>ТрендСтудио Холдинг — инвестиционная платформа в кинопроизводство</title>
+
+  <!-- Google Fonts (display=swap для INV-06 compliance: без @import url в CSS) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Design tokens (W1.4) -->
+  <link rel="stylesheet" href="styles/tokens.css">
+</head>
+<body data-palette="shadows_of_sunset_v1" data-mode="dark">
+
+  <!-- Skip-link (a11y: прыжок к main с клавиатуры) -->
+  <a class="skip-link" href="#main" data-i18n-key="a11y.skip_to_main">Перейти к содержимому</a>
+
+  <!-- Site header + Table of Contents (nav fixed_left per canon.navigation.toc) -->
+  <header class="site-header" role="banner">
+    <a class="logo" href="#s01" data-i18n-key="ui.brand.name" aria-label="ТрендСтудио Холдинг — главная">
+      <span>ТрендСтудио</span><span class="logo__accent">Холдинг</span>
+    </a>
+
+    <nav id="toc" class="toc" aria-label="Оглавление" data-placement="fixed_left">
+      <ol class="toc__list" data-scroll-spy="true" data-scroll-spy-offset="80">
+        <li><a href="#s01" data-i18n-key="ui.toc.s01">Главная</a></li>
+        <li><a href="#s02" data-i18n-key="ui.toc.s02">Почему ТрендСтудио</a></li>
+        <li><a href="#s03" data-i18n-key="ui.toc.s03">Команда</a></li>
+        <li><a href="#s04" data-i18n-key="ui.toc.s04">Advisory Board</a></li>
+        <li><a href="#s05" data-i18n-key="ui.toc.s05">Философия студии</a></li>
+        <li><a href="#s06" data-i18n-key="ui.toc.s06">Манифест</a></li>
+        <li><a href="#s07" data-i18n-key="ui.toc.s07">Пайплайн проектов</a></li>
+        <li><a href="#s08" data-i18n-key="ui.toc.s08">Финансовая модель</a></li>
+        <li><a href="#s09" data-i18n-key="ui.toc.s09">IRR-чувствительность</a></li>
+        <li><a href="#s10" data-i18n-key="ui.toc.s10">Монте-Карло</a></li>
+        <li><a href="#s11" data-i18n-key="ui.toc.s11">Риск-матрица</a></li>
+        <li><a href="#s12" data-i18n-key="ui.toc.s12">Cash Flow</a></li>
+        <li><a href="#s13" data-i18n-key="ui.toc.s13">Сценарии</a></li>
+        <li><a href="#s14" data-i18n-key="ui.toc.s14">Распределение капитала</a></li>
+        <li><a href="#s15" data-i18n-key="ui.toc.s15">Бенчмарки индустрии</a></li>
+        <li><a href="#s16" data-i18n-key="ui.toc.s16">Налоговые льготы</a></li>
+        <li><a href="#s17" data-i18n-key="ui.toc.s17">Таймлайн</a></li>
+        <li><a href="#s18" data-i18n-key="ui.toc.s18">Методология</a></li>
+        <li><a href="#s19" data-i18n-key="ui.toc.s19">KPI-дашборд</a></li>
+        <li><a href="#s20" data-i18n-key="ui.toc.s20">Горизонт инвестиций</a></li>
+        <li><a href="#s21" data-i18n-key="ui.toc.s21">Compliance</a></li>
+        <li><a href="#s22" data-i18n-key="ui.toc.s22">CTA-баннер</a></li>
+        <li><a href="#s23" data-i18n-key="ui.toc.s23">FAQ</a></li>
+        <li><a href="#s24" data-i18n-key="ui.toc.s24">Контакты</a></li>
+        <li><a href="#s25" data-i18n-key="ui.toc.s25">Подписка и disclaimer</a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <main id="main" role="main">
+
+    <!-- s01 Hero: viz01 (film reel 3D / Three.js) + viz17 (particles ambient / Canvas2D) -->
+    <section id="s01" class="section section--hero" data-section-type="hero" aria-labelledby="s01-title">
+      <h1 id="s01-title" data-i18n-key="ui.hero.headline">Кино как актив. Система как алгоритм.</h1>
+      <p class="section__lede" data-i18n-key="ui.hero.subheadline">Инвестиционная платформа в кинопроизводство России на стыке культуры и доходности.</p>
+
+      <div class="hero__parallax" data-parallax="true">
+        <div class="hero__layer" data-image-id="img01" data-depth="3" data-speed="0.3" aria-hidden="true"></div>
+        <div class="hero__layer" data-image-id="img02" data-depth="6" data-speed="0.6" aria-hidden="true"></div>
+      </div>
+
+      <div class="viz-placeholder" data-viz-id="viz01" data-chart-type="hero_film_reel_3d" data-lib="Three.js" aria-label="Кинематографичная 3D-катушка плёнки (Three.js)"></div>
+      <div class="viz-placeholder" data-viz-id="viz17" data-chart-type="particles_ambient" data-lib="Canvas2D" aria-hidden="true"></div>
+
+      <div class="hero__film-reel" data-still-ids="img04,img05,img06,img07,img08" data-duration-ms="4000" aria-label="Кинематографичные стиллы команды ТрендСтудио"></div>
+
+      <a class="cta cta--primary" href="#s08" data-cta-id="cta01" data-i18n-key="ui.cta.explore_model">Изучить модель</a>
+
+      <p class="disclaimer" data-disclaimer-id="dsc01" data-i18n-key="legal.forward_looking">Прогнозные заявления. Не является офертой.</p>
+    </section>
+
+    <!-- s02 Why now: sim01 IRR Explorer (mc_light) -->
+    <section id="s02" class="section" data-section-type="thesis" aria-labelledby="s02-title">
+      <h2 id="s02-title" data-i18n-key="ui.toc.s02">Почему ТрендСтудио</h2>
+      <div class="sim-placeholder" data-sim-id="sim01" data-engine="mc_light" aria-label="Интерактивный симулятор IRR с Monte-Carlo light"></div>
+    </section>
+
+    <!-- s03 Team: 5 portraits (img placement_section=s03) -->
+    <section id="s03" class="section" data-section-type="team" aria-labelledby="s03-title">
+      <h2 id="s03-title" data-i18n-key="ui.toc.s03">Команда</h2>
+      <div class="team-grid" data-portrait-count="5" aria-label="Портреты основателей"></div>
+    </section>
+
+    <!-- s04 Advisory Board: 4 portraits + viz18 (org_chart SVG) + viz19 (team_network D3) -->
+    <section id="s04" class="section" data-section-type="advisory" aria-labelledby="s04-title">
+      <h2 id="s04-title" data-i18n-key="ui.toc.s04">Advisory Board</h2>
+      <div class="viz-placeholder" data-viz-id="viz18" data-chart-type="org_chart" data-lib="SVG" aria-label="Оргструктура холдинга"></div>
+      <div class="viz-placeholder" data-viz-id="viz19" data-chart-type="team_network" data-lib="D3v7" aria-label="Сеть экспертных связей команды"></div>
+      <div class="advisory-grid" data-portrait-count="4" aria-label="Портреты advisory board"></div>
+    </section>
+
+    <!-- s05 Philosophy: image placement_section=s05 -->
+    <section id="s05" class="section" data-section-type="philosophy" aria-labelledby="s05-title">
+      <h2 id="s05-title" data-i18n-key="ui.toc.s05">Философия студии</h2>
+      <div class="img-placeholder" data-image-placement="s05" aria-hidden="true"></div>
+    </section>
+
+    <!-- s06 Manifesto (narrative, no viz/sim) -->
+    <section id="s06" class="section" data-section-type="manifesto" aria-labelledby="s06-title">
+      <h2 id="s06-title" data-i18n-key="ui.toc.s06">Манифест</h2>
+      <div class="narrative" data-i18n-key="content.s06.narrative"></div>
+    </section>
+
+    <!-- s07 Pipeline: viz08 (pipeline_gantt) + viz20 (project_tiles) + 7 project posters -->
+    <section id="s07" class="section" data-section-type="pipeline" aria-labelledby="s07-title">
+      <h2 id="s07-title" data-i18n-key="ui.toc.s07">Пайплайн проектов</h2>
+      <div class="viz-placeholder" data-viz-id="viz08" data-chart-type="pipeline_gantt" data-lib="D3v7" aria-label="Диаграмма Ганта пайплайна проектов"></div>
+      <div class="viz-placeholder" data-viz-id="viz20" data-chart-type="project_tiles" data-lib="D3v7" aria-label="Плитки проектов пайплайна"></div>
+      <div class="project-grid" data-poster-count="7" aria-label="Постеры проектов ТрендСтудио"></div>
+    </section>
+
+    <!-- s08 Financial model: viz06 (revenue_forecast) + viz07 (ebitda_waterfall) + sim04 (revenue_what_if) -->
+    <section id="s08" class="section" data-section-type="finmodel" aria-labelledby="s08-title">
+      <h2 id="s08-title" data-i18n-key="ui.toc.s08">Финансовая модель</h2>
+      <div class="viz-placeholder" data-viz-id="viz06" data-chart-type="revenue_forecast" data-lib="D3v7" aria-label="Прогноз выручки"></div>
+      <div class="viz-placeholder" data-viz-id="viz07" data-chart-type="ebitda_waterfall" data-lib="D3v7" aria-label="EBITDA waterfall"></div>
+      <div class="sim-placeholder" data-sim-id="sim04" data-engine="closed_form" aria-label="Симулятор What-If по выручке"></div>
+    </section>
+
+    <!-- s09 IRR sensitivity: viz04 (irr_sensitivity) + sim05 (lookup_table) -->
+    <section id="s09" class="section" data-section-type="sensitivity" aria-labelledby="s09-title">
+      <h2 id="s09-title" data-i18n-key="ui.toc.s09">IRR-чувствительность</h2>
+      <div class="viz-placeholder" data-viz-id="viz04" data-chart-type="irr_sensitivity" data-lib="D3v7" aria-label="Чувствительность IRR к параметрам"></div>
+      <div class="sim-placeholder" data-sim-id="sim05" data-engine="lookup_table" aria-label="Интерактивный IRR-калькулятор"></div>
+      <p class="disclaimer" data-disclaimer-id="dsc01" data-i18n-key="legal.forward_looking">Прогнозные заявления.</p>
+    </section>
+
+    <!-- s10 Monte-Carlo: viz05 (mc_distribution) + sim02 (mc_light) -->
+    <section id="s10" class="section" data-section-type="monte_carlo" aria-labelledby="s10-title">
+      <h2 id="s10-title" data-i18n-key="ui.toc.s10">Монте-Карло</h2>
+      <div class="viz-placeholder" data-viz-id="viz05" data-chart-type="mc_distribution" data-lib="D3v7" aria-label="Распределение Monte-Carlo"></div>
+      <div class="sim-placeholder" data-sim-id="sim02" data-engine="mc_light" aria-label="Симулятор Monte-Carlo light"></div>
+      <p class="disclaimer" data-disclaimer-id="dsc01" data-i18n-key="legal.forward_looking">Прогнозные заявления.</p>
+    </section>
+
+    <!-- s11 Risk heatmap: viz14 (risk_heatmap) + sim12 (state_machine) -->
+    <section id="s11" class="section" data-section-type="risk" aria-labelledby="s11-title">
+      <h2 id="s11-title" data-i18n-key="ui.toc.s11">Риск-матрица</h2>
+      <div class="viz-placeholder" data-viz-id="viz14" data-chart-type="risk_heatmap" data-lib="D3v7" aria-label="Тепловая карта рисков"></div>
+      <div class="sim-placeholder" data-sim-id="sim12" data-engine="state_machine" aria-label="Симулятор каскада рисков"></div>
+    </section>
+
+    <!-- s12 Cash Flow: viz09 (cashflow_area) + sim07 (closed_form) -->
+    <section id="s12" class="section" data-section-type="cashflow" aria-labelledby="s12-title">
+      <h2 id="s12-title" data-i18n-key="ui.toc.s12">Cash Flow</h2>
+      <div class="viz-placeholder" data-viz-id="viz09" data-chart-type="cashflow_area" data-lib="D3v7" aria-label="Cash Flow area-chart"></div>
+      <div class="sim-placeholder" data-sim-id="sim07" data-engine="closed_form" aria-label="Симулятор cash flow"></div>
+    </section>
+
+    <!-- s13 Scenarios: viz16 (scenario_lines) + sim06 (state_machine) -->
+    <section id="s13" class="section" data-section-type="scenarios" aria-labelledby="s13-title">
+      <h2 id="s13-title" data-i18n-key="ui.toc.s13">Сценарии</h2>
+      <div class="viz-placeholder" data-viz-id="viz16" data-chart-type="scenario_lines" data-lib="D3v7" aria-label="Линейный график сценариев Base/Bull/Bear"></div>
+      <div class="sim-placeholder" data-sim-id="sim06" data-engine="state_machine" aria-label="Переключатель сценариев"></div>
+    </section>
+
+    <!-- s14 Waterfall: viz02 (waterfall_3d) + viz15 (fund_flow_sankey) + sim03 (closed_form) -->
+    <section id="s14" class="section" data-section-type="waterfall" aria-labelledby="s14-title">
+      <h2 id="s14-title" data-i18n-key="ui.toc.s14">Распределение капитала</h2>
+      <div class="viz-placeholder" data-viz-id="viz02" data-chart-type="waterfall_3d" data-lib="D3v7" aria-label="3D-waterfall распределения"></div>
+      <div class="viz-placeholder" data-viz-id="viz15" data-chart-type="fund_flow_sankey" data-lib="D3v7" aria-label="Sankey-диаграмма движения фондовых средств"></div>
+      <div class="sim-placeholder" data-sim-id="sim03" data-engine="closed_form" aria-label="Симулятор waterfall распределения"></div>
+    </section>
+
+    <!-- s15 Peers benchmark: viz10 (peers_radar) + viz13 (benchmark_bar) + sim08 (lookup_table) -->
+    <section id="s15" class="section" data-section-type="benchmark" aria-labelledby="s15-title">
+      <h2 id="s15-title" data-i18n-key="ui.toc.s15">Бенчмарки индустрии</h2>
+      <div class="viz-placeholder" data-viz-id="viz10" data-chart-type="peers_radar" data-lib="D3v7" aria-label="Radar-сравнение с peers"></div>
+      <div class="viz-placeholder" data-viz-id="viz13" data-chart-type="benchmark_bar" data-lib="D3v7" aria-label="Бенчмарк бар-чарт"></div>
+      <div class="sim-placeholder" data-sim-id="sim08" data-engine="lookup_table" aria-label="Симулятор сравнения с peers"></div>
+    </section>
+
+    <!-- s16 Regions + Tax: viz11 (regions_choropleth) + viz21 (tax_credits_map) + sim09 (lookup_table) -->
+    <section id="s16" class="section" data-section-type="regions_tax" aria-labelledby="s16-title">
+      <h2 id="s16-title" data-i18n-key="ui.toc.s16">Налоговые льготы и регионы</h2>
+      <div class="viz-placeholder" data-viz-id="viz11" data-chart-type="regions_choropleth" data-lib="D3v7" aria-label="Карта съёмочных регионов"></div>
+      <div class="viz-placeholder" data-viz-id="viz21" data-chart-type="tax_credits_map" data-lib="D3v7" aria-label="Карта налоговых льгот"></div>
+      <div class="sim-placeholder" data-sim-id="sim09" data-engine="lookup_table" aria-label="Симулятор налоговых льгот"></div>
+      <p class="disclaimer" data-disclaimer-id="dsc02" data-i18n-key="legal.tax">Налоговая информация носит справочный характер.</p>
+    </section>
+
+    <!-- s17 Timeline: viz03 (timeline_cinematic GSAP) + viz22 (horizon_stepper D3) + sim10 (closed_form) -->
+    <section id="s17" class="section" data-section-type="timeline" aria-labelledby="s17-title">
+      <h2 id="s17-title" data-i18n-key="ui.toc.s17">Таймлайн производства</h2>
+      <div class="viz-placeholder" data-viz-id="viz03" data-chart-type="timeline_cinematic" data-lib="GSAP" aria-label="Кинематографичный таймлайн производства"></div>
+      <div class="viz-placeholder" data-viz-id="viz22" data-chart-type="horizon_stepper" data-lib="D3v7" aria-label="Степпер инвестиционного горизонта"></div>
+      <div class="sim-placeholder" data-sim-id="sim10" data-engine="closed_form" aria-label="Симулятор выбора горизонта"></div>
+    </section>
+
+    <!-- s18 Methodology (narrative) -->
+    <section id="s18" class="section" data-section-type="methodology" aria-labelledby="s18-title">
+      <h2 id="s18-title" data-i18n-key="ui.toc.s18">Методология</h2>
+      <div class="narrative" data-i18n-key="content.s18.narrative"></div>
+    </section>
+
+    <!-- s19 KPI Dashboard: viz12 (kpi_sparklines) + sim13 (lookup_table) -->
+    <section id="s19" class="section" data-section-type="kpi" aria-labelledby="s19-title">
+      <h2 id="s19-title" data-i18n-key="ui.toc.s19">KPI-дашборд</h2>
+      <div class="viz-placeholder" data-viz-id="viz12" data-chart-type="kpi_sparklines" data-lib="D3v7" aria-label="KPI sparklines"></div>
+      <div class="sim-placeholder" data-sim-id="sim13" data-engine="lookup_table" aria-label="Симулятор KPI-драйверов"></div>
+    </section>
+
+    <!-- s20 Horizon: sim11 (closed_form) -->
+    <section id="s20" class="section" data-section-type="horizon" aria-labelledby="s20-title">
+      <h2 id="s20-title" data-i18n-key="ui.toc.s20">Горизонт инвестиций</h2>
+      <div class="sim-placeholder" data-sim-id="sim11" data-engine="closed_form" aria-label="Симулятор горизонта инвестиций"></div>
+    </section>
+
+    <!-- s21 Compliance (narrative) -->
+    <section id="s21" class="section" data-section-type="compliance" aria-labelledby="s21-title">
+      <h2 id="s21-title" data-i18n-key="ui.toc.s21">Compliance</h2>
+      <div class="narrative" data-i18n-key="content.s21.narrative"></div>
+    </section>
+
+    <!-- s22 CTA banner: img placement_section=s22 -->
+    <section id="s22" class="section section--banner" data-section-type="banner" aria-labelledby="s22-title">
+      <h2 id="s22-title" data-i18n-key="ui.toc.s22">Готовы обсудить вход?</h2>
+      <div class="img-placeholder" data-image-placement="s22" aria-hidden="true"></div>
+      <a class="cta cta--primary" href="#s24" data-i18n-key="ui.cta.contact_gp">Связаться с GP</a>
+    </section>
+
+    <!-- s23 FAQ (narrative/accordion) -->
+    <section id="s23" class="section" data-section-type="faq" aria-labelledby="s23-title">
+      <h2 id="s23-title" data-i18n-key="ui.toc.s23">FAQ</h2>
+      <div class="faq" data-i18n-key="content.s23.faq_list"></div>
+    </section>
+
+    <!-- s24 Contacts -->
+    <section id="s24" class="section" data-section-type="contacts" aria-labelledby="s24-title">
+      <h2 id="s24-title" data-i18n-key="ui.toc.s24">Контакты</h2>
+      <address class="contacts" data-i18n-key="content.s24.contacts">
+        <a href="mailto:investor@trendstudio.holding">investor@trendstudio.holding</a>
+        <a href="https://t.me/trendstudio_holding" rel="noopener noreferrer">@trendstudio_holding</a>
+      </address>
+    </section>
+
+    <!-- s25 CTA subscribe + disclaimers dsc01/dsc02 -->
+    <section id="s25" class="section" data-section-type="subscribe_disclaimer" aria-labelledby="s25-title">
+      <h2 id="s25-title" data-i18n-key="ui.toc.s25">Подписка и disclaimer</h2>
+      <form class="form" data-form-id="subscribe" method="post" action="#" aria-labelledby="s25-title">
+        <label for="s25-email" data-i18n-key="ui.form.email">Email</label>
+        <input id="s25-email" type="email" name="email" required autocomplete="email">
+        <button type="submit" data-i18n-key="ui.cta.subscribe">Подписаться</button>
+      </form>
+      <p class="disclaimer" data-disclaimer-id="dsc01" data-i18n-key="legal.forward_looking">Прогнозные заявления.</p>
+      <p class="disclaimer" data-disclaimer-id="dsc02" data-i18n-key="legal.tax">Налоговая информация носит справочный характер.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__contacts">
+      <a href="mailto:investor@trendstudio.holding">investor@trendstudio.holding</a>
+      <span aria-hidden="true"> · </span>
+      <a href="https://t.me/trendstudio_holding" rel="noopener noreferrer">@trendstudio_holding</a>
+    </div>
+    <div class="site-footer__license" data-i18n-key="ui.footer.license">
+      УК ЗПИФ · лицензия ЛЗ-****-XXXX · РФ / Банк России
+    </div>
+    <nav class="site-footer__compliance" aria-label="Юридические ссылки">
+      <a href="/privacy" data-i18n-key="ui.footer.privacy">Privacy</a>
+      <a href="/terms" data-i18n-key="ui.footer.terms">Terms</a>
+      <a href="#m13" data-i18n-key="ui.footer.disclaimer">Disclaimer</a>
+    </nav>
+    <p class="site-footer__copyright" data-i18n-key="ui.footer.copyright">© 2026 ТрендСтудио Холдинг</p>
+  </footer>
+
+  <!-- JS-ядра W1.3 подключатся в W1.5.x как ESM-модули (данные грузятся из window.__LANDING_DATA__ или отдельного module-script) -->
+  <!-- Скрипты не инлайним: INV-06 запрещает eval/new Function; загрузка внешних модулей — в W2. -->
+
+</body>
+</html>

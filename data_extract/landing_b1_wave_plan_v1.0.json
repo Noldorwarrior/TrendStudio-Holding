@@ -1,0 +1,442 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "version": "1.0",
+  "created": "2026-04-19",
+  "project": "TrendStudio Landing v1.0",
+  "stage": "B",
+  "purpose": "Machine-readable wave plan for Stage B execution by CC. Defines 6 waves, dependencies, deliverables, invariants, acceptance criteria, and exit gates.",
+  "canon_refs": {
+    "canon_base": "data_extract/landing_canon_base_v1.0.json",
+    "canon_extended": "data_extract/landing_canon_extended_v1.0.json",
+    "schemas": [
+      "data_extract/landing_canon_schema_v1.0.json",
+      "data_extract/landing_canon_extended_schema_v1.0.json"
+    ],
+    "img_meta": "data_extract/landing_img_meta_v1.0.json"
+  },
+  "handoff_refs": {
+    "core": {
+      "path_a": "/Users/noldorwarrior/Documents/Claude/Projects/Холдинг/Landing_v1.0_HANDOFF_Stage_B.md",
+      "path_b": "/Users/noldorwarrior/Documents/Claude/Projects/TrendStudio-Holding/docs/Landing_v1.0_HANDOFF_Stage_B.md",
+      "sha256": "db52406bf9e86f6d08e6a907d1c2a26adaa8d01a6216606d04909fae701f2ba7"
+    },
+    "detail": {
+      "path_a": "/Users/noldorwarrior/Documents/Claude/Projects/Холдинг/Landing_v1.0_HANDOFF_Stage_B_DETAIL.md",
+      "path_b": "/Users/noldorwarrior/Documents/Claude/Projects/TrendStudio-Holding/docs/Landing_v1.0_HANDOFF_Stage_B_DETAIL.md",
+      "sha256": "539f4a694dc01766775b22064be42e0822f8ee4810ee3a198559f3ade5139be9"
+    },
+    "i18n": {
+      "path_a": "/Users/noldorwarrior/Documents/Claude/Projects/Холдинг/Landing_v1.0_HANDOFF_Stage_B_I18N.md",
+      "path_b": "/Users/noldorwarrior/Documents/Claude/Projects/TrendStudio-Holding/docs/Landing_v1.0_HANDOFF_Stage_B_I18N.md",
+      "sha256": "cdd1dd752480994602baf07502fae59eb1b3721b375fc5f950d2cd75851f3ad7"
+    }
+  },
+  "global_constants": {
+    "budget_html_soft_kb": 1200,
+    "budget_html_hard_kb": 2000,
+    "viewport_target_fps": 60,
+    "viewport_target_fps_mobile": 30,
+    "lighthouse_target_performance": 95,
+    "lighthouse_target_a11y": 95,
+    "lighthouse_target_seo": 95,
+    "lighthouse_target_bp": 95,
+    "wcag_level": "AA",
+    "reduced_motion_supported": true,
+    "session_storage_only_for_scenario": true,
+    "local_storage_forbidden": true,
+    "eval_forbidden": true,
+    "new_function_forbidden": true,
+    "external_cdn_requires_integrity": true,
+    "alt_text_required_locales": [
+      "ru",
+      "en"
+    ],
+    "fixed_seed_required_for_mc": true
+  },
+  "invariants": [
+    {
+      "id": "INV-01",
+      "name": "Canon parity",
+      "description": "Все значения в HTML (числа, тексты, id) происходят из canon JSON. Запрещены inline-константы, дублирующие canon.",
+      "check_tool": "invariants_check.py::check_canon_parity",
+      "severity": "blocker"
+    },
+    {
+      "id": "INV-02",
+      "name": "i18n symmetry",
+      "description": "landing_ru.json и landing_en.json имеют идентичный набор ключей (0 asymmetry).",
+      "check_tool": "scripts/i18n_check.py",
+      "severity": "blocker"
+    },
+    {
+      "id": "INV-03",
+      "name": "Numerical parity",
+      "description": "Симуляторы (sim01–sim13) возвращают значения в пределах tolerance от canon-референса (см. DETAIL §2.6).",
+      "check_tool": "invariants_check.py::check_numerical_parity",
+      "severity": "blocker"
+    },
+    {
+      "id": "INV-04",
+      "name": "a11y baseline",
+      "description": "WCAG 2.1 AA: focus-visible, reduced-motion support, keyboard nav, aria-labelledby, fallback aria_table для каждой viz.",
+      "check_tool": "invariants_check.py::check_a11y + axe-core",
+      "severity": "blocker"
+    },
+    {
+      "id": "INV-05",
+      "name": "Budget ceiling",
+      "description": "Итоговый HTML ≤ 1 200 KB soft (warning) / ≤ 2 000 KB hard (fail).",
+      "check_tool": "invariants_check.py::check_budget",
+      "severity": "blocker"
+    },
+    {
+      "id": "INV-06",
+      "name": "Security baseline",
+      "description": "Нет eval / new Function / localStorage / inline event handlers / external CDN без integrity / img без alt.ru+alt.en.",
+      "check_tool": "invariants_check.py::check_security",
+      "severity": "blocker"
+    },
+    {
+      "id": "INV-07",
+      "name": "Deterministic MC",
+      "description": "Все Monte Carlo симуляции используют фиксированный seed из спецификации DETAIL §4 (воспроизводимые результаты между рендерами).",
+      "check_tool": "invariants_check.py::check_mc_determinism",
+      "severity": "blocker"
+    }
+  ],
+  "hard_constraints_checklist": [
+    "no_eval",
+    "no_new_function",
+    "no_localstorage",
+    "no_sessionstorage_except_scenario",
+    "no_inline_event_handlers",
+    "no_external_cdn_without_integrity",
+    "no_img_without_alt_ru_and_alt_en",
+    "no_mc_without_fixed_seed",
+    "html_size_soft_le_1200kb",
+    "html_size_hard_le_2000kb"
+  ],
+  "waves": [
+    {
+      "id": "W1",
+      "name": "Foundation",
+      "progress_start_pct": 10.0,
+      "progress_end_pct": 20.0,
+      "estimated_duration_days": 2,
+      "goal": "Подготовить основание: i18n scaffold + валидаторы + базовый HTML-каркас + TS.Viz/TS.I18N/TS.Format/TS.EventBus регистри + CSS tokens.",
+      "inputs": [
+        "canon_base",
+        "canon_extended",
+        "schemas",
+        "img_meta",
+        "handoff_core",
+        "handoff_detail",
+        "handoff_i18n",
+        "landing_b1_wave_plan_v1.0.json"
+      ],
+      "deliverables": [
+        "i18n/landing_ru.json (scaffolded + filled)",
+        "i18n/landing_en.json (scaffolded + filled)",
+        "scripts/i18n_check.py (per I18N §7.1)",
+        "scripts/i18n_scaffold.py (per I18N §7.2)",
+        "scripts/invariants_check.py (per INVARIANTS spec)",
+        "src/ts-core/ (TS.Viz.register/render/destroy, TS.I18N.format/plural, TS.Format.currency/number, TS.EventBus)",
+        "src/css/tokens.css (palette + typography + size presets)",
+        "landing_v1.0.html (skeleton: header/sections/footer, без чартов)",
+        "scripts/build_html.py (BUDGET=1200000 soft)"
+      ],
+      "invariants_check_required": [
+        "INV-02",
+        "INV-05",
+        "INV-06"
+      ],
+      "acceptance_criteria": [
+        "i18n_check.py exit 0 (0 asymmetry)",
+        "Total keys in [400, 435]",
+        "HTML skeleton renders in Chrome/Firefox/WebKit",
+        "No eval/new Function/localStorage in bundle (regex-check)",
+        "All images have alt.ru and alt.en attributes",
+        "CSS tokens loaded, design tokens match CORE §6 palette shadows_of_sunset_v1",
+        "TS.I18N.format('ui.hero.title') возвращает корректный RU/EN"
+      ],
+      "exit_gate_mechanism": "invariants_check.py --wave W1 --strict",
+      "parallelizable": true,
+      "dependencies": []
+    },
+    {
+      "id": "W2",
+      "name": "Static content + a11y baseline",
+      "progress_start_pct": 20.0,
+      "progress_end_pct": 35.0,
+      "estimated_duration_days": 2,
+      "goal": "Наполнить HTML-каркас: hero (без 3D), about, pipeline (static list), team, risks, faq, footer, legal. a11y-ревизия: focus-visible, keyboard nav, aria-labelledby, skip-to-content.",
+      "inputs": [
+        "W1 deliverables",
+        "handoff_core (sections layout)",
+        "i18n (ui.*, narrative.*, legal.*, faq.*, form.*)"
+      ],
+      "deliverables": [
+        "landing_v1.0.html (static content complete, без чартов/симов)",
+        "src/css/layout.css (sections, responsive breakpoints)",
+        "src/css/typography.css (Cormorant + Inter + clamp scale)",
+        "src/js/nav.js (sticky header, lang switcher, theme toggle)",
+        "src/js/form.js (LP request access, validation)",
+        "a11y-smoke.md (axe-core report on static HTML, 0 violations)"
+      ],
+      "invariants_check_required": [
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-06"
+      ],
+      "acceptance_criteria": [
+        "axe-core на static HTML: 0 serious/critical",
+        "Keyboard tab-order корректен (tab/shift-tab/esc)",
+        "prefers-reduced-motion отключает все переходы",
+        "Lang switcher: localStorage НЕ используется; query-param ?lang=en работает",
+        "Skip-to-content ссылка работает",
+        "HTML size ≤ 400 KB (до чартов)"
+      ],
+      "exit_gate_mechanism": "invariants_check.py --wave W2 --strict + axe-core report",
+      "parallelizable": true,
+      "dependencies": [
+        "W1"
+      ]
+    },
+    {
+      "id": "W3",
+      "name": "Visualizations (22 viz)",
+      "progress_start_pct": 35.0,
+      "progress_end_pct": 60.0,
+      "estimated_duration_days": 4,
+      "goal": "Имплементировать 22 viz по спецификации DETAIL §3 (viz01–viz22). Marquee tier (3D/GSAP) + Hero (D3 канон-чарты) + Standard.",
+      "inputs": [
+        "W2 deliverables",
+        "handoff_detail (§3 viz specs)",
+        "i18n (chart.*, a11y.*)"
+      ],
+      "deliverables": [
+        "src/viz/viz01_hero_film_reel_3d.js (Three.js)",
+        "src/viz/viz02_waterfall_3d.js (D3)",
+        "src/viz/viz03_timeline_cinematic.js (GSAP)",
+        "src/viz/viz04_irr_sensitivity.js (D3)",
+        "src/viz/viz05_mc_distribution.js (D3)",
+        "src/viz/viz06_revenue_forecast.js (D3)",
+        "src/viz/viz07_ebitda_waterfall.js (D3)",
+        "src/viz/viz08_pipeline_gantt.js (D3)",
+        "src/viz/viz09_peers_benchmark.js (D3)",
+        "src/viz/viz10_cashflow_stepper.js (D3)",
+        "src/viz/viz11_regions_map.js (D3)",
+        "src/viz/viz12_tax_credits_ui.js (SVG)",
+        "src/viz/viz13_timeline_roadmap.js (D3)",
+        "src/viz/viz14_kpi_dashboard.js (D3)",
+        "src/viz/viz15_scenario_switcher.js (Canvas2D)",
+        "src/viz/viz16_genre_mix.js (D3)",
+        "src/viz/viz17_budget_tree.js (D3)",
+        "src/viz/viz18_risk_matrix.js (D3)",
+        "src/viz/viz19_distribution_funnel.js (D3)",
+        "src/viz/viz20_awards_track.js (D3)",
+        "src/viz/viz21_team_org.js (D3)",
+        "src/viz/viz22_faq_search.js (D3)",
+        "src/css/viz.css (styles + reduced-motion)",
+        "tests/viz-unit/*.test.js (по ≥3 тестов на viz)"
+      ],
+      "invariants_check_required": [
+        "INV-01",
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-06"
+      ],
+      "acceptance_criteria": [
+        "Все 22 viz зарегистрированы через TS.Viz.register()",
+        "Каждая viz имеет aria_table fallback",
+        "Каждая viz имеет reduced-motion path",
+        "FPS на viz01/viz02 (3D) ≥ 30 на мобильном, ≥ 60 на desktop",
+        "Все числа в виз соответствуют canon (INV-01 check)",
+        "Все заголовки/оси/легенды берутся из i18n.chart.*",
+        "HTML size ≤ 900 KB после W3",
+        "Unit tests 66+ passing (22 viz × 3)"
+      ],
+      "exit_gate_mechanism": "invariants_check.py --wave W3 --strict + jest unit",
+      "parallelizable": true,
+      "can_split_by": "tier (Marquee/Hero/Standard) or by viz_id batch",
+      "dependencies": [
+        "W2"
+      ]
+    },
+    {
+      "id": "W4",
+      "name": "Simulators + numerical parity (13 sim)",
+      "progress_start_pct": 60.0,
+      "progress_end_pct": 75.0,
+      "estimated_duration_days": 3,
+      "goal": "Имплементировать 13 симуляторов (MC + closed-form + lookup + state-machine) по DETAIL §4. Привязать к viz через EventBus. Пройти numerical parity check против canon-референса.",
+      "inputs": [
+        "W3 deliverables",
+        "handoff_detail (§4 sim specs + §2.6 numerical parity protocol)",
+        "i18n (control.*)"
+      ],
+      "deliverables": [
+        "src/sim/sim01_irr_explorer.js (mc_light, seed 0xDEADBEEF, 5000 iter)",
+        "src/sim/sim02_mc_stress.js (mc_light, seed 0xBAADF00D)",
+        "src/sim/sim03_waterfall_flow.js (closed_form, 4-tier)",
+        "src/sim/sim04_revenue_what_if.js",
+        "src/sim/sim05_irr_scenario.js",
+        "src/sim/sim06_scenario_switcher_sim.js",
+        "src/sim/sim07_cashflow_stepper.js",
+        "src/sim/sim08_budget_optimizer.js",
+        "src/sim/sim09_genre_mix_sim.js",
+        "src/sim/sim10_region_distribution_sim.js",
+        "src/sim/sim11_tax_credit_calc.js",
+        "src/sim/sim12_awards_probability.js",
+        "src/sim/sim13_kpi_projection.js",
+        "src/sim/_shared/prng.js (mulberry32 + seed management)",
+        "src/sim/_shared/stat.js (percentile/mean/std)",
+        "src/ui/controls.js (scenario switcher + 3 sliders, sessionStorage persistence)",
+        "tests/sim-unit/*.test.js (≥3 теста на sim + numerical parity tests)"
+      ],
+      "invariants_check_required": [
+        "INV-01",
+        "INV-03",
+        "INV-06",
+        "INV-07"
+      ],
+      "acceptance_criteria": [
+        "sim01 irr_explorer: canon.returns.mc_p50_internal=13.95 ±0.5 pp",
+        "sim03 waterfall_flow: canon.returns.irr_public_w3=20.09 ±0.5 pp",
+        "Все MC-симы детерминированы (seed фиксирован, 2 прогона → идентичный результат)",
+        "Scenario switcher сохраняет состояние в sessionStorage, НЕ в localStorage",
+        "URL ?scenario=bull активирует Bull сценарий при загрузке",
+        "HTML size ≤ 1100 KB после W4",
+        "Unit tests 105+ passing (66 viz + 39 sim)"
+      ],
+      "exit_gate_mechanism": "invariants_check.py --wave W4 --strict + jest numerical parity",
+      "parallelizable": true,
+      "can_split_by": "engine type (mc_light / closed_form / lookup / state_machine)",
+      "dependencies": [
+        "W3"
+      ]
+    },
+    {
+      "id": "W5",
+      "name": "Integration + drilldown + SEO/performance",
+      "progress_start_pct": 75.0,
+      "progress_end_pct": 90.0,
+      "estimated_duration_days": 2,
+      "goal": "Связать viz↔sim через EventBus. Drilldown-модальные окна для 7 viz. SEO meta + JSON-LD. Оптимизация (defer/async, tree-shake, CSS-inline critical path). Lighthouse CI.",
+      "inputs": [
+        "W4 deliverables",
+        "handoff_detail (§2.4 interaction patterns + §3 modal specs)",
+        "i18n (modal.*)"
+      ],
+      "deliverables": [
+        "src/drilldown/modal.js (WAI-ARIA dialog pattern, focus trap)",
+        "src/drilldown/modal-viz02.js (waterfall detail)",
+        "src/drilldown/modal-viz04.js (IRR sensitivity detail)",
+        "src/drilldown/modal-viz05.js (MC distribution detail)",
+        "src/drilldown/modal-viz08.js (pipeline gantt detail)",
+        "src/drilldown/modal-viz11.js (regions map detail)",
+        "src/drilldown/modal-viz12.js (tax credits detail)",
+        "src/drilldown/modal-viz18.js (risk matrix detail)",
+        "src/seo/meta.html (OG + Twitter + JSON-LD Organization + InvestmentFund)",
+        "src/perf/critical.css (above-fold inline)",
+        "src/perf/defer.js (non-critical viz lazy-init)",
+        "lighthouse_ci.config.json (desktop + mobile runs)"
+      ],
+      "invariants_check_required": [
+        "INV-01",
+        "INV-02",
+        "INV-04",
+        "INV-05",
+        "INV-06"
+      ],
+      "acceptance_criteria": [
+        "Drilldown открывается для 7 viz; Esc закрывает; focus trap работает",
+        "JSON-LD валиден (schema.org Organization + InvestmentFund)",
+        "Lighthouse: Performance ≥ 95 (desktop), ≥ 90 (mobile)",
+        "Lighthouse: Accessibility ≥ 95",
+        "Lighthouse: SEO ≥ 95",
+        "Lighthouse: Best Practices ≥ 95",
+        "HTML size ≤ 1200 KB (soft budget respected)"
+      ],
+      "exit_gate_mechanism": "invariants_check.py --wave W5 + lighthouse CI + axe",
+      "parallelizable": false,
+      "dependencies": [
+        "W4"
+      ]
+    },
+    {
+      "id": "W6",
+      "name": "Final QA + locale switching + release",
+      "progress_start_pct": 90.0,
+      "progress_end_pct": 100.0,
+      "estimated_duration_days": 1,
+      "goal": "Полный QA: locale switching, reduced-motion путь, mobile downgrade, stress-тест бюджета, regression check. Release-пакет: HTML + assets + docs.",
+      "inputs": [
+        "W5 deliverables"
+      ],
+      "deliverables": [
+        "Deliverables_Landing_v1.0/TrendStudio_Landing_v1.0.html (финал)",
+        "Deliverables_Landing_v1.0/assets/ (20 images + fonts + favicons)",
+        "Deliverables_Landing_v1.0/CHANGELOG.md",
+        "Deliverables_Landing_v1.0/QA_REPORT.md (axe + lighthouse + manual)",
+        "Deliverables_Landing_v1.0/README.md (for LP sharing)",
+        "git tag v1.0.0-landing"
+      ],
+      "invariants_check_required": [
+        "INV-01",
+        "INV-02",
+        "INV-03",
+        "INV-04",
+        "INV-05",
+        "INV-06",
+        "INV-07"
+      ],
+      "acceptance_criteria": [
+        "Lang switcher ru⇄en без перезагрузки, без потери состояния (scenario/sliders)",
+        "prefers-reduced-motion: анимации отключены, fallback-графика активна",
+        "Mobile viewport (≤ 480px): marquee viz деградирует в static",
+        "Regression: все unit-тесты из W1–W5 проходят",
+        "Все 7 invariants: PASS",
+        "Final HTML ≤ 1200 KB",
+        "0 console errors при load (Chrome/Firefox/WebKit)"
+      ],
+      "exit_gate_mechanism": "invariants_check.py --wave W6 --all-invariants + QA manual checklist",
+      "parallelizable": false,
+      "dependencies": [
+        "W5"
+      ]
+    }
+  ],
+  "exit_criteria_stage_b": {
+    "all_waves_completed": true,
+    "all_invariants_passing": true,
+    "lighthouse_all_green": true,
+    "axe_zero_serious_critical": true,
+    "html_size_le_1200kb": true,
+    "i18n_symmetry_zero_asymmetry": true,
+    "numerical_parity_all_green": true,
+    "manual_qa_checklist_passed": true
+  },
+  "handoff_to_stage_c": {
+    "required_artifacts": [
+      "Deliverables_Landing_v1.0/TrendStudio_Landing_v1.0.html",
+      "Deliverables_Landing_v1.0/QA_REPORT.md",
+      "Deliverables_Landing_v1.0/CHANGELOG.md",
+      "invariants_check.py (для regression в Stage C)"
+    ],
+    "stage_c_scope": [
+      "Playwright E2E (desktop + mobile + reduced-motion)",
+      "Lighthouse CI regression",
+      "П5 «Максимум» 32/32 (финальный)",
+      "М4 «Презентационная» 7/7",
+      "Release to LP preview URL"
+    ]
+  },
+  "verification_plan": {
+    "preset": "П5 «Максимум» 32/32 после B1b.3 (на пакет B1a+B1b.1+B1b.2+B1b.3)",
+    "trigger": "после закрытия B1b.3 через AskUserQuestion (user approval gate)",
+    "mechanisms_covered": "all 32 (см. govdoc-analytics:verification)"
+  }
+}

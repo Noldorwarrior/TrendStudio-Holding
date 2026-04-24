@@ -1,0 +1,22 @@
+e365555 feat(landing-v2.0): W2 s04-s06 + M1 Monte-Carlo                         
+bb21364 feat(landing-v2.0): W1 foundation + s00-s03 (Hero/Thesis/Market)        
+2cafad3 Landing v1.0 Autonomous Build — 6 waves, 20 images, i18n RU/EN (#10)    
+7cc54f1 Add .claude/settings.json                                               
+36299d7 feat(deck-v1.1.2): interactive HTML (25 slides, QA 0 errors, P5 32/32)  
+---                                                                             
+-rw-r--r--@ 1 noldorwarrior  staff  744 24 апр.  12:33 .landing-autonomous/PROGR
+ESS.md                                                                          
+# Landing v2.0 Autonomous Build — Progress Log                                  
+                                                                                
+**Branch:** `claude/landing-v2.0-autonomous`                                    
+**Started:** 2026-04-24                                                         
+**Orchestrator:** Claude Opus 4.7 (1M context)                                  
+                                                                                
+## Phase timeline                                                               
+                                                                                
+| Phase | Status | Commit | Notes |                                             
+|-------|--------|--------|-------|                                             
+| 0 (dry-run)         | ✅ DONE | — | Tools OK |                                
+| 1 (W1 foundation)   | ✅ DONE | bb21364 | Foundation hooks + s00-s03 + 3 img, 
+1.76 MB |                                                                       
+| 2 (W2 economics)    | ✅ DONE | e365555 | s04-s06 + M1, P50=14.06% (canon 13.9

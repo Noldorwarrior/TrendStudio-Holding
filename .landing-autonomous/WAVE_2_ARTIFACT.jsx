@@ -1,1763 +1,1846 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { Film, TrendingUp, Award, ChevronDown, Menu, X, DollarSign, Percent, PiggyBank, PlayCircle, Layers, Target, Briefcase } from 'lucide-react';
-import {
-  PieChart, Pie, Cell,
-  LineChart, Line,
-  BarChart, Bar,
-  Tooltip, Legend, ResponsiveContainer,
-  XAxis, YAxis, CartesianGrid,
-} from 'recharts';
+// =====================================================================
+// Wave 2 Artifact — ТрендСтудио Холдинг Landing v2.2 (grep-contract enforced)
+// Sections added by W2:
+//   s04 FundStructure  — Recharts donut (sweep-in, active sector) + 3+ cards
+//   s05 Economics      — 4 flip-cards (rotateY 180deg, backface-visibility) + Waterfall
+//                         cascade (canvas money-flow particles + SVG drop-shadow tiers
+//                         + @keyframes cascade / money-flow / flow-throb)
+//   s06 Returns        — Internal/Public tabs + M1 Monte-Carlo histogram
+//                         (ReferenceLine P10/P50/P90, tooltip cursor warm,
+//                          click-drill on <Bar>)
+//
+// Hooks/components from W1 that we reuse (NOT redefined here):
+//   useReveal, Reveal, Tooltip, CountUp, useIsDesktop, useFlip,
+//   GlobalFoundation, TopNav, ScrollProgress, FooterStub,
+//   HeroSection, ThesisSection, MarketSection,
+//   ICONS, Icon, PrimaryCTA, SecondaryCTA,
+//   Sparkline, MiniDonut, MiniPie, MiniStackedBar, MiniLine
+//
+// Root component: App_W2 (renders W1 sections + new s04/s05/s06).
+// =====================================================================
 
-// =============================================================================
-// TrendStudio Holding — Landing v1.0 — Wave 2 Artifact (s00–s06 + M1)
-// Scope: Foundation (s00), Hero (s01), Thesis (s02), Market (s03),
-//        Fund (s04), Economics + Waterfall (s05), Returns + M1 Monte-Carlo (s06)
-// Expected M1 P50 anchor ≈ 13.95 (default inputs: hit=25%, avg=2.3x, loss=12%)
-// Style signature: shadows_of_sunset_v1
-// SSOT: .landing-autonomous/canon/landing_canon_base_v1.0.json
-// =============================================================================
+// Recharts — подключён через CDN в шаблоне, берём нужные примитивы.
+// Используем отдельный алиас RechartsTooltip чтобы не конфликтовать с W1 <Tooltip/>.
+const {
+  PieChart, Pie, Cell, ResponsiveContainer, Tooltip: RechartsTooltip,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, ReferenceLine,
+  LineChart, Line, Legend,
+} = Recharts;
 
-// --- Design tokens (locked by canon) ---
-const COLORS = {
-  bg:        '#0B0D10',
-  text:      '#EAEAEA',
-  muted:     '#8E8E93',
-  accentWarm:'#F4A261', // shadows_of_sunset: warm sunset
-  accentCool:'#2A9D8F', // shadows_of_sunset: teal shadow
-  surface:   '#14171C',
-  border:    'rgba(234,234,234,0.12)',
-  danger:    '#E74C3C',
-  info:      '#3498DB',
-};
+// ==================================================================
+// s04 — FUND STRUCTURE
+// Donut (LP/GP) с sweep-in анимацией, active-sector выезжает,
+// tooltip с dark background #15181C + 3 cards с Reveal delay stagger.
+// ==================================================================
 
-const NAV_LINKS = [
-  { id: 'hero',      label: 'Hero' },
-  { id: 'thesis',    label: 'Тезис' },
-  { id: 'market',    label: 'Рынок' },
-  { id: 'fund',      label: 'Фонд' },
-  { id: 'economics', label: 'Экономика' },
-  { id: 'returns',   label: 'Доходность' },
-  { id: 'pipeline',  label: 'Pipeline' },
-  { id: 'team',      label: 'Команда' },
-  { id: 'risks',     label: 'Риски' },
-  { id: 'cta',       label: 'Контакт' },
+const FUND_DONUT = [
+  {
+    name: 'LP — ваш фонд',
+    value: 85,
+    absolute: 2550,
+    color: '#2A9D8F',
+    short: '2 550 млн ₽ от фонда-партнёра, 85% equity',
+    details: [
+      'Anchor-LP ticket 500+ млн ₽',
+      'Co-investment rights на любой проект',
+      'LPAC seat + key-person triggers',
+      'Standard LP rights: no-fault removal, audit, reporting',
+    ],
+  },
+  {
+    name: 'GP — холдинг',
+    value: 15,
+    absolute: 450,
+    color: '#F4A261',
+    short: '450 млн ₽ от холдинга, 15% sponsor commitment (skin-in-the-game)',
+    details: [
+      'Team equity alignment',
+      'Operational reserve на bridge-финансирование',
+      'Carry: 20% после hurdle 8% + 100% catch-up',
+      'Full discretion в пределах mandate',
+    ],
+  },
 ];
 
-// --- prefers-reduced-motion hook ---
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return;
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handler = () => setReduced(mq.matches);
-    handler();
-    if (mq.addEventListener) mq.addEventListener('change', handler);
-    else if (mq.addListener) mq.addListener(handler);
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener('change', handler);
-      else if (mq.removeListener) mq.removeListener(handler);
-    };
-  }, []);
-  return reduced;
-}
+const FUND_FACTS = [
+  {
+    id: 'size',
+    label: 'Target size',
+    value: 3000,
+    decimals: 0,
+    suffix: 'млн ₽',
+    desc: 'Целевой размер фонда. First close 1 500 млн до 30.09.2026, final close 3 000 млн до 31.03.2027.',
+    color: '#F4A261',
+  },
+  {
+    id: 'horizon',
+    label: 'Horizon',
+    value: 7,
+    decimals: 0,
+    suffix: 'лет',
+    desc: '4 года investment period + 3 года monetisation. Опция продления +2 года по согласованию LPAC.',
+    color: '#2A9D8F',
+  },
+  {
+    id: 'commit',
+    label: 'Commitment period',
+    value: 4,
+    decimals: 0,
+    suffix: 'года',
+    desc: 'За 4 года холдинг выбирает все 7 проектов из pipeline. Management fee идёт на committed capital.',
+    color: '#4A9EFF',
+  },
+];
 
-// --- Smooth scroll helper (bg-safe) ---
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// =============================================================================
-// s00 — Skeleton: ScrollProgress + TopNav + Footer stub
-// =============================================================================
-
-function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    function onScroll() {
-      const h = document.documentElement;
-      const total = (h.scrollHeight - h.clientHeight) || 1;
-      const pct = (h.scrollTop / total) * 100;
-      setProgress(Math.min(100, Math.max(0, pct)));
-    }
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, []);
+function FundDonut({ activeIndex, setActiveIndex }) {
   return (
-    <div
-      aria-hidden="true"
-      style={{
-        position: 'fixed',
-        top: 0, left: 0,
-        height: '3px',
-        width: `${progress}%`,
-        background: `linear-gradient(90deg, ${COLORS.accentWarm} 0%, ${COLORS.accentCool} 100%)`,
-        zIndex: 100,
-        transition: 'width 60ms linear',
-        pointerEvents: 'none',
-      }}
-    />
+    <div style={{ position: 'relative', height: 360 }}>
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={FUND_DONUT}
+            dataKey="value"
+            cx="50%"
+            cy="50%"
+            innerRadius={86}
+            outerRadius={146}
+            paddingAngle={3}
+            startAngle={90}
+            endAngle={-270}
+            animationBegin={200}
+            animationDuration={900}
+            onMouseEnter={(_, idx) => setActiveIndex(idx)}
+            onMouseLeave={() => setActiveIndex(null)}
+            activeIndex={activeIndex}
+            isAnimationActive={true}
+          >
+            {FUND_DONUT.map((d, i) => (
+              <Cell
+                key={d.name}
+                fill={d.color}
+                stroke={activeIndex === i ? '#F4A261' : 'transparent'}
+                strokeWidth={activeIndex === i ? 3 : 0}
+                style={{
+                  cursor: 'pointer',
+                  filter: activeIndex === i
+                    ? 'brightness(1.15) drop-shadow(0 0 8px ' + d.color + ')'
+                    : 'brightness(1)',
+                  transform: activeIndex === i ? 'scale(1.035)' : 'scale(1)',
+                  transformOrigin: 'center',
+                  transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+                }}
+              />
+            ))}
+          </Pie>
+          <RechartsTooltip
+            contentStyle={{
+              background: '#15181C',
+              border: '1px solid #F4A261',
+              borderRadius: 8,
+              color: '#EAEAEA',
+              padding: '10px 14px',
+            }}
+            itemStyle={{ color: '#EAEAEA' }}
+            labelStyle={{ color: '#F4A261' }}
+            formatter={(v, n, p) => [`${v}% (${p.payload.absolute} млн ₽)`, n]}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+      {/* Inner hole — активный сегмент или total */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          textAlign: 'center',
+          pointerEvents: 'none',
+        }}
+        aria-live="polite"
+      >
+        {activeIndex !== null && activeIndex !== undefined && FUND_DONUT[activeIndex] ? (
+          <>
+            <div
+              style={{
+                fontSize: 34,
+                fontFamily: "'Playfair Display', serif",
+                color: FUND_DONUT[activeIndex].color,
+                lineHeight: 1.1,
+              }}
+            >
+              <CountUp end={FUND_DONUT[activeIndex].absolute} decimals={0} suffix=" млн ₽" />
+            </div>
+            <div
+              style={{
+                fontSize: 11,
+                color: '#8E8E93',
+                textTransform: 'uppercase',
+                letterSpacing: 1,
+                marginTop: 4,
+              }}
+            >
+              {FUND_DONUT[activeIndex].name}
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              style={{
+                fontSize: 38,
+                fontFamily: "'Playfair Display', serif",
+                color: '#EAEAEA',
+                lineHeight: 1,
+              }}
+            >
+              3 000
+            </div>
+            <div
+              style={{
+                fontSize: 11,
+                color: '#8E8E93',
+                textTransform: 'uppercase',
+                letterSpacing: 1,
+                marginTop: 4,
+              }}
+            >
+              млн ₽ target
+            </div>
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 
-function TopNav() {
-  const [open, setOpen] = useState(false);
+function FundStructureSection() {
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
+
   return (
-    <nav
-      aria-label="Основная навигация"
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        background: 'rgba(11,13,16,0.85)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
-        borderBottom: `1px solid ${COLORS.border}`,
-      }}
-    >
-      <div className="container mx-auto px-6 flex items-center justify-between" style={{ height: 64 }}>
-        <button
-          onClick={() => scrollToId('hero')}
+    <section id="s04" style={{ padding: '96px 24px', background: '#0B0D10', position: 'relative' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <Reveal>
+          <h2
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              color: '#EAEAEA',
+              textAlign: 'center',
+              margin: 0,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Структура фонда
+          </h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <p
+            style={{
+              textAlign: 'center',
+              color: '#8E8E93',
+              margin: '14px auto 0',
+              fontSize: 18,
+              maxWidth: 720,
+              lineHeight: 1.55,
+            }}
+          >
+            Классическая LP/GP-структура Delaware-типа в рос. юрисдикции. Ваш фонд становится
+            anchor LP; холдинг берёт на себя GP commitment 15% как skin-in-the-game.
+          </p>
+        </Reveal>
+
+        <div
           style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 20,
-            fontWeight: 700,
-            color: COLORS.text,
-            background: 'transparent',
-            border: 'none',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+            gap: 48,
+            marginTop: 72,
+            alignItems: 'center',
+          }}
+        >
+          <Reveal delay={200}>
+            <FundDonut activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+          </Reveal>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {FUND_DONUT.map((d, i) => (
+              <Reveal key={d.name} delay={300 + i * 120}>
+                <div
+                  onMouseEnter={() => setActiveIndex(i)}
+                  onMouseLeave={() => setActiveIndex(null)}
+                  onClick={() => setExpandedId(expandedId === d.name ? null : d.name)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setExpandedId(expandedId === d.name ? null : d.name);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={expandedId === d.name}
+                  className="card-hover glass"
+                  style={{
+                    padding: 22,
+                    borderRadius: 12,
+                    border: `1px solid ${activeIndex === i ? d.color : '#2A2D31'}`,
+                    boxShadow: activeIndex === i ? `0 0 28px ${d.color}44` : 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                    <h3
+                      style={{
+                        margin: 0,
+                        fontFamily: "'Playfair Display', serif",
+                        fontSize: 22,
+                        color: '#EAEAEA',
+                      }}
+                    >
+                      {d.name}
+                    </h3>
+                    <span style={{ fontSize: 30, fontFamily: "'Playfair Display', serif", color: d.color }}>
+                      {d.value}%
+                    </span>
+                  </div>
+                  <p style={{ marginTop: 8, color: '#C9CBCF', fontSize: 14, lineHeight: 1.55 }}>{d.short}</p>
+                  <div
+                    style={{
+                      maxHeight: expandedId === d.name ? 260 : 0,
+                      overflow: 'hidden',
+                      transition: 'max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+                    }}
+                  >
+                    <ul
+                      style={{
+                        marginTop: 10,
+                        paddingLeft: 0,
+                        listStyle: 'none',
+                        color: '#EAEAEA',
+                        fontSize: 13,
+                        lineHeight: 1.7,
+                      }}
+                    >
+                      {d.details.map((x) => (
+                        <li key={x} style={{ marginBottom: 4 }}>
+                          <span style={{ color: d.color, marginRight: 6 }}>▸</span>
+                          {x}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div style={{ marginTop: 10, fontSize: 12, color: d.color, fontWeight: 500 }}>
+                    {expandedId === d.name ? '↑ Свернуть' : '↓ Раскрыть детали'}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+
+            <Reveal delay={600}>
+              <div
+                className="glass"
+                style={{
+                  padding: 18,
+                  borderRadius: 12,
+                  border: '1px solid #2A2D31',
+                  fontSize: 13,
+                  color: '#8E8E93',
+                  lineHeight: 1.6,
+                }}
+              >
+                <strong style={{ color: '#F4A261' }}>Юрисдикция:</strong> РФ, ЗПИФ или LP/GP в зависимости от
+                профиля вашего фонда. Управляющая компания с лицензией ЦБ РФ, депозитарий — ВТБ Специализированный.
+              </div>
+            </Reveal>
+          </div>
+        </div>
+
+        {/* Fact cards row under donut — 3 more Reveal delays for staggered effect */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: 16,
+            marginTop: 64,
+          }}
+        >
+          {FUND_FACTS.map((f, i) => (
+            <Reveal key={f.id} delay={700 + i * 100}>
+              <div
+                className="glass card-hover"
+                style={{
+                  padding: 22,
+                  borderRadius: 12,
+                  border: `1px solid ${f.color}33`,
+                  textAlign: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: '#8E8E93',
+                    textTransform: 'uppercase',
+                    letterSpacing: 1,
+                  }}
+                >
+                  {f.label}
+                </div>
+                <div
+                  style={{
+                    fontSize: 48,
+                    fontFamily: "'Playfair Display', serif",
+                    color: f.color,
+                    marginTop: 8,
+                    lineHeight: 1,
+                  }}
+                >
+                  <CountUp end={f.value} decimals={f.decimals} />
+                  <span style={{ fontSize: 16, color: '#8E8E93', marginLeft: 8 }}>{f.suffix}</span>
+                </div>
+                <p style={{ marginTop: 12, color: '#C9CBCF', fontSize: 13, lineHeight: 1.55 }}>{f.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ==================================================================
+// s05 — ECONOMICS: 4 FLIP-CARDS + WATERFALL CASCADE
+// Flip-cards используют rotateY(180deg) + transform-style: preserve-3d
+// + backface-visibility: hidden (grep-contract §4.5).
+// Waterfall cascade — <canvas> money-flow particles + SVG tiers с drop-shadow
+// + @keyframes cascade + @keyframes money-flow (grep-contract §4.6).
+// ==================================================================
+
+const ECO_KPI = [
+  {
+    id: 'mgmt',
+    label: 'Management fee',
+    value: 2,
+    suffix: '%',
+    color: '#F4A261',
+    front: 'Операционный бюджет холдинга',
+    formula: '2% × commitment/year',
+    example:
+      'На commitment вашего фонда 3 000 млн ₽ = 60 млн ₽/год × 7 лет = 420 млн ₽ операционный cap',
+    impact:
+      'Ниже индустриального стандарта 2.5% — экономия ≈150 млн в пользу distributions LP.',
+  },
+  {
+    id: 'carry',
+    label: 'Carried interest',
+    value: 20,
+    suffix: '%',
+    color: '#2A9D8F',
+    front: 'Доля холдинга в прибыли',
+    formula: '20% × прибыли сверх hurdle',
+    example:
+      'При portfolio gross 6 600 млн ₽ (MOIC 2.2×) и hurdle 8% — carry ≈ 600–900 млн для GP.',
+    impact:
+      'Market-standard, GP aligned с успехом LP: без преодоления hurdle — GP ничего не получает.',
+  },
+  {
+    id: 'hurdle',
+    label: 'Hurdle rate',
+    value: 8,
+    suffix: '%',
+    color: '#4A9EFF',
+    front: 'Preferred return для LP',
+    formula: 'Compound 8%/год до catch-up',
+    example:
+      'Ваш фонд получает commitment + 8% годовых compound до того как GP начинает carry.',
+    impact:
+      'Для commitment 3 000 млн ₽ ≈ 1 680 млн preferred return за 7 лет до catch-up.',
+  },
+  {
+    id: 'catchup',
+    label: 'GP catch-up',
+    value: 100,
+    suffix: '%',
+    color: '#A855F7',
+    front: 'Механизм выравнивания carry',
+    formula: '100% GP до parity 20/80',
+    example:
+      'После того как LP получил hurdle, следующие profits идут 100% GP до выравнивания 20%/80%.',
+    impact:
+      'Market-standard механизм, не снижает ваш терминальный NPV — только сдвигает timing.',
+  },
+];
+
+function FlipCard({ kpi, index }) {
+  const [flipped, setFlipped] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <Reveal delay={index * 110}>
+      <div style={{ perspective: 1200 }}>
+        <div
+          onMouseEnter={() => setFlipped(true)}
+          onMouseLeave={() => setFlipped(false)}
+          onClick={() => setExpanded((v) => !v)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setExpanded((v) => !v);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          aria-expanded={expanded}
+          aria-label={`${kpi.label}: ${kpi.value}${kpi.suffix}. Наведите — формула. Клик — impact.`}
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: 268,
+            transformStyle: 'preserve-3d',
+            WebkitTransformStyle: 'preserve-3d',
+            transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+            transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
             cursor: 'pointer',
           }}
-          aria-label="К началу — ТрендСтудио"
         >
-          ТрендСтудио
-        </button>
-
-        {/* Desktop links */}
-        <ul
-          className="hidden md:flex"
-          style={{ listStyle: 'none', gap: 24, margin: 0, padding: 0 }}
-        >
-          {NAV_LINKS.map((l) => (
-            <li key={l.id}>
-              <button
-                onClick={() => scrollToId(l.id)}
+          {/* FRONT */}
+          <div
+            className="glass"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              padding: 22,
+              borderRadius: 14,
+              border: `1px solid ${kpi.color}44`,
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            <div>
+              <div
                 style={{
-                  color: COLORS.muted,
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontSize: 14,
-                  padding: '6px 2px',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = COLORS.accentWarm; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = COLORS.muted; }}
-              >
-                {l.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
-          aria-expanded={open}
-          style={{ background: 'transparent', border: 'none', color: COLORS.text, cursor: 'pointer' }}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {open && (
-        <ul
-          className="md:hidden"
-          style={{
-            listStyle: 'none', margin: 0, padding: '8px 24px 16px',
-            display: 'flex', flexDirection: 'column', gap: 8,
-            borderTop: `1px solid ${COLORS.border}`,
-          }}
-        >
-          {NAV_LINKS.map((l) => (
-            <li key={l.id}>
-              <button
-                onClick={() => { scrollToId(l.id); setOpen(false); }}
-                style={{
-                  color: COLORS.text, background: 'transparent', border: 'none',
-                  cursor: 'pointer', fontSize: 14, padding: '8px 0', width: '100%', textAlign: 'left',
+                  fontSize: 11,
+                  color: '#8E8E93',
+                  textTransform: 'uppercase',
+                  letterSpacing: 1.2,
                 }}
               >
-                {l.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </nav>
-  );
-}
-
-function FooterStub() {
-  return (
-    <footer
-      style={{
-        borderTop: `1px solid ${COLORS.border}`,
-        padding: '32px 0',
-        color: COLORS.muted,
-        fontSize: 13,
-        background: COLORS.bg,
-      }}
-    >
-      <div className="container mx-auto px-6" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-        <div>ТрендСтудио Холдинг — LP-фонд кино 3000 млн ₽ · горизонт 7 лет</div>
-        <div>© 2026 TrendStudio Holding</div>
-      </div>
-    </footer>
-  );
-}
-
-// =============================================================================
-// s01 — Hero (img19 + img20)
-// =============================================================================
-
-function Hero({ prefersReducedMotion }) {
-  return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center"
-      style={{ overflow: 'hidden' }}
-    >
-      {/* img19 — hero background (eager loading, per img_meta) */}
-      <img
-        src="__IMG_PLACEHOLDER_img19__"
-        alt="Hero-фон ТрендСтудио Холдинг — кинематографический ландшафт заката в палитре shadows_of_sunset_v1"
-        className="absolute inset-0 w-full h-full object-cover"
-        loading="eager"
-      />
-      {/* Gradient readability overlay */}
-      <div
-        className="absolute inset-0"
-        aria-hidden="true"
-        style={{ background: 'linear-gradient(180deg, rgba(11,13,16,0.4) 0%, rgba(11,13,16,0.95) 100%)' }}
-      />
-      {/* img20 — film reel detail, decorative (screen blend) */}
-      <img
-        src="__IMG_PLACEHOLDER_img20__"
-        alt=""
-        aria-hidden="true"
-        className="absolute right-0 top-0 h-full w-1/3 object-cover"
-        style={{ opacity: 0.3, mixBlendMode: 'screen', pointerEvents: 'none' }}
-      />
-
-      <div className="relative z-10 container mx-auto px-6">
-        <div style={{ maxWidth: 880 }}>
-          <div
-            style={{
-              display: 'inline-block',
-              padding: '6px 14px',
-              borderRadius: 999,
-              border: `1px solid ${COLORS.border}`,
-              background: 'rgba(20,23,28,0.6)',
-              color: COLORS.accentWarm,
-              fontSize: 13,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              marginBottom: 24,
-            }}
-          >
-            LP-фонд кино · IRR 24,75%
-          </div>
-
-          <h1
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(56px, 8vw, 96px)',
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: '-0.02em',
-              margin: 0,
-              color: COLORS.text,
-            }}
-          >
-            ТрендСтудио
-          </h1>
-
-          <p
-            className="text-xl mt-4"
-            style={{
-              color: COLORS.muted,
-              fontSize: 'clamp(18px, 2.2vw, 24px)',
-              maxWidth: 640,
-              lineHeight: 1.45,
-            }}
-          >
-            LP-фонд кино 3000 млн ₽, горизонт 7 лет. Диверсифицированный портфель из 7 проектов,
-            Monte-Carlo моделирование, дисциплинированная экономика.
-          </p>
-
-          <div className="flex gap-4 mt-8" style={{ flexWrap: 'wrap' }}>
-            <button
-              onClick={() => scrollToId('pipeline')}
-              className="px-8 py-3 rounded"
-              style={{
-                background: COLORS.accentWarm,
-                color: COLORS.bg,
-                border: 'none',
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: 15,
-              }}
-            >
-              Запросить питч-дек
-            </button>
-            <button
-              onClick={() => { try { alert('One-pager coming soon'); } catch (_) {} }}
-              className="px-8 py-3 rounded border-2"
-              style={{
-                borderColor: COLORS.text,
-                background: 'transparent',
-                color: COLORS.text,
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: 15,
-              }}
-            >
-              Скачать one-pager
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Chevron down indicator — bounce disabled under prefers-reduced-motion */}
-      <ChevronDown
-        className={prefersReducedMotion ? 'absolute bottom-8 left-1/2 -translate-x-1/2' : 'absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce'}
-        style={{ color: COLORS.muted }}
-        size={32}
-        aria-hidden="true"
-      />
-    </section>
-  );
-}
-
-// =============================================================================
-// s02 — Thesis (3 columns × 3 bullets)
-// =============================================================================
-
-const THESIS_COLUMNS = [
-  {
-    icon: Film,
-    title: 'Почему кино?',
-    subtitle: 'Структурная возможность',
-    bullets: [
-      'Уход западных мейджоров освободил ~60% theatrical-доли — уникальное окно для локальных игроков.',
-      'Оригинальный контент OTT-платформ растёт 30%+ YoY при дефиците production capacity.',
-      'Международный upside: pre-sales и licensing дают 20–30% revenue к базовому сценарию.',
-    ],
-  },
-  {
-    icon: TrendingUp,
-    title: 'Почему сейчас?',
-    subtitle: 'Экономика и данные',
-    bullets: [
-      'Дисциплина: budget tolerance ±15%, gate-review, stop-loss — не допускаем overspend на post.',
-      'Финмодель v1.4.4, 348 тестов PASS, 4 Monte-Carlo движка — каждое greenlight с IRR-симуляцией.',
-      'Целевой IRR 24,75% (Internal W₅ V-D) · MC p50 13,95% · MOIC ≥ 2,2×.',
-    ],
-  },
-  {
-    icon: Award,
-    title: 'Почему мы?',
-    subtitle: 'Команда и структура',
-    bullets: [
-      'Вертикальная интеграция: development → production → post → distribution → IP-менеджмент.',
-      '7 проектов × 4 стадии × смешанный жанровый микс — диверсификация риска единичного срыва.',
-      'LP-friendly governance: 2/20, hurdle 8%, 100% catch-up, LPAC, key-person, no-fault removal.',
-    ],
-  },
-];
-
-function ThesisColumn({ col }) {
-  const Icon = col.icon;
-  return (
-    <article
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 28,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 16,
-      }}
-    >
-      <div
-        aria-hidden="true"
-        style={{
-          width: 48, height: 48,
-          borderRadius: 10,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(244,162,97,0.12)',
-          color: COLORS.accentWarm,
-        }}
-      >
-        <Icon size={24} />
-      </div>
-      <div>
-        <h3
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 24,
-            fontWeight: 700,
-            color: COLORS.text,
-            margin: 0,
-            lineHeight: 1.2,
-          }}
-        >
-          {col.title}
-        </h3>
-        <div style={{ color: COLORS.accentCool, fontSize: 13, marginTop: 6, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-          {col.subtitle}
-        </div>
-      </div>
-      <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {col.bullets.map((b, i) => (
-          <li
-            key={i}
-            style={{
-              color: COLORS.text,
-              fontSize: 15,
-              lineHeight: 1.55,
-              paddingLeft: 20,
-              position: 'relative',
-            }}
-          >
-            <span
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                left: 0, top: 10,
-                width: 8, height: 8,
-                borderRadius: '50%',
-                background: COLORS.accentWarm,
-              }}
-            />
-            {b}
-          </li>
-        ))}
-      </ul>
-    </article>
-  );
-}
-
-function Thesis() {
-  return (
-    <section id="thesis" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Инвестиционный тезис
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            Портфельный подход + дисциплинированная экономика + data-driven решения
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            7 проектов означают диверсификацию риска единичного срыва. Monte-Carlo моделирование
-            revenue и cost на всех этапах. Таргет IRR 24,75% при MC p50 13,95%.
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 24,
-          }}
-        >
-          {THESIS_COLUMNS.map((c) => (
-            <ThesisColumn key={c.title} col={c} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s03 — Market (img17 as background via CSS gradient)
-// =============================================================================
-
-const KPI_ITEMS = [
-  {
-    id: 'kpi-gross',
-    label: 'Кассовый сбор',
-    unit: 'млрд ₽',
-    target: 45,
-    decimals: 0,
-    caption: 'Оценка 2025, театральный прокат РФ',
-  },
-  {
-    id: 'kpi-domestic',
-    label: 'Доля отечественного кино',
-    unit: '%',
-    target: 75,
-    decimals: 0,
-    caption: 'После ухода западных мейджоров',
-  },
-  {
-    id: 'kpi-ott-subs',
-    label: 'OTT-подписчики',
-    unit: 'млн',
-    target: 48,
-    decimals: 0,
-    caption: 'Суммарно по ключевым платформам',
-  },
-  {
-    id: 'kpi-ott-yoy',
-    label: 'OTT рост оригинального контента',
-    unit: '% YoY',
-    target: 30,
-    decimals: 0,
-    caption: 'Кинопоиск · Okko · Wink · START',
-  },
-];
-
-function useCountUp(target, durationMs, shouldStart, decimals, prefersReducedMotion) {
-  const [value, setValue] = useState(prefersReducedMotion ? target : 0);
-  const rafRef = useRef(null);
-  const startedRef = useRef(false);
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setValue(target);
-      return;
-    }
-    if (!shouldStart || startedRef.current) return;
-    startedRef.current = true;
-
-    const startTs = performance.now();
-    function step(now) {
-      const elapsed = now - startTs;
-      const t = Math.min(1, elapsed / durationMs);
-      const eased = 1 - Math.pow(1 - t, 3);
-      const v = target * eased;
-      const pow = Math.pow(10, decimals || 0);
-      setValue(Math.round(v * pow) / pow);
-      if (t < 1) {
-        rafRef.current = requestAnimationFrame(step);
-      } else {
-        setValue(target);
-      }
-    }
-    rafRef.current = requestAnimationFrame(step);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [target, durationMs, shouldStart, decimals, prefersReducedMotion]);
-
-  return value;
-}
-
-function KpiCard({ item, inView, prefersReducedMotion }) {
-  const value = useCountUp(item.target, 1500, inView, item.decimals || 0, prefersReducedMotion);
-  const display = useMemo(() => {
-    const d = item.decimals || 0;
-    return d > 0 ? value.toFixed(d) : Math.round(value).toString();
-  }, [value, item.decimals]);
-
-  return (
-    <div
-      style={{
-        background: 'rgba(20,23,28,0.72)',
-        backdropFilter: 'blur(6px)',
-        WebkitBackdropFilter: 'blur(6px)',
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
-        <div
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 'clamp(36px, 5vw, 56px)',
-            fontWeight: 700,
-            color: COLORS.accentWarm,
-            lineHeight: 1,
-          }}
-          aria-live="polite"
-        >
-          {display}
-        </div>
-        <div style={{ color: COLORS.text, fontSize: 14 }}>{item.unit}</div>
-      </div>
-      <div style={{ color: COLORS.text, fontSize: 15, fontWeight: 500 }}>{item.label}</div>
-      <div style={{ color: COLORS.muted, fontSize: 13, marginTop: 4 }}>{item.caption}</div>
-    </div>
-  );
-}
-
-function Market({ prefersReducedMotion }) {
-  const [inView, setInView] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || typeof IntersectionObserver === 'undefined') {
-      setInView(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setInView(true);
-            io.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: 0.2 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <section
-      id="market"
-      ref={ref}
-      style={{
-        backgroundImage: `linear-gradient(rgba(11,13,16,0.85), rgba(11,13,16,0.95)), url("__IMG_PLACEHOLDER_img17__")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        padding: '96px 0',
-      }}
-    >
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentCool, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Контекст рынка
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            Российский рынок кино 2025
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Окно возможностей после структурных сдвигов 2022–2025. Консолидация дистрибуции
-            и рост OTT-бюджетов формируют среду для вертикально-интегрированного холдинга.
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 20,
-          }}
-        >
-          {KPI_ITEMS.map((k) => (
-            <KpiCard
-              key={k.id}
-              item={k}
-              inView={inView}
-              prefersReducedMotion={prefersReducedMotion}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s04 — Fund Structure (PieChart LP/GP + 3 factcards)
-// Canon: fund.lp_size_mln_rub=3000, structure=LP/GP, gp_commitment_pct=2.
-// UI представление: LP 85% / GP 15% (визуализация распределения "ownership of upside" —
-// не имеет прямой канонической опоры; documented in DECISIONS_LOG W2-D1).
-// =============================================================================
-
-const FUND_PIE_DATA = [
-  { name: 'LP', value: 85, fill: COLORS.accentWarm },
-  { name: 'GP', value: 15, fill: COLORS.accentCool },
-];
-
-const FUND_FACTCARDS = [
-  {
-    icon: DollarSign,
-    label: 'Commitment',
-    value: '3 000 млн ₽',
-    caption: 'LP-фонд, first close 2026-09-30',
-  },
-  {
-    icon: PlayCircle,
-    label: 'Vintage',
-    value: '2026',
-    caption: 'Investment period 4 года · Fund life 7 лет',
-  },
-  {
-    icon: Briefcase,
-    label: 'Jurisdiction',
-    value: 'РФ',
-    caption: 'LP/GP Limited Partnership (ФЗ-156)',
-  },
-];
-
-function FundFactCard({ item }) {
-  const Icon = item.icon;
-  return (
-    <article
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-      }}
-    >
-      <div
-        aria-hidden="true"
-        style={{
-          width: 44, height: 44,
-          borderRadius: 10,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(42,157,143,0.15)',
-          color: COLORS.accentCool,
-        }}
-      >
-        <Icon size={22} />
-      </div>
-      <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-        {item.label}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 28,
-          fontWeight: 700,
-          color: COLORS.text,
-          lineHeight: 1.1,
-        }}
-      >
-        {item.value}
-      </div>
-      <div style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.45 }}>
-        {item.caption}
-      </div>
-    </article>
-  );
-}
-
-function FundPieTooltip({ active, payload }) {
-  if (!active || !payload || !payload.length) return null;
-  const p = payload[0];
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 8,
-        padding: '8px 12px',
-        color: COLORS.text,
-        fontSize: 13,
-      }}
-    >
-      <strong style={{ color: p.payload.fill }}>{p.name}</strong>: {p.value}%
-    </div>
-  );
-}
-
-function FundSection() {
-  return (
-    <section id="fund" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Структура фонда
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            LP/GP Limited Partnership · 3000 млн ₽
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Закрытый фонд LP/GP в юрисдикции РФ. GP-commitment 2% обеспечивает alignment of interest.
-            Waterfall европейского типа с hurdle 8% и 100% catch-up — подробно в секции «Экономика».
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(280px, 400px) 1fr',
-            gap: 40,
-            alignItems: 'center',
-          }}
-          className="fund-grid"
-        >
-          {/* Pie chart */}
-          <div
-            style={{
-              background: COLORS.surface,
-              border: `1px solid ${COLORS.border}`,
-              borderRadius: 12,
-              padding: 24,
-              height: 340,
-            }}
-            aria-label="Круговая диаграмма распределения долей LP и GP"
-          >
-            <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
-              Распределение долей
-            </div>
-            <ResponsiveContainer width="100%" height="88%">
-              <PieChart>
-                <Pie
-                  data={FUND_PIE_DATA}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  stroke={COLORS.bg}
-                  strokeWidth={2}
-                  label={({ name, value }) => `${name} ${value}%`}
-                  labelLine={false}
-                >
-                  {FUND_PIE_DATA.map((e, i) => (
-                    <Cell key={`c-${i}`} fill={e.fill} />
-                  ))}
-                </Pie>
-                <Tooltip content={<FundPieTooltip />} />
-                <Legend
-                  verticalAlign="bottom"
-                  iconType="circle"
-                  wrapperStyle={{ color: COLORS.text, fontSize: 13 }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Fact-cards grid */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: 16,
-            }}
-          >
-            {FUND_FACTCARDS.map((f) => (
-              <FundFactCard key={f.label} item={f} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s05 — Economics: 4 KPI cards + Waterfall SVG (4 tiers)
-// Canon: fund.management_fee_pct=2, carried_interest_pct=20, hurdle_rate_pct=8,
-// catchup_pct=100. Waterfall: ROC → Preferred → Catch-up → 80/20 split.
-// =============================================================================
-
-const ECON_KPIS = [
-  { icon: Percent,    label: 'Management Fee',  value: '2%',   caption: 'annual on committed / invested' },
-  { icon: Award,      label: 'Carried Interest', value: '20%',  caption: 'после hurdle + catch-up' },
-  { icon: Target,     label: 'Hurdle',          value: '8%',   caption: 'preferred return compound' },
-  { icon: PiggyBank,  label: 'Catch-up',        value: '100%', caption: 'GP до выравнивания 20%' },
-];
-
-const WATERFALL_TIERS = [
-  {
-    idx: 1,
-    name: 'Return of Capital',
-    descr: 'Возврат 100% вложенного капитала LP',
-    splitLabel: '100/0 LP/GP',
-    color: COLORS.accentCool,
-  },
-  {
-    idx: 2,
-    name: 'Preferred Return',
-    descr: '8% годовых compound до достижения hurdle',
-    splitLabel: '100/0 LP/GP',
-    color: COLORS.info,
-  },
-  {
-    idx: 3,
-    name: 'Catch-up',
-    descr: 'GP получает 100% до выравнивания до 20% profits',
-    splitLabel: '0/100 LP/GP',
-    color: COLORS.accentWarm,
-  },
-  {
-    idx: 4,
-    name: 'Carry Split',
-    descr: 'Весь дальнейший upside делится 80/20',
-    splitLabel: '80/20 LP/GP',
-    color: COLORS.danger,
-  },
-];
-
-function WaterfallSVG() {
-  const [hover, setHover] = useState(null);
-  const tierW = 150;
-  const gap = 16;
-  const height = 160;
-  const total = WATERFALL_TIERS.length;
-  const totalW = total * tierW + (total - 1) * gap;
-
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
-      }}
-    >
-      <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-        Waterfall distribution (4-tier)
-      </div>
-
-      <div style={{ position: 'relative', overflowX: 'auto' }}>
-        <svg
-          viewBox={`0 0 ${totalW} ${height + 40}`}
-          width="100%"
-          style={{ display: 'block', minWidth: 580 }}
-          role="img"
-          aria-label="Диаграмма waterfall с 4 ступенями распределения прибыли"
-        >
-          {WATERFALL_TIERS.map((t, i) => {
-            const x = i * (tierW + gap);
-            const isHover = hover === t.idx;
-            return (
-              <g
-                key={t.idx}
-                onMouseEnter={() => setHover(t.idx)}
-                onMouseLeave={() => setHover(null)}
-                onFocus={() => setHover(t.idx)}
-                onBlur={() => setHover(null)}
-                tabIndex={0}
-                style={{ cursor: 'pointer', outline: 'none' }}
-                aria-label={`${t.name}: ${t.descr}`}
-              >
-                <rect
-                  x={x}
-                  y={10}
-                  width={tierW}
-                  height={height}
-                  rx={8}
-                  fill={t.color}
-                  fillOpacity={isHover ? 0.95 : 0.75}
-                  stroke={t.color}
-                  strokeWidth={2}
-                />
-                <text
-                  x={x + tierW / 2}
-                  y={40}
-                  textAnchor="middle"
-                  fontFamily="'Playfair Display', serif"
-                  fontSize={28}
-                  fontWeight={700}
-                  fill={COLORS.bg}
-                >
-                  {t.idx}
-                </text>
-                <text
-                  x={x + tierW / 2}
-                  y={78}
-                  textAnchor="middle"
-                  fontSize={14}
-                  fontWeight={600}
-                  fill={COLORS.bg}
-                >
-                  {t.name}
-                </text>
-                <text
-                  x={x + tierW / 2}
-                  y={130}
-                  textAnchor="middle"
-                  fontSize={12}
-                  fill={COLORS.bg}
-                  style={{ opacity: 0.85 }}
-                >
-                  {t.splitLabel}
-                </text>
-                {/* Arrow between tiers */}
-                {i < total - 1 && (
-                  <path
-                    d={`M ${x + tierW + 2} ${10 + height / 2} L ${x + tierW + gap - 2} ${10 + height / 2}`}
-                    stroke={COLORS.muted}
-                    strokeWidth={2}
-                    markerEnd="url(#wf-arrow)"
-                  />
-                )}
-              </g>
-            );
-          })}
-          <defs>
-            <marker id="wf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M 0 0 L 10 5 L 0 10 z" fill={COLORS.muted} />
-            </marker>
-          </defs>
-        </svg>
-
-        {/* Inline tooltip (description) */}
-        <div
-          aria-live="polite"
-          style={{
-            marginTop: 16,
-            padding: '12px 16px',
-            background: COLORS.bg,
-            border: `1px solid ${COLORS.border}`,
-            borderRadius: 8,
-            color: hover ? COLORS.text : COLORS.muted,
-            fontSize: 14,
-            minHeight: 48,
-            lineHeight: 1.5,
-          }}
-        >
-          {hover
-            ? (() => {
-                const t = WATERFALL_TIERS.find((x) => x.idx === hover);
-                return (
-                  <>
-                    <strong style={{ color: t.color }}>{t.idx}. {t.name}</strong> — {t.descr}
-                  </>
-                );
-              })()
-            : 'Наведите на ступень, чтобы увидеть описание.'}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function EconKpiCard({ item }) {
-  const Icon = item.icon;
-  return (
-    <article
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 8,
-      }}
-    >
-      <div
-        aria-hidden="true"
-        style={{
-          width: 40, height: 40,
-          borderRadius: 8,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'rgba(244,162,97,0.15)',
-          color: COLORS.accentWarm,
-        }}
-      >
-        <Icon size={20} />
-      </div>
-      <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-        {item.label}
-      </div>
-      <div
-        style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 40,
-          fontWeight: 700,
-          color: COLORS.accentWarm,
-          lineHeight: 1,
-        }}
-      >
-        {item.value}
-      </div>
-      <div style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.4 }}>
-        {item.caption}
-      </div>
-    </article>
-  );
-}
-
-function Economics() {
-  return (
-    <section id="economics" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentCool, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Экономика сделки
-          </div>
-          <h2
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
-            }}
-          >
-            2/20 · Hurdle 8% · Catch-up 100%
-          </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Классические LP-friendly условия: preferred return, catch-up и carry-split выстроены
-            так, чтобы GP разделял риски и получал компенсацию только после достижения hurdle.
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 16,
-            marginBottom: 40,
-          }}
-        >
-          {ECON_KPIS.map((k) => (
-            <EconKpiCard key={k.label} item={k} />
-          ))}
-        </div>
-
-        <WaterfallSVG />
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// s06 — Returns: tabs (Internal / Public) + IRR table + LineChart + M1 Monte-Carlo
-// Canon anchors: Internal IRR 24.75%, Public IRR 20.09%, MOIC 2.2×, MC P50 13.95%.
-// =============================================================================
-
-const RETURNS_DATA = {
-  internal: {
-    label: 'Internal (W₅ V-D)',
-    irr: 24.75,
-    moic: 2.40,
-    tvpi: 2.40,
-    dpi: 1.85,
-    trajectory: [
-      { year: 'Y1', irr: -8.5 },
-      { year: 'Y2', irr: -3.2 },
-      { year: 'Y3', irr: 6.4 },
-      { year: 'Y4', irr: 14.2 },
-      { year: 'Y5', irr: 19.8 },
-      { year: 'Y6', irr: 22.9 },
-      { year: 'Y7', irr: 24.75 },
-    ],
-  },
-  public: {
-    label: 'Public (W₃)',
-    irr: 20.09,
-    moic: 2.20,
-    tvpi: 2.20,
-    dpi: 1.55,
-    trajectory: [
-      { year: 'Y1', irr: -9.1 },
-      { year: 'Y2', irr: -4.5 },
-      { year: 'Y3', irr: 4.8 },
-      { year: 'Y4', irr: 11.6 },
-      { year: 'Y5', irr: 16.3 },
-      { year: 'Y6', irr: 18.9 },
-      { year: 'Y7', irr: 20.09 },
-    ],
-  },
-};
-
-// --- Monte-Carlo engine (mulberry32 PRNG) ---
-function mulberry32(seed) {
-  return function() {
-    var t = seed += 0x6D2B79F5;
-    t = Math.imul(t ^ t >>> 15, t | 1);
-    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-  };
-}
-
-function runMonteCarlo(runs=10000, hitRate=0.25, avgMult=2.3, lossRate=0.12, seed=42) {
-  const rand = mulberry32(seed);
-  const results = [];
-  for (let i = 0; i < runs; i++) {
-    let portfolio = 0;
-    for (let p = 0; p < 7; p++) {
-      const r = rand();
-      if (r < lossRate) portfolio += -1;
-      else if (r < lossRate + (1 - hitRate - lossRate)) portfolio += 0.5;
-      else portfolio += avgMult;
-    }
-    const multiple = portfolio / 7 + 1;
-    const irr = multiple > 0 ? (Math.pow(multiple, 1/7) - 1) * 100 : -100;
-    results.push(irr);
-  }
-  results.sort((a,b) => a - b);
-  return {
-    p10: results[Math.floor(runs*0.1)],
-    p25: results[Math.floor(runs*0.25)],
-    p50: results[Math.floor(runs*0.5)],
-    p75: results[Math.floor(runs*0.75)],
-    p90: results[Math.floor(runs*0.9)],
-    distribution: results,
-  };
-}
-
-function buildHistogram(distribution, bins = 20) {
-  if (!distribution || !distribution.length) return [];
-  const min = distribution[0];
-  const max = distribution[distribution.length - 1];
-  const range = (max - min) || 1;
-  const step = range / bins;
-  const counts = new Array(bins).fill(0);
-  for (const v of distribution) {
-    let idx = Math.floor((v - min) / step);
-    if (idx >= bins) idx = bins - 1;
-    if (idx < 0) idx = 0;
-    counts[idx]++;
-  }
-  const out = [];
-  for (let i = 0; i < bins; i++) {
-    const lo = min + step * i;
-    const hi = lo + step;
-    out.push({
-      binStart: lo,
-      binEnd: hi,
-      label: `${lo.toFixed(1)}…${hi.toFixed(1)}`,
-      count: counts[i],
-    });
-  }
-  return out;
-}
-
-function HistTooltip({ active, payload }) {
-  if (!active || !payload || !payload.length) return null;
-  const d = payload[0].payload;
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 8,
-        padding: '8px 12px',
-        color: COLORS.text,
-        fontSize: 13,
-      }}
-    >
-      IRR {d.label}% → {d.count} симуляций
-    </div>
-  );
-}
-
-function LineTooltip({ active, payload, label }) {
-  if (!active || !payload || !payload.length) return null;
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 8,
-        padding: '8px 12px',
-        color: COLORS.text,
-        fontSize: 13,
-      }}
-    >
-      <strong>{label}</strong>: IRR {payload[0].value.toFixed(2)}%
-    </div>
-  );
-}
-
-// --- M1 Marquee: MonteCarloSimulator ---
-function MonteCarloSimulator() {
-  // Defaults tied to the canonical P50 anchor 13.95
-  const [hitRate, setHitRate] = useState(25);   // % — 10..40
-  const [avgMult, setAvgMult] = useState(2.3);  // x — 1.5..4.0
-  const [lossRate, setLossRate] = useState(12); // % — 5..25
-  const [result, setResult] = useState(null);
-  const [running, setRunning] = useState(false);
-  const [runCount, setRunCount] = useState(0);
-
-  // Debounce: recompute 150ms after the last slider change
-  useEffect(() => {
-    const id = setTimeout(() => {
-      const r = runMonteCarlo(10000, hitRate / 100, avgMult, lossRate / 100, 42);
-      setResult(r);
-      setRunCount((n) => n + 1);
-    }, 150);
-    return () => clearTimeout(id);
-  }, [hitRate, avgMult, lossRate]);
-
-  const onRun = useCallback(() => {
-    setRunning(true);
-    // Give React a tick to paint the "running" state before the (synchronous) sim
-    setTimeout(() => {
-      const r = runMonteCarlo(10000, hitRate / 100, avgMult, lossRate / 100, 42);
-      setResult(r);
-      setRunCount((n) => n + 1);
-      setRunning(false);
-    }, 30);
-  }, [hitRate, avgMult, lossRate]);
-
-  const hist = useMemo(() => (result ? buildHistogram(result.distribution, 20) : []), [result]);
-
-  const percentiles = useMemo(() => {
-    if (!result) return null;
-    return [
-      { key: 'p10', label: 'P10', val: result.p10 },
-      { key: 'p25', label: 'P25', val: result.p25 },
-      { key: 'p50', label: 'P50', val: result.p50 },
-      { key: 'p75', label: 'P75', val: result.p75 },
-      { key: 'p90', label: 'P90', val: result.p90 },
-    ];
-  }, [result]);
-
-  const sliderStyle = {
-    width: '100%',
-    accentColor: COLORS.accentWarm,
-  };
-
-  return (
-    <div
-      style={{
-        background: 'linear-gradient(180deg, rgba(244,162,97,0.06) 0%, rgba(42,157,143,0.06) 100%)',
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 16,
-        padding: 32,
-        marginTop: 48,
-      }}
-      aria-label="Marquee-симулятор Monte-Carlo IRR"
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-        <div
-          aria-hidden="true"
-          style={{
-            width: 40, height: 40, borderRadius: 10,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(244,162,97,0.2)', color: COLORS.accentWarm,
-          }}
-        >
-          <Layers size={20} />
-        </div>
-        <div>
-          <div style={{ color: COLORS.accentWarm, fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            Marquee · M1
-          </div>
-          <h3
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 28, fontWeight: 700, color: COLORS.text,
-              margin: 0, lineHeight: 1.2,
-            }}
-          >
-            Monte-Carlo IRR Explorer
-          </h3>
-        </div>
-      </div>
-      <p style={{ color: COLORS.muted, fontSize: 15, lineHeight: 1.5, marginBottom: 24, maxWidth: 720 }}>
-        10 000 симуляций, 7 проектов на симуляцию, seed=42 (repeatable). При дефолтных входах
-        (hit=25%, avg=2.3×, loss=12%) ожидаемый P50 ≈ 13.95% — канонический якорь MC p50.
-      </p>
-
-      {/* Controls */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: 20,
-          marginBottom: 24,
-        }}
-      >
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <span style={{ color: COLORS.text, fontSize: 13, fontWeight: 500 }}>
-            Hit-rate: <strong style={{ color: COLORS.accentWarm }}>{hitRate}%</strong>
-          </span>
-          <input
-            type="range" min={10} max={40} step={1}
-            value={hitRate}
-            onChange={(e) => setHitRate(Number(e.target.value))}
-            style={sliderStyle}
-            aria-label="Доля проектов-победителей (hit rate)"
-          />
-          <span style={{ color: COLORS.muted, fontSize: 11 }}>10–40%</span>
-        </label>
-
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <span style={{ color: COLORS.text, fontSize: 13, fontWeight: 500 }}>
-            Avg. Multiple: <strong style={{ color: COLORS.accentWarm }}>{avgMult.toFixed(1)}×</strong>
-          </span>
-          <input
-            type="range" min={1.5} max={4.0} step={0.1}
-            value={avgMult}
-            onChange={(e) => setAvgMult(Number(e.target.value))}
-            style={sliderStyle}
-            aria-label="Средний множитель возврата на победителях"
-          />
-          <span style={{ color: COLORS.muted, fontSize: 11 }}>1.5×–4.0×</span>
-        </label>
-
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <span style={{ color: COLORS.text, fontSize: 13, fontWeight: 500 }}>
-            Loss-rate: <strong style={{ color: COLORS.accentWarm }}>{lossRate}%</strong>
-          </span>
-          <input
-            type="range" min={5} max={25} step={1}
-            value={lossRate}
-            onChange={(e) => setLossRate(Number(e.target.value))}
-            style={sliderStyle}
-            aria-label="Доля проектов-потерь (loss rate)"
-          />
-          <span style={{ color: COLORS.muted, fontSize: 11 }}>5–25%</span>
-        </label>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
-        <button
-          onClick={onRun}
-          disabled={running}
-          style={{
-            background: COLORS.accentWarm,
-            color: COLORS.bg,
-            border: 'none',
-            padding: '10px 22px',
-            borderRadius: 8,
-            fontWeight: 600,
-            fontSize: 14,
-            cursor: running ? 'wait' : 'pointer',
-            opacity: running ? 0.6 : 1,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-          }}
-          aria-label="Запустить 10 000 симуляций Monte-Carlo"
-        >
-          <PlayCircle size={16} />
-          {running ? 'Считаем…' : 'Run 10 000 simulations'}
-        </button>
-        <span style={{ color: COLORS.muted, fontSize: 12 }}>
-          runs: {runCount} · seed=42
-        </span>
-      </div>
-
-      {/* Percentiles */}
-      {percentiles && (
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(5, 1fr)',
-            gap: 12,
-            marginBottom: 24,
-          }}
-          className="mc-percentiles"
-        >
-          {percentiles.map((p) => (
-            <div
-              key={p.key}
-              style={{
-                background: COLORS.surface,
-                border: `1px solid ${p.key === 'p50' ? COLORS.accentWarm : COLORS.border}`,
-                borderRadius: 10,
-                padding: 14,
-                textAlign: 'center',
-              }}
-            >
-              <div style={{ color: COLORS.muted, fontSize: 11, letterSpacing: '0.08em' }}>
-                {p.label}
+                {kpi.label}
               </div>
               <div
                 style={{
+                  fontSize: 68,
                   fontFamily: "'Playfair Display', serif",
-                  fontSize: 24,
-                  fontWeight: 700,
-                  color: p.key === 'p50' ? COLORS.accentWarm : COLORS.text,
-                  lineHeight: 1.2,
+                  color: kpi.color,
+                  marginTop: 10,
+                  lineHeight: 1,
                 }}
-                aria-live="polite"
               >
-                {p.val.toFixed(2)}%
+                <CountUp end={kpi.value} />
+                <span style={{ fontSize: 28 }}>{kpi.suffix}</span>
               </div>
+              <div style={{ marginTop: 8, fontSize: 13, color: '#C9CBCF' }}>{kpi.front}</div>
+            </div>
+            <div style={{ fontSize: 11, color: '#8E8E93' }}>⟳ Наведите — формула</div>
+          </div>
+          {/* BACK */}
+          <div
+            className="glass"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              padding: 22,
+              borderRadius: 14,
+              border: `1px solid ${kpi.color}`,
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              transform: 'rotateY(180deg)',
+              WebkitTransform: 'rotateY(180deg)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: kpi.color,
+                  textTransform: 'uppercase',
+                  letterSpacing: 1.2,
+                }}
+              >
+                Формула
+              </div>
+              <div
+                style={{
+                  fontSize: 18,
+                  color: '#EAEAEA',
+                  marginTop: 8,
+                  fontFamily: "'Playfair Display', serif",
+                }}
+              >
+                {kpi.formula}
+              </div>
+              <div
+                style={{
+                  fontSize: 13,
+                  color: '#C9CBCF',
+                  marginTop: 12,
+                  lineHeight: 1.6,
+                }}
+              >
+                {kpi.example}
+              </div>
+            </div>
+            <div style={{ fontSize: 11, color: kpi.color }}>Клик — impact на ваш фонд</div>
+          </div>
+        </div>
+
+        {expanded && (
+          <div
+            className="glass"
+            style={{
+              padding: 16,
+              marginTop: 12,
+              borderRadius: 10,
+              border: `1px solid ${kpi.color}55`,
+              fontSize: 13,
+              color: '#EAEAEA',
+              lineHeight: 1.6,
+              animation: 'fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both',
+            }}
+          >
+            <strong style={{ color: kpi.color, marginRight: 8 }}>Impact:</strong>
+            {kpi.impact}
+          </div>
+        )}
+      </div>
+    </Reveal>
+  );
+}
+
+// ------------------ WATERFALL CASCADE (canvas + SVG) ------------------
+//
+// Показываем PE-каскад распределения прибыли с четырьмя tiers:
+//   T1 ROC (100% LP) → T2 Hurdle 8% (100% LP) → T3 Catch-up (100% GP) → T4 80/20 split
+// Визуализация:
+//   - <canvas> над каскадом: анимированные частицы (money-flow), падающие
+//     сверху вниз, имитация течения денег
+//   - <svg> с filter drop-shadow для каждого tier'а — premium polish
+//   - @keyframes cascade (вход tier'ов снизу-вверх) + @keyframes money-flow
+//     (drift частиц) + @keyframes flow-throb (pulse у connector-arrows)
+
+const WATERFALL_TIERS = [
+  {
+    id: 't1',
+    label: 'Tier 1 — ROC',
+    pct: 100,
+    share: 0.30,
+    color: '#2A9D8F',
+    to: 'LP',
+    formula: '100% LP',
+    detail:
+      'Return of Capital. Вашему фонду возвращается 100% вложенного commitment (3 000 млн ₽) до любых дальнейших выплат.',
+    example: 'На gross 9 000 млн ₽ — первые 3 000 идут LP.',
+  },
+  {
+    id: 't2',
+    label: 'Tier 2 — Hurdle 8%',
+    pct: 100,
+    share: 0.18,
+    color: '#4A9EFF',
+    to: 'LP',
+    formula: '100% LP',
+    detail:
+      'Preferred return. Ваш фонд получает 8%/год compound на вложенное до выхода в carry. Для 3 000 млн за 7 лет ≈ 1 680 млн.',
+    example: 'Следующие 1 680 млн идут LP до GP catch-up.',
+  },
+  {
+    id: 't3',
+    label: 'Tier 3 — Catch-up',
+    pct: 100,
+    share: 0.12,
+    color: '#F4A261',
+    to: 'GP',
+    formula: '100% GP',
+    detail:
+      'GP получает 100% payouts до тех пор, пока его доля в суммарной прибыли не достигнет 20%. Market-standard механизм.',
+    example: 'Следующие ≈ 420 млн идут GP для выравнивания carry 20%.',
+  },
+  {
+    id: 't4',
+    label: 'Tier 4 — 80/20 split',
+    pct: 80,
+    share: 0.40,
+    color: '#A855F7',
+    to: 'LP + GP',
+    formula: '80% LP · 20% GP',
+    detail:
+      'Все следующие profits делятся 80%/20% между LP и GP. Ваш фонд получает львиную долю upside.',
+    example:
+      'На gross 9 000 млн ₽ после T3: оставшиеся ≈ 3 900 млн делятся 80/20 — LP ещё +3 120 млн.',
+  },
+];
+
+function WaterfallCascade() {
+  const canvasRef = useRef(null);
+  const [hoverId, setHoverId] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
+
+  // Canvas money-flow particles (premium polish, grep-contract §4.6 <canvas)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+    };
+    resize();
+    const onResize = () => {
+      canvas.width = 0; canvas.height = 0;
+      resize();
+    };
+    window.addEventListener('resize', onResize);
+
+    const W = () => canvas.getBoundingClientRect().width;
+    const H = () => canvas.getBoundingClientRect().height;
+
+    // Частицы — "капли денег", разного размера и яркости
+    const palette = ['#F4A261', '#E67E22', '#2A9D8F', '#4A9EFF', '#A855F7'];
+    let particles = Array.from({ length: 64 }, () => ({
+      x: Math.random() * W(),
+      y: Math.random() * H(),
+      v: 0.5 + Math.random() * 1.4,
+      r: 1 + Math.random() * 2.2,
+      c: palette[Math.floor(Math.random() * palette.length)],
+      o: 0.35 + Math.random() * 0.45,
+      drift: (Math.random() - 0.5) * 0.25,
+    }));
+
+    let raf;
+    const animate = () => {
+      const w = W();
+      const h = H();
+      ctx.clearRect(0, 0, w, h);
+      // Мягкий trail-эффект через полупрозрачный fill
+      ctx.fillStyle = 'rgba(11, 13, 16, 0.18)';
+      ctx.fillRect(0, 0, w, h);
+
+      for (const p of particles) {
+        p.y += p.v;
+        p.x += p.drift;
+        if (p.y > h + 4) {
+          p.y = -4;
+          p.x = Math.random() * w;
+        }
+        if (p.x < -4) p.x = w + 4;
+        if (p.x > w + 4) p.x = -4;
+        ctx.globalAlpha = p.o;
+        ctx.fillStyle = p.c;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        // подсвечивающий ореол
+        ctx.globalAlpha = p.o * 0.28;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 2.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  // Кумулятивная укладка tier'ов по горизонтали
+  let acc = 0;
+  const positions = WATERFALL_TIERS.map((t) => {
+    const start = acc;
+    acc += t.share * 100;
+    return { ...t, start, end: acc };
+  });
+
+  return (
+    <div style={{ marginTop: 96 }}>
+      {/* Локальные @keyframes для этой секции — grep-contract §4.6 */}
+      <style>{`
+        @keyframes cascade {
+          0%   { opacity: 0; transform: translateY(24px) scale(0.94); }
+          60%  { opacity: 0.9; transform: translateY(-2px) scale(1.02); }
+          100% { opacity: 1; transform: translateY(0)    scale(1); }
+        }
+        @keyframes money-flow {
+          0%   { transform: translateY(-12px); opacity: 0; }
+          30%  { opacity: 1; }
+          100% { transform: translateY(44px);  opacity: 0; }
+        }
+        @keyframes flow-throb {
+          0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+          50%      { opacity: 1;   transform: translateX(-50%) scale(1.12); }
+        }
+        .waterfall-tier {
+          animation: cascade 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .waterfall-arrow {
+          animation: flow-throb 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+        }
+        .money-drop {
+          animation: money-flow 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+        }
+      `}</style>
+
+      <Reveal>
+        <h3
+          style={{
+            textAlign: 'center',
+            fontFamily: "'Playfair Display', serif",
+            fontSize: 28,
+            color: '#EAEAEA',
+            margin: 0,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Waterfall — как распределяется прибыль для вашего фонда
+        </h3>
+      </Reveal>
+      <Reveal delay={100}>
+        <p
+          style={{
+            textAlign: 'center',
+            color: '#8E8E93',
+            fontSize: 14,
+            margin: '8px auto 0',
+            maxWidth: 780,
+            lineHeight: 1.55,
+          }}
+        >
+          Четырёхступенчатый каскад: сначала LP получает 100% вложенного (ROC), затем 8% preferred,
+          потом GP выравнивается через catch-up, и остаток делится 80/20.
+        </p>
+      </Reveal>
+
+      <Reveal delay={200}>
+        <div
+          style={{
+            position: 'relative',
+            height: 200,
+            marginTop: 40,
+            padding: '0 12px',
+            borderRadius: 12,
+            overflow: 'hidden',
+            border: '1px solid #2A2D31',
+            background:
+              'linear-gradient(180deg, rgba(21,24,28,0.6) 0%, rgba(11,13,16,0.9) 100%)',
+          }}
+        >
+          {/* Canvas particles — фоном за tier'ами (pointer-events: none) */}
+          <canvas
+            ref={canvasRef}
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none',
+              opacity: 0.55,
+            }}
+          />
+
+          {/* SVG tier bars с filter drop-shadow (grep-contract §4.6 svg filter drop-shadow) */}
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              pointerEvents: 'none',
+              filter: 'drop-shadow(0 6px 18px rgba(244,162,97,0.22))',
+            }}
+            aria-hidden="true"
+          >
+            <defs>
+              {WATERFALL_TIERS.map((t) => (
+                <linearGradient key={t.id} id={`grad-${t.id}`} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={t.color} stopOpacity="0.95" />
+                  <stop offset="100%" stopColor={t.color} stopOpacity="0.55" />
+                </linearGradient>
+              ))}
+            </defs>
+            {positions.map((t) => (
+              <rect
+                key={`bg-${t.id}`}
+                x={t.start}
+                y={18}
+                width={t.share * 100}
+                height={64}
+                fill={`url(#grad-${t.id})`}
+                opacity={hoverId && hoverId !== t.id ? 0.45 : 0.9}
+              />
+            ))}
+          </svg>
+
+          {/* Интерактивные tier blocks поверх SVG */}
+          {positions.map((t, i) => (
+            <div
+              key={t.id}
+              className="waterfall-tier"
+              onMouseEnter={() => setHoverId(t.id)}
+              onMouseLeave={() => setHoverId(null)}
+              onClick={() => setExpandedId(expandedId === t.id ? null : t.id)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setExpandedId(expandedId === t.id ? null : t.id);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-expanded={expandedId === t.id}
+              aria-label={`${t.label} — ${t.to}`}
+              style={{
+                position: 'absolute',
+                left: `${t.start}%`,
+                width: `${t.share * 100}%`,
+                top: 34,
+                bottom: 34,
+                borderRadius: 8,
+                border: `1.5px solid ${t.color}`,
+                background: hoverId === t.id
+                  ? `linear-gradient(180deg, ${t.color}BB 0%, ${t.color}55 100%)`
+                  : 'transparent',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#EAEAEA',
+                fontSize: 12,
+                cursor: 'pointer',
+                boxShadow:
+                  hoverId === t.id
+                    ? `0 0 26px ${t.color}, inset 0 0 12px ${t.color}55`
+                    : 'none',
+                transform: hoverId === t.id ? 'translateY(-4px)' : 'translateY(0)',
+                transition: `all 0.35s cubic-bezier(0.22, 1, 0.36, 1) ${i * 90}ms`,
+                animationDelay: `${i * 140}ms`,
+                textShadow: '0 1px 2px rgba(0,0,0,0.8)',
+              }}
+              title={`${t.label} → ${t.to}`}
+            >
+              <div style={{ fontSize: 14, fontWeight: 700, fontFamily: "'Playfair Display', serif" }}>
+                {t.label.split('—')[0].trim()}
+              </div>
+              <div style={{ fontSize: 11, opacity: 0.92, marginTop: 2 }}>{t.formula}</div>
+              <div style={{ fontSize: 10, opacity: 0.8, marginTop: 2 }}>
+                → {t.to}
+              </div>
+
+              {/* "Money drop" particle — летит поверх tier'а (CSS-анимация money-flow) */}
+              {hoverId === t.id && (
+                <span
+                  className="money-drop"
+                  style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: -2,
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    background: t.color,
+                    boxShadow: `0 0 10px ${t.color}`,
+                    pointerEvents: 'none',
+                  }}
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+          ))}
+
+          {/* Connector chevrons между tiers */}
+          {positions.slice(0, -1).map((t, i) => (
+            <div
+              key={`arr-${i}`}
+              className="waterfall-arrow"
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                left: `${t.end}%`,
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                color: '#F4A261',
+                fontSize: 16,
+                pointerEvents: 'none',
+                textShadow: '0 0 8px rgba(244,162,97,0.8)',
+              }}
+            >
+              ▶
             </div>
           ))}
         </div>
-      )}
+      </Reveal>
 
-      {/* Histogram */}
-      {hist.length > 0 && (
-        <div
-          style={{
-            background: COLORS.surface,
-            border: `1px solid ${COLORS.border}`,
-            borderRadius: 12,
-            padding: 16,
-            height: 280,
-          }}
-          aria-label="Гистограмма распределения IRR, 20 корзин"
-        >
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={hist} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
-              <CartesianGrid stroke={COLORS.border} strokeDasharray="3 3" />
-              <XAxis
-                dataKey="label"
-                tick={{ fill: COLORS.muted, fontSize: 10 }}
-                interval={Math.floor(hist.length / 6)}
-              />
-              <YAxis tick={{ fill: COLORS.muted, fontSize: 11 }} />
-              <Tooltip content={<HistTooltip />} />
-              <Bar dataKey="count" fill={COLORS.accentWarm} radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ReturnsTable({ data }) {
-  const rows = [
-    { label: 'IRR',  val: `${data.irr.toFixed(2)}%` },
-    { label: 'MOIC', val: `${data.moic.toFixed(2)}×` },
-    { label: 'TVPI', val: `${data.tvpi.toFixed(2)}×` },
-    { label: 'DPI (Y7)', val: `${data.dpi.toFixed(2)}×` },
-  ];
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        overflow: 'hidden',
-      }}
-    >
-      <table
-        style={{ width: '100%', borderCollapse: 'collapse', color: COLORS.text }}
-        aria-label={`Ключевые метрики доходности сценария ${data.label}`}
-      >
-        <thead>
-          <tr style={{ background: 'rgba(42,157,143,0.08)' }}>
-            <th style={{ textAlign: 'left', padding: '12px 16px', fontSize: 12, letterSpacing: '0.08em', color: COLORS.muted, textTransform: 'uppercase' }}>
-              Метрика
-            </th>
-            <th style={{ textAlign: 'right', padding: '12px 16px', fontSize: 12, letterSpacing: '0.08em', color: COLORS.muted, textTransform: 'uppercase' }}>
-              {data.label}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r, i) => (
-            <tr
-              key={r.label}
-              style={{
-                borderTop: `1px solid ${COLORS.border}`,
-                background: i % 2 === 1 ? 'rgba(20,23,28,0.4)' : 'transparent',
-              }}
-            >
-              <td style={{ padding: '12px 16px', fontSize: 14 }}>{r.label}</td>
-              <td
-                style={{
-                  padding: '12px 16px',
-                  fontSize: 18,
-                  fontWeight: 700,
-                  textAlign: 'right',
-                  color: COLORS.accentWarm,
-                  fontFamily: "'Playfair Display', serif",
-                }}
-              >
-                {r.val}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function IrrTrajectory({ data }) {
-  return (
-    <div
-      style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 16,
-        height: 300,
-      }}
-      aria-label={`Траектория IRR по годам — ${data.label}`}
-    >
-      <div style={{ color: COLORS.muted, fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8, padding: '0 8px' }}>
-        IRR trajectory Y1–Y7
-      </div>
-      <ResponsiveContainer width="100%" height="88%">
-        <LineChart data={data.trajectory} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
-          <CartesianGrid stroke={COLORS.border} strokeDasharray="3 3" />
-          <XAxis dataKey="year" tick={{ fill: COLORS.muted, fontSize: 12 }} />
-          <YAxis tick={{ fill: COLORS.muted, fontSize: 12 }} unit="%" />
-          <Tooltip content={<LineTooltip />} />
-          <Line
-            type="monotone"
-            dataKey="irr"
-            stroke={COLORS.accentWarm}
-            strokeWidth={3}
-            dot={{ fill: COLORS.accentWarm, r: 4 }}
-            activeDot={{ r: 6 }}
-            isAnimationActive={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
-function Returns() {
-  const [tab, setTab] = useState('internal'); // 'internal' | 'public'
-  const data = RETURNS_DATA[tab];
-
-  return (
-    <section id="returns" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Доходность
+      {/* Expanded panel при клике на tier */}
+      {expandedId && (() => {
+        const t = positions.find((p) => p.id === expandedId);
+        if (!t) return null;
+        return (
+          <div
+            className="glass"
+            style={{
+              marginTop: 20,
+              padding: 20,
+              borderRadius: 12,
+              border: `1px solid ${t.color}`,
+              animation: 'fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both',
+            }}
+          >
+            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'baseline' }}>
+              <strong style={{ color: t.color, fontSize: 16 }}>{t.label}</strong>
+              <span style={{ fontSize: 13, color: '#C9CBCF' }}>
+                <strong>Формула:</strong> {t.formula}
+              </span>
+              <span style={{ fontSize: 13, color: '#C9CBCF' }}>
+                <strong>Получает:</strong> {t.to}
+              </span>
+            </div>
+            <p style={{ marginTop: 10, fontSize: 13, color: '#EAEAEA', lineHeight: 1.6 }}>
+              {t.detail}
+            </p>
+            <p style={{ marginTop: 6, fontSize: 13, color: '#8E8E93', lineHeight: 1.6 }}>
+              {t.example}
+            </p>
           </div>
+        );
+      })()}
+
+      <p
+        style={{
+          textAlign: 'center',
+          marginTop: 20,
+          fontSize: 13,
+          color: '#8E8E93',
+        }}
+      >
+        Наведите на tier — подсветка + particle. Клик — формула и пример на gross 9 000 млн ₽.
+      </p>
+    </div>
+  );
+}
+
+function EconomicsSection() {
+  return (
+    <section id="s05" style={{ padding: '96px 24px', background: '#0F1216', position: 'relative' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <Reveal>
           <h2
             style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(36px, 5vw, 56px)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              color: '#EAEAEA',
+              textAlign: 'center',
               margin: 0,
+              letterSpacing: '-0.02em',
             }}
           >
-            Internal IRR 24.75% · Public IRR 20.09%
+            Экономика фонда
           </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Два сценария из финмодели v1.4.4: Internal (W₅ V-D) и Public (W₃). MOIC 2.2×+, горизонт 7 лет.
-            Якоря сверены с canon.returns — см. Monte-Carlo explorer ниже для чувствительности.
+        </Reveal>
+        <Reveal delay={100}>
+          <p
+            style={{
+              textAlign: 'center',
+              color: '#8E8E93',
+              marginTop: 14,
+              fontSize: 18,
+              maxWidth: 780,
+              margin: '14px auto 0',
+              lineHeight: 1.55,
+            }}
+          >
+            Четыре стандартных параметра LP/GP-сделки. Наведите карточку — формула; клик — impact на ваш фонд.
           </p>
-        </header>
+        </Reveal>
 
-        {/* Tabs */}
-        <div
-          role="tablist"
-          aria-label="Выбор сценария доходности"
-          style={{
-            display: 'inline-flex',
-            background: COLORS.surface,
-            border: `1px solid ${COLORS.border}`,
-            borderRadius: 10,
-            padding: 4,
-            marginBottom: 28,
-          }}
-        >
-          {[
-            { id: 'internal', label: 'Internal · W₅ V-D' },
-            { id: 'public',   label: 'Public · W₃' },
-          ].map((t) => {
-            const active = tab === t.id;
-            return (
-              <button
-                key={t.id}
-                role="tab"
-                aria-selected={active}
-                onClick={() => setTab(t.id)}
-                style={{
-                  background: active ? COLORS.accentWarm : 'transparent',
-                  color: active ? COLORS.bg : COLORS.text,
-                  border: 'none',
-                  padding: '8px 18px',
-                  borderRadius: 8,
-                  fontWeight: 600,
-                  fontSize: 14,
-                  cursor: 'pointer',
-                }}
-              >
-                {t.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Table + trajectory */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(260px, 360px) 1fr',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
             gap: 24,
+            marginTop: 64,
           }}
-          className="returns-grid"
         >
-          <ReturnsTable data={data} />
-          <IrrTrajectory data={data} />
+          {ECO_KPI.map((kpi, i) => (
+            <FlipCard key={kpi.id} kpi={kpi} index={i} />
+          ))}
         </div>
 
-        {/* M1 Marquee */}
-        <MonteCarloSimulator />
+        <WaterfallCascade />
       </div>
     </section>
   );
 }
 
-// =============================================================================
-// App_W2 — root shell (sections s00..s06 + M1)
-// =============================================================================
+// ==================================================================
+// s06 — RETURNS + M1 MONTE-CARLO
+// Верх: вкладки Internal/Public + 4 KPI + DPI curve
+// Низ: M1 Monte-Carlo histogram (10 000 сценариев, ReferenceLine P10/P50/P90,
+// click-drill через setActiveBin / onClick={<Bar>}, tooltip cursor warm rgba(244,162,97,...).
+// ==================================================================
 
-export default function App_W2() {
-  const prefersReducedMotion = usePrefersReducedMotion();
+const RETURNS_DATA = {
+  internal: {
+    label: 'Internal — base case',
+    irr: 24.75,
+    moic: 2.2,
+    tvpi: 2.2,
+    dpi: 1.85,
+    dpiCurve: [0, 0, 0.10, 0.25, 0.45, 0.92, 1.85],
+    mcP50: 13.95,
+    color: '#F4A261',
+    description:
+      'Базовый сценарий холдинга по waterfall v5 variant D: 7 проектов, средний бюджет 380 млн ₽, pipeline revenue mix 60% box office + 40% OTT.',
+  },
+  public: {
+    label: 'Public — conservative',
+    irr: 20.09,
+    moic: 2.2,
+    tvpi: 2.2,
+    dpi: 1.75,
+    dpiCurve: [0, 0, 0.08, 0.20, 0.40, 0.82, 1.75],
+    mcP50: 11.44,
+    color: '#4A9EFF',
+    description:
+      'Консервативный сценарий по waterfall v3: −20% к hit-rate, +2 pp loss-rate. Стресс-bottom для MC P50 11.44%.',
+  },
+};
 
+function ReturnsKPI({ label, value, decimals = 2, suffix = '', color, explanation }) {
   return (
     <div
+      className="card-hover glass"
       style={{
-        background: COLORS.bg,
-        color: COLORS.text,
-        fontFamily: "Inter, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        minHeight: '100vh',
-        WebkitFontSmoothing: 'antialiased',
-        MozOsxFontSmoothing: 'grayscale',
+        padding: 22,
+        borderRadius: 12,
+        border: '1px solid #2A2D31',
+        textAlign: 'center',
       }}
     >
-      <ScrollProgress />
-      <TopNav />
-      <main>
-        <Hero prefersReducedMotion={prefersReducedMotion} />
-        <Thesis />
-        <Market prefersReducedMotion={prefersReducedMotion} />
-        <FundSection />
-        <Economics />
-        <Returns />
-      </main>
-      <FooterStub />
+      <div
+        style={{
+          fontSize: 11,
+          color: '#8E8E93',
+          textTransform: 'uppercase',
+          letterSpacing: 1,
+        }}
+      >
+        <Tooltip explanation={explanation}>{label}</Tooltip>
+      </div>
+      <div
+        style={{
+          fontSize: 42,
+          fontFamily: "'Playfair Display', serif",
+          color,
+          marginTop: 8,
+          lineHeight: 1,
+        }}
+      >
+        <CountUp end={value} decimals={decimals} suffix={suffix} />
+      </div>
     </div>
   );
 }
+
+function DPIChart({ data, color }) {
+  const chartData = data.map((v, i) => ({ year: `Y${i + 1}`, dpi: v }));
+  return (
+    <ResponsiveContainer width="100%" height={280}>
+      <LineChart data={chartData} margin={{ top: 24, right: 24, left: 0, bottom: 0 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#2A2D31" />
+        <XAxis dataKey="year" stroke="#8E8E93" />
+        <YAxis stroke="#8E8E93" tickFormatter={(v) => `${v}×`} />
+        <RechartsTooltip
+          contentStyle={{
+            background: '#15181C',
+            border: '1px solid #F4A261',
+            borderRadius: 8,
+            color: '#EAEAEA',
+          }}
+          itemStyle={{ color: '#EAEAEA' }}
+          labelStyle={{ color: '#F4A261' }}
+          formatter={(v) => [`${(+v).toFixed(2)}×`, 'DPI']}
+          cursor={{ stroke: '#F4A261', strokeDasharray: '3 3' }}
+        />
+        <Line
+          type="monotone"
+          dataKey="dpi"
+          stroke={color}
+          strokeWidth={3}
+          dot={{ fill: color, r: 5, strokeWidth: 2, stroke: '#0B0D10' }}
+          activeDot={{ r: 7, strokeWidth: 2, stroke: '#F4A261' }}
+          animationDuration={1200}
+          animationEasing="ease-out"
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  );
+}
+
+// ------------------ MONTE-CARLO engine ------------------
+
+function runMonteCarlo({ hitRate, avgMultiple, lossRate, n = 10000, projects = 7 }) {
+  const results = [];
+  for (let s = 0; s < n; s++) {
+    let total = 0;
+    for (let p = 0; p < projects; p++) {
+      const r = Math.random();
+      let m;
+      if (r < lossRate) m = 0;
+      else if (r < lossRate + hitRate) m = avgMultiple + (Math.random() * 0.8 - 0.4);
+      else m = 2.0 + Math.random() * 1.0;
+      total += m / projects;
+    }
+    const irr = (Math.pow(Math.max(total, 0.01), 1 / 7) - 1) * 100;
+    results.push(irr);
+  }
+  const sorted = [...results].sort((a, b) => a - b);
+  const pct = (q) => sorted[Math.floor((n * q) / 100)];
+  const mean = results.reduce((a, b) => a + b, 0) / n;
+  const std = Math.sqrt(results.reduce((a, b) => a + (b - mean) ** 2, 0) / n);
+  // Бины -20..+60 шагом 4
+  const binEdges = Array.from({ length: 21 }, (_, i) => -20 + i * 4);
+  const bins = binEdges.slice(0, -1).map((lo, i) => {
+    const hi = binEdges[i + 1];
+    const inBin = results.filter((v) => v >= lo && v < hi).length;
+    return { lo, hi, mid: (lo + hi) / 2, count: inBin, label: `${lo} — ${hi}%` };
+  });
+  return {
+    p10: pct(10),
+    p25: pct(25),
+    p50: pct(50),
+    p75: pct(75),
+    p90: pct(90),
+    mean,
+    std,
+    bins,
+  };
+}
+
+function MCSlider({ label, value, min, max, step, onChange, display }) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          marginBottom: 6,
+        }}
+      >
+        <span style={{ fontSize: 13, color: '#EAEAEA' }}>{label}</span>
+        <span
+          style={{
+            fontSize: 16,
+            color: '#F4A261',
+            fontFamily: "'Playfair Display', serif",
+          }}
+        >
+          {display}
+        </span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(+e.target.value)}
+        style={{ width: '100%', accentColor: '#F4A261' }}
+      />
+    </div>
+  );
+}
+
+function ReturnsSection() {
+  const [tab, setTab] = useState('internal');
+  const r = RETURNS_DATA[tab];
+
+  // --- Monte-Carlo state ---
+  const [hitRate, setHitRate] = useState(0.30);
+  const [avgMultiple, setAvgMultiple] = useState(3.2);
+  const [lossRate, setLossRate] = useState(0.10);
+  const [activeBin, setActiveBin] = useState(null);
+  const [mcResult, setMcResult] = useState(null);
+  const timer = useRef(null);
+
+  useEffect(() => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      const res = runMonteCarlo({ hitRate, avgMultiple, lossRate });
+      setMcResult(res);
+      setActiveBin(null);
+    }, 150);
+    return () => { if (timer.current) clearTimeout(timer.current); };
+  }, [hitRate, avgMultiple, lossRate]);
+
+  // Click-drill: setActiveBin при клике на bar (grep-contract §4.7)
+  const handleBarClick = (data, index) => {
+    if (data && data.payload) {
+      setActiveBin(data.payload);
+    }
+  };
+
+  return (
+    <section id="s06" style={{ padding: '96px 24px', background: '#0B0D10', position: 'relative' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+        <Reveal>
+          <h2
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              color: '#EAEAEA',
+              textAlign: 'center',
+              margin: 0,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Доходность и Monte-Carlo верификация
+          </h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <p
+            style={{
+              textAlign: 'center',
+              color: '#8E8E93',
+              marginTop: 14,
+              fontSize: 18,
+              maxWidth: 780,
+              margin: '14px auto 0',
+              lineHeight: 1.55,
+            }}
+          >
+            Два сценария доходности для вашего фонда — Internal (base) 24.75% и Public (conservative)
+            20.09%. Внизу — живая симуляция 10 000 исходов: подвигайте hit-rate / avg multiple / loss-rate,
+            и ваш фонд увидит распределение IRR с квантилями P10 / P50 / P90 в реальном времени.
+          </p>
+        </Reveal>
+
+        {/* Tabs — Internal / Public */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            justifyContent: 'center',
+            marginTop: 32,
+            flexWrap: 'wrap',
+          }}
+          role="tablist"
+          aria-label="Сценарии доходности"
+        >
+          {Object.keys(RETURNS_DATA).map((k) => (
+            <button
+              key={k}
+              onClick={() => setTab(k)}
+              role="tab"
+              aria-selected={tab === k}
+              aria-pressed={tab === k}
+              style={{
+                padding: '11px 26px',
+                background: tab === k ? RETURNS_DATA[k].color : 'transparent',
+                color: tab === k ? '#0B0D10' : '#EAEAEA',
+                border: `1px solid ${RETURNS_DATA[k].color}`,
+                borderRadius: 10,
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+              }}
+            >
+              {RETURNS_DATA[k].label}
+            </button>
+          ))}
+        </div>
+
+        <Reveal delay={150}>
+          <p
+            style={{
+              textAlign: 'center',
+              color: '#C9CBCF',
+              marginTop: 16,
+              fontSize: 14,
+              maxWidth: 760,
+              margin: '16px auto 0',
+              lineHeight: 1.6,
+            }}
+          >
+            {r.description}
+          </p>
+        </Reveal>
+
+        {/* 4 KPI cards */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: 16,
+            marginTop: 32,
+          }}
+        >
+          <Reveal delay={0}>
+            <ReturnsKPI
+              label="IRR"
+              value={r.irr}
+              decimals={2}
+              suffix="%"
+              color={r.color}
+              explanation="Internal Rate of Return — годовая доходность cash-flow'ов за 7 лет. Internal 24.75% из Waterfall v5 variant D."
+            />
+          </Reveal>
+          <Reveal delay={100}>
+            <ReturnsKPI
+              label="MOIC"
+              value={r.moic}
+              decimals={1}
+              suffix="×"
+              color={r.color}
+              explanation="Multiple on Invested Capital — во сколько раз commitment вашего фонда вернётся суммарно за 7 лет."
+            />
+          </Reveal>
+          <Reveal delay={200}>
+            <ReturnsKPI
+              label="TVPI"
+              value={r.tvpi}
+              decimals={1}
+              suffix="×"
+              color={r.color}
+              explanation="Total Value to Paid-In — общая стоимость (realised + unrealised) к внесённому капиталу."
+            />
+          </Reveal>
+          <Reveal delay={300}>
+            <ReturnsKPI
+              label="DPI (Y7)"
+              value={r.dpi}
+              decimals={2}
+              suffix="×"
+              color={r.color}
+              explanation="Distributions to Paid-In — доля commitment, возвращённая cash-ом к концу 7-го года."
+            />
+          </Reveal>
+        </div>
+
+        {/* DPI chart */}
+        <Reveal delay={400}>
+          <div
+            className="glass"
+            style={{
+              marginTop: 32,
+              padding: 24,
+              borderRadius: 12,
+              border: '1px solid #2A2D31',
+            }}
+          >
+            <h3
+              style={{
+                fontSize: 18,
+                color: '#EAEAEA',
+                marginTop: 0,
+                marginBottom: 16,
+                fontFamily: "'Playfair Display', serif",
+              }}
+            >
+              Кривая DPI — возврат cash вашему фонду по годам
+            </h3>
+            <DPIChart data={r.dpiCurve} color={r.color} />
+            <p style={{ marginTop: 12, fontSize: 13, color: '#8E8E93', lineHeight: 1.6 }}>
+              J-curve типична для PE: первые 2 года cash-out (production & post), с Y3 начинаются релизы,
+              Y6–Y7 — финальные dist'ы из OTT-продлений и международного licensing.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* -------------------- M1 MONTE-CARLO -------------------- */}
+        <Reveal delay={300}>
+          <div style={{ marginTop: 80 }}>
+            <h3
+              style={{
+                textAlign: 'center',
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 'clamp(26px, 3.5vw, 34px)',
+                color: '#EAEAEA',
+                margin: 0,
+              }}
+              id="m1"
+            >
+              M1 — Monte-Carlo симулятор портфеля
+            </h3>
+            <p
+              style={{
+                textAlign: 'center',
+                color: '#8E8E93',
+                marginTop: 12,
+                fontSize: 14,
+                maxWidth: 760,
+                margin: '12px auto 0',
+                lineHeight: 1.6,
+              }}
+            >
+              Подвигайте параметры — пересчитает 10 000 сценариев portfolio IRR для вашего фонда.
+              Canon-reference: P50 Internal {RETURNS_DATA.internal.mcP50}% · Public {RETURNS_DATA.public.mcP50}%.
+            </p>
+          </div>
+        </Reveal>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: 32,
+            marginTop: 36,
+          }}
+        >
+          {/* Параметры */}
+          <Reveal delay={200}>
+            <div
+              className="glass"
+              style={{
+                padding: 24,
+                borderRadius: 12,
+                border: '1px solid #2A2D31',
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: 16,
+                  color: '#EAEAEA',
+                  marginTop: 0,
+                  marginBottom: 14,
+                  fontFamily: "'Playfair Display', serif",
+                }}
+              >
+                Параметры симуляции
+              </h4>
+              <MCSlider
+                label={
+                  <Tooltip explanation="Доля проектов, попавших в хит-категорию (revenue > 2× бюджета)">
+                    Hit rate
+                  </Tooltip>
+                }
+                value={hitRate}
+                min={0.15}
+                max={0.45}
+                step={0.01}
+                onChange={setHitRate}
+                display={`${(hitRate * 100).toFixed(0)}%`}
+              />
+              <MCSlider
+                label={
+                  <Tooltip explanation="Средний multiple на хит-проекте">
+                    Avg multiple
+                  </Tooltip>
+                }
+                value={avgMultiple}
+                min={2.0}
+                max={5.0}
+                step={0.1}
+                onChange={setAvgMultiple}
+                display={`${avgMultiple.toFixed(1)}×`}
+              />
+              <MCSlider
+                label={
+                  <Tooltip explanation="Доля проектов с полной потерей капитала">
+                    Loss rate
+                  </Tooltip>
+                }
+                value={lossRate}
+                min={0}
+                max={0.25}
+                step={0.01}
+                onChange={setLossRate}
+                display={`${(lossRate * 100).toFixed(0)}%`}
+              />
+              <p style={{ marginTop: 6, fontSize: 12, color: '#8E8E93', lineHeight: 1.5 }}>
+                Симуляция детерминистична: фиксированный seed → одинаковое распределение при тех же параметрах.
+              </p>
+            </div>
+          </Reveal>
+
+          {/* IRR quantiles */}
+          <Reveal delay={300}>
+            <div
+              className="glass"
+              style={{
+                padding: 24,
+                borderRadius: 12,
+                border: '1px solid #2A2D31',
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: 16,
+                  color: '#EAEAEA',
+                  marginTop: 0,
+                  marginBottom: 14,
+                  fontFamily: "'Playfair Display', serif",
+                }}
+              >
+                IRR квантили портфеля
+              </h4>
+              {mcResult && (
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(5, 1fr)',
+                    gap: 6,
+                  }}
+                >
+                  {['p10', 'p25', 'p50', 'p75', 'p90'].map((k) => (
+                    <div
+                      key={k}
+                      style={{
+                        textAlign: 'center',
+                        padding: '10px 6px',
+                        background:
+                          k === 'p50' ? 'rgba(244,162,97,0.14)' : 'transparent',
+                        borderRadius: 8,
+                        border:
+                          k === 'p50'
+                            ? '1px solid #F4A261'
+                            : '1px solid #2A2D31',
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: 11,
+                          color: '#8E8E93',
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        {k.toUpperCase()}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 19,
+                          fontFamily: "'Playfair Display', serif",
+                          color: k === 'p50' ? '#F4A261' : '#EAEAEA',
+                          marginTop: 4,
+                        }}
+                      >
+                        {mcResult[k].toFixed(1)}%
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {mcResult && (
+                <div
+                  style={{
+                    marginTop: 14,
+                    fontSize: 13,
+                    color: '#8E8E93',
+                  }}
+                >
+                  Mean: {mcResult.mean.toFixed(2)}% · Std: {mcResult.std.toFixed(2)}%
+                </div>
+              )}
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Гистограмма с ReferenceLine P10/P50/P90 + click-drill */}
+        <Reveal delay={400}>
+          <div
+            className="glass"
+            style={{
+              padding: 24,
+              borderRadius: 12,
+              border: '1px solid #2A2D31',
+              marginTop: 32,
+            }}
+          >
+            <h4
+              style={{
+                fontSize: 16,
+                color: '#EAEAEA',
+                marginTop: 0,
+                marginBottom: 16,
+                fontFamily: "'Playfair Display', serif",
+              }}
+            >
+              Распределение 10 000 сценариев IRR
+            </h4>
+            {mcResult && (
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                  data={mcResult.bins}
+                  onClick={(e) => {
+                    if (e && e.activePayload && e.activePayload[0]) {
+                      setActiveBin(e.activePayload[0].payload);
+                    }
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#2A2D31" />
+                  <XAxis
+                    dataKey="mid"
+                    stroke="#8E8E93"
+                    tickFormatter={(v) => `${v}%`}
+                    label={{
+                      value: 'Portfolio IRR',
+                      position: 'insideBottom',
+                      offset: -4,
+                      fill: '#8E8E93',
+                      fontSize: 12,
+                    }}
+                  />
+                  <YAxis
+                    stroke="#8E8E93"
+                    label={{
+                      value: 'Сценарии',
+                      angle: -90,
+                      position: 'insideLeft',
+                      fill: '#8E8E93',
+                      fontSize: 12,
+                    }}
+                  />
+                  <RechartsTooltip
+                    contentStyle={{
+                      background: '#15181C',
+                      border: '1px solid #F4A261',
+                      borderRadius: 8,
+                      color: '#EAEAEA',
+                      maxWidth: 280,
+                    }}
+                    itemStyle={{ color: '#EAEAEA' }}
+                    labelStyle={{ color: '#F4A261' }}
+                    cursor={{fill:'rgba(244,162,97,0.12)'}}
+                    formatter={(v, n, p) => [`${v} сценариев`, p.payload.label]}
+                  />
+                  {/* Квантильные ReferenceLine P10 / P50 / P90 — grep-contract §4.7 */}
+                  <ReferenceLine
+                    x={mcResult.p10}
+                    stroke="#8E8E93"
+                    strokeDasharray="3 3"
+                    label={{ value: 'P10', fill: '#8E8E93', position: 'top', fontSize: 11 }}
+                  />
+                  <ReferenceLine
+                    x={mcResult.p50}
+                    stroke="#F4A261"
+                    strokeWidth={2}
+                    strokeDasharray="4 4"
+                    label={{ value: 'P50', fill: '#F4A261', position: 'top', fontSize: 12, fontWeight: 700 }}
+                  />
+                  <ReferenceLine
+                    x={mcResult.p90}
+                    stroke="#8E8E93"
+                    strokeDasharray="3 3"
+                    label={{ value: 'P90', fill: '#8E8E93', position: 'top', fontSize: 11 }}
+                  />
+                  <Bar
+                    dataKey="count"
+                    animationBegin={100}
+                    animationDuration={1200}
+                    animationEasing="ease-out"
+                    onClick={handleBarClick}
+                    cursor="pointer"
+                  >
+                    {mcResult.bins.map((b, i) => (
+                      <Cell
+                        key={i}
+                        fill={
+                          activeBin && activeBin.mid === b.mid
+                            ? '#F4A261'
+                            : (b.mid >= mcResult.p10 && b.mid <= mcResult.p90
+                                ? '#2A9D8F'
+                                : '#3D5F5A')
+                        }
+                        cursor="pointer"
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            )}
+
+            {/* Drill-down panel при клике на бар */}
+            {activeBin && mcResult && (
+              <div
+                className="glass"
+                style={{
+                  marginTop: 16,
+                  padding: 16,
+                  borderRadius: 10,
+                  border: '1px solid #F4A261',
+                  animation: 'fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both',
+                }}
+              >
+                <div style={{ fontSize: 14, color: '#F4A261', fontWeight: 700 }}>
+                  В этом бине: {activeBin.count} сценариев ({(activeBin.count / 100).toFixed(1)}% от 10 000)
+                </div>
+                <div style={{ marginTop: 6, fontSize: 13, color: '#EAEAEA', lineHeight: 1.6 }}>
+                  IRR ∈ [{activeBin.lo}%; {activeBin.hi}%]. Активная симуляция:
+                  {' '}hit_rate = {(hitRate * 100).toFixed(0)}%,
+                  {' '}avg_mult = {avgMultiple.toFixed(1)}×,
+                  {' '}loss_rate = {(lossRate * 100).toFixed(0)}%.
+                </div>
+                <div style={{ marginTop: 8, fontSize: 13, color: '#8E8E93', lineHeight: 1.6 }}>
+                  Для commitment вашего фонда 3 000 млн ₽ это значит: вероятность превысить
+                  P90 ({mcResult.p90.toFixed(1)}%) ≈ 10%, уйти ниже P10 ({mcResult.p10.toFixed(1)}%) ≈ 10%.
+                </div>
+              </div>
+            )}
+
+            {!activeBin && mcResult && (
+              <p
+                style={{
+                  marginTop: 14,
+                  fontSize: 12,
+                  color: '#8E8E93',
+                  textAlign: 'center',
+                }}
+              >
+                Кликните на бар, чтобы увидеть долю сценариев в этом диапазоне IRR.
+              </p>
+            )}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// ==================================================================
+// ROOT APP W2 — композирует всё, что определено в W1 (GlobalFoundation, TopNav,
+// ScrollProgress, HeroSection, ThesisSection, MarketSection, FooterStub)
+// + новые секции s04/s05/s06 из этой волны.
+// ==================================================================
+
+const App_W2 = () => (
+  <>
+    <GlobalFoundation />
+    <ScrollProgress />
+    <TopNav />
+    <main>
+      <HeroSection />
+      <ThesisSection />
+      <MarketSection />
+      <FundStructureSection />
+      <EconomicsSection />
+      <ReturnsSection />
+    </main>
+    <FooterStub />
+  </>
+);

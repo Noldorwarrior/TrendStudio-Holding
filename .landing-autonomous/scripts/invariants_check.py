@@ -10,7 +10,7 @@ args = ap.parse_args()
 
 REPO_ROOT = Path(os.environ.get('REPO_ROOT', '.')).resolve()
 CANON = REPO_ROOT / '.landing-autonomous/canon'
-HTML = REPO_ROOT / 'landing_v1.0.html'
+HTML = REPO_ROOT / 'landing_v2.2.html'
 
 fails = []
 

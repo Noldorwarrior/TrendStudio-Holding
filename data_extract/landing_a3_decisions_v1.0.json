@@ -1,0 +1,65 @@
+{
+  "artifact": "a3_askuser_gate_decisions",
+  "version": "1.0",
+  "date": "2026-04-19",
+  "canon_version": "1.0",
+  "paired_with": {
+    "base": "landing_canon_base_v1.0.json",
+    "extended": "landing_canon_extended_v1.0.json"
+  },
+  "decisions": {
+    "brand_tone": {
+      "value": "high_concept_marquee",
+      "label": "High-Concept Marquee",
+      "description": "Громкий блокбастер-подход. Агрессивный hero, crescendo-reveal, ярко выраженный wow-эффект. Эмоциональный захват внимания с первых секунд."
+    },
+    "language_priority": {
+      "value": "ru_first_en_available",
+      "default_lang": "ru",
+      "fallback_lang": "en",
+      "switcher_visible": true,
+      "namespaces": 9,
+      "expected_keys": 420
+    },
+    "primary_cta": {
+      "value": "scroll_to_pipeline",
+      "label": "Прокрутить к pipeline",
+      "target_section_id": "s07",
+      "interaction": "smooth_scroll",
+      "anchor": "#pipeline",
+      "i18n_key": "ui.cta.hero_primary",
+      "secondary_ctas_allowed": ["sim_irr", "memo_pdf", "lp_intake"]
+    },
+    "ux_defaults": {
+      "audio_muted_by_default": true,
+      "mobile_tier_downgrade": true,
+      "respect_reduce_motion": false,
+      "desktop_first_minimal_mobile": false
+    }
+  },
+  "notes": [
+    "Reduce Motion явно не выбран пользователем, но применим технически без отдельного UI-флага через CSS @media (prefers-reduced-motion: reduce) — стандарт WCAG AA, не требует явного согласования.",
+    "Desktop-first minimal mobile не выбран — значит мобильная версия полноценная, с tier-downgrade графики (не минимальный заглушечный вариант).",
+    "High-Concept Marquee vs палитра shadows_of_sunset_v1 (dark cinematic) — совместимы: marquee достигается агрессивностью анимации и типографики, а не сменой цветов. Accent #E3B13A (gold) усиливается для marquee-эффектов."
+  ],
+  "implications_for_implementation": {
+    "hero": "Crescendo image-sequence + strong parallax + GSAP aggressive reveal. Primary CTA button 'Смотреть проекты' → smooth scroll to s07 pipeline. Secondary buttons меньше — для симулятора IRR и memo PDF.",
+    "palette_adjustment": "shadows_of_sunset_v1 без изменений. Accent gold #E3B13A используется активнее для marquee-highlights.",
+    "animations": "Hero-секция — максимально выразительная (GSAP ScrollTrigger, crescendo). Остальные секции — более сдержанные, чтобы не перегружать LP.",
+    "mobile_behavior": "Tier-downgrade: 3D viz → static PNG, particles → single-frame CSS, aggressive reveals → simple fade-in. Все 25 секций + 22 viz + 13 sim доступны в упрощённом виде.",
+    "audio": "Audio tracks 3 items — все muted by default. Toggle-controls видны, но не запускаются автоматически.",
+    "accessibility": "prefers-reduced-motion: reduce → автоматически отключает parallax/aggressive reveals. Не требует отдельного UI-флага — технический стандарт WCAG AA."
+  },
+  "locks": {
+    "from_a1": ["fund.lp_size_mln_rub=3000", "horizon.years=7", "base_irr_percent=24.75", "waterfall 4-tier ROC→8%pref→catchup→80/20"],
+    "from_a2": ["palette=shadows_of_sunset_v1", "typography=Cormorant Garamond + Inter", "23 UI-блоков canon", "i18n 9 namespaces"],
+    "from_a3": ["brand_tone=high_concept_marquee", "language=ru_first_en_available", "primary_cta=scroll_to_pipeline", "audio_muted=true", "mobile_tier_downgrade=true"]
+  },
+  "next_stage": {
+    "id": "A4",
+    "name": "img-meta embed",
+    "weight_percent": 2,
+    "total_after": 10,
+    "description": "Встроить 20 реальных sha256 из data_extract/images_processed/manifest.json в canon.images; сгенерировать alt-ru/alt-en для каждого."
+  }
+}

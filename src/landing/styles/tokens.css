@@ -1,0 +1,101 @@
+/*
+ * Landing v1.0 — Design Tokens
+ * Signature: shadows_of_sunset_v1
+ * Source:    data/landing_canon_extended_v1.0.json (§palette + §typography)
+ * Mirrors:   src/landing/styles/tokens.json (same values, SSOT)
+ *
+ * Scope W1.4: ТОЛЬКО токены. Layout/components — в W2.
+ * Запрещено: хардкод цветов в остальном CSS — только через var(--color-*).
+ *
+ * Контрастность (см. tokens.test.js, проверено WCAG 2.1 AA):
+ *   text/bg          18.34 → AAA
+ *   text/bg_elevated 17.16 → AAA
+ *   text/surface     15.66 → AAA
+ *   text_muted/bg     5.48 → AA
+ *   primary/bg        8.45 → AAA
+ *   accent/bg         4.73 → AA (CTA-only)
+ *   bull/bg           3.90 → AA-large-only (badges/icons/H1)
+ *   bear/bg           3.58 → AA-large-only (badges/icons/H1)
+ */
+
+:root {
+  /* ── Palette ────────────────────────────────────────────────── */
+  --color-bg:          #0A0A0F;
+  --color-bg-elevated: #141420;
+  --color-surface:     #1E1E2E;
+  --color-text:        #F5F1E8;
+  --color-text-muted:  #8B8680;
+  --color-primary:     #D4A04C;
+  --color-accent:      #C85A2E;
+  --color-bull:        #2E7D32;
+  --color-bear:        #C62828;
+  --color-neutral:     #757575;
+  --color-border:      #2A2A3E;
+
+  /* ── Shadows ────────────────────────────────────────────────── */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+
+  /* ── Radii ──────────────────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  /* ── Typography: families ──────────────────────────────────── */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body:    "Inter", -apple-system, system-ui, sans-serif;
+
+  /* ── Typography: scale (fluid via clamp) ──────────────────── */
+  --fs-h1:      clamp(2.5rem, 5vw, 4.5rem);
+  --fs-h2:      clamp(2rem, 4vw, 3.25rem);
+  --fs-h3:      clamp(1.5rem, 3vw, 2.25rem);
+  --fs-h4:      1.25rem;
+  --fs-body:    1rem;
+  --fs-caption: 0.875rem;
+
+  /* ── Typography: line heights ─────────────────────────────── */
+  --lh-tight:   1.1;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.75;
+
+  /* ── Typography: weights ──────────────────────────────────── */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    700;
+}
+
+/* ── Root defaults (применяются только если W2 layout.css не загружен) ── */
+:where(html) {
+  color-scheme: dark;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-regular);
+}
+
+:where(h1, h2, h3, h4) {
+  font-family: var(--font-display);
+  line-height: var(--lh-tight);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+}
+
+:where(h1) { font-size: var(--fs-h1); }
+:where(h2) { font-size: var(--fs-h2); }
+:where(h3) { font-size: var(--fs-h3); }
+:where(h4) { font-size: var(--fs-h4); }
+
+:where(small) { font-size: var(--fs-caption); }
+
+/* ── Motion guard (требование wave_plan INV-02 reduce_motion_respect) ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

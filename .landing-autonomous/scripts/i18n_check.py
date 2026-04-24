@@ -8,7 +8,7 @@ ap.add_argument('--strict', action='store_true')
 args = ap.parse_args()
 
 REPO_ROOT = Path(os.environ.get('REPO_ROOT', '.')).resolve()
-HTML = REPO_ROOT / 'landing_v1.0.html'
+HTML = REPO_ROOT / 'landing_v2.2.html'
 
 if not HTML.exists():
     print("❌ HTML missing"); sys.exit(1)

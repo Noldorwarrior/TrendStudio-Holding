@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-04-19T16:09:06Z",
+  "style_signature": "shadows_of_sunset_v1",
+  "total_files": 20,
+  "files": [
+    {"name":"team_01_ceo.jpg","size":66355,"sha256":"0bc0ee6fab3b4691f258fd060d4cecddcf3f30d7854a665c11b2e0477caad0f7"},
+    {"name":"team_02_producer_lead.jpg","size":101708,"sha256":"4d641b6b4993290def53a4da5bc59e277ebb4d174bd0de11b1dd56f876a96972"},
+    {"name":"team_03_cfo.jpg","size":89127,"sha256":"8085a0316feed39f7873baaeec2f58a6d54be7348ad665fc4a6a47b0394188b1"},
+    {"name":"team_04_head_distribution.jpg","size":77919,"sha256":"a5f0ea0b59de27051847c5c33f8d964f18017e0b62a379991e6bcd64e0794fc3"},
+    {"name":"team_05_creative_director.jpg","size":77836,"sha256":"cc62cdfc9b3af757118931a5714a7a877d6927f7827ddfd8032a416270559cac"},
+    {"name":"advisory_01_industry_veteran.jpg","size":92861,"sha256":"95f0e043a0105ccc4614f3fa0abb1d5cfaa06acb3f84806963a9f3679826bde7"},
+    {"name":"advisory_02_finance_advisor.jpg","size":80379,"sha256":"84e1a8dd2b16afb2bbe2a76693a588d5bb894a563bf435fd59f5c4710a1e7b79"},
+    {"name":"advisory_03_distribution_advisor.jpg","size":92178,"sha256":"cd560eced53aac3b512dc52f724f47ee1c23efb8cdf122f1f1b9020679f98a87"},
+    {"name":"advisory_04_international_advisor.jpg","size":74978,"sha256":"a9ff126741a77f70b33c168a07cb58da70ba1f518a50632ca9fa5aa4e139ae8d"},
+    {"name":"project_01_poster.jpg","size":411044,"sha256":"c0f730394ab322d1bad857688f73121b7d708e7f4513c577b39b3775b8ca246e"},
+    {"name":"project_02_poster.jpg","size":302517,"sha256":"a6361bed847a6a7f2f3c651750b5cb17bbf829f3a74039cdecebf217094567c3"},
+    {"name":"project_03_poster.jpg","size":164062,"sha256":"f018b282b96fe85b088d844358f5974a874dabd292b7facca92fd446044db80a"},
+    {"name":"project_04_poster.jpg","size":407365,"sha256":"1e6572e278a5a9a05ebecf936732cf7d7c8641e87b3a01efa75aee97581f4f41"},
+    {"name":"project_05_poster.jpg","size":224706,"sha256":"bfa128ccb9861c2d7e0572af8c43f4ae97000ecda96ed504a0c10f81f6c3800a"},
+    {"name":"project_06_poster.jpg","size":341740,"sha256":"c3002d1f8d80e8992c59a1fb75e55216e759903aee1b9bf956362f141d672a80"},
+    {"name":"project_07_poster.jpg","size":348128,"sha256":"ebf080de820d71567e5b12d55c3998c681d3a63769f50ffbdf8ada46ee637a69"},
+    {"name":"banner_market_context.jpg","size":318279,"sha256":"2b2ce0f5db6e2d837af0bf8b7db847960a9375957ea309b1d4f6c2c458e298d0"},
+    {"name":"banner_press.jpg","size":391221,"sha256":"8a758a86e1589b8f6206910567e2e7393b252de23deeb27d2b11e80d3012cc35"},
+    {"name":"hero_bg.jpg","size":608624,"sha256":"c106036858c7c98f145c0e12bdb9355596fb7662555532a305db58c714d90ac7"},
+    {"name":"hero_film_reel.jpg","size":440382,"sha256":"5c75631be90ce4d8681d71b4e580b5848c7c2be1692d5b779b784b76aa07db61"}
+  ]
+}

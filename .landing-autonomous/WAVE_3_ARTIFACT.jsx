@@ -1308,7 +1308,7 @@ function OperationsSection() {
           from { stroke-dashoffset: 1000; }
           to   { stroke-dashoffset: 0; }
         }
-        @keyframes ops-pulse-ring {
+        @keyframes ops-halo-ring {
           0%   { box-shadow: 0 0 0 0 rgba(244,162,97,0.55); }
           70%  { box-shadow: 0 0 0 18px rgba(244,162,97,0); }
           100% { box-shadow: 0 0 0 0 rgba(244,162,97,0); }
@@ -1479,7 +1479,7 @@ function OperationsSection() {
                         boxShadow: isActive
                           ? '0 0 32px rgba(244,162,97,0.5)'
                           : 'none',
-                        animation: `ops-icon-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 120}ms both${isActive ? ', ops-pulse-ring 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite' : ''}`,
+                        animation: `ops-icon-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 120}ms both${isActive ? ', ops-halo-ring 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite' : ''}`,
                       }}
                     >
                       <Icon

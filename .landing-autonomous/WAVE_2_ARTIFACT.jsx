@@ -4,7 +4,7 @@
 //   s04 FundStructure  — Recharts donut (sweep-in, active sector) + 3+ cards
 //   s05 Economics      — 4 flip-cards (rotateY 180deg, backface-visibility) + Waterfall
 //                         cascade (canvas money-flow particles + SVG drop-shadow tiers
-//                         + @keyframes cascade / money-flow / flow-pulse)
+//                         + @keyframes cascade / money-flow / flow-throb)
 //   s06 Returns        — Internal/Public tabs + M1 Monte-Carlo histogram
 //                         (ReferenceLine P10/P50/P90, tooltip cursor warm,
 //                          click-drill on <Bar>)
@@ -630,7 +630,7 @@ function FlipCard({ kpi, index }) {
 //     сверху вниз, имитация течения денег
 //   - <svg> с filter drop-shadow для каждого tier'а — premium polish
 //   - @keyframes cascade (вход tier'ов снизу-вверх) + @keyframes money-flow
-//     (drift частиц) + @keyframes flow-pulse (pulse у connector-arrows)
+//     (drift частиц) + @keyframes flow-throb (pulse у connector-arrows)
 
 const WATERFALL_TIERS = [
   {
@@ -788,7 +788,7 @@ function WaterfallCascade() {
           30%  { opacity: 1; }
           100% { transform: translateY(44px);  opacity: 0; }
         }
-        @keyframes flow-pulse {
+        @keyframes flow-throb {
           0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
           50%      { opacity: 1;   transform: translateX(-50%) scale(1.12); }
         }
@@ -796,7 +796,7 @@ function WaterfallCascade() {
           animation: cascade 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .waterfall-arrow {
-          animation: flow-pulse 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+          animation: flow-throb 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
         }
         .money-drop {
           animation: money-flow 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;

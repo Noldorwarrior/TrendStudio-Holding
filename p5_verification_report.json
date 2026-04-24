@@ -1,8 +1,8 @@
 {
   "version": "1.2",
-  "score": 28,
-  "total": 29,
-  "passed_pct": 96.6,
+  "score": 31,
+  "total": 32,
+  "passed_pct": 96.9,
   "verdict": "PASS",
   "mechanisms": [
     {
@@ -33,11 +33,26 @@
     {
       "id": 6,
       "name": "anchor_11.44",
-      "pass": false
+      "pass": true
     },
     {
       "id": 7,
       "name": "anchor_348",
+      "pass": true
+    },
+    {
+      "id": 8,
+      "name": "m2_builder",
+      "pass": true
+    },
+    {
+      "id": 9,
+      "name": "m3_commitment",
+      "pass": true
+    },
+    {
+      "id": 10,
+      "name": "legal_nda_gate",
       "pass": true
     },
     {
@@ -63,7 +78,7 @@
     {
       "id": 15,
       "name": "img_alt_present",
-      "pass": true
+      "pass": false
     },
     {
       "id": 16,

@@ -1,57 +1,33 @@
-## Wave 3 Report
+# Wave 3 Output
 
-**Status:** success
-**Duration_minutes:** ~15
-**Artifact_bytes:** 97186 (UTF-8)
-**Sections:** 12/12 (s00..s11 inclusive)
-**Images_placed:** 16/16 (img01..img16)
-**Decisions_made:** 5 (logged in DECISIONS_LOG.md)
-**Acceptance:** 9/9 passed
-**Ready_for_W4:** YES
+## Created WAVE_3_ARTIFACT.jsx (910 lines)
 
-### Acceptance detail
+## Sections
+- **s07 Pipeline (#s07)** — 7 кликабельных постер-карточек (img10-img16), 3 filter-chips (Все / Фильмы / Сериалы, useState), `.pipeline-img` hover zoom 1.05x, полноценный `PipelineModal` с backdrop-click / ESC / focus-management / overflow-lock / aria-modal.
+- **s08 Stages (#s08)** — 4-column kanban (Development / Pre-production / Production / Post-Release) с автоматической фильтрацией PIPELINE по `status` (1 / 3 / 2 / 1 = 7 проектов), count-badge с правильным склонением, внутренний stagger Reveal (delay j*60).
+- **s09 Team (#s09)** — 5-карточек (img01-img05) grid auto-fill minmax(200px), aspect 4:5, role / title / bio / track-ul, card-hover lift.
+- **s10 Advisory (#s10)** — 4 sepia-портрета (img06-img09) filter `sepia(0.25) contrast(0.95)`, hover `translateY(-4px) rotate(2deg)` via `.advisory-card`, focus-tags chip-pills.
+- **s11 Operations (#s11)** — 6-step flow (Scouting → DD → Development → Production → Marketing & Distribution → Exit); круги d=64 с lucide-иконками (fileText / checkCircle / lightbulb / video / megaphone / trendingUp); chevron-right arrows между шагами, horizontal flex на ≥900px, 2-col grid на mobile (arrows hidden).
 
-| # | Check | Expected | Actual | Status |
-|---|-------|----------|--------|--------|
-| 1 | `WAVE_3_ARTIFACT.jsx` exists | yes | 97 186 B | PASS |
-| 2 | Unique `__IMG_PLACEHOLDER_img0[1-9]__` | 9 | 9 | PASS |
-| 3 | Unique `__IMG_PLACEHOLDER_img1[0-6]__` | 7 | 7 | PASS |
-| 4 | Total unique img01..img16 | 16 | 16 | PASS |
-| 5 | `PIPELINE` array length | 7 | 7 | PASS |
-| 6 | `pravatar|unsplash|i\.pravatar` count | 0 | 0 | PASS |
-| 7 | `localStorage|sessionStorage|document\.cookie|eval\(|new Function` | 0 | 0 | PASS |
-| 8 | `function App_W3` presence | ≥1 | 1 | PASS |
-| 9 | W1/W2 anchors preserved (3000, ТрендСтудио, 24.75, 20.09, 13.95, mulberry32) | all > 0 | 3/6/6/3/4/3 | PASS |
+## ICONS extended
+Добавлено 6 путей: fileText, checkCircle, lightbulb, video, megaphone, chevronRight, close — inline `Object.assign(ICONS, {...})` без переопределения.
 
-### Sections (order)
+## Images replaced: 19/20
+- img01-img09 (5 team + 4 advisory) ✅
+- img10-img16 (7 pipeline) ✅
+- img17 / img19 / img20 (W1 hero+market) ✅
+- img18 — reserved for W5 risks per `acceptance.sh` map; не используется ни одной из текущих волн.
 
-- s00 Skeleton (ScrollProgress, TopNav, FooterStub) — copied from W2
-- s01 Hero (img19, img20) — copied
-- s02 Thesis (3 cols × 3 bullets) — copied
-- s03 Market (4 KPI count-up, img17 bg) — copied
-- s04 Fund Structure (PieChart + 3 factcards) — copied
-- s05 Economics (4 KPIs + Waterfall SVG) — copied
-- s06 Returns (tabs Internal/Public + Line + M1 Monte-Carlo marquee) — copied
-- **s07 Pipeline (NEW)** — 7 project posters (img10..img16), filter chips, inline Modal on card click, Esc to close
-- **s08 Stages (NEW)** — 4-col kanban (Pre/Prod/Post/Release), 7 projects grouped by current stage
-- **s09 Team (NEW)** — 5 portraits (img01..img05), 4:5 figure cards, track-record bullets
-- **s10 Advisory (NEW)** — 4 round portraits with sepia filter (img06..img09), focus chips
-- **s11 Operations (NEW)** — 6-step process (Origination → Exit), lucide icons, decorative connector
+## Acceptance: all ✅
+- `assemble_html.py --up-to=3` → 97,885 B JSX wrapped
+- `inject_images.py` → 19 placeholders → data:image/jpeg;base64 (HTML 5.59 MB); 0 нерешённых `__IMG_PLACEHOLDER_*__` токенов
+- `acceptance.sh --wave=3 --image-check` → passed; metrics: tooltips=20 ≥ 5, hover=16 ≥ 4, reduce_motion=4. reveal_hooks=4 warning (benign — grep счётчик литералов `useReveal`/`IntersectionObserver`, определение foundation один раз, все `<Reveal>` рендерятся — тот же паттерн, что W2)
+- `smoke_playwright.js` → ✅ zero runtime errors, screenshot 5.6 MB inline base64 page загрузилась
 
-### New imports (lucide-react)
-
-`FileText, CheckCircle, Lightbulb, Video, Megaphone, Users, UserCheck, Clapperboard, ArrowRight`
-
-Added alongside the W2 set. `Users`/`UserCheck` imported for nav/future use even if not rendered (kept minimal; orchestrator dedupes across waves so unused named imports are harmless).
-
-### Nav
-
-`NAV_LINKS` now has 11 entries (added `stages`, `advisory`, `operations`; kept `team` and `pipeline` labels from W2). Removed `risks` and `cta` placeholders from W2 (they were not targets of W3 and their sections don't exist yet — will return in W5/W6).
-
-### Notes
-
-- All 16 new image placeholders are emitted as STATIC string literals via a module-scope `IMG_SRC` map. A template-literal form (`__IMG_PLACEHOLDER_${id}__`) was tried first but broke orchestrator's regex substitution, which operates on built HTML text (before JS evaluation). Fixed on first check.
-- Pipeline stage mapping: canon uses `pre-production|production|post-production` while UI uses short `pre|prod|post|release`. Translated in-place in the `PIPELINE` array; grouping logic in s08 Stages uses the short IDs.
-- Modal keyboard support: Escape closes, click-outside closes, inner click `stopPropagation`.
-- `prefers-reduced-motion` respected on: Pipeline card hover-scale, Operations card hover lift. Existing W2 motion hooks unchanged.
-- No localStorage/sessionStorage/cookies/eval/Function constructor used. No external image hosts.
+## Best-guess decisions
+1. **IMG_SRC lookup table вместо template literals**. Использование `` `__IMG_PLACEHOLDER_${p.img}__` `` ломало `inject_images.py` (regex ищет конкретный `__IMG_PLACEHOLDER_img01__`, а template literal оставляет в HTML литерал `${p.img}`). Создал `IMG_SRC` map с явными 16 литералами → все заменились корректно.
+2. **Modal ESC-close + body overflow lock + stopPropagation**. Добавил `document.body.style.overflow='hidden'` на время открытия модалки (a11y: предотвращение scroll-через-модаль). `aria-modal="true"` + `aria-labelledby`.
+3. **Stages склонение**. Автоматика: 1 → «проект», 2-4 → «проекта», 5+ → «проектов» (при текущих 1/3/2/1 даёт корректный русский).
+4. **Hover zoom для pipeline**. CSS `.pipeline-card:hover .pipeline-img { transform: scale(1.05); transition: transform 0.3s }` — контейнер с `overflow:hidden` обрезает увеличенную картинку.
+5. **Operations layout**. Desktop (≥900px) — horizontal flex с chevron-стрелками между шагами; mobile — 2-col grid без стрелок (noise reduction). `React.Fragment` чтобы не рендерить лишний div-обёртки между шагом и arrow.
+6. **Advisory rotate on hover**. Отдельный CSS-класс `.advisory-card` с `translateY(-4px) rotate(2deg)` (скомбинирован с обычным card-hover эффектом через локальный `<style>`).

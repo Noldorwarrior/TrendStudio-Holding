@@ -1,42 +1,41 @@
-# I18N Gaps — Wave 6
+# i18n Gaps — Landing v2.0
 
-**Status:** NO GAPS
-**Date:** 2026-04-24
-**Artifact:** `.landing-autonomous/WAVE_6_ARTIFACT.jsx`
+## Coverage summary (W6)
 
-## Summary
+**Total keys:** 94 RU / 94 EN. Symmetry: 100%. `[EN TBD]` placeholders: 0.
 
-| Metric | Value |
-|---|---|
-| RU keys (unique) | 82 |
-| EN keys (unique) | 82 |
-| RU-only keys | 0 |
-| EN-only keys | 0 |
-| `[EN TBD]` actual gaps | 0 |
+## Scope (v2.0)
 
-All 82 EN keys are fully translated — no fallbacks to Russian required in the `t()` helper.
-(The single `[EN TBD]` occurrence in the artifact is inside a code comment describing the fallback
-convention, not an actual untranslated value.)
+Покрытие i18n в v2.0 ограничено следующими областями (по плану MAJOR-i18n-pass):
 
-## Translation coverage by section
+- Nav-links TopNav2 (9 keys: `nav.*`)
+- Hero headings + CTA (5 keys: `hero.*`)
+- Section-headings для 25 секций (25 keys: `*.title`)
+- CTA buttons: Zoom/Email/Telegram/NDA/Download (10 keys: `cta.*`)
+- Footer все строки (14 keys: `footer.*`)
+- Legal intro + NDA Gate (6 keys: `legal.*`)
+- Term Sheet row-labels (13 keys: `term.*`)
+- Waterfall tier labels (4 keys: `wf.*`)
+- M3 Commitment Calculator labels (8 keys: `m3.*`)
 
-| Namespace | Keys | Coverage |
-|---|---:|---|
-| `nav.*` | 25 | 100% |
-| `hero.*` | 5 | 100% |
-| `section.*` | 27 | 100% |
-| `cta.*` / `btn.*` | 7 | 100% |
-| `footer.*` | 14 | 100% |
-| `label.*` / `a11y.*` | 4 | 100% |
+## Not covered (v2.1 roadmap)
 
-## Image alt-text coverage
+Тело секций (параграфы, карточки, подписи внутри графиков, tooltips) — RU only. Причина: рефакторинг 25 секций под i18n-хелпер рискован для 6-wave timeline и может сломать invariants. Планируется расширение в v2.1.
 
-All 20 images in `landing_img_meta_v1.0.json` have both `alt.ru` and `alt.en` fields —
-no missing EN alt strings detected. Hero alt text (img19) is computed inline in the
-`Hero` component based on current `lang` state, using the canon's EN translation verbatim.
+Области под будущее покрытие:
+- ThesisCard bodies (3 cards × ~50 слов)
+- MarketKpi labels (4 × короткие метки)
+- Monte-Carlo simulator UI-strings (~15)
+- Pipeline projects descriptions (7 × карточки)
+- Team/Advisory member bios (~10 × 40 слов)
+- Operations 6-step descriptions
+- Risks 12 карточек + modal
+- FAQ 15 Q&A + 4 category labels
+- Distribution channel cards + tooltips
+- Waterfall intro block
 
-## Decisions
+## EN translation quality
 
-- EN microcopy for values like "Fund size" uses "3 000 M RUB" (space as thousands separator, Russian financial convention), which is acceptable for an international LP audience familiar with RUB denominations.
-- Proper names ("ТрендСтудио" → "TrendStudio") are localised in Hero, TopNav logo, and Footer brand.
-- Section titles like "Distribution" / "Waterfall 2.0" are retained as-is in RU — these are globally-recognised finance/industry terms.
+Перевод сделан без машинного перевода, с использованием PE/LP терминологии (hurdle, MOIC, DPI, carry, catch-up — оставлены в исходной англ. форме как общеупотребительные). Все переводы проверены на симметрию ключей `i18n_check.py --strict`.
+
+Неуверенные формулировки отсутствуют — placeholder `[EN TBD]` не использован.

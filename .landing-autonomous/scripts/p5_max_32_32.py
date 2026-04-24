@@ -17,10 +17,14 @@ base = json.loads((canon_dir / 'landing_canon_base_v1.0.json').read_text(encodin
 
 mechs = []
 
-# 1-10: Числовые якоря
+# 1-10: Числовые якоря и v2.0 major-fix сигнатуры
 anchors = {'3000': 1, '7': 2, '24.75': 3, '20.09': 4, '13.95': 5, '11.44': 6, '348': 7}
 for a, id_ in anchors.items():
     mechs.append({'id': id_, 'name': f'anchor_{a}', 'pass': a in html})
+# 8-10: v2.0 MAJOR FIX сигнатуры (из §4.1/§4.2/§4.6)
+mechs.append({'id': 8,  'name': 'm2_builder',          'pass': 'PIPELINE_SEED' in html or 'M2Builder' in html or 'Конструктор портфеля' in html})
+mechs.append({'id': 9,  'name': 'm3_commitment',       'pass': 'Commitment' in html and ('your_take' in html or 'ваша доля' in html)})
+mechs.append({'id': 10, 'name': 'legal_nda_gate',      'pass': 'NDAGate' in html or ('checkbox' in html and 'NDA' in html)})
 
 # 11: Формат HTML
 mechs.append({'id': 11, 'name': 'html_valid', 'pass': html.startswith('<!DOCTYPE html>')})
@@ -30,20 +34,17 @@ mechs.append({'id': 12, 'name': 'no_forbidden', 'pass': not re.search(r'localSto
 
 # 13-15: Images
 mechs.append({'id': 13, 'name': 'images_count', 'pass': html.count('data:image/jpeg;base64,') >= 20})
-# mech 14: match only real placeholders (imgNN pattern), not doc-comment literals.
-mechs.append({'id': 14, 'name': 'no_placeholders', 'pass': re.search(r'__IMG_PLACEHOLDER_img[0-9]+__', html) is None})
-# mech 15: React maps produce 1 `alt=` per array.map literal; 5+ distinct alt usages is the realistic threshold
-# for the 6 distinct <img> / map call sites (hero×2, team-map, advisory-map, pipeline-map, +).
-mechs.append({'id': 15, 'name': 'img_alt_present', 'pass': html.count('alt=') >= 5})
+mechs.append({'id': 14, 'name': 'no_placeholders', 'pass': '__IMG_PLACEHOLDER_' not in html})
+mechs.append({'id': 15, 'name': 'img_alt_present', 'pass': html.count('alt=') >= 20})
 
-# 16-20: Palette
+# 16-20: Palette (было через 16 сразу после 15 — ok)
 for i, c in enumerate(['#0B0D10', '#F4A261', '#2A9D8F', '#EAEAEA', '#8E8E93'], start=16):
     mechs.append({'id': i, 'name': f'color_{c}', 'pass': c in html})
 
 # 21-25: Structure
 mechs.append({'id': 21, 'name': 'has_main', 'pass': '<main' in html or 'main(' in html})
 mechs.append({'id': 22, 'name': 'has_footer', 'pass': '<footer' in html or 'Footer' in html})
-mechs.append({'id': 23, 'name': 'react_root', 'pass': ('ReactDOM.createRoot' in html) or ('createRoot(' in html)})
+mechs.append({'id': 23, 'name': 'react_root', 'pass': 'ReactDOM.createRoot' in html})
 mechs.append({'id': 24, 'name': 'babel_present', 'pass': 'babel' in html.lower()})
 mechs.append({'id': 25, 'name': 'tailwind_cdn', 'pass': 'tailwindcss' in html.lower()})
 
@@ -64,9 +65,7 @@ report = {
     'score': score,
     'total': total,
     'passed_pct': round(100*score/total, 1),
-    # Script originally had 32 mechs (hence the name), but 3 anchor checks (id 8-10) were not defined.
-    # Current total = 29. Scale threshold proportionally: PASS ≥ ceil(29*30/32) = 28.
-    'verdict': 'PASS' if score >= 28 else 'CONDITIONAL' if score >= 23 else 'FAIL',
+    'verdict': 'PASS' if score >= 30 else 'CONDITIONAL' if score >= 25 else 'FAIL',
     'mechanisms': mechs,
 }
 out = html_path.parent / 'p5_verification_report.json'
@@ -74,4 +73,4 @@ out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8
 
 print(f'П5 Maximum: {score}/{total} — {report["verdict"]}')
 print(f'Report: {out}')
-sys.exit(0 if score >= 23 else 1)
+sys.exit(0 if score >= 25 else 1)

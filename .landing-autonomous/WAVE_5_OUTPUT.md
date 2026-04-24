@@ -1,48 +1,37 @@
-## Wave 5 Report
-**Status:** success
-**Artifact_bytes:** 230847
-**Sections:** 23/23 (s00..s22)
-**Standard_sims:** 6/6
-**Images_placed:** 20/20 (img01..img20)
-**Decisions_made:** 7
-**Acceptance:** 9/9 passed
-**Ready_for_W6:** YES
+# Wave 5 Output
 
----
+## MAJOR FIXES: §4.3 Waterfall + §4.5 Distribution
 
-### Breakdown
+### §4.5 s19 Distribution
+Section-state `hoverChannel` синхронизирует donut + timeline + cards + list-row. **Donut** Recharts (ir=70/or=120, h=340): Cell.opacity = `null?0.9 : match?1:0.3`, центр «100%\nrevenue-mix». **Timeline** 48 мес: 4 канала (theatrical/ott/tv/educational) на верхнем треке (abs-positioned `left=start/48, width=window/48`), International — отдельная нижняя полоса repeating-gradient 45° на всю длину. Метки 0/12/24/36/48+. **Channel list** (rechts от donut) + **Grid 5 cards** — все с `onMouseEnter`, dim non-match (opacity 0.55), translateY(-3px) + shadow на active. Partner-chips в `<Tooltip>`.
 
-**New sections (s17–s22):**
-- **s17 Press Quotes** — carousel из 8 цитат (canon.press_quotes). Auto-advance 5000ms через setInterval, pause на hover/focus, клавиши ←/→, dots nav, prefers-reduced-motion → disabled auto-advance.
-- **s18 FAQ** — accordion 15 Q&A (canon.faq), 4 категории (Fund Structure / Economics / Portfolio / Legal) + all, case-insensitive search по Q и A, aria-expanded / aria-controls / role="region".
-- **s19 Distribution** — 5 channels (Theatrical 30 / OTT 40 / TV 10 / Educational 5 / International 15 = 100%), partner tags из canon.distribution. Внутри — S2_OttRevenue sim.
-- **s20 Waterfall Interactive** — SVG 4-tier + live-slider return_multiplier 1×–4× через useMemo. T1 LP hurdle 8%, T2 GP catch-up 20%, T3 80/20 split, T4 super-carry +5% при >2.5× MOIC (dim = 0.35 когда inactive).
-- **s21 Legal** — 6 disclaimers (Risk Warning / Accredited Investor / Forward-Looking / No Offer / Data Sources / Confidentiality). Desktop expanded, mobile (<768px) — accordion через matchMedia.
-- **s22 CTA** — backgroundImage с СТАТИЧЕСКОЙ подстрокой `url("__IMG_PLACEHOLDER_img18__")` (linear-gradient overlay). 3 CTA buttons (Zoom / Email / Telegram) + 3 stat blocks (20.09% IRR Public, 7 проектов, 348 тестов).
+### §4.3 s20 Waterfall
+**Intro-блок** (Reveal) с 4 Tooltip-терминами: hurdle / catch-up / 80/20 split / super-carry. **Slider** 0.5–5.0 step 0.1 default 2.2, label «Target MOIC» (Tooltip). **Bars** 4 tier RU («Общий возврат фонда», «Прибыль сверх вложений», «Доля инвесторов», «Доля команды»): m<1.08→only T1 active (остальные opacity 0.3); 1.08–2.5→T1+T2+T3; >2.5→всё + glow T4 + super-carry info-баннер. LP(T3) bright, GP(T4) opacity 0.85. **PersonalExample**: input commit 10–500 реактивный, `lpTake = m<=1 ? gross : commit+profit*0.80*0.85`, показывает gross / LP take (+lpMultiple) / GP take.
 
-**6 Standard Sims:**
-- **S1_BoxOfficeCalc** (s07 Pipeline) — budget × genre × season → forecast revenue (mln ₽).
-- **S2_OttRevenue** (s19 Distribution) — subscribers × CPM × hoursViewed → monthly + yearly revenue.
-- **S3_TaxOptimizer** (s16 TaxCredits) — toggle combos (Moscow / SPb / Фонд / Минкультуры) × budget → max non-dilutive capital (cap 60%).
-- **S4_CashflowProjector** (s13 Roadmap) — annual deploy × hit-rate × avg-mult → 7-year portfolio CF table.
-- **S5_ExitValuator** (s06 Returns) — EBITDA × multiple × (1 − illiquidity discount) → exit valuation + implied MOIC.
-- **S6_FeeBreakdown** (s05 Economics) — years × mgmt-fee × carry-% → total management fee, hurdle, GP carry, LP profit take.
+## Sections
+- **s17 Press** — carousel 8 цитат, auto-advance 5000ms (useEffect+setInterval+cleanup), pause on hover, respects reduced-motion. Prev/Next + dot-indicators (active 24px). Tooltip на outlet.
+- **s18 FAQ** — 15 Q&A в 4 категориях (terms/economics/governance/process). Search input (useMemo filter q+a). Каждая категория Reveal(i*80ms) с coloured dot. Accordion с chevron rotate + max-height transition. Empty-state.
+- **s19 Distribution** — см. §4.5 выше.
+- **s20 Waterfall** — см. §4.3 выше.
+- **s22 CTA** — img18 banner (first use) + dark overlay 0.85→0.95. H2 + 3 buttons (Zoom/Email/Telegram) + 3 hero-stats CountUp (20.09% / 7 / 348), Reveal staged.
 
-**Architecture:**
-- Self-contained: W5 artifact содержит все 17 секций W4 + 6 новых секций + 6 sim components + shared SIM_* styling helpers. Total 5662 lines, 230847 bytes.
-- App_W4 → App_W5 (1 occurrence, 0 stale App_W4 refs).
-- Module scope: useState/useEffect/useRef/useMemo/useCallback. Добавлены lucide-react icons: Quote, HelpCircle, Search, ChevronLeft, ChevronRight, Pause, Mail, MessageCircle, Phone, Shield, ShieldAlert, Tv, Globe, Gift, Calculator, Landmark, BookOpen, Lock, Eye.
-- NAV_LINKS расширен до 24 items (добавлены press, faq, distribution, waterfall-interactive, legal, cta).
+## Acceptance
+- assemble_html.py --up-to=5 → 236 879 B. ✅
+- inject_images.py → 20/20 placeholders, 6.22 MB. ✅ (img18 consumed)
+- acceptance.sh --wave=5 --image-check → ✅ PASSED. Tooltips=54/12, hover=36/8, reduce_motion=5.
+- PE glossary: hurdle=17, catch-up=11, super-carry=8, MOIC=33, waterfall=25. ✅
+- Anchors: 3000 / 7 / 24.75 / 20.09 all ✅
+- smoke_playwright.js → ✅ zero runtime errors.
+- Warning only: reveal_hooks=4 (grep ловит уникальные литералы определения; `<Reveal>`-instances 101, работают) — benign, точно как в W4.
 
-**Acceptance (9/9):**
-1. ✅ WAVE_5_ARTIFACT.jsx создан (230 847 B).
-2. ✅ `grep -c "function App_W5"` = 1.
-3. ✅ `grep -c "__IMG_PLACEHOLDER_img18__"` = 1.
-4. ✅ 20 unique placeholders img01..img20 (19 из W3+W1 + img18).
-5. ✅ `grep -c "setInterval"` = 1 (PressQuotes auto-advance).
-6. ✅ `grep -c "aria-expanded"` = 3 (FAQ, Legal mobile — по одному в двух JSX ветках).
-7. ✅ Якоря сохранены: 3000 (7), ТрендСтудио (7), 24.75 (6), 20.09 (7), 13.95 (6), mulberry32 (3).
-8. ✅ 6 standard sims — 27 matches (все 6 defined + 6 JSX invocations + SIM_* helpers).
-9. ✅ Forbidden APIs: 0.
+## Best-guess decisions
+1. Donut startAngle=90/endAngle=-270 — theatrical сверху по часовой; isAnimationActive=false для instant hover-sync.
+2. International отдельная полоса с diagonal-stripe pattern — визуально отделяет «long-tail весь период» от discrete-windows каналов.
+3. Waterfall hurdle threshold ≈1.08 (8%/yr ≈ 1 year breakeven) вынесен в подпись под слайдером.
+4. PersonalExample LP-take coef 0.85 — approximation GP catch-up drag (промт прямо дал формулу).
+5. PressQuotes pause-on-hover и reduced-motion — bonus UX для читающих пользователей.
+6. FAQ single-expand через expandedId state (классический accordion UX).
+7. CTA 3 кнопки (Zoom/Email/Telegram) — как в промте.
 
-**img18 safety:** backgroundImage использует одинарные кавычки (не template literal) → `inject_images` matcher однозначно захватит `"__IMG_PLACEHOLDER_img18__"` (caught lesson from W3-D2).
+## Blockers
+Нет.

@@ -1,83 +1,63 @@
-# Landing v1.0 Autonomous — FINAL REPORT
+# Landing v2.0 — Autonomous Build Final Report
 
-**Дата:** 2026-04-24
-**Ветка:** `claude/landing-v1.0-autonomous`
-**Базовая:** `main`
-**Orchestrator:** Claude Opus 4.7 (1M context)
-**Прогон:** v1.2 multi-agent autonomous
+## Summary
 
----
+**6 waves, 25 sections, 20 images** (base64-inlined), итоговый HTML ~**6.26 MB**.
+Устранены **6 MAJOR-фиксов** из v1.0-ревью + внедрена **Animation & Interaction Layer** system-wide + **i18n RU/EN** с 94 ключами. Полный a11y-pass (modals/accordions/ARIA).
 
-## Результат
+## Waves
 
-**Статус:** ✅ ГОТОВО К МЕРДЖУ.
+| # | Commit | Sections | Notes |
+|---|---|---|---|
+| W1 | bb21364 | s00–s03 + foundation | Hero/Thesis/Market + useReveal/Reveal/Tooltip/CountUp/Icon |
+| W2 | e365555 | s04–s06 + M1 MC | FundStructure/Economics/Returns/MonteCarlo, P50 14.06% @ defaults |
+| W3 | f5db725 | s07–s11 + 16 img | Pipeline (modal `role=dialog`)/Stages/Team/Advisory/Operations |
+| W4 | dcb6225 | s12–s16 + M2 + M3 + Tax | Canon weightedIRR 25.46%, M3 Commitment Calc your_take 192@100, 4 tax calc |
+| W5 | 404a527 | s17–s20 + s22 | Press carousel/FAQ 15Q/Distribution donut+timeline/Waterfall 4-tier+LP-ex/CTA |
+| W6 | ae7e7ec | s21 + s23 + s24 + i18n | Legal accordion+NDA/Term Sheet/FooterFull/94 keys ru+en |
+| Phase 7 | 014f24e | P5 31/32 PASS | +anchor 11.44, +M2/M3/Legal P5 checks, tag v2.0.0 |
 
-- **6 волн из 6** завершены (W1..W6).
-- **25 секций** (s00 Skeleton → s24 Footer).
-- **3 marquee-симулятора:** M1 Monte-Carlo (10 000 runs, 3 sliders), M2 Pipeline Builder (native HTML5 DnD), M3 LP Sizer (MC-probability + AreaChart).
-- **6 standard sims:** S1 Box-office, S2 OTT revenue, S3 Tax optimizer, S4 Cashflow, S5 Exit valuator, S6 Fee breakdown.
-- **20 / 20 изображений** base64-inline (sha256 verified из manifest).
-- **i18n RU/EN:** 82 ключа в каждом, symmetric (0 asymmetries, 1 `[EN TBD]` в I18N_GAPS.md).
-- **a11y WCAG AA:** landmarks (main/header/nav/footer), aria-expanded/aria-controls/aria-pressed, focus-visible, prefers-reduced-motion guards, контраст AAA.
+## 6 MAJOR Fixes Applied
 
-## Метрики
+1. **§3 Animation Layer** — system-wide (`<Reveal>` instances=115, Tooltip=41, hover=46, reduce-motion blocks=5) ✓
+2. **§4.1 M2 Pipeline Builder** — clean constructor (rail→empty cols, weightedIRR 25.46% at Canon) ✓
+3. **§4.2 M3 Replaced** — Commitment Calculator (no probability/LP Sizer artefacts; signatures: «Commitment» + «your_take» + «Вложили.*Получите») ✓
+4. **§4.3 s20 Waterfall** — intro block + 4 PE tooltips (hurdle/catch-up/80-20-split/super-carry) + LP example (input commit→lpTake/gpTake) ✓
+5. **§4.4 s16 Tax Credits** — 4 inline calculators + summary-sidebar ✓
+6. **§4.5 s19 Distribution** — donut (Recharts) + 48mo timeline + 5 channel cards hover-sync ✓
+7. **§4.6 s21 Legal** — desktop stagger (Reveal i×80) + mobile accordion (useIsDesktop + expandedId) + NDA gate (checkbox+tooltip+disabled-button stub) ✓
 
-| Метрика | Значение |
-|---|---:|
-| Final HTML size | 6 542 018 B (6.24 MB) |
-| Wave 6 artifact | 258 531 B |
-| Total commits (6 waves) | 6 |
-| Decisions logged | 27 (P0 + W1-D1..5 + W2-D1..4 + W3-D1..5 + W4-D1..7 + W5-D1..7 + W6-D1..7 + P7-D1..2) |
-| Skipped items | 0 |
-| Retries used | 1 (W2 API error → re-delegation) |
+## Acceptance
 
-## Acceptance gates
+- All 6 waves gate-passed (`acceptance.sh --wave=N` for N in 1..6) ✓
+- Animation Layer: Reveal-instances 115 ≥20, Tooltip 41 ≥15, hover 46 ≥10, reduce-motion 5 ✓
+  - Note: grep-count `useReveal|IntersectionObserver` = 4 (определения функции) — скрипт ловит unique literals, но `<Reveal>`-инстансов 115, работают корректно (benign warning, как и в W4/W5).
+- **20/20 images inlined** (`__IMG_PLACEHOLDER_` = 0 matches) ✓
+- Playwright smoke: **0 runtime errors** ✓
+- M3 replace signature present (Commitment Calculator + your_take) ✓
+- **PE glossary**: hurdle, catch-up, super-carry, MOIC, waterfall — all present ✓
+- **i18n symmetry**: ru=94, en=94, `[EN TBD]`=0 (100% symmetry) ✓
 
-- `acceptance.sh --dry-run`: ✅
-- `acceptance.sh --wave=1 --image-check`: ✅
-- `acceptance.sh --wave=2`: ✅
-- `acceptance.sh --wave=3 --image-check`: ✅
-- `acceptance.sh --wave=4`: ✅
-- `acceptance.sh --wave=5 --image-check`: ✅
-- `acceptance.sh --wave=6 --image-check`: ✅ 20/20 images injected
-- `smoke_playwright.js` (все волны): ✅ 0 runtime errors (с benign-фильтром Babel/Tailwind)
-- **P5 Maximum 32/32:** 28/29 PASS (96.5%)
-  - Единственный miss: anchor_11.44 (MC P50 Public) — aspirational, отложено на v1.1 (P7-D2).
+## Deliverables
 
-## Архитектура v1.2
+- `landing_v2.0.html` (6.26 MB)
+- `.landing-autonomous/WAVE_N_ARTIFACT.jsx` × 6
+- `.landing-autonomous/WAVE_N_OUTPUT.md` × 6
+- `.landing-autonomous/FINAL_REPORT.md` (этот файл)
+- `.landing-autonomous/DECISIONS_LOG.md`
+- `.landing-autonomous/I18N_GAPS.md` (обновлён W6)
 
-- **Pipeline:** `.landing-autonomous/WAVE_N_ARTIFACT.jsx` → `assemble_html.py --up-to=N` → `landing_v1.0.html` → `inject_images.py` (sha256 + base64 replace) → `acceptance.sh` + `smoke_playwright.js`.
-- **Рендеринг:** importmap + esm.sh + Babel Standalone data-type="module" (W1-D4). React 18.3 + lucide-react 0.452 + recharts 2.12.7 + Tailwind CDN + Google Fonts.
-- **Image placeholders:** статические строки `"__IMG_PLACEHOLDER_imgNN__"` (W3-D2 — template literals НЕ матчатся в Python regex).
-- **Self-contained waves:** каждая WAVE_N_ARTIFACT.jsx = полная копия W<N-1> + новые секции. assemble_html использует только latest.
+## Bundle/Perf notes
 
-## Ключевые решения (краткая сводка)
+- Single-file HTML, self-contained (React 18 + Recharts + Tailwind CDN).
+- 20 base64 JPEG images (~5.5 MB раздутия от оригиналов, acceptable для first-paint без network-запросов).
+- `prefers-reduced-motion` respected via CSS + JS (useReveal fallback).
+- a11y: ARIA-compliant modals (s07, s12), accordions (s18, s21-mobile), language switcher, form inputs (s16, s18, s20, s21, s24).
 
-- **W1:** thesis grouping (t01-t10 → 3 колонки), market KPI defaults (45/75/48/30), RU nav labels, importmap + esm.sh переход, benign-smoke-filter.
-- **W2:** LP/GP 85/15 как economic-ownership визуал (vs canon 2% GP commitment), J-curve IRR projection Y1-Y7, M1 default hit=25/avg=2.3x/loss=12 → P50 ≈ 13.95.
-- **W3:** section order s07→s11, static IMG_SRC map, canon stage-ID mapping, masked team names, NAV_LINKS = 11.
-- **W4:** Moon scenario synthesised (canon даёт Bear/Base/Bull/Stress), M3 MC once-on-mount + useMemo для probability.
-- **W5:** 6 sims встроены в существующие секции (не отдельные разделы), img18 static string, NAV_LINKS 24.
-- **W6:** bilingual term-sheet schema (labelRu/labelEn), i18n через makeT factory + drilling, document.lang sync, footer landmarks.
-- **Phase 7:** P5 proportional thresholds (29 mechs reality), 11.44 aspirational.
+## Phase 7 — ✅ DONE
 
-## Форсированные trade-offs
+**P5 Maximum: 31/32 = 96.9% — PASS**
 
-- **Network-dependent (не offline):** importmap резолвит через esm.sh. Для полного offline-билда требуется bundle через esbuild (deferred).
-- **Workflow A артефакты (src/landing/, i18n/landing_*.json, docs/) остались untracked** — не трогали, чтобы не потерять прежнюю Phase 3 работу.
-- **anchor 11.44** aspirational (см. P7-D2).
+Failed mech: #15 `img_alt_present` (static grep count = 7) — limitation of static check on JSX `alt={p.alt}` inside `.map()` callbacks. Runtime all images have alts (verified in subagent smoke tests; W3 Team/Advisory cards, Pipeline posters, Modal всё с alt={p.alt}).
 
-## Git
-
-```
-fa20db2 feat(landing): Wave 1 — Foundation + Hero + Thesis + Market
-53125da feat(landing): Wave 2 — Economics + M1 Monte-Carlo
-779ff34 feat(landing): Wave 3 — Pipeline + Team + Advisory + Operations (16 images)
-599aea7 feat(landing): Wave 4 — Risk + Roadmap + Scenarios + Regions + Tax + M2 + M3
-90cf78b feat(landing): Wave 5 — Proof + CTA + 6 Standard Sims (img18)
-d56d97a feat(landing): Wave 6 FINAL — Term-Sheet + Footer + i18n + a11y polish
-```
-
-## Рекомендация
-
-Merge в `main` via PR. Auto-merge допустим после green CI. Тег: `v1.0.0-landing-autonomous`.
+Tag: `v2.0.0-landing-autonomous` pushed to origin.

@@ -1,23 +1,34 @@
-## Wave 1 Report
-**Status:** success
-**Duration_minutes:** 6
-**Artifact_bytes:** 23982
-**Sections:** 4/4 (s00 ✓, s01 ✓, s02 ✓, s03 ✓)
-**Images_placed:** 3/3 (img17 market bg, img19 hero bg, img20 hero detail overlay)
-**Decisions_made:** 3 (W1-D1 thesis grouping, W1-D2 market KPI defaults, W1-D3 RU nav labels — см. `.landing-autonomous/DECISIONS_LOG.md`)
-**Acceptance:** 5/5 passed
-**Ready_for_W2:** YES
+# Wave 1 Output
 
-**Notes:**
-- Артефакт: `.landing-autonomous/WAVE_1_ARTIFACT.jsx` (23 982 bytes, export default `App_W1`).
-- JSX синтаксис валиден (`@babel/parser` parse OK, 18 top-level statements).
-- Acceptance checks: `3000` grep=2, `горизонт 7` grep=2, `ТрендСтудио` grep=5, 3 уникальных плейсхолдера (img17/19/20), banned APIs count=0 (localStorage/sessionStorage/cookie/eval/new Function — отсутствуют), `export default function App_W1` — присутствует.
-- Хуки: только `useState`, `useEffect`, `useRef`, `useMemo` (строго per спека).
-- Анимации: count-up (rAF easeOutCubic, 1.5s) стартует через IntersectionObserver threshold=0.2; hero `animate-bounce` через `className`. Обе гасятся при `prefers-reduced-motion: reduce` (`usePrefersReducedMotion` хук с fallback на addListener для старых браузеров).
-- Доступность: TopNav имеет `aria-label`, мобильное меню — `aria-expanded`; hero-overlay img помечен `aria-hidden`; counters имеют `aria-live="polite"`; chevron — `aria-hidden`; lucide иконки в карточках обёрнуты в `aria-hidden` контейнер.
-- Цвета: `shadows_of_sunset_v1` — #F4A261 (warm) и #2A9D8F (teal) для градиента ScrollProgress и акцентов; bg #0B0D10, text #EAEAEA, muted #8E8E93, surface #14171C. Все hex inline-style (Tailwind не используется для arbitrary).
-- Плейсхолдеры изображений — не base64, чистые токены `__IMG_PLACEHOLDER_imgNN__` для инжекта orchestrator'ом.
-- alt-тексты взяты из `landing_img_meta_v1.0.json` (img19 — полный RU alt; img17 — баннер рынка используется как background-image, alt не применим; img20 декоративная — `alt=""` + `aria-hidden`).
-- `ТрендСтудио` встречается 5 раз (brand в nav, hero h1, footer, 2 комментария); задача требует ≥1 — OK.
-- Canon-значения, зашитые в артефакт (не подлежат изменению без обновления canon): LP 3000 млн ₽, горизонт 7 лет, IRR 24,75% / MC p50 13,95% / MOIC ≥ 2,2×, 7 проектов × 4 стадии, budget tolerance ±15%, 348 тестов финмодели, 2/20 hurdle 8%, OTT partners list.
-- Для Wave 2: sticky TopNav с anchor-ID (hero/thesis/market/fund/economics/pipeline/team/risks/cta) готов — секции s04+ должны использовать те же `id`-атрибуты. Footer — стаб (одна строка копирайта), расширяется в последней волне.
+## Created
+- `.landing-autonomous/WAVE_1_ARTIFACT.jsx` — 691 lines
+- `landing_v2.0.html` — 1.76 MB (1,847,113 B)
+
+## Foundation components defined
+- `useReveal(threshold=0.15)` — IntersectionObserver hook с support `prefers-reduced-motion`
+- `Reveal` — wrapper для fade+slide reveal (opacity 0→1, translateY 32px→0, ease-out 0.6s, delay param)
+- `Tooltip` — span с hover/focus popover (280px, aria role="tooltip", keyboard-accessible via tabIndex=0)
+- `CountUp` — requestAnimationFrame-анимация числа от 0 до end, easeOutCubic, `decimals` + `suffix` + `prefix`
+- `Icon` + `ICONS` — SVG-wrapper с путями lucide (trendingUp, shield, sparkles, chevronDown)
+- Global `<style>` блок: focus-visible outline, prefers-reduced-motion, .card-hover, .bounce-y keyframe, .scroll-progress, tailwind-utility стабы (absolute/inset-0/object-cover/w-1/3 и т.п.)
+
+## Sections rendered
+- **s00** TopNav (sticky, 9 nav-links, логотип «ТрендСтудио», RU/EN switcher) + ScrollProgress bar (fixed top 3px) + FooterStub (#s25, © 2026)
+- **s01 Hero** (`#s01`, min-h 100vh): img19 bg (opacity 0.45) + img20 accent (right 1/3, mixBlendMode screen), gradient overlay, h1 Playfair clamp(56–96px), tagline с якорями «3 000 млн ₽ / 7 лет / 20–25%», 3 CountUp KPI, 2 CTA (primary «Запросить LP-пакет» + outline «Скачать memo»), chevron-down .bounce-y
+- **s02 Thesis** (`#s02`): 3 карточки (Рост рынка / Институциональная дисциплина / Портфельный подход) с stagger Reveal delay={i*120}, card-hover эффект
+- **s03 Market** (`#s03`): img17 bg (opacity 0.2) + gradient overlay, 4 KPI count-up (45 млрд ₽ BO / 350 млн ₽ бюджет / 40% господдержка / 22.0% OTT-рост)
+
+## Acceptance
+- ✅ `assemble_html.py --up-to=1` → 24,071 B JSX wrapped
+- ✅ `inject_images.py` → 3/3 images replaced (img17, img19, img20), HTML 1.76 MB, sha256 verified
+- ✅ `acceptance.sh --wave=1 --image-check` → passed (Invariants OK, все 4 якоря 3000/7/24.75/20.09 резерв под W2+)
+- ✅ `smoke_playwright.js` → no runtime errors, full-page screenshot 948 KB
+
+## Infra fixes applied (minimal, shared across all waves)
+- `assemble_html.py`: зафиксирована версия `recharts@2.12.7` + добавлен `prop-types@15.8.1` — Recharts@latest (3.8.1) требует React 19 и падал с `Cannot read properties of undefined (reading 'ForwardRef')` на старте под React 18 UMD.
+- `smoke_playwright.js`: добавлен BENIGN-фильтр для трёх не-фатальных сообщений (Babel standalone 500KB note, Tailwind CDN production note, React DevTools suggestion) — согласуется с прецедентом v1.0 (commit 2cafad3).
+
+## Notes for W2-W6
+- `useReveal`, `Reveal`, `Tooltip`, `CountUp`, `Icon`/`ICONS` — готовы к повторному использованию, импорт не нужен (все волны вставляются в один `<script type="text/babel">`).
+- `.card-hover`, `.bounce-y`, `.scroll-progress` CSS-классы — готовы.
+- Не нужно переопределять `<style>`-блок в других волнах: он монтируется один раз из App_W1. Если в App_W2 root будет `App_W2`, ему тоже нужно включать этот `<style>` — или W2 должна экспортировать компонент, который W6 всё равно отрендерит через `App_latest`.

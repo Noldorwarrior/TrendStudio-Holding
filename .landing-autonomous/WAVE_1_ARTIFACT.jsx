@@ -1,75 +1,152 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Film, TrendingUp, Award, ChevronDown, Menu, X } from 'lucide-react';
+// ==== Wave 1: Foundation + s00-s03 ====
 
-// =============================================================================
-// TrendStudio Holding — Landing v1.0 — Wave 1 Artifact (s00–s03 + 3 images)
-// Scope: Foundation (s00), Hero (s01), Thesis (s02), Market (s03)
-// Images placed: img17 (market bg), img19 (hero bg), img20 (hero detail overlay)
-// Style signature: shadows_of_sunset_v1
-// SSOT: .landing-autonomous/canon/landing_canon_base_v1.0.json
-// =============================================================================
+// — FOUNDATION HOOKS & COMPONENTS —
 
-// --- Design tokens (locked by canon) ---
-const COLORS = {
-  bg:        '#0B0D10',
-  text:      '#EAEAEA',
-  muted:     '#8E8E93',
-  accentWarm:'#F4A261', // shadows_of_sunset: warm sunset
-  accentCool:'#2A9D8F', // shadows_of_sunset: teal shadow
-  surface:   '#14171C',
-  border:    'rgba(234,234,234,0.12)',
+function useReveal(threshold = 0.15) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) { setVisible(true); return; }
+    if (!ref.current) return;
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold }
+    );
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+  return [ref, visible];
+}
+
+function Reveal({ delay = 0, as = 'div', className = '', style = {}, children, ...rest }) {
+  const [ref, visible] = useReveal();
+  const Tag = as;
+  return (
+    <Tag
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(32px)',
+        transition: `opacity 0.6s ease-out ${delay}ms, transform 0.6s ease-out ${delay}ms`,
+        ...style
+      }}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+function Tooltip({ explanation, children }) {
+  const [show, setShow] = useState(false);
+  return (
+    <span
+      style={{ position: 'relative', borderBottom: '1px dotted #8E8E93', cursor: 'help' }}
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+      onFocus={() => setShow(true)}
+      onBlur={() => setShow(false)}
+      tabIndex={0}
+      aria-describedby="tt"
+    >
+      {children}
+      {show && (
+        <span
+          role="tooltip"
+          style={{
+            position: 'absolute', bottom: 'calc(100% + 8px)', left: '50%', transform: 'translateX(-50%)',
+            background: '#15181C', border: '1px solid #2A2D31', padding: '8px 12px', borderRadius: 6,
+            width: 280, fontSize: 13, color: '#EAEAEA', zIndex: 50,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.6)', fontWeight: 400, lineHeight: 1.5,
+            whiteSpace: 'normal', textAlign: 'left'
+          }}
+        >
+          {explanation}
+        </span>
+      )}
+    </span>
+  );
+}
+
+function CountUp({ end, duration = 1500, decimals = null, suffix = '', prefix = '' }) {
+  const [val, setVal] = useState(0);
+  const [ref, visible] = useReveal();
+  useEffect(() => {
+    if (!visible) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { setVal(end); return; }
+    const start = performance.now();
+    let raf;
+    const step = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(end * eased);
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [visible, end, duration]);
+  const fmt = decimals !== null
+    ? val.toFixed(decimals)
+    : Math.round(val).toLocaleString('ru-RU');
+  return <span ref={ref}>{prefix}{fmt}{suffix}</span>;
+}
+
+function Icon({ path, size = 20, color = 'currentColor', strokeWidth = 2, className = '' }) {
+  return (
+    <svg
+      width={size} height={size} viewBox="0 0 24 24" fill="none"
+      stroke={color} strokeWidth={strokeWidth}
+      strokeLinecap="round" strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      {path}
+    </svg>
+  );
+}
+
+const ICONS = {
+  trendingUp: (
+    <>
+      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+      <polyline points="16 7 22 7 22 13" />
+    </>
+  ),
+  shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />,
+  sparkles: (
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
+  ),
+  chevronDown: <polyline points="6 9 12 15 18 9" />,
 };
 
+// — NAV DATA —
+
 const NAV_LINKS = [
-  { id: 'hero',      label: 'Hero' },
-  { id: 'thesis',    label: 'Тезис' },
-  { id: 'market',    label: 'Рынок' },
-  { id: 'fund',      label: 'Фонд' },
-  { id: 'economics', label: 'Экономика' },
-  { id: 'pipeline',  label: 'Pipeline' },
-  { id: 'team',      label: 'Команда' },
-  { id: 'risks',     label: 'Риски' },
-  { id: 'cta',       label: 'Контакт' },
+  { id: 's01', label: 'Hero' },
+  { id: 's02', label: 'Тезис' },
+  { id: 's03', label: 'Рынок' },
+  { id: 's04', label: 'Экономика' },
+  { id: 's07', label: 'Пайплайн' },
+  { id: 's09', label: 'Команда' },
+  { id: 's12', label: 'Риски' },
+  { id: 's19', label: 'Распределение' },
+  { id: 's22', label: 'Контакты' },
 ];
 
-// --- prefers-reduced-motion hook ---
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return;
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handler = () => setReduced(mq.matches);
-    handler();
-    if (mq.addEventListener) mq.addEventListener('change', handler);
-    else if (mq.addListener) mq.addListener(handler);
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener('change', handler);
-      else if (mq.removeListener) mq.removeListener(handler);
-    };
-  }, []);
-  return reduced;
-}
-
-// --- Smooth scroll helper (bg-safe) ---
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// =============================================================================
-// s00 — Skeleton: ScrollProgress + TopNav + Footer stub
-// =============================================================================
+// — SECTION COMPONENTS —
 
 function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
+  const [w, setW] = useState(0);
   useEffect(() => {
-    function onScroll() {
-      const h = document.documentElement;
-      const total = (h.scrollHeight - h.clientHeight) || 1;
-      const pct = (h.scrollTop / total) * 100;
-      setProgress(Math.min(100, Math.max(0, pct)));
-    }
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const total = doc.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      setW(pct);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
@@ -78,192 +155,131 @@ function ScrollProgress() {
       window.removeEventListener('resize', onScroll);
     };
   }, []);
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        position: 'fixed',
-        top: 0, left: 0,
-        height: '3px',
-        width: `${progress}%`,
-        background: `linear-gradient(90deg, ${COLORS.accentWarm} 0%, ${COLORS.accentCool} 100%)`,
-        zIndex: 100,
-        transition: 'width 60ms linear',
-        pointerEvents: 'none',
-      }}
-    />
-  );
+  return <div className="scroll-progress" style={{ width: `${w}%` }} aria-hidden="true" />;
 }
 
 function TopNav() {
-  const [open, setOpen] = useState(false);
+  const [lang, setLang] = useState('RU');
   return (
     <nav
-      aria-label="Основная навигация"
       style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        background: 'rgba(11,13,16,0.85)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
-        borderBottom: `1px solid ${COLORS.border}`,
+        position: 'sticky', top: 0, zIndex: 50,
+        background: 'rgba(11,13,16,0.88)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        borderBottom: '1px solid #2A2D31'
       }}
+      aria-label="Основная навигация"
     >
-      <div className="container mx-auto px-6 flex items-center justify-between" style={{ height: 64 }}>
-        <button
-          onClick={() => scrollToId('hero')}
+      <div
+        style={{
+          maxWidth: 1280, margin: '0 auto',
+          padding: '14px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16
+        }}
+      >
+        <a
+          href="#s01"
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: 20,
-            fontWeight: 700,
-            color: COLORS.text,
-            background: 'transparent',
-            border: 'none',
-            cursor: 'pointer',
+            fontSize: 22, fontWeight: 700, color: '#EAEAEA',
+            textDecoration: 'none', letterSpacing: 0.3
           }}
-          aria-label="К началу — ТрендСтудио"
         >
           ТрендСтудио
-        </button>
-
-        {/* Desktop links */}
+        </a>
         <ul
-          className="hidden md:flex"
-          style={{ listStyle: 'none', gap: 24, margin: 0, padding: 0 }}
-        >
-          {NAV_LINKS.map((l) => (
-            <li key={l.id}>
-              <button
-                onClick={() => scrollToId(l.id)}
-                style={{
-                  color: COLORS.muted,
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontSize: 14,
-                  padding: '6px 2px',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = COLORS.accentWarm; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = COLORS.muted; }}
-              >
-                {l.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
-          aria-expanded={open}
-          style={{ background: 'transparent', border: 'none', color: COLORS.text, cursor: 'pointer' }}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {open && (
-        <ul
-          className="md:hidden"
           style={{
-            listStyle: 'none', margin: 0, padding: '8px 24px 16px',
-            display: 'flex', flexDirection: 'column', gap: 8,
-            borderTop: `1px solid ${COLORS.border}`,
+            display: 'flex', gap: 22, listStyle: 'none', margin: 0, padding: 0,
+            flexWrap: 'wrap'
           }}
+          className="hidden md:flex"
         >
           {NAV_LINKS.map((l) => (
             <li key={l.id}>
-              <button
-                onClick={() => { scrollToId(l.id); setOpen(false); }}
+              <a
+                href={`#${l.id}`}
                 style={{
-                  color: COLORS.text, background: 'transparent', border: 'none',
-                  cursor: 'pointer', fontSize: 14, padding: '8px 0', width: '100%', textAlign: 'left',
+                  color: '#EAEAEA', textDecoration: 'none',
+                  fontSize: 14, fontWeight: 500,
+                  transition: 'color 0.2s ease-out'
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#F4A261')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = '#EAEAEA')}
               >
                 {l.label}
-              </button>
+              </a>
             </li>
           ))}
         </ul>
-      )}
+        <div style={{ display: 'flex', gap: 6 }} role="group" aria-label="Язык интерфейса">
+          {['RU', 'EN'].map((code) => (
+            <button
+              key={code}
+              type="button"
+              onClick={() => setLang(code)}
+              aria-pressed={lang === code}
+              style={{
+                padding: '6px 10px',
+                borderRadius: 6,
+                fontSize: 13, fontWeight: 600,
+                background: lang === code ? '#F4A261' : 'transparent',
+                color: lang === code ? '#0B0D10' : '#EAEAEA',
+                border: `1px solid ${lang === code ? '#F4A261' : '#2A2D31'}`,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease-out'
+              }}
+            >
+              {code}
+            </button>
+          ))}
+        </div>
+      </div>
     </nav>
   );
 }
 
-function FooterStub() {
-  return (
-    <footer
-      style={{
-        borderTop: `1px solid ${COLORS.border}`,
-        padding: '32px 0',
-        color: COLORS.muted,
-        fontSize: 13,
-        background: COLORS.bg,
-      }}
-    >
-      <div className="container mx-auto px-6" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-        <div>ТрендСтудио Холдинг — LP-фонд кино 3000 млн ₽ · горизонт 7 лет</div>
-        <div>© 2026 TrendStudio Holding</div>
-      </div>
-    </footer>
-  );
-}
-
-// =============================================================================
-// s01 — Hero (img19 + img20)
-// =============================================================================
-
-function Hero({ prefersReducedMotion }) {
+function HeroSection() {
   return (
     <section
-      id="hero"
-      className="relative min-h-screen flex items-center"
-      style={{ overflow: 'hidden' }}
+      id="s01"
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
     >
-      {/* img19 — hero background (eager loading, per img_meta) */}
       <img
         src="__IMG_PLACEHOLDER_img19__"
-        alt="Hero-фон ТрендСтудио Холдинг — кинематографический ландшафт заката в палитре shadows_of_sunset_v1"
+        alt="Hero-фон ТрендСтудио Холдинг — кинематографический ландшафт заката"
         className="absolute inset-0 w-full h-full object-cover"
-        loading="eager"
+        style={{ opacity: 0.45 }}
       />
-      {/* Gradient readability overlay */}
-      <div
-        className="absolute inset-0"
-        aria-hidden="true"
-        style={{ background: 'linear-gradient(180deg, rgba(11,13,16,0.4) 0%, rgba(11,13,16,0.95) 100%)' }}
-      />
-      {/* img20 — film reel detail, decorative (screen blend) */}
       <img
         src="__IMG_PLACEHOLDER_img20__"
         alt=""
         aria-hidden="true"
         className="absolute right-0 top-0 h-full w-1/3 object-cover"
-        style={{ opacity: 0.3, mixBlendMode: 'screen', pointerEvents: 'none' }}
+        style={{ opacity: 0.3, mixBlendMode: 'screen' }}
       />
-
-      <div className="relative z-10 container mx-auto px-6">
-        <div style={{ maxWidth: 880 }}>
-          <div
-            style={{
-              display: 'inline-block',
-              padding: '6px 14px',
-              borderRadius: 999,
-              border: `1px solid ${COLORS.border}`,
-              background: 'rgba(20,23,28,0.6)',
-              color: COLORS.accentWarm,
-              fontSize: 13,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              marginBottom: 24,
-            }}
-          >
-            LP-фонд кино · IRR 24,75%
-          </div>
-
+      <div
+        className="absolute inset-0"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(180deg, rgba(11,13,16,0.2) 0%, rgba(11,13,16,0.85) 100%)'
+        }}
+      />
+      <div
+        style={{
+          position: 'relative', zIndex: 2,
+          maxWidth: 1100, padding: '120px 24px 160px',
+          textAlign: 'center', width: '100%'
+        }}
+      >
+        <Reveal delay={0}>
           <h1
             style={{
               fontFamily: "'Playfair Display', serif",
@@ -272,216 +288,237 @@ function Hero({ prefersReducedMotion }) {
               lineHeight: 1.05,
               letterSpacing: '-0.02em',
               margin: 0,
-              color: COLORS.text,
+              color: '#EAEAEA'
             }}
           >
             ТрендСтудио
           </h1>
-
+        </Reveal>
+        <Reveal delay={200}>
           <p
-            className="text-xl mt-4"
             style={{
-              color: COLORS.muted,
+              marginTop: 28,
               fontSize: 'clamp(18px, 2.2vw, 24px)',
-              maxWidth: 640,
-              lineHeight: 1.45,
+              lineHeight: 1.5,
+              color: '#EAEAEA',
+              maxWidth: 820,
+              marginLeft: 'auto',
+              marginRight: 'auto'
             }}
           >
-            LP-фонд кино 3000 млн ₽, горизонт 7 лет. Диверсифицированный портфель из 7 проектов,
-            Monte-Carlo моделирование, дисциплинированная экономика.
+            LP-фонд российского кино. <strong style={{ color: '#F4A261' }}>3 000 млн ₽</strong> на <strong style={{ color: '#F4A261' }}>7 лет</strong>. Целевая IRR <strong style={{ color: '#F4A261' }}>20–25%</strong>.
           </p>
-
-          <div className="flex gap-4 mt-8" style={{ flexWrap: 'wrap' }}>
-            <button
-              onClick={() => scrollToId('pipeline')}
-              className="px-8 py-3 rounded"
-              style={{
-                background: COLORS.accentWarm,
-                color: COLORS.bg,
-                border: 'none',
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: 15,
-              }}
-            >
-              Запросить питч-дек
-            </button>
-            <button
-              onClick={() => { try { alert('One-pager coming soon'); } catch (_) {} }}
-              className="px-8 py-3 rounded border-2"
-              style={{
-                borderColor: COLORS.text,
-                background: 'transparent',
-                color: COLORS.text,
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: 15,
-              }}
-            >
-              Скачать one-pager
-            </button>
+        </Reveal>
+        <Reveal delay={400}>
+          <div
+            style={{
+              marginTop: 40,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: 24,
+              maxWidth: 820,
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}
+          >
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, fontWeight: 700, color: '#F4A261' }}>
+                <CountUp end={3000} /> <span style={{ fontSize: 18, color: '#EAEAEA' }}>млн ₽</span>
+              </div>
+              <div style={{ fontSize: 13, color: '#8E8E93', marginTop: 4 }}>целевой размер</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, fontWeight: 700, color: '#F4A261' }}>
+                <CountUp end={7} /> <span style={{ fontSize: 18, color: '#EAEAEA' }}>лет</span>
+              </div>
+              <div style={{ fontSize: 13, color: '#8E8E93', marginTop: 4 }}>горизонт</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 38, fontWeight: 700, color: '#F4A261' }}>
+                <CountUp end={20.09} decimals={2} suffix="%" />
+              </div>
+              <div style={{ fontSize: 13, color: '#8E8E93', marginTop: 4 }}>IRR (public)</div>
+            </div>
           </div>
-        </div>
+        </Reveal>
+        <Reveal delay={600}>
+          <div
+            style={{
+              marginTop: 48,
+              display: 'flex',
+              gap: 16,
+              justifyContent: 'center',
+              flexWrap: 'wrap'
+            }}
+          >
+            <a
+              href="#s22"
+              style={{
+                background: '#F4A261',
+                color: '#0B0D10',
+                padding: '14px 28px',
+                borderRadius: 8,
+                fontWeight: 600,
+                fontSize: 16,
+                textDecoration: 'none',
+                transition: 'transform 0.2s ease-out, box-shadow 0.2s ease-out',
+                boxShadow: '0 8px 24px rgba(244,162,97,0.35)'
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+            >
+              Запросить LP-пакет
+            </a>
+            <a
+              href="#s22"
+              style={{
+                background: 'transparent',
+                color: '#EAEAEA',
+                padding: '14px 28px',
+                borderRadius: 8,
+                fontWeight: 600,
+                fontSize: 16,
+                textDecoration: 'none',
+                border: '1px solid #2A2D31',
+                transition: 'border-color 0.2s ease-out, color 0.2s ease-out'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#F4A261';
+                e.currentTarget.style.color = '#F4A261';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#2A2D31';
+                e.currentTarget.style.color = '#EAEAEA';
+              }}
+            >
+              Скачать memo
+            </a>
+          </div>
+        </Reveal>
       </div>
-
-      {/* Chevron down indicator — bounce disabled under prefers-reduced-motion */}
-      <ChevronDown
-        className={prefersReducedMotion ? 'absolute bottom-8 left-1/2 -translate-x-1/2' : 'absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce'}
-        style={{ color: COLORS.muted }}
-        size={32}
-        aria-hidden="true"
-      />
+      <a
+        href="#s02"
+        aria-label="Перейти к следующей секции"
+        className="bounce-y"
+        style={{
+          position: 'absolute',
+          bottom: 32,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 3,
+          color: '#F4A261',
+          textDecoration: 'none'
+        }}
+      >
+        <Icon path={ICONS.chevronDown} size={36} strokeWidth={2} />
+      </a>
     </section>
   );
 }
 
-// =============================================================================
-// s02 — Thesis (3 columns × 3 bullets)
-// Bullets derived from canon.thesis.items (10 items), grouped into 3 pillars.
-// Mapping decision logged in DECISIONS_LOG.md (W1-D1).
-// =============================================================================
-
-const THESIS_COLUMNS = [
-  {
-    icon: Film,
-    title: 'Почему кино?',
-    subtitle: 'Структурная возможность',
-    bullets: [
-      'Уход западных мейджоров освободил ~60% theatrical-доли — уникальное окно для локальных игроков.',
-      'Оригинальный контент OTT-платформ растёт 30%+ YoY при дефиците production capacity.',
-      'Международный upside: pre-sales и licensing дают 20–30% revenue к базовому сценарию.',
-    ],
-  },
-  {
-    icon: TrendingUp,
-    title: 'Почему сейчас?',
-    subtitle: 'Экономика и данные',
-    bullets: [
-      'Дисциплина: budget tolerance ±15%, gate-review, stop-loss — не допускаем overspend на post.',
-      'Финмодель v1.4.4, 348 тестов PASS, 4 Monte-Carlo движка — каждое greenlight с IRR-симуляцией.',
-      'Целевой IRR 24,75% (Internal W₅ V-D) · MC p50 13,95% · MOIC ≥ 2,2×.',
-    ],
-  },
-  {
-    icon: Award,
-    title: 'Почему мы?',
-    subtitle: 'Команда и структура',
-    bullets: [
-      'Вертикальная интеграция: development → production → post → distribution → IP-менеджмент.',
-      '7 проектов × 4 стадии × смешанный жанровый микс — диверсификация риска единичного срыва.',
-      'LP-friendly governance: 2/20, hurdle 8%, 100% catch-up, LPAC, key-person, no-fault removal.',
-    ],
-  },
-];
-
-function ThesisColumn({ col }) {
-  const Icon = col.icon;
+function ThesisCard({ iconPath, title, text }) {
   return (
-    <article
+    <div
+      className="card-hover"
       style={{
-        background: COLORS.surface,
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 28,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 16,
+        background: '#15181C',
+        border: '1px solid #2A2D31',
+        borderRadius: 16,
+        padding: 32,
+        height: '100%'
       }}
     >
       <div
-        aria-hidden="true"
         style={{
-          width: 48, height: 48,
-          borderRadius: 10,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          width: 48, height: 48, borderRadius: 12,
           background: 'rgba(244,162,97,0.12)',
-          color: COLORS.accentWarm,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          marginBottom: 20,
+          color: '#F4A261'
         }}
       >
-        <Icon size={24} />
+        <Icon path={iconPath} size={24} />
       </div>
-      <div>
-        <h3
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 24,
-            fontWeight: 700,
-            color: COLORS.text,
-            margin: 0,
-            lineHeight: 1.2,
-          }}
-        >
-          {col.title}
-        </h3>
-        <div style={{ color: COLORS.accentCool, fontSize: 13, marginTop: 6, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-          {col.subtitle}
-        </div>
-      </div>
-      <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {col.bullets.map((b, i) => (
-          <li
-            key={i}
-            style={{
-              color: COLORS.text,
-              fontSize: 15,
-              lineHeight: 1.55,
-              paddingLeft: 20,
-              position: 'relative',
-            }}
-          >
-            <span
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                left: 0, top: 10,
-                width: 8, height: 8,
-                borderRadius: '50%',
-                background: COLORS.accentWarm,
-              }}
-            />
-            {b}
-          </li>
-        ))}
-      </ul>
-    </article>
+      <h3
+        style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: 24, fontWeight: 700,
+          margin: '0 0 12px', color: '#EAEAEA'
+        }}
+      >
+        {title}
+      </h3>
+      <p style={{ fontSize: 15, lineHeight: 1.6, color: '#EAEAEA', margin: 0 }}>
+        {text}
+      </p>
+    </div>
   );
 }
 
-function Thesis() {
+function ThesisSection() {
+  const cards = [
+    {
+      icon: ICONS.trendingUp,
+      title: 'Рост рынка',
+      text: 'Российский бокс-офис восстанавливается темпами +18–22% г/г, OTT-платформы показывают двузначный рост подписок. Государственная поддержка закрывает до 40% бюджетов через ФПРК и Минкульт.'
+    },
+    {
+      icon: ICONS.shield,
+      title: 'Институциональная дисциплина',
+      text: 'Классическая LP/GP-структура с hurdle 8% и catch-up. Финмодель прошла 348 автоматических тестов, invariants-check и Монте-Карло по 10 000 итераций на каждый сценарий.'
+    },
+    {
+      icon: ICONS.sparkles,
+      title: 'Портфельный подход',
+      text: '7 проектов 2026–2028 в жанрах драма, комедия, триллер, семейное кино. Диверсификация по каналам: театральный прокат, OTT, ТВ, международные продажи. Нет ставки на один хит.'
+    }
+  ];
   return (
-    <section id="thesis" style={{ padding: '96px 0', background: COLORS.bg }}>
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentWarm, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Инвестиционный тезис
-          </div>
+    <section
+      id="s02"
+      style={{
+        padding: '96px 24px',
+        background: '#0B0D10',
+        position: 'relative'
+      }}
+    >
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <Reveal delay={0}>
           <h2
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: 'clamp(36px, 5vw, 56px)',
               fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
+              textAlign: 'center',
+              margin: '0 0 16px',
+              color: '#EAEAEA'
             }}
           >
-            Портфельный подход + дисциплинированная экономика + data-driven решения
+            Почему ТрендСтудио
           </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            7 проектов означают диверсификацию риска единичного срыва. Monte-Carlo моделирование
-            revenue и cost на всех этапах. Таргет IRR 24,75% при MC p50 13,95%.
+        </Reveal>
+        <Reveal delay={120}>
+          <p
+            style={{
+              textAlign: 'center', color: '#8E8E93',
+              fontSize: 18, maxWidth: 720, margin: '0 auto 56px', lineHeight: 1.6
+            }}
+          >
+            Три принципа, на которых построен фонд.
           </p>
-        </header>
-
+        </Reveal>
         <div
+          className="grid md:grid-cols-3 gap-8"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 24,
+            gap: 32
           }}
         >
-          {THESIS_COLUMNS.map((c) => (
-            <ThesisColumn key={c.title} col={c} />
+          {cards.map((c, i) => (
+            <Reveal key={c.title} delay={i * 120}>
+              <ThesisCard iconPath={c.icon} title={c.title} text={c.text} />
+            </Reveal>
           ))}
         </div>
       </div>
@@ -489,198 +526,103 @@ function Thesis() {
   );
 }
 
-// =============================================================================
-// s03 — Market (img17 as background via CSS gradient)
-// 4 KPI cards with count-up animation (rAF, 1.5s, IntersectionObserver).
-// KPI values: canon.distribution.channels (OTT=42%), canon.thesis.items (OTT 30%+ YoY).
-// Cinema gross + domestic-share — reasonable industry defaults (logged W1-D2).
-// =============================================================================
-
-const KPI_ITEMS = [
-  {
-    id: 'kpi-gross',
-    label: 'Кассовый сбор',
-    unit: 'млрд ₽',
-    target: 45,
-    decimals: 0,
-    caption: 'Оценка 2025, театральный прокат РФ',
-  },
-  {
-    id: 'kpi-domestic',
-    label: 'Доля отечественного кино',
-    unit: '%',
-    target: 75,
-    decimals: 0,
-    caption: 'После ухода западных мейджоров',
-  },
-  {
-    id: 'kpi-ott-subs',
-    label: 'OTT-подписчики',
-    unit: 'млн',
-    target: 48,
-    decimals: 0,
-    caption: 'Суммарно по ключевым платформам',
-  },
-  {
-    id: 'kpi-ott-yoy',
-    label: 'OTT рост оригинального контента',
-    unit: '% YoY',
-    target: 30,
-    decimals: 0,
-    caption: 'Кинопоиск · Okko · Wink · START',
-  },
-];
-
-function useCountUp(target, durationMs, shouldStart, decimals, prefersReducedMotion) {
-  const [value, setValue] = useState(prefersReducedMotion ? target : 0);
-  const rafRef = useRef(null);
-  const startedRef = useRef(false);
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setValue(target);
-      return;
-    }
-    if (!shouldStart || startedRef.current) return;
-    startedRef.current = true;
-
-    const startTs = performance.now();
-    function step(now) {
-      const elapsed = now - startTs;
-      const t = Math.min(1, elapsed / durationMs);
-      // easeOutCubic
-      const eased = 1 - Math.pow(1 - t, 3);
-      const v = target * eased;
-      const pow = Math.pow(10, decimals || 0);
-      setValue(Math.round(v * pow) / pow);
-      if (t < 1) {
-        rafRef.current = requestAnimationFrame(step);
-      } else {
-        setValue(target);
-      }
-    }
-    rafRef.current = requestAnimationFrame(step);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [target, durationMs, shouldStart, decimals, prefersReducedMotion]);
-
-  return value;
-}
-
-function KpiCard({ item, inView, prefersReducedMotion }) {
-  const value = useCountUp(item.target, 1500, inView, item.decimals || 0, prefersReducedMotion);
-  const display = useMemo(() => {
-    const d = item.decimals || 0;
-    return d > 0 ? value.toFixed(d) : Math.round(value).toString();
-  }, [value, item.decimals]);
-
+function MarketKpi({ label, end, suffix = '', decimals = null }) {
   return (
     <div
+      className="card-hover"
       style={{
-        background: 'rgba(20,23,28,0.72)',
-        backdropFilter: 'blur(6px)',
-        WebkitBackdropFilter: 'blur(6px)',
-        border: `1px solid ${COLORS.border}`,
-        borderRadius: 12,
-        padding: 24,
+        background: 'rgba(21,24,28,0.9)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        border: '1px solid #2A2D31',
+        borderRadius: 16,
+        padding: 28,
+        textAlign: 'center'
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
-        <div
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 'clamp(36px, 5vw, 56px)',
-            fontWeight: 700,
-            color: COLORS.accentWarm,
-            lineHeight: 1,
-          }}
-          aria-live="polite"
-        >
-          {display}
-        </div>
-        <div style={{ color: COLORS.text, fontSize: 14 }}>{item.unit}</div>
+      <div
+        style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: 40, fontWeight: 700,
+          color: '#F4A261',
+          lineHeight: 1.1
+        }}
+      >
+        <CountUp end={end} suffix={suffix} decimals={decimals} />
       </div>
-      <div style={{ color: COLORS.text, fontSize: 15, fontWeight: 500 }}>{item.label}</div>
-      <div style={{ color: COLORS.muted, fontSize: 13, marginTop: 4 }}>{item.caption}</div>
+      <div style={{ marginTop: 12, fontSize: 14, color: '#8E8E93', fontWeight: 500 }}>
+        {label}
+      </div>
     </div>
   );
 }
 
-function Market({ prefersReducedMotion }) {
-  const [inView, setInView] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || typeof IntersectionObserver === 'undefined') {
-      setInView(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setInView(true);
-            io.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: 0.2 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
+function MarketSection() {
+  const kpis = [
+    { label: 'Рынок BO 2025', end: 45, suffix: ' млрд ₽' },
+    { label: 'Средний бюджет', end: 350, suffix: ' млн ₽' },
+    { label: 'Гос-поддержка', end: 40, suffix: '%' },
+    { label: 'OTT-рост г/г', end: 22, decimals: 1, suffix: '%' }
+  ];
   return (
     <section
-      id="market"
-      ref={ref}
+      id="s03"
       style={{
-        backgroundImage: `linear-gradient(rgba(11,13,16,0.85), rgba(11,13,16,0.95)), url("__IMG_PLACEHOLDER_img17__")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        padding: '96px 0',
+        padding: '96px 24px',
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
-      <div className="container mx-auto px-6">
-        <header style={{ maxWidth: 780, marginBottom: 48 }}>
-          <div style={{ color: COLORS.accentCool, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
-            Контекст рынка
-          </div>
+      <img
+        src="__IMG_PLACEHOLDER_img17__"
+        alt="Широкий баннер раздела «Контекст рынка» — панорамная кинематографическая сцена"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: 0.2 }}
+      />
+      <div
+        className="absolute inset-0"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(180deg, #0B0D10 0%, rgba(11,13,16,0.85) 50%, #0B0D10 100%)'
+        }}
+      />
+      <div style={{ position: 'relative', zIndex: 2, maxWidth: 1200, margin: '0 auto' }}>
+        <Reveal delay={0}>
           <h2
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: 'clamp(36px, 5vw, 56px)',
               fontWeight: 700,
-              lineHeight: 1.1,
-              color: COLORS.text,
-              margin: 0,
+              textAlign: 'center',
+              margin: '0 0 16px',
+              color: '#EAEAEA'
             }}
           >
-            Российский рынок кино 2025
+            Рынок кинопроизводства РФ
           </h2>
-          <p style={{ color: COLORS.muted, fontSize: 18, marginTop: 16, lineHeight: 1.5, maxWidth: 720 }}>
-            Окно возможностей после структурных сдвигов 2022–2025. Консолидация дистрибуции
-            и рост OTT-бюджетов формируют среду для вертикально-интегрированного холдинга.
+        </Reveal>
+        <Reveal delay={120}>
+          <p
+            style={{
+              textAlign: 'center', color: '#8E8E93',
+              fontSize: 18, maxWidth: 760, margin: '0 auto 56px', lineHeight: 1.6
+            }}
+          >
+            Четыре ключевых показателя рынка 2025 — база для расчёта целевой доходности фонда.
           </p>
-        </header>
-
+        </Reveal>
         <div
+          className="grid md:grid-cols-4 gap-6"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 20,
+            gap: 24
           }}
         >
-          {KPI_ITEMS.map((k) => (
-            <KpiCard
-              key={k.id}
-              item={k}
-              inView={inView}
-              prefersReducedMotion={prefersReducedMotion}
-            />
+          {kpis.map((k, i) => (
+            <Reveal key={k.label} delay={i * 100}>
+              <MarketKpi {...k} />
+            </Reveal>
           ))}
         </div>
       </div>
@@ -688,32 +630,62 @@ function Market({ prefersReducedMotion }) {
   );
 }
 
-// =============================================================================
-// App_W1 — root shell
-// =============================================================================
-
-export default function App_W1() {
-  const prefersReducedMotion = usePrefersReducedMotion();
-
+function FooterStub() {
   return (
-    <div
+    <footer
+      id="s25"
       style={{
-        background: COLORS.bg,
-        color: COLORS.text,
-        fontFamily: "Inter, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        minHeight: '100vh',
-        WebkitFontSmoothing: 'antialiased',
-        MozOsxFontSmoothing: 'grayscale',
+        padding: '48px 24px',
+        borderTop: '1px solid #2A2D31',
+        background: '#0B0D10',
+        textAlign: 'center'
       }}
     >
+      <p style={{ margin: 0, color: '#8E8E93', fontSize: 14 }}>
+        © 2026 ТрендСтудио. Все права защищены.
+      </p>
+    </footer>
+  );
+}
+
+// — APP —
+
+function App_W1() {
+  return (
+    <>
+      <style>{`
+        *:focus-visible { outline: 2px solid #F4A261; outline-offset: 2px; border-radius: 4px; }
+        @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+        .card-hover { transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.5); border-color: #F4A261; }
+        @keyframes bounce-y { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+        .bounce-y { animation: bounce-y 2s ease-in-out infinite; }
+        .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg,#F4A261,#E67E22); z-index: 60; transition: width 0.1s linear; }
+        html { scroll-behavior: smooth; }
+        body { background: #0B0D10; color: #EAEAEA; }
+        .absolute { position: absolute; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+        .object-cover { object-fit: cover; }
+        .right-0 { right: 0; }
+        .top-0 { top: 0; }
+        .w-1\\/3 { width: 33.333333%; }
+      `}</style>
       <ScrollProgress />
       <TopNav />
       <main>
-        <Hero prefersReducedMotion={prefersReducedMotion} />
-        <Thesis />
-        <Market prefersReducedMotion={prefersReducedMotion} />
+        <HeroSection />
+        <ThesisSection />
+        <MarketSection />
       </main>
       <FooterStub />
-    </div>
+    </>
   );
 }

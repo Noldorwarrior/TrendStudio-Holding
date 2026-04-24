@@ -1,132 +1,60 @@
-# cc_autonomous_package/ — Landing v1.0 Autonomous Build
+# cc_autonomous_package_v2/ — Landing v2.0 Autonomous Build
 
-**Версия:** 1.2
-**Размер пакета:** ~5 MB (20 JPEG + 6 JSON + 4 md docs + 10 scripts + 6 WAVE_PROMPTS)
-
----
-
-## Что это
-
-Self-contained пакет для автономной сборки HTML-лендинга ТрендСтудио Холдинг через Claude Code.
-Запуск 1 командой → CC работает 8-12 часов → готовый PR в main.
-
-## Структура
-
-```
-cc_autonomous_package/
-├── PROMPT_Landing_ClaudeCode_AUTONOMOUS_v1.2.md  # ГЛАВНЫЙ промт для orchestrator
-├── SHARED_STATE.md                                # state-машина
-├── README.md                                      # это
-├── canon/                                         # 6 Canon JSONs (SSOT)
-│   ├── landing_canon_base_v1.0.json
-│   ├── landing_canon_schema_v1.0.json
-│   ├── landing_canon_extended_v1.0.json
-│   ├── landing_canon_extended_schema_v1.0.json
-│   ├── landing_a3_decisions_v1.0.json
-│   └── landing_img_meta_v1.0.json
-├── docs/                                          # 4 справочных
-│   ├── Landing_v1.0_HANDOFF_Stage_B.md
-│   ├── Landing_v1.0_HANDOFF_Stage_B_I18N.md
-│   ├── HANDOFF_Landing_v1.0_A1_to_A2.md
-│   └── Gemini_TZ_images_v1.0.md
-├── WAVE_PROMPTS/                                  # 6 спец для субагентов
-│   ├── W1.md — Foundation + Hero + Thesis + Market
-│   ├── W2.md — Economics + M1 Monte-Carlo
-│   ├── W3.md — Pipeline + Team + Operations (16 images)
-│   ├── W4.md — Risk + Roadmap + M2 + M3
-│   ├── W5.md — Proof + CTA + 6 sims
-│   └── W6.md — Polish + i18n + a11y + FINAL
-├── images/                                        # 20 JPEG (4.4 MB)
-│   ├── team_01_ceo.jpg
-│   ├── ...
-│   └── hero_film_reel.jpg
-├── images_manifest.json                           # sha256 + size для bootstrap-проверки
-└── scripts/                                       # 10 исполняемых
-    ├── bootstrap.sh                               # setup repo, copy files, verify images
-    ├── verify_images.py                           # sha256 pre-flight
-    ├── inject_images.py                           # base64 placeholder replace
-    ├── acceptance.sh                              # per-wave gate
-    ├── invariants_check.py                        # 7 инвариантов
-    ├── i18n_check.py                              # RU/EN симметрия
-    ├── smoke_playwright.js                        # runtime + screenshots
-    ├── assemble_html.py                           # merge waves → single HTML
-    ├── p5_max_32_32.py                            # П5 «Максимум» финал
-    └── notify_progress.sh                         # PROGRESS.md обновитель
-```
+**Версия:** 2.0
+**Отличие от v1.2:** систематический animation/interaction layer + 6 fix-спек для проблемных секций (M2, M3, Waterfall, Tax Credits, Distribution, Legal)
+**Размер:** ~5 MB (images unchanged)
+**Базовая:** анализ результатов v1.0 autonomous run (6 выявленных проблем)
 
 ## Как запустить
 
-### Шаг 1. Bootstrap (из терминала, вручную)
+### Шаг 1. Bootstrap
 
 ```bash
-bash /Users/noldorwarrior/Documents/Claude/Projects/Холдинг/cc_autonomous_package/scripts/bootstrap.sh
+bash /Users/noldorwarrior/Documents/Claude/Projects/Холдинг/cc_autonomous_package_v2/scripts/bootstrap.sh
 ```
 
-Что делает bootstrap:
-1. `cd TrendStudio-Holding`, checkout main, pull
-2. Создаёт/чекаутит ветку `claude/landing-v1.0-autonomous`
-3. Копирует пакет → `.landing-autonomous/`
-4. Копирует 20 JPEG → `data_extract/images_processed/`
-5. Проверяет sha256 всех 20 изображений
-6. Ставит Python deps (jsonschema) и Node deps (playwright)
+Создаст ветку `claude/landing-v2.0-autonomous` от main, скопирует пакет, проверит 20 изображений.
 
-**Если bootstrap упал:** см. error message, починить, запустить повторно (idempotent).
-
-### Шаг 2. Запустить Claude Code
+### Шаг 2. Запустить CC с полной автономией
 
 ```bash
 cd /Users/noldorwarrior/Documents/Claude/Projects/TrendStudio-Holding
-claude code
+claude code --dangerously-skip-permissions
 ```
 
-В интерактивном промте CC вставить:
-> Прочитай `.landing-autonomous/PROMPT_Landing_ClaudeCode_AUTONOMOUS_v1.2.md` и следуй инструкциям §1 как orchestrator. Действуй автономно. Для всех Python-запусков экспортируй `REPO_ROOT=$(pwd)`.
+В CC вставьте:
+> Прочитай `.landing-autonomous/PROMPT_Landing_v2.0_AUTONOMOUS.md` и следуй §1-§4 как orchestrator. Полная автономия, никаких уточняющих вопросов. Для Python: `REPO_ROOT=$(pwd) python3 ...`
 
-### Шаг 3. Ждать 8-12 часов
+### Шаг 3. Уйти на 8-12 часов
 
-CC выполняет 6 волн + финал. Прогресс — в `.landing-autonomous/PROGRESS.md`.
+CC выполнит 6 волн + П5 32/32 + PR + auto-merge. Прогресс — в `.landing-autonomous/PROGRESS.md`.
 
-### Шаг 4. Проверка результата
+### Шаг 4. Проверка
 
 ```bash
 cat .landing-autonomous/PROGRESS.md
 cat .landing-autonomous/FINAL_REPORT.md
-cat .landing-autonomous/p5_verification_report.json | jq '.score, .total, .verdict'
-open landing_v1.0.html
+cat .landing-autonomous/DECISIONS_LOG.md
+cat .landing-autonomous/p5_verification_report.json | python3 -m json.tool
+open landing_v2.0.html
 gh pr view
 ```
 
-## Риски и откат
+## Что изменилось (v1.2 → v2.0)
 
-Если результат не понравился:
-```bash
-# Закрыть PR без мержа
-gh pr close <PR_NUM>
-# Удалить ветку
-git checkout main
-git branch -D claude/landing-v1.0-autonomous
-git push origin :claude/landing-v1.0-autonomous
-```
+1. **Системно:** Animation & Interaction Layer во всех 25 секциях (scroll-reveal, hover, Tooltip, stagger)
+2. **M2 Pipeline Builder:** полный refactor семантики — rail = pool, колонки = empty initial, IRR меняется от drag
+3. **M3 LP Sizer → Commitment Calculator + mini-waterfall:** позитивный personal-calc вместо «0% probability»
+4. **s20 Waterfall:** intro на простом языке + Tooltip на hurdle/catch-up/super-carry/MOIC + персональный LP-пример
+5. **s16 Tax Credits:** inline-калькулятор budget→субсидия в каждой карточке
+6. **s19 Distribution:** donut 100% mix + horizontal timeline release windows + hover-интерактив
+7. **s21 Legal:** mobile accordion + stagger + NDA conversion gate с checkbox
 
-Или, если auto-merge уже сработал:
-```bash
-git revert <merge-commit-sha>
-git push origin main
-```
+## Итог
 
-## Что получите в итоге
-
-- `landing_v1.0.html` (~6.5 MB, single-file, offline-ready)
-- `DECISIONS_LOG.md` — что CC решил сам и почему (ключевой артефакт эксперимента)
-- `SKIPPED.md` — что пропущено
-- `I18N_GAPS.md` — EN-переводы, оставшиеся [TBD]
-- `p5_verification_report.json` — П5 «Максимум» 32/32 score
-- `FINAL_REPORT.md` — summary запуска
-- Git-история ветки: 6 commits + final + tag `v1.0.0-landing-autonomous`
-- Screenshots из Playwright smoke (6 штук)
-
----
-
-**Создано:** 2026-04-24
-**Автор промта:** Claude Sonnet 4.7 (Cowork)
-**Для запуска:** Claude Code CLI
+Landing ловит LP за счёт:
+- Personal calculator (M3 replace) — «вы получите X млн»
+- Tax credits calculator — «ваш бюджет → ваша субсидия»
+- Waterfall на простом языке — механика без PE-жаргона
+- Visual polish — scroll-reveal и hover на всех карточках
+- NDA gate в Legal — prolongation to PPM

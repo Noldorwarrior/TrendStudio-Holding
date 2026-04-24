@@ -1444,7 +1444,6 @@ function App_W5() {
         <FundStructureSection />
         <EconomicsSection />
         <ReturnsSection />
-        <MonteCarloSimulator />
         {/* W3 — pipeline + team + advisory + operations */}
         <PipelineSection />
         <TeamSection />

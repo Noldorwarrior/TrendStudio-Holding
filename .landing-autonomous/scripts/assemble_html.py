@@ -19,8 +19,10 @@ TEMPLATE = '''<!DOCTYPE html>
   <title>ТрендСтудио | Киноиндустриальный холдинг — партнёрство с фондами</title>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-is@18.2.0/umd/react-is.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+  <script crossorigin src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>

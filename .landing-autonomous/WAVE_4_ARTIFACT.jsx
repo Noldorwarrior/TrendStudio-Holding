@@ -2038,7 +2038,6 @@ function App_W4() {
         <FundStructureSection />
         <EconomicsSection />
         <ReturnsSection />
-        <MonteCarloSimulator />
         {/* W3 — pipeline cards + team + advisory + operations */}
         <PipelineSection />
         <TeamSection />

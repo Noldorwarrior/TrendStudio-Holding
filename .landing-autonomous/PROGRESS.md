@@ -16,4 +16,4 @@
 | 4 (W4 Risk/Road/Scen/Tax) | ✅ DONE | 3a9212c | gravity matrix, Roadmap REDESIGN (7 swimlanes+scrubber), Tax 85% cap, M2/M3 fixed, 8.8 MB |
 | 5 (W5 Press/Distr/Water/CTA) | ✅ DONE | 6b1c1a0 | s17 carousel 8q, s19 donut+timeline+14 partner chips, s20 scroll-pinned 200vh + cascade + particles, s22 img18 premium; FAQ НЕ рендерен (в W6); 9.03 MB |
 | 6 (W6 FAQ/Legal/Term/Footer/i18n) | ✅ DONE | 287ae62 | FAQ moved to end, Legal flip-cards+NDA, Term Sheet 13-row interactive, FooterFull 4-col, i18n 112/112 symmetry, 9.09 MB |
-| 7 (P5 + PR #12)         | ⏳ PENDING | — | tag v2.1.0, orchestrator to handle |
+| 7 (P5 + PR #12)         | ✅ DONE | b99e687 | **P5 = 32/32 PASS**, tag `v2.1.0-landing-autonomous`, **PR #12 MERGEABLE/CLEAN** |

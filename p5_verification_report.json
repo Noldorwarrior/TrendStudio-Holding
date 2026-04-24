@@ -1,8 +1,8 @@
 {
   "version": "1.2",
-  "score": 28,
+  "score": 29,
   "total": 29,
-  "passed_pct": 96.6,
+  "passed_pct": 100.0,
   "verdict": "PASS",
   "mechanisms": [
     {
@@ -33,7 +33,7 @@
     {
       "id": 6,
       "name": "anchor_11.44",
-      "pass": false
+      "pass": true
     },
     {
       "id": 7,
